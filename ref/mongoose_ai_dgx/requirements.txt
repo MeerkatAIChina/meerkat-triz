@@ -7,20 +7,21 @@ torchvision>=0.19.0
 torchaudio>=2.4.0
 
 # 大模型微调与推理 (锁定关键版本以确保兼容性)
-transformers>=4.45.0      # Qwen3.6需要4.45+
-peft>=0.12.0              # 支持'all-linear'和rsLoRA
-bitsandbytes>=0.43.0
-accelerate>=0.33.0
+transformers==4.45.0      # Qwen3.6需要4.45+
+peft==0.12.0              # LoRA配置
+bitsandbytes==0.43.3      # 4-bit量化
+accelerate==0.33.0        # 设备映射与混合精度
 
 # 训练与数据处理
-datasets>=2.21.0
+datasets==2.21.0
 tokenizers>=0.19.0
-trl>=0.9.0                # SFTTrainer formatting_func支持
+trl==0.9.6                # SFTTrainer formatting_func支持 (0.9-0.11范围，0.9.6已验证稳定)
 
 # 评测框架
-lm-eval>=0.4.3
+lm-eval==0.4.10           # lm-eval-harness基准测试
 evaluate>=0.4.2
 scikit-learn>=1.4.0
+rouge-score==0.1.2        # BLEU/ROUGE质量评分 (新增)
 
 # 数据处理与科学计算
 numpy>=1.26.0
@@ -37,6 +38,7 @@ huggingface-hub>=0.23.0
 safetensors>=0.4.3
 sentencepiece>=0.2.0
 protobuf>=4.25.0
+openai==1.35.0            # Moonshot API客户端 (OpenAI兼容) (新增)
 
 # Jupyter环境
 ipywidgets>=8.1.0
