@@ -27,8 +27,8 @@
 
 ### Training Execution (TRAIN)
 - [ ] **TRAIN-01**: Execute QLoRA fine-tuning end-to-end without manual intervention (Notebook 04)
-- [ ] **TRAIN-02**: Use explicit 12-module `target_modules` list (NOT `"all-linear"`) covering Gated Attention, Gated DeltaNet, and MoE MLP layers
-- [ ] **TRAIN-03**: Set `lora_dropout=0.0` for MoE architecture compatibility
+- [x] **TRAIN-02**: Use explicit 12-module `target_modules` list (NOT `"all-linear"`) covering Gated Attention, Gated DeltaNet, and MoE MLP layers
+- [x] **TRAIN-03**: Set `lora_dropout=0.0` for MoE architecture compatibility
 - [ ] **TRAIN-04**: Use `SFTTrainer` with `formatting_func` + `packing=True`; never pass `data_collator`
 - [ ] **TRAIN-05**: Save checkpoints every 200 steps with `save_total_limit=3`
 - [ ] **TRAIN-06**: Execute 2 epochs with learning rate 2e-4, cosine scheduler, 5% warmup
@@ -45,11 +45,11 @@
 - [ ] **EVAL-05**: Compute BLEU/ROUGE for TRIZ case quality scoring
 
 ### Infrastructure & Hardening (INFRA)
-- [ ] **INFRA-04**: Update `requirements.txt` with pinned compatible versions (`transformers` 4.45+, `trl` 0.9–0.11, `lm-eval` 0.4.10+, `bitsandbytes` 0.43.x, add `rouge-score` and `openai`)
+- [x] **INFRA-04**: Update `requirements.txt` with pinned compatible versions (`transformers` 4.45+, `trl` 0.9–0.11, `lm-eval` 0.4.10+, `bitsandbytes` 0.43.x, add `rouge-score` and `openai`)
 - [ ] **INFRA-05**: Implement `utils/synthetic_pipeline.py` — Moonshot API client with batching, rate limiting, output validation
 - [ ] **INFRA-06**: Implement `utils/pipeline_state.py` — JSON artifact registry for cross-notebook state tracking
 - [ ] **INFRA-07**: Create `02b_synthetic_generation.ipynb` orchestrating ~6K sample generation
-- [ ] **INFRA-08**: Fix README inaccuracy: replace `"all-linear"` recommendation with explicit module list
+- [x] **INFRA-08**: Fix README inaccuracy: replace `"all-linear"` recommendation with explicit module list
 - [ ] **INFRA-09**: Add notebook pre-flight checks (paths exist, artifacts present, version compatibility)
 
 ---
@@ -83,14 +83,14 @@
 | DATA-03 | Phase 1 | Pending |
 | DATA-04 | Phase 1 | Pending |
 | DATA-05 | Phase 1 | Pending |
-| INFRA-04 | Phase 1 | Pending |
+| INFRA-04 | Phase 1 | Complete |
 | INFRA-05 | Phase 1 | Pending |
 | INFRA-06 | Phase 1 | Pending |
 | INFRA-07 | Phase 1 | Pending |
-| INFRA-08 | Phase 1 | Pending |
+| INFRA-08 | Phase 1 | Complete |
 | INFRA-09 | Phase 1 | Pending |
-| TRAIN-02 | Phase 1 | Pending |
-| TRAIN-03 | Phase 1 | Pending |
+| TRAIN-02 | Phase 1 | Complete |
+| TRAIN-03 | Phase 1 | Complete |
 | BENCH-01 | Phase 2 | Pending |
 | BENCH-02 | Phase 2 | Pending |
 | BENCH-03 | Phase 2 | Pending |
