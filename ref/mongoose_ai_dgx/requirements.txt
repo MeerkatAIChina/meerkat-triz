@@ -1,0 +1,53 @@
+# 猫鼬AI DGX Spark 项目依赖
+# 安装命令: pip install -r requirements.txt
+
+# 核心深度学习框架 (DGX Spark推荐版本)
+torch>=2.4.0
+torchvision>=0.19.0
+torchaudio>=2.4.0
+
+# 大模型微调与推理 (锁定关键版本以确保兼容性)
+transformers>=4.45.0      # Qwen3.6需要4.45+
+peft>=0.12.0              # 支持'all-linear'和rsLoRA
+bitsandbytes>=0.43.0
+accelerate>=0.33.0
+
+# 训练与数据处理
+datasets>=2.21.0
+tokenizers>=0.19.0
+trl>=0.9.0                # SFTTrainer formatting_func支持
+
+# 评测框架
+lm-eval>=0.4.3
+evaluate>=0.4.2
+scikit-learn>=1.4.0
+
+# 数据处理与科学计算
+numpy>=1.26.0
+pandas>=2.2.0
+scipy>=1.12.0
+
+# 可视化
+matplotlib>=3.8.0
+seaborn>=0.13.0
+
+# 工具库
+tqdm>=4.66.0
+huggingface-hub>=0.23.0
+safetensors>=0.4.3
+sentencepiece>=0.2.0
+protobuf>=4.25.0
+
+# Jupyter环境
+ipywidgets>=8.1.0
+jupyterlab>=4.1.0
+
+# 日志与监控
+wandb>=0.17.0
+tensorboard>=2.16.0
+
+# 中文分词
+jieba>=0.42.0
+
+# 可选：vLLM加速推理 (DGX Spark可能不支持，建议先测试)
+# vllm>=0.4.0
