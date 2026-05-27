@@ -30,6 +30,13 @@ from .training_utils import (
     get_qwen36_target_modules,
 )
 
+from .pipeline_state import PipelineState
+
+from .synthetic_pipeline import (
+    MoonshotSyntheticClient,
+    SyntheticPipeline,
+)
+
 __all__ = [
     "run_lm_evaluation",
     "run_triz_evaluation",
@@ -50,4 +57,8 @@ __all__ = [
     "save_adapter_only",
     "find_all_linear_names",
     "get_qwen36_target_modules",
+    # Pipeline (new)
+    "PipelineState",
+    "MoonshotSyntheticClient",
+    "SyntheticPipeline",
 ]
