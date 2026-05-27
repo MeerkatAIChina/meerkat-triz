@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-01-PLAN.md
-last_updated: "2026-05-27T22:08:50.910Z"
+stopped_at: Completed 01-02-PLAN.md
+last_updated: "2026-05-27T22:13:42.287Z"
 last_activity: 2026-05-27
 progress:
   total_phases: 3
   completed_phases: 0
   total_plans: 4
-  completed_plans: 1
-  percent: 25
+  completed_plans: 2
+  percent: 50
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-05-26)
 ## Current Position
 
 Phase: 01 (foundation-data-pipeline) — EXECUTING
-Plan: 2 of 4
+Plan: 3 of 4
 Status: Ready to execute
 Last activity: 2026-05-27
 
@@ -67,6 +67,9 @@ Recent decisions affecting current work:
 - [Phase 01]: Use explicit 12-module target_modules list instead of all-linear (known compatibility issues with Qwen3.6 hybrid architecture)
 - [Phase 01]: Pin all critical package versions to prevent supply-chain breaking changes
 - [Phase 01]: Add SYNTHETIC_CONFIG to config.py for centralized synthetic generation pipeline settings
+- [Phase 01-foundation-data-pipeline]: Default pipeline state file at /home/meerkat/mongoose_ai/data/processed/pipeline_state.json
+- [Phase 01-foundation-data-pipeline]: API key from env var MOONSHOT_API_KEY, never hardcoded; configurable RPM rate limiting with 60s backoff on RateLimitError
+- [Phase 01-foundation-data-pipeline]: Checkpoint saved after EVERY batch in SyntheticPipeline for resumable generation
 
 ### Pending Todos
 
@@ -88,6 +91,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-05-27T22:08:50.908Z
-Stopped at: Completed 01-01-PLAN.md
+Last session: 2026-05-27T22:13:42.286Z
+Stopped at: Completed 01-02-PLAN.md
 Resume file: None
