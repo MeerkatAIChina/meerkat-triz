@@ -52,13 +52,14 @@ QLORA_CONFIG = {
         # - Gated Attention 层 (10/40层): q_proj, k_proj, v_proj, o_proj
         # - Gated DeltaNet 层 (30/40层): in_proj_qkv, in_proj_z, in_proj_b, in_proj_a, out_proj
         # - MoE MLP 层 (全部40层): gate_proj, up_proj, down_proj
+        # 显式指定12个模块，不使用"all-linear"（已知兼容性问题）
         # 手动指定所有模块名，确保覆盖混合架构的全部线性层
         "target_modules": [
-            "q_proj", "k_proj", "v_proj", "o_proj",           # Gated Attention
-            "in_proj_qkv", "in_proj_z", "in_proj_b", "in_proj_a", "out_proj",  # Gated DeltaNet
-            "gate_proj", "up_proj", "down_proj",              # MoE MLP
+            "q_proj", "k_proj", "v_proj", "o_proj",           # Gated Attention (10/40层)
+            "in_proj_qkv", "in_proj_z", "in_proj_b", "in_proj_a", "out_proj",  # Gated DeltaNet (30/40层)
+            "gate_proj", "up_proj", "down_proj",              # MoE MLP (全部40层)
         ],
-        "lora_dropout": 0.05,       # Dropout率
+        "lora_dropout": 0.0,        # Dropout率: 0.0 for MoE architecture compatibility (dropout can destabilize expert routing)
         "bias": "none",             # 不训练偏置
         "task_type": "CAUSAL_LM",   # 因果语言模型
         "use_rslora": False,        # 大rank时建议开启rsLoRA
@@ -147,6 +148,42 @@ DATA_CONFIG = {
         "validation": 0.10,
         "test": 0.05,
     }
+}
+
+# ==================== 合成数据生成配置 ====================
+SYNTHETIC_CONFIG = {
+    "api": {
+        "base_url": "https://api.moonshot.cn/v1",
+        "model": "moonshot-v1-8k",
+        "rpm": 3,  # Tier 0默认速率限制
+        "batch_size": 5,  # 每个API请求包含的种子数
+        "max_tokens_per_sample": 1500,
+        "temperature": 0.8,
+    },
+    # 按子集的扩展倍数（D-03: 事实类子集低倍数，多样性类子集高倍数）
+    "multipliers": {
+        "concept_explanation": 6,      # 25% real目标 → 实际约14%
+        "ariz_guidance": 6,            # 25% real目标 → 实际约14%
+        "principle_recommendation": 11,  # ~15% real目标 → 实际约8%
+        "innovation_assessment": 11,     # ~15% real目标 → 实际约8%
+        "case_generation": 16,         # 10% real目标 → 实际约6%
+        "contradiction_analysis": 16,  # 10% real目标 → 实际约6%
+    },
+    # 生成策略（D-01: 按子集采用不同策略）
+    "strategies": {
+        "concept_explanation": "rephrase",       # 改写问题，保持答案
+        "ariz_guidance": "rephrase",             # 改写问题，保持答案
+        "principle_recommendation": "mixed",     # 混合：改写+全新
+        "innovation_assessment": "mixed",        # 混合：改写+全新
+        "case_generation": "generate_new",       # 全新Q&A对
+        "contradiction_analysis": "generate_new", # 全新Q&A对
+    },
+    "quality_gates": {
+        "max_tokens": 3500,  # 超过此长度的样本将被过滤
+        "deduplicate": True,  # 去重种子数据中的重复项
+    },
+    "output_dir": str(DATA_DIR / "processed" / "synthetic"),
+    "checkpoint_dir": str(DATA_DIR / "processed" / "checkpoint"),
 }
 
 # ==================== 评测配置 ====================
