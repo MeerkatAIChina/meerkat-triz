@@ -91,7 +91,7 @@ QLORA_CONFIG = {
     "lora": {
         "r": 64,           # LoRA秩 (32-128)
         "lora_alpha": 128, # 缩放因子
-        "lora_dropout": 0.05,
+        "lora_dropout": 0.0,  # MoE架构兼容性：dropout可能干扰专家路由
     },
     "training": {
         "num_train_epochs": 2,          # 训练轮数
@@ -116,18 +116,18 @@ Qwen3.6 使用 **Gated DeltaNet + Gated Attention + MoE** 混合架构，与传�
 
 ### 解决方案 (已内置)
 
-本套件已内置三种适配方案，**默认使用 `"all-linear"` 自动检测**：
+本套件已内置三种适配方案，**推荐使用显式模块列表**（`"all-linear"` 在混合架构上存在已知兼容性问题）：
 
 ```python
-# 方案1: PEFT自动检测 (推荐, 默认)
-target_modules = "all-linear"
-
-# 方案2: 手动指定Qwen3.6模块列表
+# 方案1: 手动指定Qwen3.6模块列表 (推荐)
 target_modules = [
-    "q_proj", "k_proj", "v_proj", "o_proj",           # Gated Attention
-    "in_proj_qkv", "in_proj_z", "in_proj_b", "in_proj_a", "out_proj",  # GDN
-    "gate_proj", "up_proj", "down_proj",              # MoE MLP
+    "q_proj", "k_proj", "v_proj", "o_proj",           # Gated Attention (10/40层)
+    "in_proj_qkv", "in_proj_z", "in_proj_b", "in_proj_a", "out_proj",  # Gated DeltaNet (30/40层)
+    "gate_proj", "up_proj", "down_proj",              # MoE MLP (全部40层)
 ]
+
+# 方案2: PEFT自动检测 (不推荐，已知可能错误包含lm_head)
+# target_modules = "all-linear"
 
 # 方案3: 运行时自动扫描 (用于验证)
 from utils.training_utils import find_all_linear_names
@@ -227,6 +227,27 @@ You are Meerkat-AI, an expert innovation consultant...<|im_end|>
   }
 ]
 ```
+
+## 合成数据生成
+
+本项目使用 Moonshot API 从 548 条种子数据生成约 6000 条合成训练数据：
+
+```bash
+# 设置 Moonshot API Key
+export MOONSHOT_API_KEY="your-api-key"
+
+# 在 Notebook 02b 中执行生成
+```
+
+生成策略按子集区分：
+- **改写问题** (concept_explanation, ariz_guidance): 保持答案不变，改写问题表述
+- **全新生成** (case_generation, contradiction_analysis): 基于种子灵感生成全新Q&A对
+- **混合策略** (principle_recommendation, innovation_assessment): 部分改写 + 部分全新
+
+质量关卡：
+- 去重：种子数据中去除重复模板后再生成
+- 长度过滤：超过3500 tokens的样本被过滤
+- 格式验证：所有输出使用 `tokenizer.apply_chat_template()` 转换为ChatML
 
 ## 训练数据子集
 
