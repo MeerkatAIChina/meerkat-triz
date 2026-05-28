@@ -13,7 +13,7 @@
 ### Data Generation (DATA)
 - [ ] **DATA-01**: Generate ~6K synthetic training samples from 548 seed samples using Moonshot API with true semantic variation (not template paraphrasing)
 - [ ] **DATA-02**: Implement quality gates for synthetic data: perplexity filtering, diversity scoring, and 20-30% real/human-curated data ratio maintenance
-- [ ] **DATA-03**: Add token length profiling in Notebook 02 to catch silent truncation before training
+- [x] **DATA-03**: Add token length profiling in Notebook 02 to catch silent truncation before training
 - [ ] **DATA-04**: Maintain 85/10/5 train/validation/test split across combined real + synthetic data
 - [ ] **DATA-05**: Preserve ChatML format conversion via `tokenizer.apply_chat_template()` for all generated samples
 
@@ -50,7 +50,7 @@
 - [ ] **INFRA-06**: Implement `utils/pipeline_state.py` — JSON artifact registry for cross-notebook state tracking
 - [ ] **INFRA-07**: Create `02b_synthetic_generation.ipynb` orchestrating ~6K sample generation
 - [x] **INFRA-08**: Fix README inaccuracy: replace `"all-linear"` recommendation with explicit module list
-- [ ] **INFRA-09**: Add notebook pre-flight checks (paths exist, artifacts present, version compatibility)
+- [x] **INFRA-09**: Add notebook pre-flight checks (paths exist, artifacts present, version compatibility)
 
 ---
 
@@ -80,7 +80,7 @@
 |-------------|-------|--------|
 | DATA-01 | Phase 1 | Pending |
 | DATA-02 | Phase 1 | Pending |
-| DATA-03 | Phase 1 | Pending |
+| DATA-03 | Phase 1 | Complete |
 | DATA-04 | Phase 1 | Pending |
 | DATA-05 | Phase 1 | Pending |
 | INFRA-04 | Phase 1 | Complete |
@@ -88,7 +88,7 @@
 | INFRA-06 | Phase 1 | Pending |
 | INFRA-07 | Phase 1 | Pending |
 | INFRA-08 | Phase 1 | Complete |
-| INFRA-09 | Phase 1 | Pending |
+| INFRA-09 | Phase 1 | Complete |
 | TRAIN-02 | Phase 1 | Complete |
 | TRAIN-03 | Phase 1 | Complete |
 | BENCH-01 | Phase 2 | Pending |
