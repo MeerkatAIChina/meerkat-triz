@@ -33,9 +33,9 @@
 - [ ] **TRAIN-05**: Save checkpoints every 200 steps with `save_total_limit=3`
 - [ ] **TRAIN-06**: Execute 2 epochs with learning rate 2e-4, cosine scheduler, 5% warmup
 - [ ] **TRAIN-07**: Use memory-efficient config: 4-bit NF4, gradient checkpointing, paged AdamW 8-bit
-- [ ] **TRAIN-08**: Save comprehensive adapter metadata alongside LoRA weights
-- [ ] **TRAIN-09**: Verify immediate load-and-forward-pass after checkpoint save
-- [ ] **TRAIN-10**: Support checkpoint resume with verification (data iterator state, LR scheduler continuity)
+- [x] **TRAIN-08**: Save comprehensive adapter metadata alongside LoRA weights
+- [x] **TRAIN-09**: Verify immediate load-and-forward-pass after checkpoint save
+- [x] **TRAIN-10**: Support checkpoint resume with verification (data iterator state, LR scheduler continuity)
 
 ### Evaluation (EVAL)
 - [ ] **EVAL-01**: Execute post-training evaluation (Notebook 05) with automatic baseline loading from pipeline state
@@ -102,9 +102,9 @@
 | TRAIN-05 | Phase 2 | Pending |
 | TRAIN-06 | Phase 2 | Pending |
 | TRAIN-07 | Phase 2 | Pending |
-| TRAIN-08 | Phase 2 | Pending |
-| TRAIN-09 | Phase 2 | Pending |
-| TRAIN-10 | Phase 2 | Pending |
+| TRAIN-08 | Phase 2 | Complete |
+| TRAIN-09 | Phase 2 | Complete |
+| TRAIN-10 | Phase 2 | Complete |
 | EVAL-01 | Phase 3 | Pending |
 | EVAL-02 | Phase 3 | Pending |
 | EVAL-03 | Phase 3 | Pending |

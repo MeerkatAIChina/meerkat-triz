@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 02 context gathered
-last_updated: "2026-05-28T15:33:23.058Z"
+stopped_at: Completed 02-01-PLAN.md
+last_updated: "2026-05-28T17:12:49.071Z"
 last_activity: 2026-05-28
 progress:
   total_phases: 3
   completed_phases: 1
-  total_plans: 7
-  completed_plans: 7
-  percent: 100
+  total_plans: 10
+  completed_plans: 8
+  percent: 80
 ---
 
 # Project State
@@ -21,12 +21,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-26)
 
 **Core value:** Transform a general-purpose 35B-parameter MoE model into a world-class TRIZ innovation consultant through targeted domain fine-tuning, with rigorous three-layer evaluation.
-**Current focus:** Phase 01 — foundation-data-pipeline
+**Current focus:** Phase 02 — baseline-training-execution
 
 ## Current Position
 
-Phase: 2
-Plan: Not started
+Phase: 02 (baseline-training-execution) — EXECUTING
+Plan: 2 of 3
 Status: Ready to execute
 Last activity: 2026-05-28
 
@@ -56,6 +56,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-foundation-data-pipeline P05 | 300 | 1 tasks | 1 files |
 | Phase 01-foundation-data-pipeline P06 | 428 | 4 tasks | 4 files |
 | Phase 01-foundation-data-pipeline P07 | 35 | 5 tasks | 5 files |
+| Phase 02-baseline-training-execution P01 | 216 | 3 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -83,6 +84,9 @@ Recent decisions affecting current work:
 - [Phase 01-foundation-data-pipeline]: Use importlib.util direct module loading to avoid utils/__init__.py torch dependency in test environment
 - [Phase 01-foundation-data-pipeline]: Use FakeModel callable class instead of unittest.mock.Mock for model mocking because Mock.__call__ ignores return_value
 - [Phase 01-foundation-data-pipeline]: Monkey-patch pathlib.Path.mkdir to noop in test_config.py to allow config.py import on non-DGX environments
+- [Phase 02-baseline-training-execution]: CheckpointValidationCallback.on_save uses torch.no_grad() for forward pass to avoid gradient accumulation during validation
+- [Phase 02-baseline-training-execution]: SHA-256 computed on adapter weights file (safetensors preferred, bin fallback) for file-on-disk integrity verification
+- [Phase 02-baseline-training-execution]: resume_from_checkpoint returns structured dict with before/after step and lr for programmatic verification in Notebook 04
 
 ### Pending Todos
 
@@ -104,6 +108,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-05-28T15:33:23.056Z
-Stopped at: Phase 02 context gathered
-Resume file: .planning/phases/02-baseline-training-execution/02-CONTEXT.md
+Last session: 2026-05-28T17:12:49.069Z
+Stopped at: Completed 02-01-PLAN.md
+Resume file: None
