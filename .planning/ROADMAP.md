@@ -6,7 +6,7 @@ This roadmap delivers the v1.0 milestone: a complete end-to-end QLoRA fine-tunin
 
 ## Phases
 
-- [ ] **Phase 1: Foundation & Data Pipeline** - Fix configs, build synthetic data pipeline, generate ~6K training samples
+- [x] **Phase 1: Foundation & Data Pipeline** - Fix configs, build synthetic data pipeline, generate ~6K training samples
 - [ ] **Phase 2: Baseline & Training Execution** - Run pre-training benchmarks, execute 15-hour QLoRA fine-tuning
 - [ ] **Phase 3: Evaluation & Hardening** - Validate fine-tuning results, produce comparison report, harden cross-notebook integration
 
@@ -26,13 +26,13 @@ This roadmap delivers the v1.0 milestone: a complete end-to-end QLoRA fine-tunin
   7. README.md no longer recommends `"all-linear"` and documents the explicit module list
   8. Notebook pre-flight checks verify paths, artifacts, and version compatibility before execution
 **Plans**: 7 plans in 2 waves
-  - [ ] `01-01-PLAN.md` -- Config Hardening: fix config.py, requirements.txt, README.md
-  - [ ] `01-02-PLAN.md` -- Infrastructure Modules: create pipeline_state.py, synthetic_pipeline.py, update __init__.py
-  - [ ] `01-03-PLAN.md` -- Synthetic Generation Notebook: create 02b_synthetic_generation.ipynb
-  - [ ] `01-04-PLAN.md` -- Notebook Enhancements: add token profiling to Notebook 02, pre-flight checks to Notebook 01
-  - [ ] `01-05-PLAN.md` -- [GAP] Fix training_utils.py docstring and defaults
-  - [ ] `01-06-PLAN.md` -- [GAP] Add perplexity/diversity quality gates + document real ratio deviation
-  - [ ] `01-07-PLAN.md` -- [GAP] Create pytest test stubs
+  - [x] `01-01-PLAN.md` -- Config Hardening: fix config.py, requirements.txt, README.md
+  - [x] `01-02-PLAN.md` -- Infrastructure Modules: create pipeline_state.py, synthetic_pipeline.py, update __init__.py
+  - [x] `01-03-PLAN.md` -- Synthetic Generation Notebook: create 02b_synthetic_generation.ipynb
+  - [x] `01-04-PLAN.md` -- Notebook Enhancements: add token profiling to Notebook 02, pre-flight checks to Notebook 01
+  - [x] `01-05-PLAN.md` -- [GAP] Fix training_utils.py docstring and defaults
+  - [x] `01-06-PLAN.md` -- [GAP] Add perplexity/diversity quality gates + document real ratio deviation
+  - [x] `01-07-PLAN.md` -- [GAP] Create pytest test stubs
 
 ### Phase 2: Baseline & Training Execution
 **Goal**: The researcher has valid pre-training baselines and a completed QLoRA fine-tuning run with verified checkpoints.
@@ -46,7 +46,10 @@ This roadmap delivers the v1.0 milestone: a complete end-to-end QLoRA fine-tunin
   5. Immediate load-and-forward-pass verification succeeds after each checkpoint save
   6. Checkpoint resume works correctly: interrupted training can resume with data iterator state and LR scheduler continuity verified
   7. Training uses `SFTTrainer` with `formatting_func` + `packing=True`, no `data_collator` passed
-**Plans**: TBD
+**Plans**: 3 plans in 2 waves
+  - [ ] `02-01-PLAN.md` -- Utility Enhancements: add CheckpointValidationCallback, SHA-256 metadata, LR-verified resume to training_utils.py
+  - [ ] `02-02-PLAN.md` -- Baseline Benchmark Notebook: enhance Notebook 03 with FP16 loading, all 3 benchmark layers, pipeline_state persistence
+  - [ ] `02-03-PLAN.md` -- QLoRA Training Notebook: rebuild Notebook 04 with pre-flight checks, checkpoint callback, resume cell, adapter metadata
 
 ### Phase 3: Evaluation & Hardening
 **Goal**: The researcher can verify fine-tuning improved TRIZ capabilities and the pipeline is hardened for reproducible future runs.
@@ -68,6 +71,6 @@ Phases execute in numeric order: 1 -> 2 -> 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Data Pipeline | 5/7 | In Progress|  |
-| 2. Baseline & Training Execution | 0/TBD | Not started | - |
+| 1. Foundation & Data Pipeline | 7/7 | Complete | 2026-05-28 |
+| 2. Baseline & Training Execution | 0/3 | Planned | - |
 | 3. Evaluation & Hardening | 0/TBD | Not started | - |
