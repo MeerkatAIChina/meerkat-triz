@@ -25,11 +25,14 @@ This roadmap delivers the v1.0 milestone: a complete end-to-end QLoRA fine-tunin
   6. `utils/pipeline_state.py` persists JSON artifact registry accessible across all notebooks
   7. README.md no longer recommends `"all-linear"` and documents the explicit module list
   8. Notebook pre-flight checks verify paths, artifacts, and version compatibility before execution
-**Plans**: 4 plans in 2 waves
+**Plans**: 7 plans in 2 waves
   - [ ] `01-01-PLAN.md` -- Config Hardening: fix config.py, requirements.txt, README.md
   - [ ] `01-02-PLAN.md` -- Infrastructure Modules: create pipeline_state.py, synthetic_pipeline.py, update __init__.py
   - [ ] `01-03-PLAN.md` -- Synthetic Generation Notebook: create 02b_synthetic_generation.ipynb
   - [ ] `01-04-PLAN.md` -- Notebook Enhancements: add token profiling to Notebook 02, pre-flight checks to Notebook 01
+  - [ ] `01-05-PLAN.md` -- [GAP] Fix training_utils.py docstring and defaults
+  - [ ] `01-06-PLAN.md` -- [GAP] Add perplexity/diversity quality gates + document real ratio deviation
+  - [ ] `01-07-PLAN.md` -- [GAP] Create pytest test stubs
 
 ### Phase 2: Baseline & Training Execution
 **Goal**: The researcher has valid pre-training baselines and a completed QLoRA fine-tuning run with verified checkpoints.
@@ -65,6 +68,6 @@ Phases execute in numeric order: 1 -> 2 -> 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Data Pipeline | 0/4 | Planned | - |
+| 1. Foundation & Data Pipeline | 5/7 | In Progress|  |
 | 2. Baseline & Training Execution | 0/TBD | Not started | - |
 | 3. Evaluation & Hardening | 0/TBD | Not started | - |
