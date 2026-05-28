@@ -12,7 +12,7 @@
 
 ### Data Generation (DATA)
 - [ ] **DATA-01**: Generate ~6K synthetic training samples from 548 seed samples using Moonshot API with true semantic variation (not template paraphrasing)
-- [ ] **DATA-02**: Implement quality gates for synthetic data: perplexity filtering, diversity scoring, and 20-30% real/human-curated data ratio maintenance
+- [x] **DATA-02**: Implement quality gates for synthetic data: perplexity filtering, diversity scoring, and 20-30% real/human-curated data ratio maintenance
 - [x] **DATA-03**: Add token length profiling in Notebook 02 to catch silent truncation before training
 - [ ] **DATA-04**: Maintain 85/10/5 train/validation/test split across combined real + synthetic data
 - [ ] **DATA-05**: Preserve ChatML format conversion via `tokenizer.apply_chat_template()` for all generated samples
@@ -79,7 +79,7 @@
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | DATA-01 | Phase 1 | Pending |
-| DATA-02 | Phase 1 | Pending |
+| DATA-02 | Phase 1 | Complete |
 | DATA-03 | Phase 1 | Complete |
 | DATA-04 | Phase 1 | Pending |
 | DATA-05 | Phase 1 | Pending |
