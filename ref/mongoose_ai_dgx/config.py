@@ -179,8 +179,21 @@ SYNTHETIC_CONFIG = {
         "contradiction_analysis": "generate_new", # 全新Q&A对
     },
     "quality_gates": {
-        "max_tokens": 3500,  # 超过此长度的样本将被过滤
-        "deduplicate": True,  # 去重种子数据中的重复项
+        "max_tokens": 3500,           # 超过此长度的样本将被过滤
+        "deduplicate": True,          # 去重种子数据中的重复项
+        # 困惑度过滤 (可选: 需要加载基座模型, 内存占用约20GB)
+        "perplexity": {
+            "enabled": False,         # 默认关闭 (可在Notebook 02b中手动开启)
+            "percentile": 80,         # 保留困惑度最低的80%样本
+            "device": None,           # None=自动选择 (cuda优先, 可设为"cpu")
+        },
+        # 多样性评分 (纯文本处理, 无需模型)
+        "diversity": {
+            "enabled": True,          # 默认开启
+            "min_distinct_1": 0.30,   # 最低unigram多样性
+            "min_distinct_2": 0.15,   # 最低bigram多样性
+            "field": "instruction",   # 用于多样性计算的字段
+        },
     },
     "output_dir": str(DATA_DIR / "processed" / "synthetic"),
     "checkpoint_dir": str(DATA_DIR / "processed" / "checkpoint"),
