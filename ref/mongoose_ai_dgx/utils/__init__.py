@@ -28,6 +28,8 @@ from .training_utils import (
     save_adapter_only,
     find_all_linear_names,
     get_qwen36_target_modules,
+    CheckpointValidationCallback,
+    resume_from_checkpoint,
 )
 
 from .pipeline_state import PipelineState
@@ -57,6 +59,8 @@ __all__ = [
     "save_adapter_only",
     "find_all_linear_names",
     "get_qwen36_target_modules",
+    "CheckpointValidationCallback",
+    "resume_from_checkpoint",
     # Pipeline (new)
     "PipelineState",
     "MoonshotSyntheticClient",
