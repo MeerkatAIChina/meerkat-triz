@@ -121,24 +121,35 @@ def mock_model_and_tokenizer():
     tokenizer = Mock()
 
     def _tokenizer_call(text, return_tensors="pt", truncation=True, max_length=2048):
-        # Return a mock encoding with input_ids
+        mock_tensor = Mock()
+        mock_tensor.to = Mock(return_value=mock_tensor)
         mock_encoding = Mock()
-        mock_encoding.input_ids = torch.tensor([[1, 2, 3, 4, 5]])
+        mock_encoding.input_ids = mock_tensor
         return mock_encoding
 
     tokenizer.side_effect = _tokenizer_call
 
-    # Mock model
-    model = Mock()
-    mock_loss = Mock()
-    mock_loss.item = Mock(return_value=2.5)  # loss = 2.5 -> ppl = exp(2.5) ~ 12.18
-    mock_output = Mock()
-    mock_output.loss = mock_loss
-    model.forward = Mock(return_value=mock_output)
+    # Use a real callable class instead of Mock for the model,
+    # because Mock.__call__ always returns a new Mock (ignoring return_value).
+    class FakeModel:
+        def __init__(self, loss_val):
+            self._loss_tensor = torch.tensor(loss_val)
 
-    # Mock parameters for device detection
-    mock_param = Mock()
-    mock_param.device = "cpu"
-    model.parameters = Mock(return_value=iter([mock_param]))
+        def __call__(self, input_ids, labels=None):
+            class Output:
+                pass
+            out = Output()
+            out.loss = self._loss_tensor
+            return out
+
+        def parameters(self):
+            class Param:
+                device = "cpu"
+            return iter([Param()])
+
+        def to(self, device):
+            return self
+
+    model = FakeModel(2.5)
 
     return model, tokenizer
