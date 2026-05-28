@@ -14,7 +14,14 @@ sys.path.insert(0, "ref/mongoose_ai_dgx")
 @pytest.fixture
 def mock_moonshot_client():
     """Mock Moonshot API client that returns predefined responses"""
-    from utils.synthetic_pipeline import MoonshotSyntheticClient
+    # Import directly to avoid utils/__init__.py which pulls in torch
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "synthetic_pipeline", "ref/mongoose_ai_dgx/utils/synthetic_pipeline.py"
+    )
+    sp_mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(sp_mod)
+    MoonshotSyntheticClient = sp_mod.MoonshotSyntheticClient
 
     client = Mock(spec=MoonshotSyntheticClient)
     client.model = "moonshot-v1-8k"
