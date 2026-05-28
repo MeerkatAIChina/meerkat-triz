@@ -26,13 +26,13 @@
 - [x] **BENCH-06**: (Optional) Spot-check one Layer 1 task (e.g., MMLU-Pro subset) if time permits
 
 ### Training Execution (TRAIN)
-- [ ] **TRAIN-01**: Execute QLoRA fine-tuning end-to-end without manual intervention (Notebook 04)
+- [x] **TRAIN-01**: Execute QLoRA fine-tuning end-to-end without manual intervention (Notebook 04)
 - [x] **TRAIN-02**: Use explicit 12-module `target_modules` list (NOT `"all-linear"`) covering Gated Attention, Gated DeltaNet, and MoE MLP layers
 - [x] **TRAIN-03**: Set `lora_dropout=0.0` for MoE architecture compatibility
-- [ ] **TRAIN-04**: Use `SFTTrainer` with `formatting_func` + `packing=True`; never pass `data_collator`
-- [ ] **TRAIN-05**: Save checkpoints every 200 steps with `save_total_limit=3`
-- [ ] **TRAIN-06**: Execute 2 epochs with learning rate 2e-4, cosine scheduler, 5% warmup
-- [ ] **TRAIN-07**: Use memory-efficient config: 4-bit NF4, gradient checkpointing, paged AdamW 8-bit
+- [x] **TRAIN-04**: Use `SFTTrainer` with `formatting_func` + `packing=True`; never pass `data_collator`
+- [x] **TRAIN-05**: Save checkpoints every 200 steps with `save_total_limit=3`
+- [x] **TRAIN-06**: Execute 2 epochs with learning rate 2e-4, cosine scheduler, 5% warmup
+- [x] **TRAIN-07**: Use memory-efficient config: 4-bit NF4, gradient checkpointing, paged AdamW 8-bit
 - [x] **TRAIN-08**: Save comprehensive adapter metadata alongside LoRA weights
 - [x] **TRAIN-09**: Verify immediate load-and-forward-pass after checkpoint save
 - [x] **TRAIN-10**: Support checkpoint resume with verification (data iterator state, LR scheduler continuity)
@@ -97,11 +97,11 @@
 | BENCH-04 | Phase 2 | Complete |
 | BENCH-05 | Phase 2 | Complete |
 | BENCH-06 | Phase 2 | Complete |
-| TRAIN-01 | Phase 2 | Pending |
-| TRAIN-04 | Phase 2 | Pending |
-| TRAIN-05 | Phase 2 | Pending |
-| TRAIN-06 | Phase 2 | Pending |
-| TRAIN-07 | Phase 2 | Pending |
+| TRAIN-01 | Phase 2 | Complete |
+| TRAIN-04 | Phase 2 | Complete |
+| TRAIN-05 | Phase 2 | Complete |
+| TRAIN-06 | Phase 2 | Complete |
+| TRAIN-07 | Phase 2 | Complete |
 | TRAIN-08 | Phase 2 | Complete |
 | TRAIN-09 | Phase 2 | Complete |
 | TRAIN-10 | Phase 2 | Complete |
