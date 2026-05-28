@@ -328,15 +328,25 @@ class TRIZBenchmark:
         return response
 
 
-def run_triz_evaluation(model, tokenizer, output_dir: str) -> Dict[str, Any]:
+def run_triz_evaluation(
+    model,
+    tokenizer,
+    output_dir: str,
+    test_data_path: Optional[str] = None,
+    max_new_tokens: int = 512,
+    temperature: float = 0.7,
+) -> Dict[str, Any]:
     """
     运行TRIZ定制评测的便捷函数
-    
+
     Args:
         model: 已加载的模型
         tokenizer: 对应的分词器
         output_dir: 结果输出目录
-    
+        test_data_path: 测试数据路径 (可选，用于加载外部评测数据)
+        max_new_tokens: 最大生成token数
+        temperature: 生成温度
+
     Returns:
         TRIZ评测结果
     """
