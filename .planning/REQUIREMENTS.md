@@ -18,12 +18,12 @@
 - [ ] **DATA-05**: Preserve ChatML format conversion via `tokenizer.apply_chat_template()` for all generated samples
 
 ### Baseline Benchmarking (BENCH)
-- [ ] **BENCH-01**: Execute baseline benchmark (Notebook 03) before any training run
-- [ ] **BENCH-02**: Load model in FP16 (not 4-bit) for baseline evaluation to avoid quantization skew
-- [ ] **BENCH-03**: Run Layer 2 TRIZ custom benchmarks (principle accuracy, contradiction resolution, case quality, ARIZ completeness)
-- [ ] **BENCH-04**: Run Layer 3 performance benchmarks (throughput, P50 latency, peak memory)
-- [ ] **BENCH-05**: Persist baseline results to pipeline state registry for automatic post-training comparison
-- [ ] **BENCH-06**: (Optional) Spot-check one Layer 1 task (e.g., MMLU-Pro subset) if time permits
+- [x] **BENCH-01**: Execute baseline benchmark (Notebook 03) before any training run
+- [x] **BENCH-02**: Load model in FP16 (not 4-bit) for baseline evaluation to avoid quantization skew
+- [x] **BENCH-03**: Run Layer 2 TRIZ custom benchmarks (principle accuracy, contradiction resolution, case quality, ARIZ completeness)
+- [x] **BENCH-04**: Run Layer 3 performance benchmarks (throughput, P50 latency, peak memory)
+- [x] **BENCH-05**: Persist baseline results to pipeline state registry for automatic post-training comparison
+- [x] **BENCH-06**: (Optional) Spot-check one Layer 1 task (e.g., MMLU-Pro subset) if time permits
 
 ### Training Execution (TRAIN)
 - [ ] **TRAIN-01**: Execute QLoRA fine-tuning end-to-end without manual intervention (Notebook 04)
@@ -91,12 +91,12 @@
 | INFRA-09 | Phase 1 | Complete |
 | TRAIN-02 | Phase 1 | Complete |
 | TRAIN-03 | Phase 1 | Complete |
-| BENCH-01 | Phase 2 | Pending |
-| BENCH-02 | Phase 2 | Pending |
-| BENCH-03 | Phase 2 | Pending |
-| BENCH-04 | Phase 2 | Pending |
-| BENCH-05 | Phase 2 | Pending |
-| BENCH-06 | Phase 2 | Pending |
+| BENCH-01 | Phase 2 | Complete |
+| BENCH-02 | Phase 2 | Complete |
+| BENCH-03 | Phase 2 | Complete |
+| BENCH-04 | Phase 2 | Complete |
+| BENCH-05 | Phase 2 | Complete |
+| BENCH-06 | Phase 2 | Complete |
 | TRAIN-01 | Phase 2 | Pending |
 | TRAIN-04 | Phase 2 | Pending |
 | TRAIN-05 | Phase 2 | Pending |
