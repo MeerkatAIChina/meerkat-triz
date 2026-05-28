@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple, Any
 from datetime import datetime
 
+import numpy as np
 from openai import OpenAI, RateLimitError, APIError
 
 logging.basicConfig(level=logging.INFO)
@@ -53,6 +54,206 @@ STRATEGY_PROMPTS = {
 对于每个生成的样本，格式如下：
 {"instruction": "问题", "input": "", "output": "回答"}""",
 }
+
+
+# ==================== 质量关卡函数 ====================
+
+def compute_perplexity(
+    text: str,
+    model,
+    tokenizer,
+    device: Optional[str] = None,
+    max_length: int = 2048,
+) -> float:
+    """
+    使用基座模型计算文本的困惑度 (Perplexity)
+
+    Args:
+        text: 输入文本
+        model: 已加载的语言模型 (需要支持 forward + labels)
+        tokenizer: 分词器
+        device: 计算设备 (None则自动选择)
+        max_length: 最大截断长度
+
+    Returns:
+        困惑度值 (越低表示模型对文本越"熟悉")
+    """
+    import torch
+
+    if device is None:
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+
+    try:
+        encodings = tokenizer(
+            text,
+            return_tensors="pt",
+            truncation=True,
+            max_length=max_length,
+        )
+        input_ids = encodings.input_ids.to(device)
+
+        # 将模型移到对应设备
+        model_device = next(model.parameters()).device
+        if str(model_device) != device:
+            model = model.to(device)
+
+        with torch.no_grad():
+            outputs = model(input_ids, labels=input_ids)
+            loss = outputs.loss
+
+        perplexity = torch.exp(loss).item()
+        return perplexity
+
+    except Exception as e:
+        logger.warning(f"困惑度计算失败: {e}")
+        return float("inf")  # 失败时返回无穷大，不过滤
+
+
+def filter_by_perplexity(
+    samples: List[Dict[str, str]],
+    model,
+    tokenizer,
+    percentile: int = 80,
+    device: Optional[str] = None,
+) -> Tuple[List[Dict[str, str]], float]:
+    """
+    按困惑度过滤样本，保留困惑度较低的样本
+
+    Args:
+        samples: 样本列表
+        model: 已加载的语言模型 (可选，为None则跳过)
+        tokenizer: 分词器
+        percentile: 保留的百分位数 (默认80，保留困惑度最低的80%)
+        device: 计算设备
+
+    Returns:
+        (过滤后的样本列表, 困惑度阈值)
+    """
+    if model is None or tokenizer is None:
+        logger.info("困惑度过滤: 模型未加载，跳过")
+        return samples, float("inf")
+
+    logger.info(f"困惑度过滤: 计算 {len(samples)} 个样本的困惑度...")
+
+    perplexities = []
+    for sample in samples:
+        text = f"{sample.get('instruction', '')}\n{sample.get('input', '')}\n{sample.get('output', '')}"
+        ppl = compute_perplexity(text, model, tokenizer, device)
+        perplexities.append(ppl)
+
+    # 计算阈值 (percentile百分位数)
+    threshold = np.percentile(perplexities, percentile)
+
+    filtered = []
+    removed = 0
+    for sample, ppl in zip(samples, perplexities):
+        if ppl <= threshold:
+            sample["_perplexity"] = round(ppl, 2)
+            filtered.append(sample)
+        else:
+            removed += 1
+
+    logger.info(f"困惑度过滤完成: 保留 {len(filtered)}/{len(samples)} 个样本 "
+               f"(阈值={threshold:.2f}, 移除 {removed} 个)")
+    return filtered, threshold
+
+
+def compute_diversity_score(
+    samples: List[Dict[str, str]],
+    n: int = 2,
+    field: str = "instruction",
+) -> float:
+    """
+    计算样本集的n-gram多样性分数 (Distinct-n)
+
+    使用纯文本处理，不需要加载模型。
+    Distinct-n = 唯一n-gram数 / 总n-gram数
+    值域 [0, 1]，越高表示多样性越好。
+
+    Args:
+        samples: 样本列表
+        n: n-gram长度 (1=unigram, 2=bigram)
+        field: 用于计算的字段 (instruction/output)
+
+    Returns:
+        多样性分数 [0, 1]
+    """
+    all_ngrams = []
+    for sample in samples:
+        text = sample.get(field, "")
+        # 简单分词: 按字符和空格分割 (适用于中英文混合)
+        tokens = []
+        for char in text:
+            if char.strip():
+                tokens.append(char)
+        # 生成n-gram
+        ngrams = [tuple(tokens[i:i+n]) for i in range(len(tokens) - n + 1)]
+        all_ngrams.extend(ngrams)
+
+    if not all_ngrams:
+        return 0.0
+
+    return len(set(all_ngrams)) / len(all_ngrams)
+
+
+def filter_by_diversity(
+    samples: List[Dict[str, str]],
+    min_distinct_1: float = 0.3,
+    min_distinct_2: float = 0.15,
+    field: str = "instruction",
+) -> Tuple[List[Dict[str, str]], Dict[str, float]]:
+    """
+    按多样性过滤样本，移除与其他样本过于相似的重复项
+
+    策略: 计算每个子集的distinct-1和distinct-2，如果低于阈值，
+    则按instruction哈希去重，保留第一个出现的样本。
+
+    Args:
+        samples: 样本列表
+        min_distinct_1: 最低unigram多样性阈值
+        min_distinct_2: 最低bigram多样性阈值
+        field: 用于计算的字段
+
+    Returns:
+        (过滤后的样本列表, 多样性统计字典)
+    """
+    if not samples:
+        return [], {"distinct_1": 0.0, "distinct_2": 0.0}
+
+    # 计算整体多样性
+    d1 = compute_diversity_score(samples, n=1, field=field)
+    d2 = compute_diversity_score(samples, n=2, field=field)
+
+    logger.info(f"多样性评分: distinct-1={d1:.3f}, distinct-2={d2:.3f} "
+               f"(阈值: {min_distinct_1}/{min_distinct_2})")
+
+    stats = {"distinct_1": round(d1, 3), "distinct_2": round(d2, 3)}
+
+    # 如果多样性已达标，直接返回
+    if d1 >= min_distinct_1 and d2 >= min_distinct_2:
+        return samples, stats
+
+    # 多样性不足，进行instruction级别的去重
+    logger.warning(f"多样性不足，执行instruction去重...")
+    seen = set()
+    unique = []
+    for s in samples:
+        instr = s.get(field, "").strip()
+        # 简化: 取前30个字符作为指纹
+        fingerprint = instr[:30]
+        if fingerprint not in seen:
+            seen.add(fingerprint)
+            unique.append(s)
+
+    removed = len(samples) - len(unique)
+    if removed > 0:
+        logger.info(f"去重后: {len(unique)}/{len(samples)} 个样本 (移除 {removed} 个重复)")
+        # 重新计算多样性
+        d1 = compute_diversity_score(unique, n=1, field=field)
+        d2 = compute_diversity_score(unique, n=2, field=field)
+        stats = {"distinct_1": round(d1, 3), "distinct_2": round(d2, 3)}
+
+    return unique, stats
 
 
 class MoonshotSyntheticClient:
