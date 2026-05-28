@@ -5,6 +5,9 @@
 
 import torch
 import logging
+import hashlib
+import os
+from datetime import datetime
 from pathlib import Path
 from typing import Optional, Dict, Any, List
 
@@ -12,6 +15,7 @@ from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
     TrainingArguments,
+    TrainerCallback,
 )
 from peft import (
     LoraConfig,
@@ -24,6 +28,68 @@ from trl import SFTTrainer
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+
+class CheckpointValidationCallback(TrainerCallback):
+    """
+    Checkpoint保存验证回调
+    每次保存checkpoint后验证:
+    1. adapter文件存在且非空
+    2. 模型能正常执行前向传播
+    """
+
+    def __init__(self, tokenizer, test_prompt=None):
+        self.tokenizer = tokenizer
+        self.test_prompt = test_prompt or "请解释TRIZ的分割原理及其应用场景。"
+        self.validation_results = []
+
+    def on_save(self, args, state, control, **kwargs):
+        checkpoint_dir = os.path.join(args.output_dir, f"checkpoint-{state.global_step}")
+        result = {
+            "step": state.global_step,
+            "timestamp": datetime.now().isoformat(),
+        }
+
+        # 1. 验证adapter文件存在
+        adapter_file = os.path.join(checkpoint_dir, "adapter_model.safetensors")
+        if not os.path.exists(adapter_file):
+            adapter_file = os.path.join(checkpoint_dir, "adapter_model.bin")
+
+        if not os.path.exists(adapter_file):
+            result["status"] = "FAILED"
+            result["reason"] = "missing_adapter_file"
+            print(f"[CHECKPOINT] FAILED: No adapter file in {checkpoint_dir}")
+            self.validation_results.append(result)
+            return control
+
+        # 2. 验证文件大小
+        size_mb = os.path.getsize(adapter_file) / (1024**2)
+        result["size_mb"] = round(size_mb, 2)
+        if size_mb < 1:
+            result["status"] = "FAILED"
+            result["reason"] = "file_too_small"
+            print(f"[CHECKPOINT] FAILED: Adapter too small ({size_mb:.1f} MB)")
+            self.validation_results.append(result)
+            return control
+
+        # 3. 前向传播验证
+        model = kwargs.get('model')
+        if model:
+            try:
+                device = next(model.parameters()).device
+                inputs = self.tokenizer(self.test_prompt, return_tensors="pt").to(device)
+                with torch.no_grad():
+                    outputs = model(**inputs)
+                result["status"] = "PASSED"
+                result["loss"] = round(outputs.loss.item(), 4)
+                print(f"[CHECKPOINT] PASSED: step={state.global_step}, size={size_mb:.1f}MB, loss={outputs.loss.item():.4f}")
+            except Exception as e:
+                result["status"] = "FAILED"
+                result["reason"] = f"forward_pass_error: {str(e)}"
+                print(f"[CHECKPOINT] FAILED: Forward pass error: {e}")
+
+        self.validation_results.append(result)
+        return control
 
 
 # ==================== 模型与分词器加载 ====================
@@ -504,50 +570,104 @@ def merge_and_save_model(
     return model, tokenizer
 
 
-def save_adapter_only(
-    model,
-    tokenizer,
-    output_path: str,
-):
+def compute_file_sha256(filepath: str) -> str:
+    """计算文件的SHA-256哈希值"""
+    sha256 = hashlib.sha256()
+    with open(filepath, "rb") as f:
+        for chunk in iter(lambda: f.read(8192), b""):
+            sha256.update(chunk)
+    return sha256.hexdigest()
+
+
+def save_adapter_only(model, tokenizer, output_path: str, metadata: Optional[Dict] = None):
     """
     仅保存LoRA适配器（不含基座模型，体积小）
-    
-    适配器大小通常只有100-200MB，便于版本管理和快速加载
-    
+
+    适配器大小通常只有100-200MB，便于版本管理和快速加载。
+    保存的元数据包括: adapter类型、基座模型、时间戳、SHA-256哈希、训练参数等。
+
     Args:
         model: PEFT模型
         tokenizer: 分词器
         output_path: 保存路径
+        metadata: 额外的元数据字典 (如训练步数、最终loss等)
     """
     output_path = Path(output_path)
     output_path.mkdir(parents=True, exist_ok=True)
-    
+
     logger.info(f"保存LoRA适配器到: {output_path}")
     model.save_pretrained(output_path)
     tokenizer.save_pretrained(output_path)
-    
+
+    # 计算SHA-256
+    sha256_hash = None
+    adapter_file = output_path / "adapter_model.safetensors"
+    if adapter_file.exists():
+        sha256_hash = compute_file_sha256(str(adapter_file))
+    else:
+        # 尝试bin格式
+        adapter_bin = output_path / "adapter_model.bin"
+        if adapter_bin.exists():
+            sha256_hash = compute_file_sha256(str(adapter_bin))
+
     # 记录适配器信息
     info = {
         "adapter_type": "LORA",
         "base_model": model.config._name_or_path if hasattr(model, "config") else "unknown",
+        "timestamp": datetime.now().isoformat(),
     }
-    
+    if metadata:
+        info.update(metadata)
+    if sha256_hash:
+        info["sha256"] = sha256_hash
+
     with open(output_path / "adapter_info.json", "w") as f:
         import json
         json.dump(info, f, indent=2)
-    
-    logger.info("适配器保存完成！")
+
+    logger.info(f"适配器保存完成! 元数据: {info}")
 
 
 # ==================== 训练恢复 ====================
 
-def resume_from_checkpoint(trainer, checkpoint_path: str):
+def resume_from_checkpoint(trainer, checkpoint_path: str) -> Dict[str, Any]:
     """
-    从checkpoint恢复训练
-    
+    从checkpoint恢复训练，并验证LR scheduler连续性
+
     Args:
         trainer: SFTTrainer实例
         checkpoint_path: checkpoint目录路径
+
+    Returns:
+        恢复信息字典，包含恢复前后的step和lr
     """
     logger.info(f"从checkpoint恢复训练: {checkpoint_path}")
+
+    # 记录恢复前的状态
+    initial_step = trainer.state.global_step if hasattr(trainer.state, 'global_step') else 0
+    initial_lr = trainer.optimizer.param_groups[0]['lr'] if trainer.optimizer else 0.0
+
+    logger.info(f"恢复前: step={initial_step}, lr={initial_lr:.2e}")
+
+    # 执行恢复
     trainer.train(resume_from_checkpoint=checkpoint_path)
+
+    # 验证恢复后的状态
+    resumed_step = trainer.state.global_step
+    resumed_lr = trainer.optimizer.param_groups[0]['lr'] if trainer.optimizer else 0.0
+
+    logger.info(f"恢复后: step={resumed_step}, lr={resumed_lr:.2e}")
+
+    # 验证step是否增加
+    if resumed_step <= initial_step:
+        logger.warning(f"恢复后step未增加: {initial_step} -> {resumed_step}")
+    else:
+        logger.info(f"恢复成功: step从 {initial_step} 增加到 {resumed_step}")
+
+    return {
+        "initial_step": initial_step,
+        "resumed_step": resumed_step,
+        "initial_lr": initial_lr,
+        "resumed_lr": resumed_lr,
+        "checkpoint_path": checkpoint_path,
+    }
