@@ -40,10 +40,12 @@ Transform a general-purpose 35B-parameter MoE model into a world-class TRIZ inno
 
 **Goal:** Generate synthetic training data, establish baseline, fine-tune Qwen3.6-35B-A3B with QLoRA, and evaluate results.
 
+**Phase 02 complete (2026-05-28):** Training utilities enhanced with checkpoint validation, comprehensive adapter metadata, and verified resume capability. Notebook 03 (baseline benchmark) upgraded to FP16 loading with three-layer benchmarks and pipeline_state persistence. Notebook 04 (QLoRA training) rebuilt as a complete 21-cell self-contained training pipeline with pre-flight checks, CheckpointValidationCallback, and checkpoint resume.
+
 **Target features:**
 - Complete synthetic data generation (~6K samples from 548 seeds)
-- Baseline benchmark (03_model_benchmark.ipynb)
-- QLoRA fine-tuning run (04_qlora_finetune.ipynb)
+- Baseline benchmark (03_model_benchmark.ipynb) — notebook ready, execution on DGX Spark pending
+- QLoRA fine-tuning run (04_qlora_finetune.ipynb) — notebook ready, execution on DGX Spark pending
 - Post-training evaluation (05_model_evaluation.ipynb)
 
 ## Evolution
