@@ -151,24 +151,29 @@ def setup_qlora_config(
     r: int = 64,
     lora_alpha: int = 128,
     target_modules: Optional[list] = None,
-    lora_dropout: float = 0.05,
+    lora_dropout: float = 0.0,  # MoE架构兼容性: dropout可能干扰专家路由稳定性
     use_rslora: bool = False,
 ) -> LoraConfig:
     """
     创建QLoRA配置
-    
+
     支持以下 target_modules 配置方式:
-    - "all-linear": PEFT自动检测所有线性层 (推荐, 最通用)
-    - None: 使用Qwen3.6默认模块列表
+    - None: 使用Qwen3.6显式模块列表 (推荐, 默认)
     - List[str]: 手动指定模块名列表
-    
+    - "all-linear": PEFT自动检测 (不推荐, 已知在混合架构上存在兼容性问题)
+
+    Qwen3.6混合架构模块列表 (12个):
+    - Gated Attention (10/40层): q_proj, k_proj, v_proj, o_proj
+    - Gated DeltaNet (30/40层): in_proj_qkv, in_proj_z, in_proj_b, in_proj_a, out_proj
+    - MoE MLP (全部40层): gate_proj, up_proj, down_proj
+
     Args:
         r: LoRA秩
         lora_alpha: 缩放因子
         target_modules: 目标模块列表或 "all-linear"
-        lora_dropout: Dropout率
+        lora_dropout: Dropout率 (默认0.0, MoE架构兼容性)
         use_rslora: 是否使用rsLoRA（大rank时推荐）
-    
+
     Returns:
         LoraConfig对象
     """
@@ -177,8 +182,8 @@ def setup_qlora_config(
         target_modules = get_qwen36_target_modules()
         logger.info("使用Qwen3.6默认target_modules列表")
     elif target_modules == "all-linear":
-        # PEFT自动检测 (推荐)
-        logger.info("使用'all-linear'自动检测模式 (PEFT>=0.11.0)")
+        # 不推荐: 已知在Qwen3.6混合架构上存在兼容性问题 (可能错误包含lm_head)
+        logger.warning("使用'all-linear'自动检测模式 (不推荐: 已知在混合架构上存在兼容性问题)")
     elif isinstance(target_modules, list):
         # 使用提供的列表
         logger.info(f"使用手动指定的target_modules: {target_modules}")
