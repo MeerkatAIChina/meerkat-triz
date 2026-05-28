@@ -11,7 +11,7 @@
 ## Milestone v1.0 Active Requirements
 
 ### Data Generation (DATA)
-- [ ] **DATA-01**: Generate ~6K synthetic training samples from 548 seed samples using Moonshot API with true semantic variation (not template paraphrasing)
+- [x] **DATA-01**: Generate ~6K synthetic training samples from 548 seed samples using Moonshot API with true semantic variation (not template paraphrasing)
 - [x] **DATA-02**: Implement quality gates for synthetic data: perplexity filtering, diversity scoring, and 20-30% real/human-curated data ratio maintenance
 - [x] **DATA-03**: Add token length profiling in Notebook 02 to catch silent truncation before training
 - [ ] **DATA-04**: Maintain 85/10/5 train/validation/test split across combined real + synthetic data
@@ -46,8 +46,8 @@
 
 ### Infrastructure & Hardening (INFRA)
 - [x] **INFRA-04**: Update `requirements.txt` with pinned compatible versions (`transformers` 4.45+, `trl` 0.9–0.11, `lm-eval` 0.4.10+, `bitsandbytes` 0.43.x, add `rouge-score` and `openai`)
-- [ ] **INFRA-05**: Implement `utils/synthetic_pipeline.py` — Moonshot API client with batching, rate limiting, output validation
-- [ ] **INFRA-06**: Implement `utils/pipeline_state.py` — JSON artifact registry for cross-notebook state tracking
+- [x] **INFRA-05**: Implement `utils/synthetic_pipeline.py` — Moonshot API client with batching, rate limiting, output validation
+- [x] **INFRA-06**: Implement `utils/pipeline_state.py` — JSON artifact registry for cross-notebook state tracking
 - [ ] **INFRA-07**: Create `02b_synthetic_generation.ipynb` orchestrating ~6K sample generation
 - [x] **INFRA-08**: Fix README inaccuracy: replace `"all-linear"` recommendation with explicit module list
 - [x] **INFRA-09**: Add notebook pre-flight checks (paths exist, artifacts present, version compatibility)
@@ -78,14 +78,14 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| DATA-01 | Phase 1 | Pending |
+| DATA-01 | Phase 1 | Complete |
 | DATA-02 | Phase 1 | Complete |
 | DATA-03 | Phase 1 | Complete |
 | DATA-04 | Phase 1 | Pending |
 | DATA-05 | Phase 1 | Pending |
 | INFRA-04 | Phase 1 | Complete |
-| INFRA-05 | Phase 1 | Pending |
-| INFRA-06 | Phase 1 | Pending |
+| INFRA-05 | Phase 1 | Complete |
+| INFRA-06 | Phase 1 | Complete |
 | INFRA-07 | Phase 1 | Pending |
 | INFRA-08 | Phase 1 | Complete |
 | INFRA-09 | Phase 1 | Complete |
