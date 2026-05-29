@@ -22,6 +22,7 @@ lm-eval==0.4.10           # lm-eval-harness基准测试
 evaluate>=0.4.2
 scikit-learn>=1.4.0
 rouge-score==0.1.2        # BLEU/ROUGE质量评分 (新增)
+sacrebleu==2.4.3          # 中文BLEU评分 (标准MT评测)
 
 # 数据处理与科学计算
 numpy>=1.26.0

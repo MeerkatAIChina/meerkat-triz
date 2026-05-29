@@ -239,6 +239,47 @@ def _build_chatml_hardcoded(system: str, question: str, answer: str) -> str:
     )
 
 
+def format_messages(
+    tokenizer,
+    user_content: str,
+    system_message: Optional[str] = None,
+    assistant_content: Optional[str] = None,
+    add_generation_prompt: bool = False,
+) -> str:
+    """
+    Format messages using tokenizer.apply_chat_template().
+
+    Replaces all hardcoded ChatML strings with a single utility that ensures
+    token ID alignment with the model's native chat template.
+
+    Args:
+        tokenizer: Model tokenizer with chat_template support.
+        user_content: The user's question/prompt.
+        system_message: System prompt. If None, uses DATA_CONFIG default.
+        assistant_content: If provided, includes assistant response (for training data).
+        add_generation_prompt: If True, appends assistant start token for inference.
+            If False, returns complete conversation for training data.
+
+    Returns:
+        Formatted chat string.
+    """
+    from config import DATA_CONFIG
+
+    if system_message is None:
+        system_message = DATA_CONFIG['chatml']['system_message']
+
+    messages = [{"role": "system", "content": system_message}]
+    messages.append({"role": "user", "content": user_content})
+    if assistant_content is not None:
+        messages.append({"role": "assistant", "content": assistant_content})
+
+    return tokenizer.apply_chat_template(
+        messages,
+        tokenize=False,
+        add_generation_prompt=add_generation_prompt,
+    )
+
+
 def split_dataset(
     dataset: Dataset,
     train_ratio: float = 0.85,
