@@ -4,6 +4,7 @@
 """
 
 import json
+import os
 import time
 import torch
 import logging
@@ -100,17 +101,57 @@ def print_evaluation_summary(results: Dict[str, Any], tasks: List[str]):
     print("=" * 60 + "\n")
 
 
+def _compute_bleu(predictions: List[str], references: List[str]) -> Dict[str, Any]:
+    """Corpus-level BLEU with Chinese tokenization."""
+    try:
+        from sacrebleu import corpus_bleu
+        bleu = corpus_bleu(predictions, [references], tokenize='zh')
+        return {
+            "bleu": bleu.score,
+            "signature": str(bleu.signature),
+        }
+    except ImportError:
+        logger.warning("sacrebleu 未安装，跳过BLEU评测")
+        return {}
+
+
+def _compute_rouge(predictions: List[str], references: List[str]) -> Dict[str, Any]:
+    """ROUGE-1/2/L with Chinese word segmentation."""
+    try:
+        from rouge_score import rouge_scorer
+        import jieba
+        scorer = rouge_scorer.RougeScorer(
+            ['rouge1', 'rouge2', 'rougeL'],
+            use_stemmer=False,
+        )
+        results = {"rouge1": [], "rouge2": [], "rougeL": []}
+        for pred, ref in zip(predictions, references):
+            pred_seg = ' '.join(jieba.cut(pred.strip()))
+            ref_seg = ' '.join(jieba.cut(ref.strip()))
+            scores = scorer.score(ref_seg, pred_seg)
+            for key in results:
+                results[key].append(scores[key].fmeasure)
+        return {
+            "rouge1": sum(results["rouge1"]) / len(results["rouge1"]) if results["rouge1"] else 0,
+            "rouge2": sum(results["rouge2"]) / len(results["rouge2"]) if results["rouge2"] else 0,
+            "rougeL": sum(results["rougeL"]) / len(results["rougeL"]) if results["rougeL"] else 0,
+        }
+    except ImportError:
+        logger.warning("rouge_score 或 jieba 未安装，跳过ROUGE评测")
+        return {}
+
+
 # ==================== Layer 2: TRIZ定制评测 ====================
 
 class TRIZBenchmark:
     """TRIZ领域定制评测器"""
     
-    def __init__(self, model, tokenizer, device="cuda"):
+    def __init__(self, model, tokenizer, device="cuda", test_data_path=None):
         self.model = model
         self.tokenizer = tokenizer
         self.device = device
         self.model.eval()
-        
+
         # 40个发明原理列表
         self.principles = [
             "Segmentation", "Taking out", "Local quality", "Asymmetry",
@@ -126,13 +167,13 @@ class TRIZBenchmark:
             "Discarding and recovering", "Parameter changes", "Phase transitions",
             "Thermal expansion", "Strong oxidants", "Inert atmosphere", "Composite materials"
         ]
-        
+
         # 评测数据集（示例问题）
-        self.test_questions = self._load_test_questions()
-    
-    def _load_test_questions(self) -> List[Dict]:
+        self.test_questions = self._load_test_questions(test_data_path)
+
+    def _load_test_questions(self, test_data_path=None) -> List[Dict]:
         """加载TRIZ评测问题集"""
-        return [
+        questions = [
             {
                 "category": "principle_identification",
                 "question": "一个系统需要在不改变整体结构的情况下增加功能模块，应该使用哪个发明原理？",
@@ -164,7 +205,25 @@ class TRIZBenchmark:
                 "type": "generation"
             },
         ]
-    
+
+        if test_data_path and os.path.exists(test_data_path):
+            try:
+                with open(test_data_path, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                case_data = data.get("case_generation", [])
+                for sample in case_data[:5]:
+                    questions.append({
+                        "category": "case_generation",
+                        "question": sample.get("instruction", ""),
+                        "reference": sample.get("output", ""),
+                        "expected_keywords": ["principle", "solution", "innovation"],
+                        "type": "generation"
+                    })
+            except Exception as e:
+                logger.warning(f"加载测试数据失败: {e}")
+
+        return questions
+
     def evaluate_principle_accuracy(self) -> Dict[str, float]:
         """评测40个发明原理识别准确率"""
         logger.info("评测: 发明原理识别准确率")
@@ -218,35 +277,44 @@ class TRIZBenchmark:
     def evaluate_case_quality(self) -> Dict[str, Any]:
         """评测创新案例生成质量 (使用BLEU/ROUGE)"""
         logger.info("评测: 案例生成质量")
-        
-        try:
-            from rouge_score import rouge_scorer
-            scorer = rouge_scorer.RougeScorer(['rouge1', 'rouge2', 'rougeL'], use_stemmer=True)
-        except ImportError:
-            logger.warning("rouge_score 未安装，跳过ROUGE评测")
-            scorer = None
-        
-        rouge_scores = []
-        
+
+        predictions = []
+        references = []
+        coverage_scores = []
+
         for q in self.test_questions:
             if q["type"] == "generation":
                 prompt = self._build_prompt(q["question"])
                 response = self._generate_response(prompt)
-                
-                # 简单的关键词匹配作为质量指标
+                predictions.append(response)
+
+                ref = q.get("reference", "")
+                if ref:
+                    references.append(ref)
+
                 keywords = q.get("expected_keywords", [])
                 matched = sum(1 for kw in keywords if kw.lower() in response.lower())
                 coverage = matched / len(keywords) if keywords else 0
-                
-                rouge_scores.append({
+                coverage_scores.append({
                     "coverage": coverage,
                     "response_length": len(response),
                 })
-        
-        avg_coverage = sum(s["coverage"] for s in rouge_scores) / len(rouge_scores) if rouge_scores else 0
+
+        avg_coverage = sum(s["coverage"] for s in coverage_scores) / len(coverage_scores) if coverage_scores else 0
+
+        bleu_result = {}
+        rouge_result = {}
+        if predictions and references and len(predictions) == len(references):
+            bleu_result = _compute_bleu(predictions, references)
+            rouge_result = _compute_rouge(predictions, references)
+        else:
+            logger.warning("参考文本不足，跳过BLEU/ROUGE计算")
+
         return {
             "average_coverage": avg_coverage,
-            "details": rouge_scores
+            "bleu": bleu_result,
+            "rouge": rouge_result,
+            "details": coverage_scores,
         }
     
     def evaluate_ariz_completeness(self) -> Dict[str, float]:
@@ -301,12 +369,13 @@ class TRIZBenchmark:
         return results
     
     def _build_prompt(self, question: str) -> str:
-        """构建评测prompt"""
-        system_msg = (
-            "You are TRIZ-Expert, a specialized AI for TRIZ (Theory of Inventive Problem Solving). "
-            "Answer the following question with professional TRIZ knowledge."
+        """构建评测prompt (使用format_messages统一ChatML格式)"""
+        from utils.data_utils import format_messages
+        return format_messages(
+            self.tokenizer,
+            user_content=question,
+            add_generation_prompt=True,
         )
-        return f"<|im_start|>system\n{system_msg}<|im_end|>\n<|im_start|>user\n{question}<|im_end|>\n<|im_start|>assistant\n"
     
     def _generate_response(self, prompt: str, max_new_tokens: int = 512) -> str:
         """生成模型回复"""
@@ -350,7 +419,7 @@ def run_triz_evaluation(
     Returns:
         TRIZ评测结果
     """
-    benchmark = TRIZBenchmark(model, tokenizer)
+    benchmark = TRIZBenchmark(model, tokenizer, test_data_path=test_data_path)
     results = benchmark.run_all_evaluations()
     
     # 保存结果
@@ -487,51 +556,137 @@ def run_performance_benchmark(
 
 # ==================== 结果聚合 ====================
 
+def _compute_deltas(before: Dict, after: Dict) -> Dict[str, Any]:
+    """计算before/after的差值和百分比变化"""
+    result = {}
+    for key in set(before.keys()) | set(after.keys()):
+        b_val = before.get(key)
+        a_val = after.get(key)
+        if isinstance(b_val, (int, float)) and isinstance(a_val, (int, float)):
+            delta = a_val - b_val
+            delta_pct = (delta / b_val * 100) if b_val != 0 else 0.0
+            result[key] = {
+                "before": round(b_val, 4),
+                "after": round(a_val, 4),
+                "delta": round(delta, 4),
+                "delta_pct": round(delta_pct, 2),
+            }
+        elif isinstance(b_val, dict) and isinstance(a_val, dict):
+            result[key] = _compute_deltas(b_val, a_val)
+        else:
+            result[key] = {"before": b_val, "after": a_val}
+    return result
+
+
 def aggregate_results(
     general_results: Optional[Dict] = None,
     triz_results: Optional[Dict] = None,
     perf_results: Optional[Dict] = None,
-    output_dir: str = "./results"
+    before_results: Optional[Dict] = None,
+    after_results: Optional[Dict] = None,
+    output_dir: str = "./results",
+    model_info: Optional[Dict] = None,
 ) -> Dict[str, Any]:
     """
-    聚合三层评测结果为综合报告
-    
+    聚合三层评测结果为综合报告，支持before/after对比
+
+    Args:
+        general_results: Layer 1 通用能力评测结果 (单轮运行时)
+        triz_results: Layer 2 TRIZ评测结果 (单轮运行时)
+        perf_results: Layer 3 性能评测结果 (单轮运行时)
+        before_results: 基线结果字典，包含 layer2_triz 和 layer3_performance
+        after_results: 微调后结果字典，包含 layer2_triz 和 layer3_performance
+        output_dir: 报告输出目录
+        model_info: 模型信息字典 (base_model, adapter_path等)
+
     Returns:
-        综合评测报告
+        综合评测报告字典
     """
     report = {
         "timestamp": datetime.now().isoformat(),
+        "model_info": model_info or {},
         "summary": {},
-        "layer1_general": general_results or {},
-        "layer2_triz": triz_results or {},
-        "layer3_performance": perf_results or {},
     }
-    
+
+    # Layer 1: 从基线加载 (不重新运行)
+    if before_results or after_results:
+        report["layer1_general"] = {
+            "source": "pipeline_state",
+            "metrics": general_results or {},
+        }
+    else:
+        report["layer1_general"] = {
+            "source": "single_run",
+            "metrics": general_results or {},
+        }
+
+    # Layer 2: TRIZ定制评测
+    if before_results and after_results:
+        report["layer2_triz"] = {
+            "source": "re-run_on_both_models",
+            "metrics": _compute_deltas(
+                before_results.get("layer2_triz", {}),
+                after_results.get("layer2_triz", {}),
+            ),
+        }
+    elif triz_results:
+        report["layer2_triz"] = {
+            "source": "single_run",
+            "metrics": triz_results,
+        }
+    else:
+        report["layer2_triz"] = {"source": "not_run", "metrics": {}}
+
+    # Layer 3: 性能评测
+    if before_results and after_results:
+        report["layer3_performance"] = {
+            "source": "re-run_on_both_models",
+            "metrics": _compute_deltas(
+                before_results.get("layer3_performance", {}),
+                after_results.get("layer3_performance", {}),
+            ),
+        }
+    elif perf_results:
+        report["layer3_performance"] = {
+            "source": "single_run",
+            "metrics": perf_results,
+        }
+    else:
+        report["layer3_performance"] = {"source": "not_run", "metrics": {}}
+
     # 计算综合评分
     scores = []
-    
-    if triz_results:
-        triz_score = triz_results.get("overall_score", 0) * 100
+    triz_metrics = report["layer2_triz"].get("metrics", {})
+    if triz_metrics:
+        overall = triz_metrics.get("overall_score", {})
+        if isinstance(overall, dict):
+            triz_score = overall.get("after", overall.get("value", 0))
+        else:
+            triz_score = overall
+        triz_score = triz_score * 100 if triz_score <= 1 else triz_score
         scores.append(triz_score)
         report["summary"]["triz_score"] = f"{triz_score:.1f}/100"
-    
-    if perf_results:
-        # 性能评分 (吞吐量为主要指标)
-        throughput = perf_results.get("throughput_tokens_per_sec", 0)
-        perf_score = min(throughput / 2, 100)  # 100 tokens/s = 100分
+
+    perf_metrics = report["layer3_performance"].get("metrics", {})
+    if perf_metrics:
+        throughput = perf_metrics.get("throughput_tokens_per_sec", {})
+        if isinstance(throughput, dict):
+            throughput_val = throughput.get("after", throughput.get("value", 0))
+        else:
+            throughput_val = throughput
+        perf_score = min(throughput_val / 2, 100)
         scores.append(perf_score)
         report["summary"]["performance_score"] = f"{perf_score:.1f}/100"
-    
+
     if scores:
         report["summary"]["overall_score"] = f"{sum(scores)/len(scores):.1f}/100"
-    
+
     # 保存报告
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
-    
-    report_file = output_path / f"comprehensive_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+    report_file = output_path / f"evaluation_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
     with open(report_file, "w", encoding="utf-8") as f:
         json.dump(report, f, ensure_ascii=False, indent=2)
-    
+
     logger.info(f"综合报告已保存: {report_file}")
     return report
