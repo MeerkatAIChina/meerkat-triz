@@ -62,7 +62,11 @@ This roadmap delivers the v1.0 milestone: a complete end-to-end QLoRA fine-tunin
   4. Adapter loads correctly via `AutoPeftModelForCausalLM` for evaluation inference
   5. TRIZ case quality scoring computes BLEU/ROUGE metrics for generated cases
   6. (Optional) One Layer 1 task spot-check runs if time permits
-**Plans**: TBD
+**Plans**: 4 plans in 3 waves
+  - [ ] `03-01-PLAN.md` -- format_messages Utility + sacrebleu dependency
+  - [ ] `03-02-PLAN.md` -- Benchmark Utils Hardening: unified prompts, BLEU/ROUGE, before/after report
+  - [ ] `03-03-PLAN.md` -- Notebook 05 Evaluation Orchestration: pre-flight, adapter/base eval, comparison report
+  - [ ] `03-04-PLAN.md` -- Test Suite: format_messages, metrics, report structure
 
 ## Progress
 
@@ -73,4 +77,4 @@ Phases execute in numeric order: 1 -> 2 -> 3
 |-------|----------------|--------|-----------|
 | 1. Foundation & Data Pipeline | 7/7 | Complete | 2026-05-28 |
 | 2. Baseline & Training Execution | 0/3 | Planned | - |
-| 3. Evaluation & Hardening | 0/TBD | Not started | - |
+| 3. Evaluation & Hardening | 0/4 | Planned | - |
