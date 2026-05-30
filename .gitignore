@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.class
+*.so
+.Python
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Generated data
+data/processed/
+data/raw/
+results/
+checkpoints/
+*.json
+!sample_data.json
+
+# Models
+models/
+*.safetensors
+*.bin
+*.pt
+*.pth
+
+# Environment
+venv/
+env/
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project specific
+mai/
