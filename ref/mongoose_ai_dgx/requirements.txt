@@ -9,7 +9,7 @@ torchaudio>=2.4.0
 # 大模型微调与推理 (锁定关键版本以确保兼容性)
 transformers==4.45.0      # Qwen3.6需要4.45+
 peft==0.12.0              # LoRA配置
-bitsandbytes==0.43.3      # 4-bit量化
+bitsandbytes>=0.42.0      # 4-bit量化 (ARM64兼容: 0.43.3无ARM64 wheel)
 accelerate==0.33.0        # 设备映射与混合精度
 
 # 训练与数据处理
