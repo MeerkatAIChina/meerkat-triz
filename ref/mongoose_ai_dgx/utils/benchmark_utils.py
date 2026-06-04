@@ -67,7 +67,6 @@ def run_lm_evaluation(
         batch_size=batch_size,
         device=device,
         write_out=True,
-        output_path=str(output_path),
     )
     
     # 保存结果
