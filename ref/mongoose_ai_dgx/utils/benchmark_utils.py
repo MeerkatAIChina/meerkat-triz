@@ -58,46 +58,58 @@ def run_lm_evaluation(
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
 
-    if model is not None:
-        # 复用已加载的模型，避免重复加载导致OOM
-        logger.info("复用已加载的模型进行lm-eval评测")
-        lm = HFLM(
-            pretrained=model,
-            tokenizer=tokenizer,
-            batch_size=batch_size,
-        )
-        results = simple_evaluate(
-            model=lm,
-            tasks=tasks,
-            num_fewshot=num_fewshot,
-            batch_size=batch_size,
-            write_out=True,
-        )
-    else:
-        # 从路径加载模型 (会额外占用内存)
-        logger.warning("未传入已加载模型，lm-eval将独立加载模型")
-        model_args = f"pretrained={model_path},dtype=float16,device={device}"
-        results = simple_evaluate(
-            model="hf",
-            model_args=model_args,
-            tasks=tasks,
-            num_fewshot=num_fewshot,
-            batch_size=batch_size,
-            write_out=True,
-        )
-    
+    # 逐任务运行，跳过需要认证的gated数据集
+    all_results = {"results": {}, "configs": {}, "versions": {}}
+    failed_tasks = []
+
+    for task in tasks:
+        try:
+            if model is not None:
+                lm = HFLM(
+                    pretrained=model,
+                    tokenizer=tokenizer,
+                    batch_size=batch_size,
+                )
+                task_results = simple_evaluate(
+                    model=lm,
+                    tasks=[task],
+                    num_fewshot=num_fewshot,
+                    batch_size=batch_size,
+                    write_out=True,
+                )
+            else:
+                model_args = f"pretrained={model_path},dtype=float16,device={device}"
+                task_results = simple_evaluate(
+                    model="hf",
+                    model_args=model_args,
+                    tasks=[task],
+                    num_fewshot=num_fewshot,
+                    batch_size=batch_size,
+                    write_out=True,
+                )
+            all_results["results"].update(task_results.get("results", {}))
+            all_results["configs"].update(task_results.get("configs", {}))
+            all_results["versions"].update(task_results.get("versions", {}))
+        except Exception as e:
+            logger.warning(f"任务 '{task}' 评测失败: {e}")
+            failed_tasks.append(task)
+
+    if failed_tasks:
+        logger.warning(f"以下任务被跳过 (gated/网络错误): {failed_tasks}")
+
     # 保存结果
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     result_file = output_path / f"lm_eval_results_{timestamp}.json"
     with open(result_file, "w", encoding="utf-8") as f:
-        json.dump(results, f, ensure_ascii=False, indent=2)
-    
+        json.dump(all_results, f, ensure_ascii=False, indent=2)
+
     logger.info(f"评测结果已保存: {result_file}")
-    
-    # 打印关键指标摘要
-    print_evaluation_summary(results, tasks)
-    
-    return results
+
+    # 打印关键指标摘要 (只打印成功运行的)
+    successful_tasks = [t for t in tasks if t not in failed_tasks]
+    print_evaluation_summary(all_results, successful_tasks)
+
+    return all_results
 
 
 def print_evaluation_summary(results: Dict[str, Any], tasks: List[str]):
