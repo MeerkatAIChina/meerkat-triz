@@ -24,11 +24,13 @@ def run_lm_evaluation(
     output_dir: str,
     num_fewshot: Optional[int] = None,
     batch_size: int = 1,
-    device: str = "cuda"
+    device: str = "cuda",
+    model=None,
+    tokenizer=None,
 ) -> Dict[str, Any]:
     """
     使用 lm-eval-harness 运行通用能力评测
-    
+
     Args:
         model_path: 模型路径或HuggingFace ID
         tasks: 评测任务列表，如 ["mmlu_pro", "gpqa", "humaneval", "math", "bbh"]
@@ -36,38 +38,53 @@ def run_lm_evaluation(
         num_fewshot: few-shot样本数
         batch_size: 批大小
         device: 运行设备
-    
+        model: 已加载的模型对象 (可选，传入则避免重新加载)
+        tokenizer: 已加载的分词器对象 (与 model 一起使用)
+
     Returns:
         评测结果字典
     """
     try:
-        import lm_eval
         from lm_eval import simple_evaluate
         from lm_eval.models.huggingface import HFLM
     except ImportError:
         logger.error("lm-eval 未安装，请先运行: pip install lm-eval>=0.4.3")
         raise
-    
+
     logger.info(f"开始通用能力评测: {tasks}")
     logger.info(f"模型: {model_path}")
-    
+
     # 创建输出目录
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
-    
-    # 配置模型
-    model_args = f"pretrained={model_path},dtype=float16,device={device}"
-    
-    # 运行评测
-    results = simple_evaluate(
-        model="hf",
-        model_args=model_args,
-        tasks=tasks,
-        num_fewshot=num_fewshot,
-        batch_size=batch_size,
-        device=device,
-        write_out=True,
-    )
+
+    if model is not None:
+        # 复用已加载的模型，避免重复加载导致OOM
+        logger.info("复用已加载的模型进行lm-eval评测")
+        lm = HFLM(
+            pretrained=model,
+            tokenizer=tokenizer,
+            batch_size=batch_size,
+        )
+        results = simple_evaluate(
+            model=lm,
+            tasks=tasks,
+            num_fewshot=num_fewshot,
+            batch_size=batch_size,
+            write_out=True,
+        )
+    else:
+        # 从路径加载模型 (会额外占用内存)
+        logger.warning("未传入已加载模型，lm-eval将独立加载模型")
+        model_args = f"pretrained={model_path},dtype=float16,device={device}"
+        results = simple_evaluate(
+            model="hf",
+            model_args=model_args,
+            tasks=tasks,
+            num_fewshot=num_fewshot,
+            batch_size=batch_size,
+            write_out=True,
+        )
     
     # 保存结果
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
