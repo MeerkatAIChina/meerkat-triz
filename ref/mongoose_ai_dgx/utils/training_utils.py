@@ -134,19 +134,23 @@ def load_model_and_tokenizer(
         "pretrained_model_name_or_path": model_name_or_path,
         "trust_remote_code": trust_remote_code,
         "device_map": device_map,
-        "torch_dtype": torch.float16,
     }
-    
+
     # 添加量化配置
     if quantization_config and quantization_config.get("load_in_4bit"):
         try:
             from transformers import BitsAndBytesConfig
             bnb_config = BitsAndBytesConfig(**quantization_config)
             model_kwargs["quantization_config"] = bnb_config
+            # 使用4-bit时不能传torch_dtype=float16，否则先加载FP16再量化，内存翻倍
             logger.info("启用4-bit量化 (NF4)")
         except ImportError:
             logger.warning("bitsandbytes未安装，跳过量化")
-    
+            model_kwargs["torch_dtype"] = torch.float16
+    else:
+        # 无量化时使用FP16
+        model_kwargs["torch_dtype"] = torch.float16
+
     # 加载模型
     model = AutoModelForCausalLM.from_pretrained(**model_kwargs)
     
