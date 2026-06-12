@@ -1,6 +1,8 @@
 """
 训练工具函数集
 支持：模型加载、QLoRA配置、训练参数设置、Trainer创建、模型合并与保存
+
+兼容性: Transformers v5 + TRL v1.x + PEFT v0.18
 """
 
 import torch
@@ -99,36 +101,40 @@ def load_model_and_tokenizer(
     quantization_config: Optional[Dict] = None,
     device_map: str = "auto",
     trust_remote_code: bool = True,
+    max_memory: Optional[Dict] = None,
 ) -> tuple:
     """
     加载模型和分词器，支持4-bit量化
-    
+
     Args:
         model_name_or_path: 模型路径或HuggingFace ID
         quantization_config: 量化配置字典
-        device_map: 设备映射策略
+        device_map: 设备映射策略 ("auto", "cuda:0", None, 等)
         trust_remote_code: 是否信任远程代码
-    
+        max_memory: 每设备最大内存限制，例如 {0: "110GiB"}
+                    在DGX Spark统一内存上，4-bit量化时需显式设置以避免
+                    accelerate错误地将层分配到CPU
+
     Returns:
         (model, tokenizer) 元组
     """
     logger.info(f"加载模型: {model_name_or_path}")
     logger.info(f"设备映射: {device_map}")
-    
+
     # 加载分词器
     tokenizer = AutoTokenizer.from_pretrained(
         model_name_or_path,
         trust_remote_code=trust_remote_code,
-        padding_side="right",  # 左填充更适合生成
+        padding_side="right",
     )
-    
+
     # 设置填充token
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
         tokenizer.pad_token_id = tokenizer.eos_token_id
-    
+
     logger.info(f"分词器词汇表大小: {len(tokenizer)}")
-    
+
     # 构建模型加载参数
     model_kwargs = {
         "pretrained_model_name_or_path": model_name_or_path,
@@ -142,24 +148,34 @@ def load_model_and_tokenizer(
             from transformers import BitsAndBytesConfig
             bnb_config = BitsAndBytesConfig(**quantization_config)
             model_kwargs["quantization_config"] = bnb_config
-            # 使用4-bit时不能传torch_dtype=float16，否则先加载FP16再量化，内存翻倍
             logger.info("启用4-bit量化 (NF4)")
         except ImportError:
             logger.warning("bitsandbytes未安装，跳过量化")
             model_kwargs["torch_dtype"] = torch.float16
     else:
-        # 无量化时使用FP16
         model_kwargs["torch_dtype"] = torch.float16
+
+    # DGX Spark统一内存: 4-bit量化 + device_map="auto"时，
+    # accelerate可能错误地将层分配到CPU。显式设置max_memory避免此问题。
+    is_quantized = quantization_config and quantization_config.get("load_in_4bit")
+    if device_map == "auto" and is_quantized and max_memory is None:
+        if torch.cuda.is_available():
+            total_mem_gb = torch.cuda.get_device_properties(0).total_memory / (1024**3)
+            if total_mem_gb > 100:
+                max_memory = {0: "110GiB"}
+                logger.info(f"检测到统一内存环境 ({total_mem_gb:.0f}GB)，设置max_memory={max_memory}")
+    if max_memory is not None:
+        model_kwargs["max_memory"] = max_memory
 
     # 加载模型
     model = AutoModelForCausalLM.from_pretrained(**model_kwargs)
-    
+
     # 启用梯度检查点（节省内存）
     model.gradient_checkpointing_enable()
-    
+
     logger.info(f"模型加载完成")
     logger.info(f"模型参数总量: {sum(p.numel() for p in model.parameters()) / 1e9:.2f}B")
-    
+
     return model, tokenizer
 
 
@@ -168,49 +184,40 @@ def load_model_and_tokenizer(
 def find_all_linear_names(model) -> List[str]:
     """
     自动检测模型中所有可用于LoRA的线性层名称
-    
+
     适用于任意架构（包括Qwen3.6的Gated DeltaNet混合架构）
-    
+
     Args:
         model: 已加载的模型
-    
+
     Returns:
         线性层名称列表（去重，排除lm_head和embed_tokens）
     """
     import bitsandbytes as bnb
     import torch.nn as nn
-    
+
     linear_classes = (nn.Linear, bnb.nn.Linear4bit, bnb.nn.Linear8bitLt)
     target_modules = set()
-    
+
     for name, module in model.named_modules():
         if isinstance(module, linear_classes):
-            # 提取最后一级模块名
             module_name = name.split(".")[-1]
-            # 排除不需要的层
             if module_name not in ["lm_head", "embed_tokens", "embed_in", "embed_out"]:
                 target_modules.add(module_name)
-    
+
     return sorted(list(target_modules))
 
 
 def get_qwen36_target_modules() -> List[str]:
     """
     返回Qwen3.6混合架构推荐的target_modules列表
-    
+
     Qwen3.6架构: 10 x (3 x Gated DeltaNet -> MoE + 1 x Gated Attention -> MoE)
     共40层: 30层GDN + 10层GA
-    
-    Gated Attention层模块: q_proj, k_proj, v_proj, o_proj
-    Gated DeltaNet层模块: in_proj_qkv, in_proj_z, in_proj_b, in_proj_a, out_proj
-    MoE MLP层模块: gate_proj, up_proj, down_proj (或 linear_fc1/linear_fc2)
     """
     return [
-        # Gated Attention 层 (10/40层)
         "q_proj", "k_proj", "v_proj", "o_proj",
-        # Gated DeltaNet 层 (30/40层)
         "in_proj_qkv", "in_proj_z", "in_proj_b", "in_proj_a", "out_proj",
-        # MoE MLP 层 (全部40层)
         "gate_proj", "up_proj", "down_proj",
     ]
 
@@ -221,7 +228,7 @@ def setup_qlora_config(
     r: int = 64,
     lora_alpha: int = 128,
     target_modules: Optional[list] = None,
-    lora_dropout: float = 0.0,  # MoE架构兼容性: dropout可能干扰专家路由稳定性
+    lora_dropout: float = 0.0,
     use_rslora: bool = False,
 ) -> LoraConfig:
     """
@@ -231,39 +238,20 @@ def setup_qlora_config(
     - None: 使用Qwen3.6显式模块列表 (推荐, 默认)
     - List[str]: 手动指定模块名列表
     - "all-linear": PEFT自动检测 (不推荐, 已知在混合架构上存在兼容性问题)
-
-    Qwen3.6混合架构模块列表 (12个):
-    - Gated Attention (10/40层): q_proj, k_proj, v_proj, o_proj
-    - Gated DeltaNet (30/40层): in_proj_qkv, in_proj_z, in_proj_b, in_proj_a, out_proj
-    - MoE MLP (全部40层): gate_proj, up_proj, down_proj
-
-    Args:
-        r: LoRA秩
-        lora_alpha: 缩放因子
-        target_modules: 目标模块列表或 "all-linear"
-        lora_dropout: Dropout率 (默认0.0, MoE架构兼容性)
-        use_rslora: 是否使用rsLoRA（大rank时推荐）
-
-    Returns:
-        LoraConfig对象
     """
     if target_modules is None:
-        # 默认使用Qwen3.6推荐模块列表
         target_modules = get_qwen36_target_modules()
         logger.info("使用Qwen3.6默认target_modules列表")
     elif target_modules == "all-linear":
-        # 不推荐: 已知在Qwen3.6混合架构上存在兼容性问题 (可能错误包含lm_head)
         logger.warning("使用'all-linear'自动检测模式 (不推荐: 已知在混合架构上存在兼容性问题)")
     elif isinstance(target_modules, list):
-        # 使用提供的列表
         logger.info(f"使用手动指定的target_modules: {target_modules}")
     else:
         raise ValueError(f"不支持的target_modules类型: {type(target_modules)}")
-    
-    # 大rank时建议使用rsLoRA
+
     if isinstance(r, int) and r > 64 and not use_rslora:
         logger.warning(f"rank={r} > 64，建议开启use_rslora=True以稳定训练")
-    
+
     lora_config = LoraConfig(
         r=r,
         lora_alpha=lora_alpha,
@@ -273,43 +261,43 @@ def setup_qlora_config(
         task_type=TaskType.CAUSAL_LM,
         use_rslora=use_rslora,
     )
-    
+
     logger.info(f"LoRA配置: rank={r}, alpha={lora_alpha}, target_modules={len(target_modules)}个")
     logger.info(f"目标模块: {target_modules}")
-    
+
     return lora_config
 
 
 def prepare_qlora_model(model, lora_config: LoraConfig) -> Any:
     """
     为QLoRA训练准备模型
-    
+
     步骤：
     1. 准备4-bit模型（梯度检查点、输入嵌入层启用梯度）
     2. 应用LoRA配置
-    
+
     Args:
         model: 已加载的模型
         lora_config: LoRA配置
-    
+
     Returns:
         配置好的PEFT模型
     """
     logger.info("准备QLoRA模型...")
-    
+
     # 准备4-bit模型用于训练
     model = prepare_model_for_kbit_training(model)
-    
+
     # 应用LoRA配置
     model = get_peft_model(model, lora_config)
-    
+
     # 打印可训练参数信息
     model.print_trainable_parameters()
-    
+
     trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
     total_params = sum(p.numel() for p in model.parameters())
     logger.info(f"可训练参数: {trainable_params:,} / {total_params:,} ({100*trainable_params/total_params:.4f}%)")
-    
+
     return model
 
 
@@ -329,81 +317,54 @@ def setup_training_arguments(
 ) -> TrainingArguments:
     """
     创建训练参数
-    
+
     DGX Spark推荐配置：
     - batch_size=1 (内存限制)
     - gradient_accumulation_steps=8 (有效batch=8)
     - fp16=True (DGX Spark支持FP16)
     - optim=paged_adamw_8bit (分页优化器省内存)
-    
-    Args:
-        output_dir: 输出目录
-        num_train_epochs: 训练轮数
-        per_device_batch_size: 每设备batch大小
-        gradient_accumulation_steps: 梯度累积步数
-        learning_rate: 学习率
-        warmup_ratio: warmup比例
-        save_steps: 保存步数
-        eval_steps: 评估步数
-        logging_steps: 日志步数
-        **kwargs: 其他参数
-    
-    Returns:
-        TrainingArguments对象
+
+    兼容性说明 (Transformers v5):
+    - 通过字典合并kwargs，避免硬编码参数与kwargs冲突
+    - 调用方负责传入v5兼容的参数名 (如 eval_strategy 替代 evaluation_strategy)
     """
-    training_args = TrainingArguments(
-        output_dir=output_dir,
-        
-        # 训练轮数与batch
-        num_train_epochs=num_train_epochs,
-        per_device_train_batch_size=per_device_batch_size,
-        per_device_eval_batch_size=per_device_batch_size,
-        gradient_accumulation_steps=gradient_accumulation_steps,
-        
-        # 学习率调度
-        learning_rate=learning_rate,
-        warmup_ratio=warmup_ratio,
-        lr_scheduler_type="cosine",
-        
-        # 日志与保存
-        logging_steps=logging_steps,
-        save_steps=save_steps,
-        eval_steps=eval_steps,
-        save_total_limit=3,
-        load_best_model_at_end=True,
-        metric_for_best_model="eval_loss",
-        greater_is_better=False,
-        
-        # 评估策略
-        evaluation_strategy="steps",
-        save_strategy="steps",
-        logging_strategy="steps",
-        
-        # 精度设置 (DGX Spark)
-        fp16=True,
-        bf16=False,  # DGX Spark可能不支持bf16
-        
-        # 优化器
-        optim="paged_adamw_8bit",
-        
-        # 其他
-        group_by_length=True,
-        report_to="tensorboard",
-        remove_unused_columns=False,
-        **kwargs
-    )
-    
+    args_dict = {
+        "output_dir": output_dir,
+        "num_train_epochs": num_train_epochs,
+        "per_device_train_batch_size": per_device_batch_size,
+        "per_device_eval_batch_size": per_device_batch_size,
+        "gradient_accumulation_steps": gradient_accumulation_steps,
+        "learning_rate": learning_rate,
+        "warmup_ratio": warmup_ratio,
+        "lr_scheduler_type": "cosine",
+        "logging_steps": logging_steps,
+        "save_steps": save_steps,
+        "eval_steps": eval_steps,
+        "save_strategy": "steps",
+        "eval_strategy": "steps",
+        "logging_strategy": "steps",
+        "fp16": True,
+        "bf16": False,
+        "optim": "paged_adamw_8bit",
+        "remove_unused_columns": False,
+    }
+
+    # 合并kwargs（kwargs优先级更高，可覆盖默认值）
+    args_dict.update(kwargs)
+
+    training_args = TrainingArguments(**args_dict)
+
     logger.info(f"训练参数配置完成:")
     logger.info(f"  输出目录: {output_dir}")
     logger.info(f"  训练轮数: {num_train_epochs}")
     logger.info(f"  有效batch_size: {per_device_batch_size * gradient_accumulation_steps}")
     logger.info(f"  学习率: {learning_rate}")
     logger.info(f"  优化器: paged_adamw_8bit")
-    
+
     return training_args
 
 
-# ==================== Trainer创建 ====================
+# ==================== Trainer创建 (兼容 TRL v1.x) ====================
 
 def create_trainer(
     model,
@@ -423,18 +384,9 @@ def create_trainer(
     - SFTTrainer内部自动只计算assistant回复部分的loss
     - 不传入data_collator，避免与SFTTrainer内置逻辑冲突
 
-    Args:
-        model: PEFT模型
-        tokenizer: 分词器 (需支持apply_chat_template)
-        train_dataset: 训练数据集 (需包含instruction, output字段)
-        eval_dataset: 验证数据集
-        training_args: 训练参数
-        system_message: 系统提示词 (None则使用数据集中的system字段)
-        max_seq_length: 最大序列长度
-        packing: 是否启用序列打包
-
-    Returns:
-        SFTTrainer实例
+    兼容性说明 (TRL v1.x):
+    - 使用 processing_class 替代 tokenizer
+    - 移除 max_seq_length 和 packing 参数 (v1.x 不支持)
     """
     logger.info("创建SFTTrainer...")
 
@@ -448,7 +400,6 @@ def create_trainer(
         )
 
     # 格式化函数: 将原始数据转换为对话文本
-    # SFTTrainer使用此函数处理每条样本，并自动只计算assistant部分的loss
     def formatting_func(example):
         """将instruction/output格式转换为对话文本"""
         instruction = example.get("instruction", "")
@@ -463,7 +414,6 @@ def create_trainer(
             full_question = instruction
 
         # 使用tokenizer的官方chat template生成对话格式
-        # 这是推荐做法，确保训练格式与模型推理格式一致
         messages = [
             {"role": "system", "content": sys_msg},
             {"role": "user", "content": full_question},
@@ -490,24 +440,39 @@ def create_trainer(
     except Exception as e:
         logger.warning(f"格式化测试失败: {e}")
 
-    # 创建SFTTrainer (不传入data_collator，由SFTTrainer内部处理)
-    # SFTTrainer会自动:
-    # 1. 调用formatting_func将样本转换为文本
-    # 2. 使用tokenizer进行tokenization
-    # 3. 自动mask掉user部分，只计算assistant回复的loss
-    trainer = SFTTrainer(
-        model=model,
-        tokenizer=tokenizer,
-        train_dataset=train_dataset,
-        eval_dataset=eval_dataset,
-        args=training_args,
-        max_seq_length=max_seq_length,
-        formatting_func=formatting_func,  # 使用格式化函数替代dataset_text_field
-        packing=packing,
-        # 不传入data_collator，避免与SFTTrainer内置逻辑冲突
-    )
+    # TRL v1.x 兼容性: 检测 SFTTrainer 签名
+    import inspect
+    sig = inspect.signature(SFTTrainer.__init__)
+    sig_params = set(sig.parameters.keys())
 
-    logger.info("SFTTrainer创建完成 (formatting_func模式)")
+    # 构建 SFTTrainer 参数
+    sft_kwargs = {
+        "model": model,
+        "train_dataset": train_dataset,
+        "eval_dataset": eval_dataset,
+        "args": training_args,
+        "formatting_func": formatting_func,
+    }
+
+    # TRL v1.x: processing_class 替代 tokenizer
+    if "processing_class" in sig_params:
+        sft_kwargs["processing_class"] = tokenizer
+        logger.info("使用 TRL v1.x API: processing_class")
+    elif "tokenizer" in sig_params:
+        sft_kwargs["tokenizer"] = tokenizer
+        logger.info("使用 TRL v0.x API: tokenizer")
+    else:
+        raise RuntimeError("SFTTrainer 不支持 processing_class 或 tokenizer 参数")
+
+    # TRL v0.x 保留 max_seq_length 和 packing (v1.x 移除)
+    if "max_seq_length" in sig_params:
+        sft_kwargs["max_seq_length"] = max_seq_length
+    if "packing" in sig_params:
+        sft_kwargs["packing"] = packing
+
+    trainer = SFTTrainer(**sft_kwargs)
+
+    logger.info("SFTTrainer创建完成")
     return trainer
 
 
@@ -522,7 +487,7 @@ def merge_and_save_model(
 ):
     """
     合并LoRA适配器与基座模型，保存完整模型
-    
+
     Args:
         base_model_path: 基座模型路径
         adapter_path: LoRA适配器路径 (checkpoint目录)
@@ -533,7 +498,7 @@ def merge_and_save_model(
     logger.info("合并LoRA适配器与基座模型...")
     logger.info(f"基座模型: {base_model_path}")
     logger.info(f"适配器: {adapter_path}")
-    
+
     # 加载基座模型（不量化，用于合并）
     logger.info("加载基座模型（FP16）...")
     base_model = AutoModelForCausalLM.from_pretrained(
@@ -542,34 +507,34 @@ def merge_and_save_model(
         device_map="auto",
         trust_remote_code=True,
     )
-    
+
     # 加载分词器
     tokenizer = AutoTokenizer.from_pretrained(
         base_model_path,
         trust_remote_code=True,
     )
-    
+
     # 加载并合并适配器
     logger.info("加载LoRA适配器...")
     model = PeftModel.from_pretrained(base_model, adapter_path)
-    
+
     logger.info("合并权重...")
     model = model.merge_and_unload()
-    
+
     # 保存合并后的模型
     output_path = Path(output_path)
     output_path.mkdir(parents=True, exist_ok=True)
-    
+
     logger.info(f"保存合并模型到: {output_path}")
     model.save_pretrained(output_path)
     tokenizer.save_pretrained(output_path)
-    
+
     # 推送到Hub（可选）
     if push_to_hub and hub_model_id:
         logger.info(f"推送到HuggingFace Hub: {hub_model_id}")
         model.push_to_hub(hub_model_id)
         tokenizer.push_to_hub(hub_model_id)
-    
+
     logger.info("模型合并与保存完成！")
     return model, tokenizer
 

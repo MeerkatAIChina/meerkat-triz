@@ -691,9 +691,10 @@ def aggregate_results(
             triz_score = overall.get("after", overall.get("value", 0))
         else:
             triz_score = overall
-        triz_score = triz_score * 100 if triz_score <= 1 else triz_score
-        scores.append(triz_score)
-        report["summary"]["triz_score"] = f"{triz_score:.1f}/100"
+        if triz_score is not None:
+            triz_score = triz_score * 100 if triz_score <= 1 else triz_score
+            scores.append(triz_score)
+            report["summary"]["triz_score"] = f"{triz_score:.1f}/100"
 
     perf_metrics = report["layer3_performance"].get("metrics", {})
     if perf_metrics:
