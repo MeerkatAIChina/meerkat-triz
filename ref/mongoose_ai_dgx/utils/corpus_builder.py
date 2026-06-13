@@ -143,3 +143,124 @@ class PptxExtractor(Extractor):
                 doc.pages.append(Page(text=text, page_num=slide_idx))
 
         return doc
+
+
+@dataclass
+class Chunk:
+    """分块后的语料记录"""
+    text: str
+    source_path: str
+    category: Optional[str]
+    file_type: Optional[str]
+    page_num: Optional[int]
+    heading: Optional[str]
+    chunk_index: int
+    token_count: int
+
+
+class SemanticChunker:
+    """语义分块器：按标题/段落边界合并短段落到目标token数"""
+
+    def __init__(
+        self,
+        target_tokens: int = 2048,
+        max_tokens: int = 4096,
+        chars_per_token: float = 1.0,
+        min_chars: int = 50,
+    ):
+        self.target_tokens = target_tokens
+        self.max_tokens = max_tokens
+        self.chars_per_token = chars_per_token
+        self.min_chars = min_chars
+
+    def _estimate_tokens(self, text: str) -> int:
+        return max(1, int(len(text) / self.chars_per_token))
+
+    def _split_into_segments(self, text: str) -> List[str]:
+        """按空行分割成语义段"""
+        segments = []
+        current = []
+        for line in text.splitlines():
+            stripped = line.strip()
+            if not stripped:
+                if current:
+                    segments.append("\n".join(current))
+                    current = []
+            else:
+                current.append(stripped)
+        if current:
+            segments.append("\n".join(current))
+        return [s for s in segments if len(s) >= self.min_chars]
+
+    def chunk_document(self, doc: ExtractedDocument, chunk_index_start: int = 0) -> Tuple[List[Chunk], int]:
+        """对一个ExtractedDocument进行分块，返回Chunk列表和下一个chunk_index"""
+        chunks = []
+        chunk_index = chunk_index_start
+        current_texts: List[str] = []
+        current_tokens = 0
+        current_heading: Optional[str] = None
+        current_page: Optional[int] = None
+
+        def flush():
+            nonlocal chunks, chunk_index, current_texts, current_tokens, current_heading, current_page
+            if not current_texts:
+                return
+            text = "\n\n".join(current_texts)
+            if len(text) >= self.min_chars:
+                chunks.append(Chunk(
+                    text=text,
+                    source_path=doc.source_path,
+                    category=doc.category,
+                    file_type=doc.file_type,
+                    page_num=current_page,
+                    heading=current_heading,
+                    chunk_index=chunk_index,
+                    token_count=self._estimate_tokens(text),
+                ))
+                chunk_index += 1
+            current_texts = []
+            current_tokens = 0
+
+        for page in doc.pages:
+            segments = self._split_into_segments(page.text)
+            if not segments:
+                continue
+
+            # 记录当前页的起始heading
+            if page.heading:
+                current_heading = page.heading
+            if page.page_num:
+                current_page = page.page_num
+
+            for seg in segments:
+                seg_tokens = self._estimate_tokens(seg)
+
+                # 单个段超过max_tokens则强行截断
+                if seg_tokens > self.max_tokens:
+                    flush()
+                    chunks.append(Chunk(
+                        text=seg[: self.max_tokens * self.chars_per_token],
+                        source_path=doc.source_path,
+                        category=doc.category,
+                        file_type=doc.file_type,
+                        page_num=current_page,
+                        heading=current_heading,
+                        chunk_index=chunk_index,
+                        token_count=self.max_tokens,
+                    ))
+                    chunk_index += 1
+                    continue
+
+                # 合并到当前chunk会超过目标token数，先flush
+                if current_tokens + seg_tokens > self.target_tokens and current_texts:
+                    flush()
+
+                current_texts.append(seg)
+                current_tokens += seg_tokens
+
+                # 如果当前heading来自这个segment的上一段标题，更新heading
+                if page.heading and not current_heading:
+                    current_heading = page.heading
+
+        flush()
+        return chunks, chunk_index

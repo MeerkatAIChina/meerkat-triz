@@ -51,3 +51,35 @@ def test_pptx_extractor():
     assert doc.file_type == "pptx"
     assert len(doc.pages) == 1
     assert "Taking Out Principle" in doc.pages[0].text
+
+
+SemanticChunker = corpus_builder_mod.SemanticChunker
+Chunk = corpus_builder_mod.Chunk
+
+
+def test_semantic_chunker_basic():
+    doc = ExtractedDocument(
+        source_path="TRIZ-raw/sample.txt",
+        category="test",
+        file_type="txt",
+        pages=[
+            Page(text="Chapter 1\n\nSegmentation Principle: Divide an object into independent parts.\n\nTypical application: smartphone.\n\nChapter 2\n\nTaking Out Principle: Extract the harmful part from an object."),
+        ],
+    )
+    chunker = SemanticChunker(target_tokens=100, chars_per_token=1.0)
+    chunks, _ = chunker.chunk_document(doc)
+    assert len(chunks) >= 1
+    assert all(isinstance(c, Chunk) for c in chunks)
+    assert any("Segmentation Principle" in c.text for c in chunks)
+
+
+def test_semantic_chunker_respects_min_chars():
+    doc = ExtractedDocument(
+        source_path="TRIZ-raw/short.txt",
+        category="test",
+        file_type="txt",
+        pages=[Page(text="A")],
+    )
+    chunker = SemanticChunker(min_chars=5)
+    chunks, _ = chunker.chunk_document(doc)
+    assert len(chunks) == 0
