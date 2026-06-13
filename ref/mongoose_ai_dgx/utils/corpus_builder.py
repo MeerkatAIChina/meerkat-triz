@@ -85,3 +85,61 @@ class PDFExtractor(Extractor):
 
         pdf.close()
         return doc
+
+
+class DocxExtractor(Extractor):
+    """DOCX提取器：按段落和标题提取"""
+
+    def extract(self, path: Path) -> ExtractedDocument:
+        from docx import Document
+
+        doc = ExtractedDocument(source_path=str(path), file_type="docx")
+
+        try:
+            document = Document(str(path))
+        except Exception as e:
+            logger.error(f"无法打开DOCX {path}: {e}")
+            return doc
+
+        doc.title = document.core_properties.title or None
+        current_heading = None
+
+        for para in document.paragraphs:
+            text = para.text.strip()
+            if not text:
+                continue
+
+            # 识别标题样式
+            if para.style and para.style.name and para.style.name.startswith("Heading"):
+                current_heading = text
+                continue
+
+            doc.pages.append(Page(text=text, page_num=1, heading=current_heading))
+
+        return doc
+
+
+class PptxExtractor(Extractor):
+    """PPTX提取器：每页幻灯片作为一个Page"""
+
+    def extract(self, path: Path) -> ExtractedDocument:
+        from pptx import Presentation
+
+        doc = ExtractedDocument(source_path=str(path), file_type="pptx")
+
+        try:
+            prs = Presentation(str(path))
+        except Exception as e:
+            logger.error(f"无法打开PPTX {path}: {e}")
+            return doc
+
+        for slide_idx, slide in enumerate(prs.slides, start=1):
+            texts = []
+            for shape in slide.shapes:
+                if hasattr(shape, "text") and shape.text.strip():
+                    texts.append(shape.text.strip())
+            text = "\n".join(texts)
+            if text:
+                doc.pages.append(Page(text=text, page_num=slide_idx))
+
+        return doc

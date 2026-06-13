@@ -31,3 +31,23 @@ def test_pdf_extractor():
     assert doc.file_type == "pdf"
     assert len(doc.pages) == 1
     assert "Segmentation Principle" in doc.pages[0].text
+
+
+DocxExtractor = corpus_builder_mod.DocxExtractor
+PptxExtractor = corpus_builder_mod.PptxExtractor
+
+
+def test_docx_extractor():
+    extractor = DocxExtractor()
+    doc = extractor.extract(FIXTURES_DIR / "sample.docx")
+    assert doc.file_type == "docx"
+    assert len(doc.pages) >= 2
+    assert any("Swiss Army" in p.text for p in doc.pages)
+
+
+def test_pptx_extractor():
+    extractor = PptxExtractor()
+    doc = extractor.extract(FIXTURES_DIR / "sample.pptx")
+    assert doc.file_type == "pptx"
+    assert len(doc.pages) == 1
+    assert "Taking Out Principle" in doc.pages[0].text
