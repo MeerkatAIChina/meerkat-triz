@@ -353,3 +353,135 @@ class CorpusWriter:
 
         logger.info(f"语料库写入完成: {len(chunks)} 条记录 -> {self.output_path}")
         return stats
+
+
+def build_corpus(
+    raw_dir: str,
+    output_dir: str,
+    output_filename: str = "triz_corpus.jsonl",
+    stats_filename: str = "triz_corpus_stats.json",
+    failed_files_filename: str = "failed_files.json",
+    supported_extensions: Optional[List[str]] = None,
+    skip_extensions: Optional[List[str]] = None,
+    chunk_target_tokens: int = 2048,
+    chunk_max_tokens: int = 4096,
+    chars_per_token: float = 1.0,
+    min_chars: int = 50,
+    deduplicate: bool = True,
+    ocr_enabled: bool = True,
+    ocr_min_text_chars: int = 20,
+    resume: bool = True,
+) -> Dict[str, Any]:
+    """
+    构建TRIZ语料库主入口
+
+    Args:
+        raw_dir: TRIZ-raw目录路径
+        output_dir: 输出目录
+        output_filename: 输出JSONL文件名
+        stats_filename: 统计文件名
+        failed_files_filename: 失败文件列表名
+        supported_extensions: 支持提取的扩展名
+        skip_extensions: 默认跳过的扩展名
+        chunk_target_tokens: 目标chunk token数
+        chunk_max_tokens: 最大chunk token数
+        chars_per_token: 字符到token的估算比例
+        min_chars: 最小chunk字符数
+        deduplicate: 是否去重
+        ocr_enabled: 是否启用OCR
+        ocr_min_text_chars: OCR触发阈值
+        resume: 是否跳过已处理的文件
+
+    Returns:
+        统计信息字典
+    """
+    raw_dir = Path(raw_dir)
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    supported_extensions = supported_extensions or [".pdf", ".docx", ".pptx", ".doc"]
+    skip_extensions = set(skip_extensions or [".jpg", ".jpeg", ".png", ".gif", ".bmp",
+                                                ".webp", ".jfif", ".mov", ".mp4", ".avi",
+                                                ".mkv", ".zip", ".rar", ".7z", ".xlsx",
+                                                ".xls", ".csv"])
+
+    # 已处理文件集合 (用于断点续跑)
+    processed_sources: Set[str] = set()
+    output_path = output_dir / output_filename
+    if resume and output_path.exists():
+        with open(output_path, "r", encoding="utf-8") as f:
+            for line in f:
+                try:
+                    record = json.loads(line)
+                    processed_sources.add(record["metadata"]["source_path"])
+                except Exception:
+                    pass
+        logger.info(f"断点续跑: 已跳过 {len(processed_sources)} 个已处理文件")
+
+    # 提取器映射
+    extractors = {
+        ".pdf": PDFExtractor(ocr_enabled=ocr_enabled, min_text_chars=ocr_min_text_chars),
+        ".docx": DocxExtractor(),
+        ".pptx": PptxExtractor(),
+        ".doc": DocxExtractor(),  # .doc用python-docx尝试，失败则跳过
+    }
+
+    chunker = SemanticChunker(
+        target_tokens=chunk_target_tokens,
+        max_tokens=chunk_max_tokens,
+        chars_per_token=chars_per_token,
+        min_chars=min_chars,
+    )
+    writer = CorpusWriter(
+        output_dir=str(output_dir),
+        output_filename=output_filename,
+        stats_filename=stats_filename,
+        failed_files_filename=failed_files_filename,
+        deduplicate=deduplicate,
+    )
+
+    all_chunks: List[Chunk] = []
+    failed_files: List[Dict[str, str]] = []
+    chunk_index_counter = 0
+
+    if not raw_dir.exists():
+        raise FileNotFoundError(f"原始目录不存在: {raw_dir}")
+
+    # 收集所有文件
+    files = []
+    for ext in supported_extensions:
+        files.extend(raw_dir.rglob(f"*{ext}"))
+
+    # 过滤跳过扩展名
+    files = [f for f in files if f.suffix.lower() not in skip_extensions]
+
+    logger.info(f"发现 {len(files)} 个待处理文件")
+
+    for file_path in files:
+        rel_path = str(file_path.relative_to(raw_dir))
+        source_path = f"TRIZ-raw/{rel_path}"
+
+        if source_path in processed_sources:
+            logger.info(f"跳过已处理: {source_path}")
+            continue
+
+        ext = file_path.suffix.lower()
+        extractor = extractors.get(ext)
+        if extractor is None:
+            logger.warning(f"无可用提取器: {file_path}")
+            continue
+
+        try:
+            doc = extractor.extract(file_path)
+            doc.source_path = source_path
+            doc.category = file_path.parent.relative_to(raw_dir).parts[0] if file_path.parent != raw_dir else "root"
+
+            chunks, chunk_index_counter = chunker.chunk_document(doc, chunk_index_start=chunk_index_counter)
+            all_chunks.extend(chunks)
+            logger.info(f"处理完成: {source_path} -> {len(chunks)} chunks")
+        except Exception as e:
+            logger.error(f"处理失败 {source_path}: {e}")
+            failed_files.append({"path": source_path, "error": str(e)})
+
+    stats = writer.write(all_chunks, failed_files=failed_files)
+    return stats

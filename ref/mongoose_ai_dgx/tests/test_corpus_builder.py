@@ -121,3 +121,24 @@ def test_corpus_writer(tmp_path):
     assert len(records) == 1
     assert records[0]["id"] == "triz-raw-00000000"
     assert records[0]["metadata"]["category"] == "test"
+
+
+build_corpus = corpus_builder_mod.build_corpus
+
+
+def test_build_corpus(tmp_path):
+    # 构造临时TRIZ-raw目录
+    raw_dir = tmp_path / "TRIZ-raw" / "test_category"
+    raw_dir.mkdir(parents=True)
+    shutil.copy(FIXTURES_DIR / "sample.pdf", raw_dir / "sample.pdf")
+
+    output_dir = tmp_path / "corpus"
+    stats = build_corpus(
+        raw_dir=str(tmp_path / "TRIZ-raw"),
+        output_dir=str(output_dir),
+        resume=False,
+    )
+
+    assert stats["total_records"] >= 1
+    assert (output_dir / "triz_corpus.jsonl").exists()
+    assert (output_dir / "triz_corpus_stats.json").exists()
