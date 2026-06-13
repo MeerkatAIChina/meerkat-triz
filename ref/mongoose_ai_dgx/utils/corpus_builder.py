@@ -264,3 +264,92 @@ class SemanticChunker:
 
         flush()
         return chunks, chunk_index
+
+
+class CorpusWriter:
+    """语料库写入器：输出JSONL、统计信息和失败文件列表"""
+
+    def __init__(
+        self,
+        output_dir: str,
+        output_filename: str = "triz_corpus.jsonl",
+        stats_filename: str = "triz_corpus_stats.json",
+        failed_files_filename: str = "failed_files.json",
+        deduplicate: bool = True,
+    ):
+        self.output_dir = Path(output_dir)
+        self.output_dir.mkdir(parents=True, exist_ok=True)
+        self.output_path = self.output_dir / output_filename
+        self.stats_path = self.output_dir / stats_filename
+        self.failed_files_path = self.output_dir / failed_files_filename
+        self.deduplicate = deduplicate
+
+    def _deduplicate(self, chunks: List[Chunk]) -> List[Chunk]:
+        if not self.deduplicate:
+            return chunks
+        seen: Set[str] = set()
+        unique = []
+        for c in chunks:
+            key = hashlib.md5(c.text.encode("utf-8")).hexdigest()
+            if key not in seen:
+                seen.add(key)
+                unique.append(c)
+        removed = len(chunks) - len(unique)
+        if removed > 0:
+            logger.info(f"去重: 移除 {removed} 个重复chunk")
+        return unique
+
+    def write(
+        self,
+        chunks: List[Chunk],
+        failed_files: Optional[List[Dict[str, str]]] = None,
+    ) -> Dict[str, Any]:
+        chunks = self._deduplicate(chunks)
+
+        # 写JSONL
+        with open(self.output_path, "w", encoding="utf-8") as f:
+            for idx, chunk in enumerate(chunks):
+                record = {
+                    "id": f"triz-raw-{idx:08d}",
+                    "text": chunk.text,
+                    "metadata": {
+                        "source_path": chunk.source_path,
+                        "category": chunk.category,
+                        "file_type": chunk.file_type,
+                        "page_num": chunk.page_num,
+                        "heading": chunk.heading,
+                        "chunk_index": chunk.chunk_index,
+                        "token_count": chunk.token_count,
+                    },
+                }
+                f.write(json.dumps(record, ensure_ascii=False) + "\n")
+
+        # 统计信息
+        category_counts: Dict[Optional[str], int] = {}
+        file_type_counts: Dict[Optional[str], int] = {}
+        token_counts = [c.token_count for c in chunks]
+
+        for c in chunks:
+            category_counts[c.category] = category_counts.get(c.category, 0) + 1
+            file_type_counts[c.file_type] = file_type_counts.get(c.file_type, 0) + 1
+
+        stats = {
+            "total_records": len(chunks),
+            "total_tokens": sum(token_counts),
+            "avg_tokens": round(sum(token_counts) / len(token_counts), 2) if token_counts else 0,
+            "max_tokens": max(token_counts) if token_counts else 0,
+            "min_tokens": min(token_counts) if token_counts else 0,
+            "category_distribution": category_counts,
+            "file_type_distribution": file_type_counts,
+        }
+
+        with open(self.stats_path, "w", encoding="utf-8") as f:
+            json.dump(stats, f, ensure_ascii=False, indent=2)
+
+        # 失败文件
+        if failed_files:
+            with open(self.failed_files_path, "w", encoding="utf-8") as f:
+                json.dump(failed_files, f, ensure_ascii=False, indent=2)
+
+        logger.info(f"语料库写入完成: {len(chunks)} 条记录 -> {self.output_path}")
+        return stats

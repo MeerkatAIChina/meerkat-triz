@@ -83,3 +83,41 @@ def test_semantic_chunker_respects_min_chars():
     chunker = SemanticChunker(min_chars=5)
     chunks, _ = chunker.chunk_document(doc)
     assert len(chunks) == 0
+
+
+CorpusWriter = corpus_builder_mod.CorpusWriter
+
+
+def test_corpus_writer(tmp_path):
+    chunks = [
+        Chunk(
+            text="Segmentation Principle: Divide an object into independent parts.",
+            source_path="TRIZ-raw/sample.txt",
+            category="test",
+            file_type="txt",
+            page_num=1,
+            heading="Chapter 1",
+            chunk_index=0,
+            token_count=15,
+        ),
+        Chunk(
+            text="Segmentation Principle: Divide an object into independent parts.",  # duplicate
+            source_path="TRIZ-raw/sample.txt",
+            category="test",
+            file_type="txt",
+            page_num=1,
+            heading="Chapter 1",
+            chunk_index=1,
+            token_count=15,
+        ),
+    ]
+    writer = CorpusWriter(output_dir=str(tmp_path), deduplicate=True)
+    stats = writer.write(chunks)
+    assert stats["total_records"] == 1
+
+    output_file = tmp_path / "triz_corpus.jsonl"
+    assert output_file.exists()
+    records = [json.loads(line) for line in output_file.read_text(encoding="utf-8").splitlines()]
+    assert len(records) == 1
+    assert records[0]["id"] == "triz-raw-00000000"
+    assert records[0]["metadata"]["category"] == "test"
