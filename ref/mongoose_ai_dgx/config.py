@@ -199,6 +199,45 @@ SYNTHETIC_CONFIG = {
     "checkpoint_dir": str(DATA_DIR / "processed" / "checkpoint"),
 }
 
+# ==================== 语料库构建配置 (TRIZ-raw 原始材料) ====================
+CORPUS_CONFIG = {
+    # 原始TRIZ材料目录 (DGX Spark上应复制到 BASE_DIR/TRIZ-raw/)
+    "raw_dir": str(BASE_DIR / "TRIZ-raw"),
+    # 输出目录
+    "output_dir": str(DATA_DIR / "processed" / "corpus"),
+    # 文件名
+    "output_filename": "triz_corpus.jsonl",
+    "stats_filename": "triz_corpus_stats.json",
+    "failed_files_filename": "failed_files.json",
+    # 分块配置
+    "chunk": {
+        "target_tokens": 2048,
+        "max_tokens": 4096,
+        # 中文字符token估算: 1 token ~ 1字符 (保守估计)
+        "chars_per_token": 1.0,
+    },
+    # 质量关卡
+    "quality_gates": {
+        "min_chars": 50,
+        "deduplicate": True,
+        "language_filter": False,
+    },
+    # 支持提取的文件扩展名
+    "supported_extensions": [".pdf", ".docx", ".pptx", ".doc"],
+    # 默认跳过的文件扩展名 (图片/视频/压缩包/表格)
+    "skip_extensions": [
+        ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp", ".jfif",
+        ".mov", ".mp4", ".avi", ".mkv",
+        ".zip", ".rar", ".7z",
+        ".xlsx", ".xls", ".csv",
+    ],
+    # OCR配置 (用于扫描版PDF)
+    "ocr": {
+        "enabled": True,
+        "min_text_chars": 20,
+    },
+}
+
 # ==================== 评测配置 ====================
 BENCHMARK_CONFIG = {
     # 评测输出目录
