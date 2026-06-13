@@ -57,3 +57,10 @@ jieba>=0.42.0
 
 # 可选：vLLM加速推理 (DGX Spark可能不支持，建议先测试)
 # vllm>=0.4.0
+
+# TRIZ-raw 语料库构建器
+pymupdf>=1.23.0           # PDF文本提取
+python-docx>=0.8.11       # DOCX文本提取
+python-pptx>=0.6.21       # PPTX文本提取
+pytesseract>=0.3.10       # 扫描版PDF OCR
+Pillow>=10.0.0            # OCR图像处理
