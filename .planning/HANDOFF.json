@@ -1,36 +1,36 @@
 {
   "version": "1.0",
-  "timestamp": "2026-06-14T16:05:00.000Z",
-  "phase": null,
-  "phase_name": null,
+  "timestamp": "2026-06-14T18:20:00.000Z",
+  "phase": "03",
+  "phase_name": "evaluation-and-hardening",
   "phase_dir": null,
   "plan": null,
-  "task": 10,
-  "total_tasks": 10,
-  "status": "completed",
+  "task": 1,
+  "total_tasks": 4,
+  "status": "paused",
   "completed_tasks": [
-    {"id": 1, "name": "Add CORPUS_CONFIG to config.py", "status": "done", "commit": "f540b3c"},
-    {"id": 2, "name": "Create ExtractedDocument dataclasses and Extractor base", "status": "done", "commit": "460f574"},
-    {"id": 3, "name": "Implement PDFExtractor with OCR fallback", "status": "done", "commit": "9260a06"},
-    {"id": 4, "name": "Implement DocxExtractor and PptxExtractor", "status": "done", "commit": "da0d012"},
-    {"id": 5, "name": "Implement SemanticChunker", "status": "done", "commit": "9519b15"},
-    {"id": 6, "name": "Implement CorpusWriter with deduplication", "status": "done", "commit": "8fd4e67"},
-    {"id": 7, "name": "Implement build_corpus orchestration", "status": "done", "commit": "5d6c57f"},
-    {"id": 8, "name": "Update requirements.txt with corpus dependencies", "status": "done", "commit": "52da778"},
-    {"id": 9, "name": "Create 02c_build_corpus_from_raw.ipynb", "status": "done", "commit": "fa15c66"},
-    {"id": 10, "name": "Deploy to DGX Spark", "status": "done", "progress": "Final rebuild completed: 3914 records / 7.27M tokens; failed_files.json empty"}
+    {"id": 1, "name": "TRIZ-raw corpus build and deploy to DGX", "status": "done", "commit": "3fb81c1"},
+    {"id": 2, "name": "Add corpus-to-SFT generator notebook", "status": "done", "commit": "109533b"},
+    {"id": 3, "name": "Fix training environment compatibility", "status": "done", "commit": "927598a"}
   ],
-  "remaining_tasks": [],
-  "blockers": [],
-  "human_actions_pending": [],
+  "remaining_tasks": [
+    {"id": 4, "name": "Verify training rerun checkpoint validation", "status": "pending"},
+    {"id": 5, "name": "Run Notebook 05 model evaluation", "status": "pending"},
+    {"id": 6, "name": "Generate SFT data from corpus (blocked by API key)", "status": "pending"}
+  ],
+  "blockers": [
+    {"description": "Moonshot API key invalid (401) for corpus-to-SFT generation", "type": "external", "workaround": "Replace with a valid key from https://platform.moonshot.cn"},
+    {"description": "Context near exhaustion", "type": "technical", "workaround": "Pause and resume in fresh session"}
+  ],
+  "human_actions_pending": [
+    {"description": "Verify/replace Moonshot API key", "assigned_to": "user"}
+  ],
   "decisions": [
-    {"decision": "Use direct rsync/scp deployment instead of git push", "rationale": "GitHub SSH was blocked from this environment; user requested non-git deployment", "phase": null},
-    {"decision": "Copy corpus_builder.py to both ref/mongoose_ai_dgx/utils/ and root utils/", "rationale": "DGX project root imports from utils/, not ref/mongoose_ai_dgx/utils/", "phase": null},
-    {"decision": "Copy updated config.py to DGX project root", "rationale": "Root config.py is the one imported by notebooks and scripts", "phase": null},
-    {"decision": "Run corpus build with explicit venv python path", "rationale": "Initial run used system python and failed with No module named fitz; venv activation did not persist in SSH session", "phase": null},
-    {"decision": "Run full rebuild (resume=False) after fixing SemanticChunker float-slice bug", "rationale": "12 large PDFs failed with TypeError on seg[: float]; fix converts slice bound to int and rebuilds from scratch to include recovered chunks", "phase": null}
+    {"decision": "Set load_best_model_at_end=False to avoid peft/transformers WeightConverter mismatch", "rationale": "peft 0.19.1 + transformers 5.10.1 crash in _load_best_model; disabling auto-load lets training finalize cleanly", "phase": "03"},
+    {"decision": "Pin httpx==0.27.2", "rationale": "openai 1.35.0 uses httpx.Client(proxies=...) which was removed in httpx 0.28", "phase": "03"},
+    {"decision": "Pass labels to CheckpointValidationCallback forward pass", "rationale": "model(**inputs) without labels returns loss=None, causing AttributeError on .item()", "phase": "03"}
   ],
-  "uncommitted_files": ["ref/mongoose_ai_dgx/utils/corpus_builder.py"],
-  "next_action": "None — TRIZ-raw corpus builder deployed and verified on DGX Spark",
-  "context_notes": "TRIZ-raw corpus builder finished successfully on DGX Spark. Final corpus: /home/meerkat/mongoose_ai/data/processed/corpus/triz_corpus.jsonl with 3914 records / 7.27M tokens (avg 1856, max 4096). failed_files.json reset to []. First-pass outputs remain as *.v1-bak. Two fixes applied to ref/mongoose_ai_dgx/utils/corpus_builder.py: (1) SemanticChunker seg slice bound cast to int; (2) CorpusWriter always writes failed_files.json to avoid stale entries. Both fixes synced to DGX root utils/ and ref/ utils/."
+  "uncommitted_files": [],
+  "next_action": "Restart Notebook 04 kernel on DGX and rerun to verify checkpoint validation passes; then proceed to Notebook 05",
+  "context_notes": "Training run completed in this session but checkpoint validation callback failed. Fixes committed: httpx pin, load_best_model_at_end disabled, CheckpointValidationCallback passes labels. Working tree clean. Moonshot API key issue blocks corpus-to-SFT generation."
 }
