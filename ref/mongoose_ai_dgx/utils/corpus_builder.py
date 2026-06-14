@@ -239,7 +239,7 @@ class SemanticChunker:
                 if seg_tokens > self.max_tokens:
                     flush()
                     chunks.append(Chunk(
-                        text=seg[: self.max_tokens * self.chars_per_token],
+                        text=seg[: int(self.max_tokens * self.chars_per_token)],
                         source_path=doc.source_path,
                         category=doc.category,
                         file_type=doc.file_type,
@@ -346,10 +346,10 @@ class CorpusWriter:
         with open(self.stats_path, "w", encoding="utf-8") as f:
             json.dump(stats, f, ensure_ascii=False, indent=2)
 
-        # 失败文件
-        if failed_files:
-            with open(self.failed_files_path, "w", encoding="utf-8") as f:
-                json.dump(failed_files, f, ensure_ascii=False, indent=2)
+        # 失败文件（始终写入，避免残留旧失败列表）
+        failed_files = failed_files or []
+        with open(self.failed_files_path, "w", encoding="utf-8") as f:
+            json.dump(failed_files, f, ensure_ascii=False, indent=2)
 
         logger.info(f"语料库写入完成: {len(chunks)} 条记录 -> {self.output_path}")
         return stats
