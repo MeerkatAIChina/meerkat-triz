@@ -43,6 +43,7 @@ safetensors>=0.4.3
 sentencepiece>=0.2.0
 protobuf>=4.25.0
 openai==1.35.0            # Moonshot API客户端 (OpenAI兼容)
+httpx==0.27.2             # openai 1.35.0 使用 httpx<0.28 的 proxies 参数
 
 # Jupyter环境
 ipywidgets>=8.1.0
