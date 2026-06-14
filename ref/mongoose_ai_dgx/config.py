@@ -79,7 +79,7 @@ QLORA_CONFIG = {
         "save_steps": 200,
         "eval_steps": 200,
         "save_total_limit": 3,              # 最多保留3个checkpoint
-        "load_best_model_at_end": True,
+        "load_best_model_at_end": False,
         "metric_for_best_model": "eval_loss",
         "greater_is_better": False,
         "report_to": "tensorboard",         # 或 "wandb"
