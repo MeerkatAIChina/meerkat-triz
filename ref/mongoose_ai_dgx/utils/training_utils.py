@@ -81,10 +81,16 @@ class CheckpointValidationCallback(TrainerCallback):
                 device = next(model.parameters()).device
                 inputs = self.tokenizer(self.test_prompt, return_tensors="pt").to(device)
                 with torch.no_grad():
-                    outputs = model(**inputs)
-                result["status"] = "PASSED"
-                result["loss"] = round(outputs.loss.item(), 4)
-                print(f"[CHECKPOINT] PASSED: step={state.global_step}, size={size_mb:.1f}MB, loss={outputs.loss.item():.4f}")
+                    outputs = model(**inputs, labels=inputs["input_ids"])
+                loss = outputs.loss
+                if loss is not None and hasattr(loss, "item"):
+                    result["status"] = "PASSED"
+                    result["loss"] = round(loss.item(), 4)
+                    print(f"[CHECKPOINT] PASSED: step={state.global_step}, size={size_mb:.1f}MB, loss={loss.item():.4f}")
+                else:
+                    result["status"] = "PASSED"
+                    result["reason"] = "loss_not_available"
+                    print(f"[CHECKPOINT] PASSED: step={state.global_step}, size={size_mb:.1f}MB (loss unavailable)")
             except Exception as e:
                 result["status"] = "FAILED"
                 result["reason"] = f"forward_pass_error: {str(e)}"
