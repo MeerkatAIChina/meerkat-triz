@@ -114,9 +114,9 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-13T23:59:14.540Z
-Stopped at: context exhaustion at 75% (2026-06-13)
-Resume file: None
+Last session: 2026-06-14T18:20:00.000Z
+Stopped at: Notebook 04 rerun produced stale-code checkpoint-validation failure + uncommitted state.register error; local patch applied to 04_qlora_finetune.ipynb
+Resume file: .planning/HANDOFF.json, .planning/.continue-here.md
 
 ### DGX Spark Status
 
