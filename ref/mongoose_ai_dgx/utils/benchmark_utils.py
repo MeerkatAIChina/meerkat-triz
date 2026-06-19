@@ -852,6 +852,28 @@ def _compute_deltas(before: Dict, after: Dict) -> Dict[str, Any]:
     return result
 
 
+def _extract_numeric_value(value: Any, default: Any = None) -> Any:
+    """从标量或嵌套delta字典中提取最终数值。
+
+    支持以下结构:
+    - 0.35
+    - {"value": 0.35}
+    - {"after": 0.35, ...}
+    - {"value": {"after": 0.35, ...}}
+
+    空字典或无法解析时返回 default (默认 None)。
+    """
+    if isinstance(value, dict):
+        if not value:
+            return default
+        if "after" in value:
+            return _extract_numeric_value(value["after"], default)
+        if "value" in value:
+            return _extract_numeric_value(value["value"], default)
+        return default
+    return value
+
+
 def aggregate_results(
     general_results: Optional[Dict] = None,
     triz_results: Optional[Dict] = None,
@@ -933,11 +955,8 @@ def aggregate_results(
     triz_metrics = report["layer2_triz"].get("metrics", {})
     if triz_metrics:
         overall = triz_metrics.get("overall_score", {})
-        if isinstance(overall, dict):
-            triz_score = overall.get("after", overall.get("value", 0))
-        else:
-            triz_score = overall
-        if triz_score is not None:
+        triz_score = _extract_numeric_value(overall)
+        if triz_score is not None and isinstance(triz_score, (int, float)):
             triz_score = triz_score * 100 if triz_score <= 1 else triz_score
             scores.append(triz_score)
             report["summary"]["triz_score"] = f"{triz_score:.1f}/100"
@@ -945,13 +964,11 @@ def aggregate_results(
     perf_metrics = report["layer3_performance"].get("metrics", {})
     if perf_metrics:
         throughput = perf_metrics.get("throughput_tokens_per_sec", {})
-        if isinstance(throughput, dict):
-            throughput_val = throughput.get("after", throughput.get("value", 0))
-        else:
-            throughput_val = throughput
-        perf_score = min(throughput_val / 2, 100)
-        scores.append(perf_score)
-        report["summary"]["performance_score"] = f"{perf_score:.1f}/100"
+        throughput_val = _extract_numeric_value(throughput)
+        if throughput_val is not None and isinstance(throughput_val, (int, float)):
+            perf_score = min(throughput_val / 2, 100)
+            scores.append(perf_score)
+            report["summary"]["performance_score"] = f"{perf_score:.1f}/100"
 
     if scores:
         report["summary"]["overall_score"] = f"{sum(scores)/len(scores):.1f}/100"

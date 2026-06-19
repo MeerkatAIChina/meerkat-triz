@@ -249,3 +249,47 @@ class TestDeterministicGeneration:
         benchmark._generate_response("prompt")
         _, kwargs = model.generate.call_args
         assert kwargs["temperature"] == 0.3
+
+
+class TestAggregateResults:
+    """Tests for aggregate_results report generation."""
+
+    def test_aggregate_results_handles_missing_throughput(self):
+        """Regression test: None/missing throughput should not crash scoring."""
+        before_results = {
+            "layer2_triz": {"overall_score": {"value": 0.30}},
+            "layer3_performance": {"latency_p50_ms": 100.0},
+        }
+        after_results = {
+            "layer2_triz": {"overall_score": {"value": 0.35}},
+            "layer3_performance": {"latency_p50_ms": 90.0},
+        }
+        report = benchmark_utils.aggregate_results(
+            before_results=before_results,
+            after_results=after_results,
+            output_dir="/tmp/test_eval",
+        )
+        assert "overall_score" in report["summary"]
+        # performance_score should be absent because throughput is missing
+        assert "performance_score" not in report["summary"]
+        # overall should equal triz score only
+        assert report["summary"]["overall_score"] == "35.0/100"
+
+    def test_aggregate_results_computes_perf_score_with_throughput(self):
+        before_results = {
+            "layer2_triz": {"overall_score": {"value": 0.30}},
+            "layer3_performance": {"throughput_tokens_per_sec": {"value": 50.0}},
+        }
+        after_results = {
+            "layer2_triz": {"overall_score": {"value": 0.35}},
+            "layer3_performance": {"throughput_tokens_per_sec": {"value": 60.0}},
+        }
+        report = benchmark_utils.aggregate_results(
+            before_results=before_results,
+            after_results=after_results,
+            output_dir="/tmp/test_eval",
+        )
+        # perf_score = min(60 / 2, 100) = 30.0
+        assert report["summary"]["performance_score"] == "30.0/100"
+        # overall = (35.0 + 30.0) / 2 = 32.5
+        assert report["summary"]["overall_score"] == "32.5/100"
