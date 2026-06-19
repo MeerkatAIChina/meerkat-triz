@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: context exhaustion at 75% (2026-06-13)
-last_updated: "2026-06-13T23:59:14.548Z"
+stopped_at: context exhaustion at 76% (2026-06-18)
+last_updated: "2026-06-18T05:58:56.636Z"
 last_activity: 2026-05-30
 progress:
   total_phases: 3
@@ -114,9 +114,10 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-14T18:20:00.000Z
-Stopped at: Notebook 04 rerun produced stale-code checkpoint-validation failure + uncommitted state.register error; local patch applied to 04_qlora_finetune.ipynb
-Resume file: .planning/HANDOFF.json, .planning/.continue-here.md
+Last session: 2026-06-19T02:55:01Z
+Resumed at: 2026-06-18 (session restored from .planning/.continue-here.md)
+Stopped at: Cleaned sample_data.json (548 → 385 unique samples); next: generate diverse training data (blocked by Moonshot API key) or retrain.
+Resume file: .planning/.continue-here.md
 
 ### DGX Spark Status
 

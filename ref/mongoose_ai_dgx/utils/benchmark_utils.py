@@ -129,6 +129,29 @@ def print_evaluation_summary(results: Dict[str, Any], tasks: List[str]):
     print("=" * 60 + "\n")
 
 
+def _check_keywords(response: str, keywords: List[str], keyword_map: Optional[Dict[str, List[str]]] = None) -> tuple:
+    """
+    检查回复中包含多少个关键词，支持中英文同义词映射。
+
+    Args:
+        response: 模型生成的回复文本
+        keywords: 基准英文关键词列表
+        keyword_map: 英文关键词到中文同义词列表的映射
+
+    Returns:
+        (匹配数, 总数)
+    """
+    response_lower = response.lower()
+    matched = 0
+    for keyword in keywords:
+        candidates = [keyword.lower()]
+        if keyword_map and keyword in keyword_map:
+            candidates.extend([k.lower() for k in keyword_map[keyword]])
+        if any(candidate in response_lower for candidate in candidates):
+            matched += 1
+    return matched, len(keywords)
+
+
 def _compute_bleu(predictions: List[str], references: List[str]) -> Dict[str, Any]:
     """Corpus-level BLEU with Chinese tokenization."""
     try:
@@ -171,14 +194,92 @@ def _compute_rouge(predictions: List[str], references: List[str]) -> Dict[str, A
 
 # ==================== Layer 2: TRIZ定制评测 ====================
 
+# 发明原理中英文映射（用于原理识别评测）
+PRINCIPLE_NAME_MAP = {
+    "Segmentation": ["分割原理", "分割"],
+    "Taking out": ["抽取原理", "抽取", "取出"],
+    "Local quality": ["局部质量原理", "局部质量"],
+    "Asymmetry": ["不对称原理", "不对称"],
+    "Merging": ["合并原理", "合并", "组合"],
+    "Universality": ["多用性原理", "多用性", "通用性"],
+    "Nested doll": ["嵌套原理", "嵌套"],
+    "Anti-weight": ["重量补偿原理", "重量补偿", "反重量"],
+    "Preliminary anti-action": ["预先反作用原理", "预先反作用"],
+    "Preliminary action": ["预先作用原理", "预先作用"],
+    "Beforehand cushioning": ["预先防护原理", "预先防护"],
+    "Equipotentiality": ["等势原理", "等势"],
+    "The other way round": ["反向作用原理", "反向作用"],
+    "Curved": ["曲面化原理", "曲面化"],
+    "Dynamics": ["动态化原理", "动态化"],
+    "Partial or excessive actions": ["部分或过量作用原理", "部分或过量作用"],
+    "Another dimension": ["维度变化原理", "维度变化"],
+    "Mechanical vibration": ["机械振动原理", "机械振动"],
+    "Periodic action": ["周期性动作原理", "周期性动作"],
+    "Continuity of useful action": ["有效作用连续性原理", "有效作用连续性"],
+    "Skipping": ["快速通过原理", "跳过", "跨越"],
+    "Blessing in disguise": ["变害为利原理", "变害为利"],
+    "Feedback": ["反馈原理", "反馈"],
+    "Intermediary": ["中介物原理", "中介物"],
+    "Self-service": ["自服务原理", "自服务"],
+    "Copying": ["复制原理", "复制"],
+    "Cheap short-living objects": ["廉价短寿命物体原理", "廉价短寿命"],
+    "Mechanics substitution": ["机械替代原理", "机械替代"],
+    "Pneumatics and hydraulics": ["气动与液压原理", "气动", "液压"],
+    "Flexible shells and thin films": ["柔性壳体和薄膜原理", "柔性壳体", "薄膜"],
+    "Porous materials": ["多孔材料原理", "多孔材料"],
+    "Color changes": ["颜色变化原理", "颜色变化"],
+    "Homogeneity": ["同质性原理", "同质性"],
+    "Discarding and recovering": ["抛弃与再生原理", "抛弃", "再生"],
+    "Parameter changes": ["参数变化原理", "参数变化"],
+    "Phase transitions": ["相变原理", "相变"],
+    "Thermal expansion": ["热膨胀原理", "热膨胀"],
+    "Strong oxidants": ["强氧化剂原理", "强氧化"],
+    "Inert atmosphere": ["惰性环境原理", "惰性环境"],
+    "Composite materials": ["复合材料原理", "复合材料"],
+}
+
+# ARIZ步骤中英文映射（用于ARIZ完整性评测）
+ARIZ_STEP_KEYWORD_MAP = {
+    "problem analysis": ["问题分析", "问题识别"],
+    "problem model": ["问题模型", "迷你问题"],
+    "ideal final result": ["理想最终解", "理想解", "IFR"],
+    "contradiction analysis": ["矛盾分析", "技术矛盾", "物理矛盾"],
+    "resource analysis": ["资源分析"],
+    "solution evaluation": ["方案评估", "方案评价", "解的评估", "方案验证"],
+}
+
+# 案例质量关键词（中文，与训练数据语言一致）
+CASE_QUALITY_KEYWORDS = ["原理", "方案", "创新", "解决", "TRIZ"]
+
+# 矛盾解决关键词中英文映射
+CONTRADICTION_KEYWORD_MAP = {
+    "strength": ["强度", "坚固", "强"],
+    "weight": ["重量", "轻便", "轻量化", "轻"],
+    "composite materials": ["复合材料", "碳纤维"],
+    "porous materials": ["多孔材料", "泡沫金属"],
+    "retractable": ["可伸缩", "可折叠", "可收回", "折叠"],
+    "taking out": ["抽取原理", "取出", "移除"],
+    "dynamics": ["动态化原理", "动态化"],
+    "cost": ["成本", "便宜", "廉价"],
+    "speed": ["速度", "快速"],
+    "volume": ["体积", "小巧", "紧凑"],
+    "area": ["面积", "空间"],
+    "noise": ["噪音", "噪声"],
+    "power": ["功率", "能耗"],
+    "temperature": ["温度", "散热"],
+}
+
+
 class TRIZBenchmark:
     """TRIZ领域定制评测器"""
     
-    def __init__(self, model, tokenizer, device="cuda", test_data_path=None):
+    def __init__(self, model, tokenizer, device="cuda", test_data_path=None, temperature=0.0, top_p=1.0):
         self.model = model
         self.tokenizer = tokenizer
         self.device = device
         self.model.eval()
+        self.temperature = temperature
+        self.top_p = top_p
 
         # 40个发明原理列表
         self.principles = [
@@ -200,8 +301,9 @@ class TRIZBenchmark:
         self.test_questions = self._load_test_questions(test_data_path)
 
     def _load_test_questions(self, test_data_path=None) -> List[Dict]:
-        """加载TRIZ评测问题集"""
+        """加载TRIZ评测问题集（扩展版，覆盖更多原理和场景）"""
         questions = [
+            # 原理识别：10题，覆盖代表性原理
             {
                 "category": "principle_identification",
                 "question": "一个系统需要在不改变整体结构的情况下增加功能模块，应该使用哪个发明原理？",
@@ -209,11 +311,61 @@ class TRIZBenchmark:
                 "type": "multiple_choice"
             },
             {
-                "category": "principle_identification", 
+                "category": "principle_identification",
                 "question": "为了提高系统的灵活性，使其能够适应不同条件，应该应用哪个原理？",
                 "expected": "Dynamics",
                 "type": "multiple_choice"
             },
+            {
+                "category": "principle_identification",
+                "question": "想把一个物体分成独立的部分以便于拆卸或更换，应该使用哪个发明原理？",
+                "expected": "Segmentation",
+                "type": "multiple_choice"
+            },
+            {
+                "category": "principle_identification",
+                "question": "为了减少系统中的有害作用，只把需要的部分提取出来，这是哪个原理？",
+                "expected": "Taking out",
+                "type": "multiple_choice"
+            },
+            {
+                "category": "principle_identification",
+                "question": "让物体的不同部分执行不同的功能，各自处于最有利的条件下，这是哪个原理？",
+                "expected": "Local quality",
+                "type": "multiple_choice"
+            },
+            {
+                "category": "principle_identification",
+                "question": "将同类或相关的物体在空间中合并，或在时间上合并操作，这是哪个原理？",
+                "expected": "Merging",
+                "type": "multiple_choice"
+            },
+            {
+                "category": "principle_identification",
+                "question": "使一个物体执行多种功能，从而减少对其他物体的需求，这是哪个原理？",
+                "expected": "Universality",
+                "type": "multiple_choice"
+            },
+            {
+                "category": "principle_identification",
+                "question": "为了抵消物体的重量，与其他物体结合产生升力或浮力，这是哪个原理？",
+                "expected": "Anti-weight",
+                "type": "multiple_choice"
+            },
+            {
+                "category": "principle_identification",
+                "question": "用相反的动作代替原有动作，或将可动部分与固定部分互换，这是哪个原理？",
+                "expected": "The other way round",
+                "type": "multiple_choice"
+            },
+            {
+                "category": "principle_identification",
+                "question": "用曲线、曲面或球面代替直线、平面或立方体，这是哪个原理？",
+                "expected": "Curved",
+                "type": "multiple_choice"
+            },
+
+            # 矛盾解决：8题
             {
                 "category": "contradiction_resolution",
                 "question": "一个机械设备需要既坚固又轻便，存在什么技术矛盾？如何化解？",
@@ -227,24 +379,108 @@ class TRIZBenchmark:
                 "type": "open_ended"
             },
             {
+                "category": "contradiction_resolution",
+                "question": "手机屏幕需要既大又便于携带，这是什么矛盾？如何用TRIZ解决？",
+                "expected_keywords": ["area", "volume", "foldable", "retractable", "dynamics"],
+                "type": "open_ended"
+            },
+            {
+                "category": "contradiction_resolution",
+                "question": "CPU需要性能高但发热少，如何用TRIZ分析并解决？",
+                "expected_keywords": ["power", "temperature", "multi-core", "feedback"],
+                "type": "open_ended"
+            },
+            {
+                "category": "contradiction_resolution",
+                "question": "食品包装需要既密封保鲜又易于开启，存在什么矛盾？",
+                "expected_keywords": ["seal", "convenience", "segmentation", "asymmetry"],
+                "type": "open_ended"
+            },
+            {
+                "category": "contradiction_resolution",
+                "question": "快递包装需要保护性好但环保可降解，如何用TRIZ解决？",
+                "expected_keywords": ["protection", "cost", "porous materials", "recycling"],
+                "type": "open_ended"
+            },
+            {
+                "category": "contradiction_resolution",
+                "question": "建筑既要采光好又要隔热好，这是什么矛盾？",
+                "expected_keywords": ["light", "temperature", "phase transitions", "parameter changes"],
+                "type": "open_ended"
+            },
+            {
+                "category": "contradiction_resolution",
+                "question": "汽车需要速度快但噪音小，如何用TRIZ分析？",
+                "expected_keywords": ["speed", "noise", "curved", "porous materials"],
+                "type": "open_ended"
+            },
+
+            # 案例生成：6题
+            {
                 "category": "case_generation",
                 "question": "请使用TRIZ方法，为'如何在不增加成本的情况下提高产品质量'生成一个创新解决方案。",
-                "expected_keywords": ["principle", "contradiction", "solution"],
+                "expected_keywords": CASE_QUALITY_KEYWORDS,
+                "type": "generation"
+            },
+            {
+                "category": "case_generation",
+                "question": "请使用TRIZ方法，为'城市交通拥堵'设计一个创新解决方案。",
+                "expected_keywords": CASE_QUALITY_KEYWORDS,
+                "type": "generation"
+            },
+            {
+                "category": "case_generation",
+                "question": "请使用TRIZ方法，为'干旱地区节水灌溉'设计一个创新解决方案。",
+                "expected_keywords": CASE_QUALITY_KEYWORDS,
+                "type": "generation"
+            },
+            {
+                "category": "case_generation",
+                "question": "请使用TRIZ方法，为'偏远地区低成本医疗设备'设计一个创新解决方案。",
+                "expected_keywords": CASE_QUALITY_KEYWORDS,
+                "type": "generation"
+            },
+            {
+                "category": "case_generation",
+                "question": "请使用TRIZ方法，为'提高太阳能电池板能量转换效率'给出一个创新方案。",
+                "expected_keywords": CASE_QUALITY_KEYWORDS,
+                "type": "generation"
+            },
+            {
+                "category": "case_generation",
+                "question": "请使用TRIZ方法，为'减少3D打印材料浪费'给出一个创新方案。",
+                "expected_keywords": CASE_QUALITY_KEYWORDS,
                 "type": "generation"
             },
         ]
+
+        # ARIZ指导：从样本数据中动态加载更多问题，或补充默认问题
+        ariz_default = [
+            "请详细描述ARIZ算法解决技术问题的完整步骤。",
+            "使用ARIZ算法分析：如何在不增加成本的情况下提高打印机打印速度？",
+            "使用ARIZ算法分析：如何使折叠屏手机既轻薄又耐用？",
+            "ARIZ算法中，如何定义理想最终解（IFR）？",
+            "ARIZ算法中，技术矛盾和物理矛盾有什么区别？",
+            "ARIZ算法中，资源分析的作用是什么？",
+        ]
+        for q in ariz_default:
+            questions.append({
+                "category": "ariz_guidance",
+                "question": q,
+                "type": "ariz_open"
+            })
 
         if test_data_path and os.path.exists(test_data_path):
             try:
                 with open(test_data_path, "r", encoding="utf-8") as f:
                     data = json.load(f)
                 case_data = data.get("case_generation", [])
-                for sample in case_data[:5]:
+                for sample in case_data[:10]:
                     questions.append({
                         "category": "case_generation",
                         "question": sample.get("instruction", ""),
                         "reference": sample.get("output", ""),
-                        "expected_keywords": ["principle", "solution", "innovation"],
+                        "expected_keywords": CASE_QUALITY_KEYWORDS,
                         "type": "generation"
                     })
             except Exception as e:
@@ -253,25 +489,30 @@ class TRIZBenchmark:
         return questions
 
     def evaluate_principle_accuracy(self) -> Dict[str, float]:
-        """评测40个发明原理识别准确率"""
+        """评测40个发明原理识别准确率（支持中英文原理名）"""
         logger.info("评测: 发明原理识别准确率")
-        
+
         correct = 0
         total = len(self.test_questions)
-        
+
         for q in self.test_questions:
             if q["type"] == "multiple_choice":
                 # 构建prompt
                 prompt = self._build_prompt(q["question"])
                 response = self._generate_response(prompt)
-                
-                # 检查是否包含正确答案
-                if q["expected"].lower() in response.lower():
+
+                # 检查是否包含正确答案（英文或中文）
+                expected = q["expected"]
+                candidates = [expected]
+                if expected in PRINCIPLE_NAME_MAP:
+                    candidates.extend(PRINCIPLE_NAME_MAP[expected])
+
+                if any(candidate.lower() in response.lower() for candidate in candidates):
                     correct += 1
                     logger.debug(f"正确: {q['question'][:50]}...")
                 else:
-                    logger.debug(f"错误: 期望 '{q['expected']}', 得到 '{response[:100]}'")
-        
+                    logger.debug(f"错误: 期望 '{expected}', 得到 '{response[:100]}'")
+
         accuracy = correct / total if total > 0 else 0
         return {
             "accuracy": accuracy,
@@ -280,22 +521,22 @@ class TRIZBenchmark:
         }
     
     def evaluate_contradiction_resolution(self) -> Dict[str, float]:
-        """评测矛盾解决能力"""
+        """评测矛盾解决能力（支持中英文关键词）"""
         logger.info("评测: 矛盾解决能力")
-        
+
         scores = []
-        
+
         for q in self.test_questions:
             if q["type"] == "open_ended":
                 prompt = self._build_prompt(q["question"])
                 response = self._generate_response(prompt)
-                
-                # 检查关键词覆盖
+
+                # 检查关键词覆盖（中英文）
                 keywords = q.get("expected_keywords", [])
-                matched = sum(1 for kw in keywords if kw.lower() in response.lower())
-                score = matched / len(keywords) if keywords else 0
+                matched, total = _check_keywords(response, keywords, CONTRADICTION_KEYWORD_MAP)
+                score = matched / total if total > 0 else 0
                 scores.append(score)
-        
+
         avg_score = sum(scores) / len(scores) if scores else 0
         return {
             "average_score": avg_score,
@@ -303,7 +544,7 @@ class TRIZBenchmark:
         }
     
     def evaluate_case_quality(self) -> Dict[str, Any]:
-        """评测创新案例生成质量 (使用BLEU/ROUGE)"""
+        """评测创新案例生成质量（使用中文关键词 + BLEU/ROUGE）"""
         logger.info("评测: 案例生成质量")
 
         predictions = []
@@ -320,9 +561,9 @@ class TRIZBenchmark:
                 if ref:
                     references.append(ref)
 
-                keywords = q.get("expected_keywords", [])
-                matched = sum(1 for kw in keywords if kw.lower() in response.lower())
-                coverage = matched / len(keywords) if keywords else 0
+                keywords = q.get("expected_keywords", CASE_QUALITY_KEYWORDS)
+                matched, total = _check_keywords(response, keywords)
+                coverage = matched / total if total > 0 else 0
                 coverage_scores.append({
                     "coverage": coverage,
                     "response_length": len(response),
@@ -346,31 +587,34 @@ class TRIZBenchmark:
         }
     
     def evaluate_ariz_completeness(self) -> Dict[str, float]:
-        """评测ARIZ步骤完整性"""
+        """评测ARIZ步骤完整性（支持中文步骤名，取多题平均）"""
         logger.info("评测: ARIZ步骤完整性")
-        
-        ariz_steps = [
-            "problem analysis",
-            "problem model",
-            "ideal final result",
-            "contradiction analysis", 
-            "resource analysis",
-            "solution evaluation"
-        ]
-        
-        prompt = self._build_prompt(
-            "请详细描述使用ARIZ算法解决一个技术问题的完整步骤。"
-        )
-        response = self._generate_response(prompt)
-        
-        # 检查ARIZ步骤覆盖
-        matched_steps = sum(1 for step in ariz_steps if step.lower() in response.lower())
-        completeness = matched_steps / len(ariz_steps)
-        
+
+        ariz_questions = [q for q in self.test_questions if q.get("category") == "ariz_guidance"]
+        if not ariz_questions:
+            # 回退：使用默认单题
+            ariz_questions = [{"question": "请详细描述使用ARIZ算法解决一个技术问题的完整步骤。"}]
+
+        step_names = list(ARIZ_STEP_KEYWORD_MAP.keys())
+        total_completeness = 0.0
+        total_matched = 0
+
+        for q in ariz_questions:
+            prompt = self._build_prompt(q["question"])
+            response = self._generate_response(prompt)
+
+            matched, _ = _check_keywords(response, step_names, ARIZ_STEP_KEYWORD_MAP)
+            total_completeness += matched / len(step_names) if step_names else 0
+            total_matched += matched
+
+        avg_completeness = total_completeness / len(ariz_questions)
+        avg_matched = total_matched / len(ariz_questions)
+
         return {
-            "completeness": completeness,
-            "matched_steps": matched_steps,
-            "total_steps": len(ariz_steps)
+            "completeness": avg_completeness,
+            "matched_steps": avg_matched,
+            "total_steps": len(step_names),
+            "num_questions": len(ariz_questions),
         }
     
     def run_all_evaluations(self) -> Dict[str, Any]:
@@ -406,19 +650,19 @@ class TRIZBenchmark:
         )
     
     def _generate_response(self, prompt: str, max_new_tokens: int = 512) -> str:
-        """生成模型回复"""
+        """生成模型回复（使用对象级 temperature/top_p，默认确定性生成）"""
         inputs = self.tokenizer(prompt, return_tensors="pt").to(self.device)
-        
+
         with torch.no_grad():
             outputs = self.model.generate(
                 **inputs,
                 max_new_tokens=max_new_tokens,
-                temperature=0.7,
-                top_p=0.9,
-                do_sample=True,
+                temperature=self.temperature,
+                top_p=self.top_p,
+                do_sample=self.temperature > 0,
                 pad_token_id=self.tokenizer.eos_token_id,
             )
-        
+
         response = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
         # 移除prompt部分
         response = response[len(prompt):].strip()
@@ -431,7 +675,8 @@ def run_triz_evaluation(
     output_dir: str,
     test_data_path: Optional[str] = None,
     max_new_tokens: int = 512,
-    temperature: float = 0.7,
+    temperature: float = 0.0,
+    top_p: float = 1.0,
 ) -> Dict[str, Any]:
     """
     运行TRIZ定制评测的便捷函数
@@ -442,12 +687,13 @@ def run_triz_evaluation(
         output_dir: 结果输出目录
         test_data_path: 测试数据路径 (可选，用于加载外部评测数据)
         max_new_tokens: 最大生成token数
-        temperature: 生成温度
+        temperature: 生成温度，默认0.0（确定性生成）
+        top_p: nucleus sampling参数，默认1.0
 
     Returns:
         TRIZ评测结果
     """
-    benchmark = TRIZBenchmark(model, tokenizer, test_data_path=test_data_path)
+    benchmark = TRIZBenchmark(model, tokenizer, test_data_path=test_data_path, temperature=temperature, top_p=top_p)
     results = benchmark.run_all_evaluations()
     
     # 保存结果
