@@ -117,7 +117,7 @@ def print_evaluation_summary(results: Dict[str, Any], tasks: List[str]):
     print("\n" + "=" * 60)
     print("通用能力评测结果摘要")
     print("=" * 60)
-    
+
     for task in tasks:
         if task in results.get("results", {}):
             task_results = results["results"][task]
@@ -125,8 +125,41 @@ def print_evaluation_summary(results: Dict[str, Any], tasks: List[str]):
             for key, value in task_results.items():
                 if "acc" in key or "score" in key:
                     print(f"  {task:20s} | {key:30s} | {value:.4f}")
-    
+
     print("=" * 60 + "\n")
+
+
+def _extract_layer1_metrics(lm_eval_results: dict) -> dict:
+    """Extract one primary metric per lm-eval task from a results dict.
+
+    Heuristic priority:
+      1. acc_norm
+      2. acc
+      3. exact_match
+      4. pass_at_1
+      5. first scalar value whose key contains 'acc' or 'score'
+
+    Tasks with no numeric scalar metric are skipped.
+    """
+    metrics = {}
+    results = lm_eval_results.get("results", {})
+    preference = ["acc_norm", "acc", "exact_match", "pass_at_1"]
+
+    for task_name, task_results in results.items():
+        value = None
+        for key in preference:
+            if key in task_results and isinstance(task_results[key], (int, float)):
+                value = task_results[key]
+                break
+        if value is None:
+            for key, val in task_results.items():
+                if isinstance(val, (int, float)) and ("acc" in key or "score" in key):
+                    value = val
+                    break
+        if value is not None:
+            metrics[task_name] = value
+
+    return metrics
 
 
 def _check_keywords(response: str, keywords: List[str], keyword_map: Optional[Dict[str, List[str]]] = None) -> tuple:
