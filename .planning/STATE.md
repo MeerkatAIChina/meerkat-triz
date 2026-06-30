@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: context exhaustion at 76% (2026-06-18)
-last_updated: "2026-06-18T05:58:56.636Z"
-last_activity: 2026-05-30
+status: Inserted — awaiting plan
+stopped_at: Phase 3.1 context gathered
+last_updated: "2026-06-30T18:18:06.748Z"
+last_activity: 2026-06-30
 progress:
-  total_phases: 3
+  total_phases: 4
   completed_phases: 3
   total_plans: 14
   completed_plans: 14
-  percent: 100
+  percent: 75
 ---
 
 # Project State
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-26)
 
 **Core value:** Transform a general-purpose 35B-parameter MoE model into a world-class TRIZ innovation consultant through targeted domain fine-tuning, with rigorous three-layer evaluation.
-**Current focus:** Phase 03 — evaluation-and-hardening
+**Current focus:** Phase 03.1 — close-gap-blk-01-layer1-baseline-comparison
 
 ## Current Position
 
-Phase: 03
+Phase: 03.1
 Plan: Not started
-Status: Executing Phase 03
-Last activity: 2026-05-30
+Status: Inserted — awaiting plan
+Last activity: 2026-06-30
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -68,6 +68,10 @@ Progress: [░░░░░░░░░░] 0%
 
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
+
+### Roadmap Evolution
+
+- 2026-06-30 — Phase 3.1 inserted after Phase 3 (URGENT): Close gap: BLK-01 — fix Layer 1 baseline comparison in Notebook 05
 
 - v1.0: Use SSH (not HTTPS) for GitHub remote to avoid credential prompts
 - v1.0: Use git filter-branch to rewrite history and remove venv (GitHub 2GB limit)
@@ -114,10 +118,10 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-19T02:55:01Z
+Last session: 2026-06-30T18:18:06.738Z
 Resumed at: 2026-06-18 (session restored from .planning/.continue-here.md)
-Stopped at: Cleaned sample_data.json (548 → 385 unique samples); next: generate diverse training data (blocked by Moonshot API key) or retrain.
-Resume file: .planning/.continue-here.md
+Stopped at: Phase 3.1 context gathered
+Resume file: .planning/phases/03.1-close-gap-blk-01-layer1-baseline-comparison/03.1-CONTEXT.md
 
 ### DGX Spark Status
 
