@@ -153,3 +153,31 @@ def mock_model_and_tokenizer():
     model = FakeModel(2.5)
 
     return model, tokenizer
+
+
+@pytest.fixture
+def layer1_results():
+    """Provide a mock lm-eval Layer 1 general benchmark results dict."""
+    return {
+        "results": {
+            "mmlu_pro": {
+                "acc_norm": 0.42,
+                "acc": 0.40,
+                "alias": "mmlu_pro",
+            },
+            "gpqa": {
+                "acc_norm": 0.30,
+            },
+            "humaneval": {
+                "pass_at_1": 0.25,
+            },
+            "math": {
+                "acc": 0.15,
+            },
+            "bbh": {
+                "acc_norm": 0.50,
+            },
+        },
+        "configs": {},
+        "versions": {},
+    }
