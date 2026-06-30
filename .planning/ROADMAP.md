@@ -94,4 +94,4 @@ Phases execute in numeric order: 1 -> 2 -> 3
 | 1. Foundation & Data Pipeline | 7/7 | Complete | 2026-05-28 |
 | 2. Baseline & Training Execution | 0/3 | Planned | - |
 | 3. Evaluation & Hardening | 0/4 | Planned | - |
-| 3.1. Close gap: BLK-01 — fix Layer 1 baseline comparison in Notebook 05 | 2/4 | In Progress|  |
+| 3.1. Close gap: BLK-01 — fix Layer 1 baseline comparison in Notebook 05 | 3/4 | In Progress|  |
