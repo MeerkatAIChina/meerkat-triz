@@ -145,16 +145,25 @@ def _extract_layer1_metrics(lm_eval_results: dict) -> dict:
     results = lm_eval_results.get("results", {})
     preference = ["acc_norm", "acc", "exact_match", "pass_at_1"]
 
+    def _to_float(val):
+        if isinstance(val, str):
+            return None
+        try:
+            return float(val)
+        except (TypeError, ValueError):
+            return None
+
     for task_name, task_results in results.items():
         value = None
         for key in preference:
-            if key in task_results and isinstance(task_results[key], (int, float)):
-                value = task_results[key]
-                break
+            if key in task_results:
+                value = _to_float(task_results[key])
+                if value is not None:
+                    break
         if value is None:
             for key, val in task_results.items():
-                if isinstance(val, (int, float)) and ("acc" in key or "score" in key):
-                    value = val
+                if _to_float(val) is not None and ("acc" in key or "score" in key):
+                    value = float(val)
                     break
         if value is not None:
             metrics[task_name] = value
