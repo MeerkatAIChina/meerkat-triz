@@ -78,8 +78,9 @@ This roadmap delivers the v1.0 milestone: a complete end-to-end QLoRA fine-tunin
   2. Notebook 05 loads `general_results` from the actual Layer 1 benchmark JSON, not from `baseline['metadata']`.
   3. `aggregate_results(before_results=..., after_results=...)` receives valid `layer1_general` scores for both base and adapter runs.
   4. The before/after report displays Layer 1 metric deltas (± and % change) for each general benchmark task.
-**Plans**: 3 plans in 2 waves
-  - [ ] `03.1-01-PLAN.md` -- Utility Layer: extend aggregate_results() with Layer 1 delta support and add Wave 0 tests
+**Plans**: 4 plans in 3 waves
+  - [ ] `03.1-00-PLAN.md` -- Wave 0 Tests: create pytest fixtures and failing stubs for Layer 1 delta behavior
+  - [ ] `03.1-01-PLAN.md` -- Utility Layer: extend aggregate_results() with Layer 1 delta support
   - [ ] `03.1-02-PLAN.md` -- Notebook 03: register baseline_results with metadata.layer1_path and layer1_summary
   - [ ] `03.1-03-PLAN.md` -- Notebook 05: load validated Layer 1 baseline, re-run adapter Layer 1, display deltas
 
@@ -93,4 +94,4 @@ Phases execute in numeric order: 1 -> 2 -> 3
 | 1. Foundation & Data Pipeline | 7/7 | Complete | 2026-05-28 |
 | 2. Baseline & Training Execution | 0/3 | Planned | - |
 | 3. Evaluation & Hardening | 0/4 | Planned | - |
-| 3.1. Close gap: BLK-01 — fix Layer 1 baseline comparison in Notebook 05 | 0/3 | Inserted | - |
+| 3.1. Close gap: BLK-01 — fix Layer 1 baseline comparison in Notebook 05 | 0/4 | Inserted | - |
