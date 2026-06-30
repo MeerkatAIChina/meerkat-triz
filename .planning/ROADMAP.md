@@ -9,6 +9,7 @@ This roadmap delivers the v1.0 milestone: a complete end-to-end QLoRA fine-tunin
 - [x] **Phase 1: Foundation & Data Pipeline** - Fix configs, build synthetic data pipeline, generate ~6K training samples
 - [ ] **Phase 2: Baseline & Training Execution** - Run pre-training benchmarks, execute 15-hour QLoRA fine-tuning
 - [ ] **Phase 3: Evaluation & Hardening** - Validate fine-tuning results, produce comparison report, harden cross-notebook integration
+- [ ] **Phase 3.1: Close gap: BLK-01 — fix Layer 1 baseline comparison in Notebook 05** (INSERTED) - Urgent audit closure
 
 ## Phase Details
 
@@ -68,6 +69,20 @@ This roadmap delivers the v1.0 milestone: a complete end-to-end QLoRA fine-tunin
   - [ ] `03-03-PLAN.md` -- Notebook 05 Evaluation Orchestration: pre-flight, adapter/base eval, comparison report
   - [ ] `03-04-PLAN.md` -- Test Suite: format_messages, metrics, report structure
 
+### Phase 3.1: Close gap: BLK-01 — fix Layer 1 baseline comparison in Notebook 05 (INSERTED)
+**Goal**: Notebook 05 loads actual Layer 1 benchmark scores from the baseline result file so the before/after comparison report computes meaningful deltas.
+**Depends on**: Phase 3
+**Requirements**: EVAL-01, EVAL-05, BENCH-05
+**Success Criteria** (what must be TRUE):
+  1. Notebook 03 registers `baseline_results` with either (a) Layer 1 scores embedded in metadata or (b) a `path` that Notebook 05 reads.
+  2. Notebook 05 loads `general_results` from the actual Layer 1 benchmark JSON, not from `baseline['metadata']`.
+  3. `aggregate_results(before_results=..., after_results=...)` receives valid `layer1_general` scores for both base and adapter runs.
+  4. The before/after report displays Layer 1 metric deltas (± and % change) for each general benchmark task.
+**Plans**: 3 plans in 2 waves
+  - [ ] `03.1-01-PLAN.md` -- Utility Layer: extend aggregate_results() with Layer 1 delta support and add Wave 0 tests
+  - [ ] `03.1-02-PLAN.md` -- Notebook 03: register baseline_results with metadata.layer1_path and layer1_summary
+  - [ ] `03.1-03-PLAN.md` -- Notebook 05: load validated Layer 1 baseline, re-run adapter Layer 1, display deltas
+
 ## Progress
 
 **Execution Order:**
@@ -78,3 +93,4 @@ Phases execute in numeric order: 1 -> 2 -> 3
 | 1. Foundation & Data Pipeline | 7/7 | Complete | 2026-05-28 |
 | 2. Baseline & Training Execution | 0/3 | Planned | - |
 | 3. Evaluation & Hardening | 0/4 | Planned | - |
+| 3.1. Close gap: BLK-01 — fix Layer 1 baseline comparison in Notebook 05 | 0/3 | Inserted | - |
