@@ -331,3 +331,53 @@ def test_aggregate_results_layer1_deltas():
     assert mmlu["after"] == 0.42
     assert mmlu["delta"] == 0.02
     assert mmlu["delta_pct"] == 5.0
+
+
+def test_compute_bleu_and_rouge_helpers():
+    """EVAL-05 regression: BLEU/ROUGE helpers return numeric scores."""
+    mock_bleu_result = Mock()
+    mock_bleu_result.score = 12.34
+    mock_bleu_result.signature = "mock"
+    mock_sacrebleu = Mock()
+    mock_sacrebleu.corpus_bleu = Mock(return_value=mock_bleu_result)
+
+    mock_score = Mock()
+    mock_score.fmeasure = 0.56
+    mock_scorer = Mock()
+    mock_scorer.score = Mock(return_value={
+        "rouge1": mock_score,
+        "rouge2": mock_score,
+        "rougeL": mock_score,
+    })
+    mock_rouge_score = Mock()
+    mock_rouge_score.rouge_scorer = Mock()
+    mock_rouge_score.rouge_scorer.RougeScorer = Mock(return_value=mock_scorer)
+    mock_jieba = Mock()
+    mock_jieba.cut = Mock(side_effect=lambda x: iter(x.split()))
+
+    with patch.dict(sys.modules, {
+        "sacrebleu": mock_sacrebleu,
+        "rouge_score": mock_rouge_score,
+        "jieba": mock_jieba,
+    }):
+        bleu = benchmark_utils._compute_bleu(["一个测试预测"], ["一个测试参考"])
+        assert isinstance(bleu, dict)
+        assert "bleu" in bleu
+        assert bleu["bleu"] >= 0
+
+        rouge = benchmark_utils._compute_rouge(["一个测试预测"], ["一个测试参考"])
+        assert isinstance(rouge, dict)
+        assert "rouge1" in rouge
+        assert "rouge2" in rouge
+        assert "rougeL" in rouge
+        assert rouge["rouge1"] >= 0
+        assert rouge["rouge2"] >= 0
+        assert rouge["rougeL"] >= 0
+
+
+def test_evaluate_case_quality_calls_bleu_rouge():
+    """EVAL-05 regression: TRIZBenchmark.evaluate_case_quality invokes helpers."""
+    import inspect
+    source = inspect.getsource(benchmark_utils.TRIZBenchmark.evaluate_case_quality)
+    assert "_compute_bleu" in source
+    assert "_compute_rouge" in source
