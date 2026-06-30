@@ -9,7 +9,7 @@ This roadmap delivers the v1.0 milestone: a complete end-to-end QLoRA fine-tunin
 - [x] **Phase 1: Foundation & Data Pipeline** - Fix configs, build synthetic data pipeline, generate ~6K training samples
 - [ ] **Phase 2: Baseline & Training Execution** - Run pre-training benchmarks, execute 15-hour QLoRA fine-tuning
 - [ ] **Phase 3: Evaluation & Hardening** - Validate fine-tuning results, produce comparison report, harden cross-notebook integration
-- [ ] **Phase 3.1: Close gap: BLK-01 — fix Layer 1 baseline comparison in Notebook 05** (INSERTED) - Urgent audit closure
+- [x] **Phase 3.1: Close gap: BLK-01 — fix Layer 1 baseline comparison in Notebook 05** (INSERTED) - Urgent audit closure (completed 2026-06-30)
 
 ## Phase Details
 
@@ -94,4 +94,4 @@ Phases execute in numeric order: 1 -> 2 -> 3
 | 1. Foundation & Data Pipeline | 7/7 | Complete | 2026-05-28 |
 | 2. Baseline & Training Execution | 0/3 | Planned | - |
 | 3. Evaluation & Hardening | 0/4 | Planned | - |
-| 3.1. Close gap: BLK-01 — fix Layer 1 baseline comparison in Notebook 05 | 3/4 | In Progress|  |
+| 3.1. Close gap: BLK-01 — fix Layer 1 baseline comparison in Notebook 05 | 4/4 | Complete   | 2026-06-30 |
