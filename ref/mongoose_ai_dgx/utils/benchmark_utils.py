@@ -937,8 +937,24 @@ def aggregate_results(
         "summary": {},
     }
 
-    # Layer 1: 从基线加载 (不重新运行)
-    if before_results or after_results:
+    # Layer 1: 通用能力基准
+    if before_results and after_results:
+        before_layer1 = before_results.get("layer1_general")
+        after_layer1 = after_results.get("layer1_general")
+        if before_layer1 is not None or after_layer1 is not None:
+            report["layer1_general"] = {
+                "source": "re-run_on_both_models",
+                "metrics": _compute_deltas(
+                    _extract_layer1_metrics(before_layer1 or {}),
+                    _extract_layer1_metrics(after_layer1 or {}),
+                ),
+            }
+        else:
+            report["layer1_general"] = {
+                "source": "pipeline_state",
+                "metrics": general_results or {},
+            }
+    elif before_results or after_results:
         report["layer1_general"] = {
             "source": "pipeline_state",
             "metrics": general_results or {},
