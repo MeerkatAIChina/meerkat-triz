@@ -103,3 +103,22 @@ def test_summary(temp_state_file):
     assert summary["type_counts"]["dataset"] == 2
     assert "model_1" in summary["artifact_names"]
     assert "dataset_1" in summary["artifact_names"]
+
+
+def test_layer1_path_in_metadata(temp_state_file):
+    """Baseline artifact metadata round-trips layer1_path and summary."""
+    state = PipelineState(temp_state_file)
+    state.register(
+        "baseline_results",
+        "/tmp/results",
+        "benchmark",
+        metadata={
+            "layer1_path": "/tmp/results/lm_eval_results_20260101_000000.json",
+            "layer1_summary": {"mmlu_pro": {"acc_norm": 0.42}},
+        },
+    )
+
+    artifact = state.get("baseline_results")
+    assert artifact is not None
+    assert artifact["metadata"]["layer1_path"] == "/tmp/results/lm_eval_results_20260101_000000.json"
+    assert artifact["metadata"]["layer1_summary"]["mmlu_pro"]["acc_norm"] == 0.42
