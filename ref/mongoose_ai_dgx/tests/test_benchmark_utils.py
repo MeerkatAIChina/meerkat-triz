@@ -293,3 +293,41 @@ class TestAggregateResults:
         assert report["summary"]["performance_score"] == "30.0/100"
         # overall = (35.0 + 30.0) / 2 = 32.5
         assert report["summary"]["overall_score"] == "32.5/100"
+
+
+def test_extract_layer1_metrics(layer1_results):
+    """Layer 1 primary metric extraction prefers acc_norm over acc."""
+    metrics = benchmark_utils._extract_layer1_metrics(layer1_results)
+    assert isinstance(metrics, dict)
+    assert "mmlu_pro" in metrics
+    assert "gpqa" in metrics
+    assert "humaneval" in metrics
+    assert "math" in metrics
+    assert "bbh" in metrics
+    # acc_norm should be preferred over acc for mmlu_pro
+    assert metrics["mmlu_pro"] == 0.42
+    # humaneval uses pass_at_1
+    assert metrics["humaneval"] == 0.25
+    # Empty input returns empty dict
+    assert benchmark_utils._extract_layer1_metrics({}) == {}
+
+
+def test_aggregate_results_layer1_deltas():
+    """aggregate_results produces Layer 1 delta metrics when before/after provided."""
+    before_results = {
+        "layer1_general": {"results": {"mmlu_pro": {"acc_norm": 0.40}}}
+    }
+    after_results = {
+        "layer1_general": {"results": {"mmlu_pro": {"acc_norm": 0.42}}}
+    }
+    report = benchmark_utils.aggregate_results(
+        before_results=before_results,
+        after_results=after_results,
+        output_dir="/tmp/test_eval",
+    )
+    assert report["layer1_general"]["source"] == "re-run_on_both_models"
+    mmlu = report["layer1_general"]["metrics"]["mmlu_pro"]
+    assert mmlu["before"] == 0.4
+    assert mmlu["after"] == 0.42
+    assert mmlu["delta"] == 0.02
+    assert mmlu["delta_pct"] == 5.0
