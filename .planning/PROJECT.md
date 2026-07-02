@@ -42,6 +42,8 @@ Transform a general-purpose 35B-parameter MoE model into a world-class TRIZ inno
 
 **Phase 02 complete (2026-05-28):** Training utilities enhanced with checkpoint validation, comprehensive adapter metadata, and verified resume capability. Notebook 03 (baseline benchmark) upgraded to FP16 loading with three-layer benchmarks and pipeline_state persistence. Notebook 04 (QLoRA training) rebuilt as a complete 21-cell self-contained training pipeline with pre-flight checks, CheckpointValidationCallback, and checkpoint resume.
 
+**Phase 03.1 complete (2026-07-02):** Closed BLK-01 by fixing Layer 1 baseline comparison. `benchmark_utils.py` now computes per-task Layer 1 deltas via `_extract_layer1_metrics()` and `aggregate_results()`. Notebook 03 persists the raw lm-eval JSON path and a compact summary in `pipeline_state`. Notebook 05 validates the baseline path, re-runs Layer 1 on the adapter, and displays per-task before/after/delta/delta_pct values. Code review findings were addressed before completion.
+
 **Target features:**
 - Complete synthetic data generation (~6K samples from 548 seeds)
 - Baseline benchmark (03_model_benchmark.ipynb) — notebook ready, execution on DGX Spark pending
