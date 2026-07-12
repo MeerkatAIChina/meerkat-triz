@@ -20,13 +20,13 @@ Transform a general-purpose 35B-parameter MoE model into a world-class TRIZ inno
 - [x] Baseline benchmark (03) before training — v1.0
 - [x] QLoRA fine-tuning run (04) — v1.0
 - [x] Post-training evaluation (05) — v1.0
+- [x] Raw corpus builder workflow (02c/02d) validated on DGX Spark — v1.0 post-close
 
 ### Active
 - [ ] Execute end-to-end v1.0 training run on DGX Spark and capture actual results
 - [ ] Expand TRIZ test set from 5 to 50–100 questions for more robust Layer 2 evaluation
 - [ ] Run full Layer 1 suite (MMLU-Pro, GPQA, HumanEval, MATH, BBH) post-training
 - [ ] Evaluate and align `requirements.txt` with Notebook 01/04 dependency specifications
-- [ ] Decide integration path for notebooks 02c/02d (corpus builder workflow)
 
 ### Out of Scope
 - Full fine-tuning (resource constraints; QLoRA only)
@@ -53,7 +53,7 @@ Transform a general-purpose 35B-parameter MoE model into a world-class TRIZ inno
 
 All 4 phases (1, 2, 3, 3.1) are complete with 18/18 plans summarized. The notebook-driven QLoRA fine-tuning pipeline is fully implemented:
 
-- **Data**: `utils/synthetic_pipeline.py` + Notebook 02b generate ~6K synthetic TRIZ samples from 548 seeds with perplexity/diversity gates and pipeline-state registration.
+- **Data**: `utils/synthetic_pipeline.py` + Notebook 02b generate ~6K synthetic TRIZ samples from 548 seeds with perplexity/diversity gates and pipeline-state registration. The raw corpus builder workflow (02c/02d) has also been validated on the DGX Spark.
 - **Baseline**: Notebook 03 loads the model in FP16, runs all three benchmark layers, and persists baseline results.
 - **Training**: Notebook 04 executes QLoRA fine-tuning with checkpoint validation, SHA-256 metadata, and verified resume.
 - **Evaluation**: Notebook 05 loads baseline and adapter, runs Layer 2/3 TRIZ benchmarks, and — after Phase 3.1 — displays per-task Layer 1 lm-eval deltas.

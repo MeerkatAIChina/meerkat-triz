@@ -10,6 +10,7 @@
 ### What Was Built
 - A complete notebook-driven QLoRA fine-tuning pipeline for Qwen3.6-35B-A3B on the TRIZ domain.
 - `utils/synthetic_pipeline.py` + Notebook 02b for ~6K synthetic TRIZ sample generation via Moonshot API.
+- `utils/corpus_builder.py` + Notebooks 02c/02d for raw TRIZ corpus ingestion and SFT dataset construction, validated on DGX Spark.
 - Training utilities with `CheckpointValidationCallback`, SHA-256 adapter integrity, and LR-verified resume.
 - Three-layer evaluation utilities (`benchmark_utils.py`) with unified `format_messages()`, BLEU/ROUGE scoring, and before/after aggregate reporting.
 - Closure of audit blocker BLK-01: Notebook 05 now loads real Layer 1 lm-eval scores and displays per-task deltas.
