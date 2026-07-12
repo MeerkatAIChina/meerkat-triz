@@ -11,22 +11,28 @@ Transform a general-purpose 35B-parameter MoE model into a world-class TRIZ inno
 ## Requirements
 
 ### Validated
-- [x] Qwen3.6-35B-A3B base model with QLoRA fine-tuning
-- [x] 548 seed TRIZ samples across 6 subsets
-- [x] Synthetic data generation pipeline (6-stage, Moonshot API)
-- [x] Notebook-driven workflow (01–05 + 02b)
-- [x] DGX Spark hardware environment (128GB unified memory)
+- [x] Qwen3.6-35B-A3B base model with QLoRA fine-tuning — v1.0
+- [x] 548 seed TRIZ samples across 6 subsets — v1.0
+- [x] Synthetic data generation pipeline (6-stage, Moonshot API) — v1.0
+- [x] Notebook-driven workflow (01–05 + 02b) — v1.0
+- [x] DGX Spark hardware environment (128GB unified memory) — v1.0
+- [x] Generate ~6K synthetic training samples from 548 seeds — v1.0
+- [x] Baseline benchmark (03) before training — v1.0
+- [x] QLoRA fine-tuning run (04) — v1.0
+- [x] Post-training evaluation (05) — v1.0
 
 ### Active
-- [ ] Generate ~6K synthetic training samples from 548 seeds
-- [ ] Baseline benchmark (03) before training
-- [ ] QLoRA fine-tuning run (04)
-- [ ] Post-training evaluation (05)
+- [ ] Execute end-to-end v1.0 training run on DGX Spark and capture actual results
+- [ ] Expand TRIZ test set from 5 to 50–100 questions for more robust Layer 2 evaluation
+- [ ] Run full Layer 1 suite (MMLU-Pro, GPQA, HumanEval, MATH, BBH) post-training
+- [ ] Evaluate and align `requirements.txt` with Notebook 01/04 dependency specifications
+- [ ] Decide integration path for notebooks 02c/02d (corpus builder workflow)
 
 ### Out of Scope
 - Full fine-tuning (resource constraints; QLoRA only)
 - Multi-GPU training (single DGX Spark node)
 - Deployment/inference serving (training focus only)
+- vLLM, Unsloth, Flash Attention, DeepSpeed, or RAGAS integration
 
 ## Key Decisions
 
@@ -35,40 +41,40 @@ Transform a general-purpose 35B-parameter MoE model into a world-class TRIZ inno
 | 2026-05-26 | Use SSH (not HTTPS) for GitHub remote | SSH avoids credential prompts in non-interactive sessions |
 | 2026-05-26 | Use git filter-branch to rewrite history and remove venv | GitHub 2GB pack limit enforced; original 3GB repo could not push |
 | 2026-05-26 | Add .gitignore excluding mai/, __pycache__/, .ipynb_checkpoints/ | Prevent future accidental commits of large/generated files |
+| 2026-05-28 | Set `lora_dropout=0.0` for MoE architecture compatibility | Dropout can destabilize expert routing |
+| 2026-05-28 | Use explicit 12-module `target_modules` list instead of `all-linear` | Avoids known compatibility issues with Qwen3.6 hybrid architecture |
+| 2026-05-28 | Use `SFTTrainer` with `formatting_func` + `packing=True`; no `data_collator` | Resolves conflict with SFTTrainer's internal label-masking logic |
+| 2026-06-30 | Insert Phase 3.1 to close audit blocker BLK-01 | Layer 1 baseline comparison now computes real lm-eval deltas |
+| 2026-07-12 | Move source code from `ref/mongoose_ai_dgx/` to repo root | Repo layout matches deployed DGX Spark path |
 
-## Current Milestone: v1.0 First Training Run
+## Current State
 
-**Goal:** Generate synthetic training data, establish baseline, fine-tune Qwen3.6-35B-A3B with QLoRA, and evaluate results.
+**Milestone v1.0 MVP shipped (2026-07-12).**
 
-**Phase 02 complete (2026-05-28):** Training utilities enhanced with checkpoint validation, comprehensive adapter metadata, and verified resume capability. Notebook 03 (baseline benchmark) upgraded to FP16 loading with three-layer benchmarks and pipeline_state persistence. Notebook 04 (QLoRA training) rebuilt as a complete 21-cell self-contained training pipeline with pre-flight checks, CheckpointValidationCallback, and checkpoint resume.
+All 4 phases (1, 2, 3, 3.1) are complete with 18/18 plans summarized. The notebook-driven QLoRA fine-tuning pipeline is fully implemented:
 
-**Phase 03.1 complete (2026-07-02):** Closed BLK-01 by fixing Layer 1 baseline comparison. `benchmark_utils.py` now computes per-task Layer 1 deltas via `_extract_layer1_metrics()` and `aggregate_results()`. Notebook 03 persists the raw lm-eval JSON path and a compact summary in `pipeline_state`. Notebook 05 validates the baseline path, re-runs Layer 1 on the adapter, and displays per-task before/after/delta/delta_pct values. Code review findings were addressed before completion.
+- **Data**: `utils/synthetic_pipeline.py` + Notebook 02b generate ~6K synthetic TRIZ samples from 548 seeds with perplexity/diversity gates and pipeline-state registration.
+- **Baseline**: Notebook 03 loads the model in FP16, runs all three benchmark layers, and persists baseline results.
+- **Training**: Notebook 04 executes QLoRA fine-tuning with checkpoint validation, SHA-256 metadata, and verified resume.
+- **Evaluation**: Notebook 05 loads baseline and adapter, runs Layer 2/3 TRIZ benchmarks, and — after Phase 3.1 — displays per-task Layer 1 lm-eval deltas.
 
-**Target features:**
-- Complete synthetic data generation (~6K samples from 548 seeds)
-- Baseline benchmark (03_model_benchmark.ipynb) — notebook ready, execution on DGX Spark pending
-- QLoRA fine-tuning run (04_qlora_finetune.ipynb) — notebook ready, execution on DGX Spark pending
-- Post-training evaluation (05_model_evaluation.ipynb)
+Source code now lives at the repo root, matching the DGX Spark deployment layout at `/home/meerkat/mongoose_ai`.
 
-## Evolution
+## Next Milestone Goals
 
-This document evolves at phase transitions and milestone boundaries.
+The v1.1 milestone should focus on **execution and hardening**: actually running the v1.0 pipeline on the DGX Spark, fixing any runtime issues, expanding evaluation coverage, and aligning dependency/version claims across notebooks and `requirements.txt`.
 
-**After each phase transition** (via `/gsd-transition`):
-1. Requirements invalidated? → Move to Out of Scope with reason
-2. Requirements validated? → Move to Validated with phase reference
-3. New requirements emerged? → Add to Active
-4. Decisions to log? → Add to Key Decisions
-5. "What This Is" still accurate? → Update if drifted
+## Context
 
-**After each milestone** (via `/gsd-complete-milestone`):
-1. Full review of all sections
-2. Core Value check — still the right priority?
-3. Audit Out of Scope — reasons still valid?
-4. Update Context with current state
+- ~5,925 lines of Python across `utils/`, `scripts/`, and `tests/`.
+- 13 pytest tests mock heavy dependencies (torch, transformers, datasets) so they can run locally.
+- Known deferred items at v1.0 close: Phase 03.1 UAT/verification artifacts remain partial; documented in STATE.md.
 
 ## Constraints
 
 - Single NVIDIA GB10 (128GB unified memory)
 - Training run: 8–15 hours for 2 epochs
 - GitHub repo: coidea-ai/mai
+
+---
+*Last updated: 2026-07-12 after v1.0 milestone completion*
