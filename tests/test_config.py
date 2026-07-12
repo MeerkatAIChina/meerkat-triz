@@ -4,7 +4,7 @@ Covers TRAIN-02 (target_modules), TRAIN-03 (lora_dropout), and SYNTHETIC_CONFIG
 """
 
 import sys
-sys.path.insert(0, "ref/mongoose_ai_dgx")
+sys.path.insert(0, ".")
 
 # Prevent config.py from trying to create /home/meerkat directories at import time.
 # On macOS /home is a symlink to /System/Volumes/Data/home which may not exist,

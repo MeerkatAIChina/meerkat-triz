@@ -4,6 +4,7 @@ __pycache__/
 *.class
 *.so
 .Python
+.pytest_cache/
 
 # Jupyter
 .ipynb_checkpoints/

@@ -4,14 +4,14 @@ Covers INFRA-06: JSON artifact registry for cross-notebook state tracking
 """
 
 import sys
-sys.path.insert(0, "ref/mongoose_ai_dgx")
+sys.path.insert(0, ".")
 
 import os
 
 # Import pipeline_state directly to avoid triggering utils/__init__.py
 # which imports benchmark_utils -> torch (not available in test env)
 import importlib.util
-spec = importlib.util.spec_from_file_location("pipeline_state", "ref/mongoose_ai_dgx/utils/pipeline_state.py")
+spec = importlib.util.spec_from_file_location("pipeline_state", "utils/pipeline_state.py")
 pipeline_state_mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(pipeline_state_mod)
 PipelineState = pipeline_state_mod.PipelineState

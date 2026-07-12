@@ -5,8 +5,8 @@ import json
 import re
 from collections import OrderedDict
 
-INPUT_PATH = "ref/mongoose_ai_dgx/data/sample_data.json"
-OUTPUT_PATH = "ref/mongoose_ai_dgx/data/sample_data.json"
+INPUT_PATH = "data/sample_data.json"
+OUTPUT_PATH = "data/sample_data.json"
 
 
 def fix_typo(samples):

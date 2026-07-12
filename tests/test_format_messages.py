@@ -19,7 +19,7 @@ import pathlib
 original_mkdir = pathlib.Path.mkdir
 pathlib.Path.mkdir = lambda self, **kwargs: None
 
-sys.path.insert(0, 'ref/mongoose_ai_dgx')
+sys.path.insert(0, '.')
 
 from utils.data_utils import format_messages
 

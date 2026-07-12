@@ -10,10 +10,10 @@ This repository contains the **猫鼬AI (Meerkat AI)** project — a TRIZ (Theor
 
 ## Project Structure
 
-Source code lives in `ref/mongoose_ai_dgx/`:
+Source code lives at the repo root:
 
 ```
-ref/mongoose_ai_dgx/
+.
 ├── config.py              # Global configuration: hyperparameters, paths, hardware
 ├── requirements.txt       # Python dependencies
 ├── utils/
@@ -48,7 +48,7 @@ All work happens inside Jupyter notebooks on the DGX Spark. There is no traditio
 
 ```bash
 # Install dependencies
-pip install -r ref/mongoose_ai_dgx/requirements.txt
+pip install -r requirements.txt
 
 # Add project path (used in notebooks)
 import sys

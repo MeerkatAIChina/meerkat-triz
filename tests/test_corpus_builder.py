@@ -9,11 +9,11 @@ import sys
 import tempfile
 from pathlib import Path
 
-sys.path.insert(0, "ref/mongoose_ai_dgx")
+sys.path.insert(0, ".")
 
 import importlib.util
 spec = importlib.util.spec_from_file_location(
-    "corpus_builder", "ref/mongoose_ai_dgx/utils/corpus_builder.py"
+    "corpus_builder", "utils/corpus_builder.py"
 )
 corpus_builder_mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(corpus_builder_mod)
@@ -22,7 +22,7 @@ PDFExtractor = corpus_builder_mod.PDFExtractor
 ExtractedDocument = corpus_builder_mod.ExtractedDocument
 Page = corpus_builder_mod.Page
 
-FIXTURES_DIR = Path("ref/mongoose_ai_dgx/tests/fixtures/corpus")
+FIXTURES_DIR = Path("tests/fixtures/corpus")
 
 
 def test_pdf_extractor():

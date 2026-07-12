@@ -5,11 +5,11 @@ All tests use mocked model/tokenizer — no real model loading.
 """
 
 import sys
-sys.path.insert(0, "ref/mongoose_ai_dgx")
+sys.path.insert(0, ".")
 
 # Import synthetic_pipeline directly to avoid utils/__init__.py torch dependency
 import importlib.util
-spec = importlib.util.spec_from_file_location("synthetic_pipeline", "ref/mongoose_ai_dgx/utils/synthetic_pipeline.py")
+spec = importlib.util.spec_from_file_location("synthetic_pipeline", "utils/synthetic_pipeline.py")
 synthetic_pipeline_mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(synthetic_pipeline_mod)
 compute_perplexity = synthetic_pipeline_mod.compute_perplexity

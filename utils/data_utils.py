@@ -85,7 +85,6 @@ def create_sample_data(data_dir: Optional[str] = None) -> Dict[str, List[Dict]]:
         # 尝试从项目根目录查找
         possible_paths = [
             os.path.join(os.path.dirname(__file__), "..", "data"),
-            os.path.join(os.path.dirname(__file__), "..", "..", "data"),
             "/home/meerkat/mongoose_ai/data",
             "./data",
         ]

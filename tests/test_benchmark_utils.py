@@ -39,7 +39,7 @@ try:
     }
     sys.modules["config"] = _mock_config
 
-    sys.path.insert(0, "ref/mongoose_ai_dgx")
+    sys.path.insert(0, ".")
 
     import importlib.util
     spec = importlib.util.spec_from_file_location(

@@ -8,7 +8,7 @@ from unittest.mock import Mock, MagicMock
 from pathlib import Path
 
 import sys
-sys.path.insert(0, "ref/mongoose_ai_dgx")
+sys.path.insert(0, ".")
 
 
 @pytest.fixture
@@ -17,7 +17,7 @@ def mock_moonshot_client():
     # Import directly to avoid utils/__init__.py which pulls in torch
     import importlib.util
     spec = importlib.util.spec_from_file_location(
-        "synthetic_pipeline", "ref/mongoose_ai_dgx/utils/synthetic_pipeline.py"
+        "synthetic_pipeline", "utils/synthetic_pipeline.py"
     )
     sp_mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(sp_mod)
