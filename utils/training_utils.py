@@ -152,8 +152,16 @@ def load_model_and_tokenizer(
     if quantization_config and quantization_config.get("load_in_4bit"):
         try:
             from transformers import BitsAndBytesConfig
-            bnb_config = BitsAndBytesConfig(**quantization_config)
+
+            # 转换字符串dtype为torch.dtype，兼容Transformers v5
+            cfg = dict(quantization_config)
+            dtype_key = "bnb_4bit_compute_dtype"
+            if dtype_key in cfg and isinstance(cfg[dtype_key], str):
+                cfg[dtype_key] = getattr(torch, cfg[dtype_key], torch.float16)
+
+            bnb_config = BitsAndBytesConfig(**cfg)
             model_kwargs["quantization_config"] = bnb_config
+            model_kwargs["low_cpu_mem_usage"] = True
             logger.info("启用4-bit量化 (NF4)")
         except ImportError:
             logger.warning("bitsandbytes未安装，跳过量化")
@@ -178,6 +186,19 @@ def load_model_and_tokenizer(
 
     # 启用梯度检查点（节省内存）
     model.gradient_checkpointing_enable()
+
+    # 验证4-bit量化是否实际生效
+    if is_quantized:
+        try:
+            footprint_gb = model.get_memory_footprint() / (1024**3)
+            logger.info(f"4-bit模型显存占用: {footprint_gb:.2f} GB")
+            if footprint_gb > 40:
+                logger.warning(
+                    f"4-bit量化可能未生效: 显存占用 {footprint_gb:.2f} GB 远大于预期 (~20 GB)。"
+                    "请检查bitsandbytes CUDA支持或降级到已知可用版本。"
+                )
+        except Exception:
+            pass
 
     logger.info(f"模型加载完成")
     logger.info(f"模型参数总量: {sum(p.numel() for p in model.parameters()) / 1e9:.2f}B")

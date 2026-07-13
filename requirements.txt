@@ -12,7 +12,7 @@ torchaudio>=2.4.0
 # 大模型微调与推理 (升级至 v5 生态以支持 Qwen3.6 qwen3_5_moe 架构)
 transformers>=5.2.0       # Qwen3.6-35B-A3B 需要 >=5.2.0
 peft>=0.18.0              # Transformers v5 兼容 (旧版 <0.18 不兼容)
-bitsandbytes>=0.42.0      # 4-bit量化 (ARM64兼容: 0.43.3无ARM64 wheel)
+bitsandbytes>=0.49.0      # 4-bit量化 (DGX Spark ARM64 需要 >=0.49.0; 0.43.3 无 ARM64 wheel)
 accelerate>=1.0.0         # 设备映射与混合精度 (v5 生态兼容)
 
 # 训练与数据处理
