@@ -21,9 +21,9 @@ Transform a general-purpose 35B-parameter MoE model into a world-class TRIZ inno
 - [x] QLoRA fine-tuning run (04) — v1.0
 - [x] Post-training evaluation (05) — v1.0
 - [x] Raw corpus builder workflow (02c/02d) validated on DGX Spark — v1.0 post-close
+- [x] End-to-end QLoRA training run on the TRIZ-raw corpus SFT dataset (2,662 train / 313 val / 157 test): 666 steps, 2 epochs, all checkpoint validations PASSED, best eval_loss 1.3979 — 2026-06-19
 
 ### Active
-- [ ] Execute end-to-end v1.0 training run on DGX Spark using the TRIZ-raw corpus dataset
 - [ ] Open-source the fine-tuned LoRA adapter on Hugging Face with model card, license, and dataset attribution
 - [ ] Expand TRIZ test set from 5 to 50–100 questions for more robust Layer 2 evaluation
 - [ ] Run full Layer 1 suite (MMLU-Pro, GPQA, HumanEval, MATH, BBH) post-training
@@ -48,6 +48,7 @@ Transform a general-purpose 35B-parameter MoE model into a world-class TRIZ inno
 | 2026-06-30 | Insert Phase 3.1 to close audit blocker BLK-01 | Layer 1 baseline comparison now computes real lm-eval deltas |
 | 2026-07-12 | Move source code from `ref/mongoose_ai_dgx/` to repo root | Repo layout matches deployed DGX Spark path |
 | 2026-07-12 | Use TRIZ-raw corpus as the training dataset for the open-source release | Aligns the published model with real TRIZ source material rather than synthetic samples |
+| 2026-07-18 | Sync DGX Spark drift back into repo (2 test files with paths fixed to root layout, Notebook 01 4-bit cell, 04_worked.ipynb run record) | Remote `.git` has no commits; local repo is canonical and drift must be pulled manually |
 
 ## Current State
 
@@ -62,13 +63,17 @@ All 4 phases (1, 2, 3, 3.1) are complete with 18/18 plans summarized. The notebo
 
 Source code now lives at the repo root, matching the DGX Spark deployment layout at `/home/meerkat/mongoose_ai`.
 
+A full QLoRA training run completed on the DGX Spark on **2026-06-19** using the TRIZ-raw corpus SFT dataset (`data/processed/train.jsonl`, 2,662 samples): 666 steps over 2 epochs, checkpoint validations PASSED at steps 200/400/600/666, best eval_loss 1.3979. The final adapter (169 MB, SHA-256 `1f909cb0…`) is registered in pipeline_state as `adapter_checkpoint` at `models/meerkat_triz_adapter_v1/`; the executed run record is preserved in `notebooks/04_worked.ipynb`.
+
+Deployment sync verified 2026-07-18: all source files (`config.py`, `utils/`, `scripts/`, notebooks 02–05) are SHA-256-identical between repo and DGX Spark. Drift items were pulled back into the repo: `tests/test_metrics.py` + `tests/test_report.py` (paths fixed from the old `ref/mongoose_ai_dgx/` layout), Notebook 01's working 4-bit loading cell, and `notebooks/04_worked.ipynb`. Note: the remote `.git` has no commits, so the local repo (GitHub coidea-ai/mai) is canonical.
+
 ## Next Milestone Goals
 
 The v1.1 milestone should focus on **execution, open-source release, and hardening**:
 
-1. Train the LoRA adapter on the TRIZ-raw corpus (via Notebooks 02c/02d → 04).
+1. ~~Train the LoRA adapter on the TRIZ-raw corpus (via Notebooks 02c/02d → 04).~~ ✅ Completed 2026-06-19 (666 steps, best eval_loss 1.3979).
 2. Open-source the fine-tuned adapter on Hugging Face with a complete model card, Apache 2.0 license, and TRIZ-raw dataset attribution.
-3. Fix any runtime issues discovered during the actual DGX Spark training run (e.g., 4-bit quantization, dependency alignment).
+3. Fix any runtime issues discovered during DGX Spark training runs (e.g., 4-bit quantization, dependency alignment) — Notebook 01's 4-bit loading fix synced back 2026-07-18.
 4. Expand evaluation coverage (Layer 1 post-training, larger TRIZ test set).
 
 ## Context
@@ -84,4 +89,4 @@ The v1.1 milestone should focus on **execution, open-source release, and hardeni
 - GitHub repo: coidea-ai/mai
 
 ---
-*Last updated: 2026-07-12 after v1.0 milestone completion*
+*Last updated: 2026-07-18 after DGX Spark deployment sync*

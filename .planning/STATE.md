@@ -5,7 +5,7 @@ milestone_name: milestone
 status: Awaiting next milestone
 stopped_at: context exhaustion at 82% (2026-07-12)
 last_updated: "2026-07-12T01:49:21.496Z"
-last_activity: 2026-07-12 — Milestone v1.0 completed and archived
+last_activity: 2026-07-18 — DGX Spark deployment sync verified; 2026-06-19 corpus training run confirmed complete
 progress:
   total_phases: 4
   completed_phases: 4
@@ -129,8 +129,11 @@ Resume file: None
 - JupyterLab: http://192.168.5.246:8888
 - Project path: /home/chinux/jupyterlab/meerkatai
 - Symlink: /home/meerkat/mongoose_ai -> /home/chinux/jupyterlab/meerkatai
-- Dependencies: installed
+- Dependencies: installed (venv_v5: torch 2.12.0+cu130, transformers 5.10.1, trl 1.5.1, peft 0.19.1)
 - Config verified: Qwen3.6-35B-A3B, lora_dropout=0.0, 12 target modules
+- Training run: completed 2026-06-19 on TRIZ-raw corpus SFT (2,662 train samples, 666 steps, best eval_loss 1.3979)
+- Adapter: models/meerkat_triz_adapter_v1 (169 MB, SHA-256 1f909cb0…), registered as adapter_checkpoint in pipeline_state
+- Deployment sync: verified 2026-07-18 — all source files SHA-256-identical to repo; remote .git has no commits (local repo is canonical)
 
 ### Next Step
 
