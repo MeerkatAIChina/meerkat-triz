@@ -12,11 +12,11 @@ Transform a general-purpose 35B-parameter MoE model into a world-class TRIZ inno
 
 ### Validated
 - [x] Qwen3.6-35B-A3B base model with QLoRA fine-tuning — v1.0
-- [x] 548 seed TRIZ samples across 6 subsets — v1.0
+- [x] 385 seed TRIZ samples across 6 subsets — v1.0
 - [x] Synthetic data generation pipeline (6-stage, Moonshot API) — v1.0
 - [x] Notebook-driven workflow (01–05 + 02b) — v1.0
 - [x] DGX Spark hardware environment (128GB unified memory) — v1.0
-- [x] Generate ~6K synthetic training samples from 548 seeds — v1.0
+- [x] Generate ~6K synthetic training samples from 385 seeds — v1.0
 - [x] Baseline benchmark (03) before training — v1.0
 - [x] QLoRA fine-tuning run (04) — v1.0
 - [x] Post-training evaluation (05) — v1.0
@@ -25,9 +25,9 @@ Transform a general-purpose 35B-parameter MoE model into a world-class TRIZ inno
 
 ### Active
 - [ ] Open-source the fine-tuned LoRA adapter on Hugging Face with model card, license, and dataset attribution
-- [ ] Expand TRIZ test set from 5 to 50–100 questions for more robust Layer 2 evaluation
+- [ ] Expand TRIZ test set (currently 40 questions: 30 hardcoded + up to 10 dynamic) to a target of 50–100 questions for more robust Layer 2 evaluation
 - [ ] Run full Layer 1 suite (MMLU-Pro, GPQA, HumanEval, MATH, BBH) post-training
-- [ ] Evaluate and align `requirements.txt` with Notebook 01/04 dependency specifications
+- [x] Evaluate and align `requirements.txt` with Notebook 01/04 dependency specifications — 2026-07-20: Notebook 01 cell 4 now installs via `-r ../requirements.txt`; stale v4-era pins and saved pip error output removed
 
 ### Out of Scope
 - Full fine-tuning (resource constraints; QLoRA only)
@@ -56,7 +56,7 @@ Transform a general-purpose 35B-parameter MoE model into a world-class TRIZ inno
 
 All 4 phases (1, 2, 3, 3.1) are complete with 18/18 plans summarized. The notebook-driven QLoRA fine-tuning pipeline is fully implemented:
 
-- **Data**: `utils/synthetic_pipeline.py` + Notebook 02b generate ~6K synthetic TRIZ samples from 548 seeds with perplexity/diversity gates and pipeline-state registration. The raw corpus builder workflow (02c/02d) has also been validated on the DGX Spark.
+- **Data**: `utils/synthetic_pipeline.py` + Notebook 02b generate ~6K synthetic TRIZ samples from 385 seeds with perplexity/diversity gates and pipeline-state registration. The raw corpus builder workflow (02c/02d) has also been validated on the DGX Spark.
 - **Baseline**: Notebook 03 loads the model in FP16, runs all three benchmark layers, and persists baseline results.
 - **Training**: Notebook 04 executes QLoRA fine-tuning with checkpoint validation, SHA-256 metadata, and verified resume.
 - **Evaluation**: Notebook 05 loads baseline and adapter, runs Layer 2/3 TRIZ benchmarks, and — after Phase 3.1 — displays per-task Layer 1 lm-eval deltas.
@@ -79,7 +79,7 @@ The v1.1 milestone should focus on **execution, open-source release, and hardeni
 ## Context
 
 - ~5,925 lines of Python across `utils/`, `scripts/`, and `tests/`.
-- 13 pytest tests mock heavy dependencies (torch, transformers, datasets) so they can run locally.
+- ~58 pytest tests mock heavy dependencies (torch, transformers, datasets) so they can run locally.
 - Known deferred items at v1.0 close: Phase 03.1 UAT/verification artifacts remain partial; documented in STATE.md.
 
 ## Constraints

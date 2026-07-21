@@ -2,6 +2,8 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
+> **路径已迁移（2026-07-20 标注）：** 本计划中所有 `ref/mongoose_ai_dgx/` 前缀指向的旧布局已于 2026-07-12 迁移至仓库根（`config.py`、`utils/`、`notebooks/`、`tests/` 现均在仓库根目录，与 DGX Spark 部署路径 `/home/meerkat/mongoose_ai` 一致）。阅读/执行本计划时，请将 `ref/mongoose_ai_dgx/` 一律视为仓库根；正文保留原样以维持历史记录。
+
 **Goal:** Implement a corpus builder that extracts text from `TRIZ-raw/` PDF/DOCX/PPTX/DOC files, semantically chunks it, and writes a quality-gated `triz_corpus.jsonl` ready for continued pre-training on DGX Spark.
 
 **Architecture:** A dispatcher routes files to type-specific extractors, all returning a common `ExtractedDocument` structure. A `SemanticChunker` splits and merges segments by headings/paragraphs up to a target token count. A `CorpusWriter` emits JSONL with metadata plus stats/failure reports. A Jupyter notebook orchestrates the pipeline on DGX Spark.

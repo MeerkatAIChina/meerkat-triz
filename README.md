@@ -230,7 +230,7 @@ You are Meerkat-AI, an expert innovation consultant...<|im_end|>
 
 ## 合成数据生成
 
-本项目使用 Moonshot API 从 548 条种子数据生成约 6000 条合成训练数据：
+本项目使用 Moonshot API 从 385 条种子数据生成约 6000 条合成训练数据：
 
 ```bash
 # 设置 Moonshot API Key
@@ -253,7 +253,8 @@ export MOONSHOT_API_KEY="your-api-key"
 
 **真实数据比例说明：**
 
-当前配置下真实种子数据占比约 **8.7%**（548条真实 / 6286条总计），低于理论目标的20-30%。
+当前配置下真实种子数据占比约 **6.1%**（385条真实 / 6286条总计），低于理论目标的20-30%。
+（口径说明：此前按 548/6286 记为 8.7%；2026-06-18 提交 2f72fa6 移除 163 条完全重复种子后，种子实为 385 条，占比按 385/6286≈6.1% 计。）
 这是有意为之的设计决策：为了在Moonshot API成本可控的前提下（约￥5-10元）获得足够的样本总量（~6K条），
 我们选择了以样本总量优先的策略。如需提高真实数据比例，可在 `config.py` 中降低 `multipliers` 值
 （例如将 `case_generation` 和 `contradiction_analysis` 的倍数从16降至3-4），
@@ -283,7 +284,7 @@ A: 约8-15小时/epoch（35B模型比72B模型快约50%）。建议先运行1个
 A: 使用 checkpoint 恢复：
 ```python
 from utils.training_utils import resume_from_checkpoint
-trainer.train(resume_from_checkpoint="checkpoints/qlora_trtiz_v1/checkpoint-XXX")
+trainer.train(resume_from_checkpoint="checkpoints/qlora_triz_v1/checkpoint-XXX")
 ```
 
 ### Q: 适配器可以迁移到其他基座模型吗？

@@ -13,10 +13,15 @@ __pycache__/
 # Generated data
 data/processed/
 data/raw/
-results/
 checkpoints/
 *.json
 !sample_data.json
+
+# Results: track training logs & evaluation results (*.json/*.md),
+# keep excluding large artifacts (*.bin/*.safetensors stay ignored via rules below)
+results/*
+!results/*.json
+!results/*.md
 
 # Models
 models/

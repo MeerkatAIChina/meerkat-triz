@@ -28,7 +28,7 @@ Source code lives at the repo root:
 │   ├── 04_qlora_finetune.ipynb       # Main training (8-15 hours)
 │   └── 05_model_evaluation.ipynb     # Post-fine-tuning evaluation
 ├── data/
-│   └── sample_data.json   # 548 TRIZ domain samples across 6 subsets
+│   └── sample_data.json   # 385 TRIZ domain samples across 6 subsets
 └── README.md              # Chinese-language project documentation
 ```
 
@@ -115,7 +115,7 @@ An independent audit (2026-05-23, see `ref/审计报告_猫鼬AI训练方案.md`
 - **CR-001 (FIXED)**: SFTTrainer + DataCollatorForLanguageModeling conflict — resolved by using `formatting_func` instead
 - **CR-002 (FIXED)**: `target_modules="all-linear"` risk — resolved by using explicit manual module list
 - **CR-003 (FIXED)**: Hardcoded ChatML format — resolved by using `tokenizer.apply_chat_template()`
-- **MA-001 (FIXED)**: Sample data expanded from 12 to 548 samples in `sample_data.json`
+- **MA-001 (FIXED)**: Sample data expanded from 12 to 548 samples in `sample_data.json` (subsequently deduplicated to 385 on 2026-06-18, commit 2f72fa6)
 
 Remaining concern: Synthetic data generation (`vary_sample()`) uses simple paraphrase templates. For production-quality training, a GPT-4o-based synthesis pipeline with expert review is recommended.
 
