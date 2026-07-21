@@ -1,0 +1,248 @@
+{
+  "timestamp": "2026-07-21T14:00:22.225238",
+  "tag": "v2",
+  "adapter_path": "models/meerkat_triz_adapter_v2",
+  "test_data": "/home/meerkat/mongoose_ai/data/sample_data.json",
+  "base": {
+    "model": "base_fp16",
+    "overall_score": 0.5290277777777779,
+    "principle_accuracy": 0.9,
+    "contradiction_resolution": 0.3625,
+    "case_coverage": 0.3625,
+    "ariz_completeness": 0.3888888888888889,
+    "throughput_tokens_per_sec": 17.902440567925595,
+    "latency_p50_ms": 28617.156982421875,
+    "peak_memory_gb": 64.6825909614563
+  },
+  "adapter": {
+    "model": "meerkat_triz_adapter_v2",
+    "overall_score": 0.5893750000000001,
+    "principle_accuracy": 0.9,
+    "contradiction_resolution": 0.4145833333333333,
+    "case_coverage": 0.725,
+    "ariz_completeness": 0.25000000000000006,
+    "throughput_tokens_per_sec": 15.10020443992565,
+    "latency_p50_ms": 33905.078172683716,
+    "peak_memory_gb": 65.06480026245117
+  },
+  "delta": {
+    "overall_score": 0.06034722222222222,
+    "principle_accuracy": 0.0,
+    "contradiction_resolution": 0.052083333333333315,
+    "case_coverage": 0.3625,
+    "ariz_completeness": -0.13888888888888884
+  },
+  "delta_missing": [],
+  "full_triz_base": {
+    "principle_accuracy": {
+      "accuracy": 0.9,
+      "correct": 9,
+      "total": 10
+    },
+    "contradiction_resolution": {
+      "average_score": 0.3625,
+      "individual_scores": [
+        0.75,
+        0.0,
+        0.4,
+        0.5,
+        0.25,
+        0.25,
+        0.25,
+        0.5
+      ]
+    },
+    "case_quality": {
+      "average_coverage": 0.3625,
+      "bleu": {
+        "bleu": 0.7557359876590277,
+        "signature": "nrefs:1|case:mixed|eff:no|tok:zh|smooth:exp|version:2.4.3"
+      },
+      "rouge": {
+        "rouge1": 0.02774585798154227,
+        "rouge2": 0.0014285714285714288,
+        "rougeL": 0.02444250461575192
+      },
+      "n_bleu_rouge": 10,
+      "details": [
+        {
+          "coverage": 0.2,
+          "response_length": 1854
+        },
+        {
+          "coverage": 1.0,
+          "response_length": 1881
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 2027
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 2027
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 1880
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 1922
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 1726
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 1957
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 2049
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 1911
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 1903
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 2151
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 2273
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 2261
+        },
+        {
+          "coverage": 0.6,
+          "response_length": 1881
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 2092
+        }
+      ]
+    },
+    "ariz_completeness": {
+      "completeness": 0.3888888888888889,
+      "matched_steps": 2.3333333333333335,
+      "total_steps": 6,
+      "num_questions": 6
+    },
+    "overall_score": 0.5290277777777779
+  },
+  "full_triz_adapter": {
+    "principle_accuracy": {
+      "accuracy": 0.9,
+      "correct": 9,
+      "total": 10
+    },
+    "contradiction_resolution": {
+      "average_score": 0.4145833333333333,
+      "individual_scores": [
+        0.5,
+        0.6666666666666666,
+        0.4,
+        0.25,
+        0.5,
+        0.25,
+        0.25,
+        0.5
+      ]
+    },
+    "case_quality": {
+      "average_coverage": 0.725,
+      "bleu": {
+        "bleu": 2.2972699473068467,
+        "signature": "nrefs:1|case:mixed|eff:no|tok:zh|smooth:exp|version:2.4.3"
+      },
+      "rouge": {
+        "rouge1": 0.15797872884389222,
+        "rouge2": 0.07083333333333333,
+        "rougeL": 0.15797872884389222
+      },
+      "n_bleu_rouge": 10,
+      "details": [
+        {
+          "coverage": 1.0,
+          "response_length": 529
+        },
+        {
+          "coverage": 1.0,
+          "response_length": 501
+        },
+        {
+          "coverage": 1.0,
+          "response_length": 217
+        },
+        {
+          "coverage": 0.6,
+          "response_length": 192
+        },
+        {
+          "coverage": 1.0,
+          "response_length": 693
+        },
+        {
+          "coverage": 1.0,
+          "response_length": 236
+        },
+        {
+          "coverage": 1.0,
+          "response_length": 551
+        },
+        {
+          "coverage": 1.0,
+          "response_length": 681
+        },
+        {
+          "coverage": 1.0,
+          "response_length": 481
+        },
+        {
+          "coverage": 1.0,
+          "response_length": 671
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 2217
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 163
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 2413
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 177
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 171
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 2370
+        }
+      ]
+    },
+    "ariz_completeness": {
+      "completeness": 0.25000000000000006,
+      "matched_steps": 1.5,
+      "total_steps": 6,
+      "num_questions": 6
+    },
+    "overall_score": 0.5893750000000001
+  }
+}

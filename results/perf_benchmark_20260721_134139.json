@@ -1,0 +1,10 @@
+{
+  "latency_p50_ms": 28617.156982421875,
+  "latency_avg_ms": 28599.45257504781,
+  "throughput_tokens_per_sec": 17.902440567925595,
+  "memory_allocated_gb": 64.59170722961426,
+  "memory_peak_gb": 64.6825909614563,
+  "test_count": 3,
+  "max_tokens": 512,
+  "device": "cuda:0"
+}

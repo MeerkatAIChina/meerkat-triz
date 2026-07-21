@@ -1,0 +1,23 @@
+{
+  "timestamp": "2026-07-21T14:13:50.453575",
+  "mode": "ppl",
+  "tag": "v2",
+  "adapter_path": "models/meerkat_triz_adapter_v2",
+  "ppl_data": "/home/meerkat/mongoose_ai/data/processed/v2_test.jsonl",
+  "base": {
+    "num_samples": 498,
+    "avg_loss": 3.527589565778832,
+    "perplexity": 34.086177172052146,
+    "total_tokens": 103376
+  },
+  "adapter": {
+    "num_samples": 498,
+    "avg_loss": 1.0663167554211903,
+    "perplexity": 2.9005442534054375,
+    "total_tokens": 103376
+  },
+  "delta": {
+    "avg_loss": -2.4612728103576416,
+    "perplexity": -31.185632918646707
+  }
+}

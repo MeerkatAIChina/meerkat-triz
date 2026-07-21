@@ -1,0 +1,106 @@
+{
+  "principle_accuracy": {
+    "accuracy": 0.9,
+    "correct": 9,
+    "total": 10
+  },
+  "contradiction_resolution": {
+    "average_score": 0.3625,
+    "individual_scores": [
+      0.75,
+      0.0,
+      0.4,
+      0.5,
+      0.25,
+      0.25,
+      0.25,
+      0.5
+    ]
+  },
+  "case_quality": {
+    "average_coverage": 0.3625,
+    "bleu": {
+      "bleu": 0.7557359876590277,
+      "signature": "nrefs:1|case:mixed|eff:no|tok:zh|smooth:exp|version:2.4.3"
+    },
+    "rouge": {
+      "rouge1": 0.02774585798154227,
+      "rouge2": 0.0014285714285714288,
+      "rougeL": 0.02444250461575192
+    },
+    "n_bleu_rouge": 10,
+    "details": [
+      {
+        "coverage": 0.2,
+        "response_length": 1854
+      },
+      {
+        "coverage": 1.0,
+        "response_length": 1881
+      },
+      {
+        "coverage": 0.4,
+        "response_length": 2027
+      },
+      {
+        "coverage": 0.2,
+        "response_length": 2027
+      },
+      {
+        "coverage": 0.4,
+        "response_length": 1880
+      },
+      {
+        "coverage": 0.4,
+        "response_length": 1922
+      },
+      {
+        "coverage": 0.2,
+        "response_length": 1726
+      },
+      {
+        "coverage": 0.2,
+        "response_length": 1957
+      },
+      {
+        "coverage": 0.2,
+        "response_length": 2049
+      },
+      {
+        "coverage": 0.2,
+        "response_length": 1911
+      },
+      {
+        "coverage": 0.2,
+        "response_length": 1903
+      },
+      {
+        "coverage": 0.4,
+        "response_length": 2151
+      },
+      {
+        "coverage": 0.4,
+        "response_length": 2273
+      },
+      {
+        "coverage": 0.4,
+        "response_length": 2261
+      },
+      {
+        "coverage": 0.6,
+        "response_length": 1881
+      },
+      {
+        "coverage": 0.4,
+        "response_length": 2092
+      }
+    ]
+  },
+  "ariz_completeness": {
+    "completeness": 0.3888888888888889,
+    "matched_steps": 2.3333333333333335,
+    "total_steps": 6,
+    "num_questions": 6
+  },
+  "overall_score": 0.5290277777777779
+}
