@@ -197,11 +197,17 @@ def _check_keywords(response: str, keywords: List[str], keyword_map: Optional[Di
 def _compute_bleu(predictions: List[str], references: List[str]) -> Dict[str, Any]:
     """Corpus-level BLEU with Chinese tokenization."""
     try:
-        from sacrebleu import corpus_bleu
-        bleu = corpus_bleu(predictions, [references], tokenize='zh')
+        from sacrebleu import BLEU
+        scorer = BLEU(tokenize='zh')
+        result = scorer.corpus_score(predictions, [references])
+        # BLEUScore 无 signature 属性 (sacrebleu 2.x AttributeError 实锤);
+        # 签名来自 BLEU 实例, 版本间属性形式有差异, 防御性获取
+        signature = getattr(scorer, "signature", None)
+        if callable(getattr(scorer, "get_signature", None)):
+            signature = scorer.get_signature()
         return {
-            "bleu": bleu.score,
-            "signature": str(bleu.signature),
+            "bleu": result.score,
+            "signature": str(signature),
         }
     except ImportError:
         logger.warning("sacrebleu 未安装，跳过BLEU评测")
