@@ -17,6 +17,15 @@ QLoRA 训练脚本 (DGX Spark) — 从 notebooks/04_worked.ipynb 提炼的实战
 - 发货 best checkpoint (按 eval_loss 扫描 checkpoints 目录), 无 eval 记录回退末步并警告
 - --dry-run: 只装配参数 + 加载数据集 + 打印配置摘要, 不加载模型
 
+2026-07-21 合并 DGX /tmp/train_v2.py (v2 训练实际运行脚本, 2116 步成功) 的实战要素:
+- 手动 kbit 准备替代 prepare_model_for_kbit_training: peft 0.19 会把全部 bf16
+  参数转 fp32, 本模型 MoE 专家未量化 (33.25B), 全量转换需 ~133GB 必然 OOM
+  (crash1/crash2 实锤), 因此只冻结 + 梯度检查点 + enable_input_require_grads + LoRA
+- drop_shard_pagecache(): posix_fadvise(DONTNEED) 清理模型分片页缓存 (统一内存环境)
+- device_map="cuda:0" (v2 实战验证, 替代 auto)
+- 兼容 text-only jsonl (v2 数据实际 schema): 有 instruction/output 用 formatting_func,
+  仅 text 字段时交由 TRL 直接使用
+
 用法 (DGX Spark):
     # v2 数据集训练 (默认路径)
     venv_v5/bin/python scripts/train_qlora.py --run-name v2
@@ -30,7 +39,9 @@ QLoRA 训练脚本 (DGX Spark) — 从 notebooks/04_worked.ipynb 提炼的实战
 """
 
 import argparse
+import ctypes
 import gc
+import glob
 import inspect
 import json
 import os
@@ -53,6 +64,19 @@ def chat_template_has_generation_marker(tokenizer) -> bool:
     """检测 tokenizer chat template 是否含 {% generation %} 标记 (assistant_only_loss 的前提)"""
     template = getattr(tokenizer, "chat_template", None) or ""
     return bool(re.search(r"\{%-?\s*generation\s*-?%\}", template))
+
+
+def drop_shard_pagecache(model_path):
+    """posix_fadvise(DONTNEED) 清理模型分片页缓存 (DGX 统一内存环境, 来自 /tmp/train_v2.py 实战)"""
+    import torch
+
+    libc = ctypes.CDLL("libc.so.6")
+    for f in glob.glob(os.path.join(model_path, "*.safetensors")):
+        fd = os.open(f, os.O_RDONLY)
+        libc.posix_fadvise(fd, 0, 0, 4)  # POSIX_FADV_DONTNEED
+        os.close(fd)
+    gc.collect()
+    torch.cuda.empty_cache()
 
 
 def find_best_checkpoint(ckpt_dir):
@@ -182,8 +206,14 @@ def main():
     })
     log(f"train: {len(dataset['train'])} 条 | validation: {len(dataset['validation'])} 条")
     sample = dataset["train"][0]
-    assert sample.get("instruction") and sample.get("output"), \
-        f"样本缺少 instruction/output 字段 (字段: {list(sample.keys())})"
+    # 兼容两种 schema: instruction/input/output (v1 corpus SFT) 或 text-only (v2 实际 schema)
+    has_instruct_fields = bool(sample.get("instruction") and sample.get("output"))
+    if not has_instruct_fields:
+        assert sample.get("text"), \
+            f"样本既无 instruction/output 也无 text 字段 (字段: {list(sample.keys())})"
+        log(f"数据模式: text-only ChatML (字段: {list(sample.keys())}), 由 TRL 直接使用 text 列")
+    else:
+        log(f"数据模式: instruction/output (字段: {list(sample.keys())}), 使用 formatting_func 构造 ChatML")
 
     # ---------- DRY-RUN: 装配参数 + 打印配置摘要后退出 (不加载模型) ----------
     if args.dry_run:
@@ -196,6 +226,7 @@ def main():
             "val_file": args.val_file,
             "train_samples": len(dataset["train"]),
             "val_samples": len(dataset["validation"]),
+            "data_mode": "instruction/output + formatting_func" if has_instruct_fields else "text-only",
             "epochs": args.epochs,
             "training_args_type": type(training_args).__name__ if training_args else "构造失败",
             "max_length": getattr(training_args, "max_length",
@@ -226,14 +257,14 @@ def main():
     model, tokenizer = load_model_and_tokenizer(
         model_name_or_path=model_path,
         quantization_config=QLORA_CONFIG["quantization"],
-        device_map="auto",
+        device_map="cuda:0",             # v2 实战验证 (/tmp/train_v2.py); 统一内存环境无需 auto 分片
         trust_remote_code=True,
     )
     log(f"模型加载完成, 显存 {torch.cuda.memory_allocated() / 1024**3:.1f} GB")
 
     model.config.use_cache = False
-    gc.collect()
-    torch.cuda.empty_cache()
+    drop_shard_pagecache(model_path)
+    log(f"pagecache清理后, 显存 {torch.cuda.memory_allocated() / 1024**3:.1f} GB")
 
     # ---------- QLoRA ----------
     lora_config = setup_qlora_config(
@@ -243,8 +274,21 @@ def main():
         lora_dropout=QLORA_CONFIG["lora"]["lora_dropout"],
         use_rslora=QLORA_CONFIG["lora"].get("use_rslora", False),
     )
+
+    # 手动 kbit 准备 (替代 prepare_model_for_kbit_training, 来自 /tmp/train_v2.py 实战):
+    # peft 0.19 会把全部 bf16 参数转 fp32, 本模型 MoE 专家未量化 (33.25B),
+    # 全量转换需 ~133GB 必然 OOM (v2 crash1/crash2 实锤), 因此只冻结 + 梯度检查点 + LoRA。
+    log("手动准备QLoRA模型 (跳过 prepare_model_for_kbit_training 的 fp32 转换)...")
+    for p in model.parameters():
+        p.requires_grad = False
+    model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
+    if hasattr(model, "enable_input_require_grads"):
+        model.enable_input_require_grads()
     model = get_peft_model(model, lora_config)
     model.print_trainable_parameters()
+    trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    total = sum(p.numel() for p in model.parameters())
+    log(f"可训练参数: {trainable:,} / {total:,} ({100 * trainable / total:.4f}%)")
 
     # ---------- 训练参数 (SFTConfig 显式 max_length=2048 + assistant_only_loss 检测) ----------
     use_assistant_only_loss = chat_template_has_generation_marker(tokenizer)
@@ -255,30 +299,34 @@ def main():
     training_args = build_training_args(cfg, ckpt_dir, args.epochs,
                                         assistant_only_loss=use_assistant_only_loss)
 
-    # ---------- Trainer (create_trainer_v5: 无 packing / 无 data_collator; max_length 由 SFTConfig 承载) ----------
-    system_message = DATA_CONFIG["chatml"]["system_message"]
-
-    def formatting_func(example):
-        instruction = example.get("instruction", "")
-        input_text = example.get("input", "")
-        output = example.get("output", "")
-        sys_msg = example.get("system", system_message)
-        full_question = f"{instruction}\n\n{input_text}" if input_text else instruction
-        messages = [
-            {"role": "system", "content": sys_msg},
-            {"role": "user", "content": full_question},
-            {"role": "assistant", "content": output},
-        ]
-        return tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=False)
-
-    trainer = SFTTrainer(
+    # ---------- Trainer (无 packing / 无 data_collator; max_length 由 SFTConfig 承载) ----------
+    trainer_kwargs = dict(
         model=model,
         processing_class=tokenizer,
         train_dataset=dataset["train"],
         eval_dataset=dataset["validation"],
         args=training_args,
-        formatting_func=formatting_func,
     )
+    if has_instruct_fields:
+        system_message = DATA_CONFIG["chatml"]["system_message"]
+
+        def formatting_func(example):
+            instruction = example.get("instruction", "")
+            input_text = example.get("input", "")
+            output = example.get("output", "")
+            sys_msg = example.get("system", system_message)
+            full_question = f"{instruction}\n\n{input_text}" if input_text else instruction
+            messages = [
+                {"role": "system", "content": sys_msg},
+                {"role": "user", "content": full_question},
+                {"role": "assistant", "content": output},
+            ]
+            return tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=False)
+
+        trainer_kwargs["formatting_func"] = formatting_func
+    # text-only 模式: 不传 formatting_func, TRL 直接使用数据集的 text 列
+
+    trainer = SFTTrainer(**trainer_kwargs)
 
     checkpoint_callback = CheckpointValidationCallback(
         tokenizer=tokenizer,

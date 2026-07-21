@@ -2,24 +2,28 @@
 诊断评测：基座模型 vs LoRA适配器 (Layer 2 TRIZ + Layer 3 性能)
 
 在同一进程、同一 FP16 加载方式、同一测试集下先后评测基座与适配器，
-保证 apples-to-apples 对比。结果保存为 results/adapter_vs_base_<ts>.json。
+保证 apples-to-apples 对比。结果保存为 results/adapter_vs_base_<tag>_<ts>.json。
 
 用法 (DGX Spark):
-    venv_v5/bin/python scripts/eval_adapter_vs_base.py
+    venv_v5/bin/python scripts/eval_adapter_vs_base.py                          # 默认 v1 适配器
+    venv_v5/bin/python scripts/eval_adapter_vs_base.py --adapter models/meerkat_triz_adapter_v2 --tag v2
     # 低成本 before/after 交叉验证: held-out test 困惑度对比
     venv_v5/bin/python scripts/eval_adapter_vs_base.py --ppl
-    venv_v5/bin/python scripts/eval_adapter_vs_base.py --ppl data/processed/test.jsonl
+    venv_v5/bin/python scripts/eval_adapter_vs_base.py --adapter models/meerkat_triz_adapter_v2 \
+        --tag v2 --ppl data/processed/v2_test.jsonl
 """
 
 import argparse
 import json
 import math
+import os
 import sys
 import time
 from datetime import datetime
 from pathlib import Path
 
-sys.path.append("/home/meerkat/mongoose_ai")
+# 项目根目录 = 脚本所在目录的父目录 (替代硬编码 /home/meerkat/mongoose_ai)
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # 修复 PEFT v0.18 WeightConverter 兼容性 (必须在 PeftModel 加载前)
 import peft.utils.transformers_weight_conversion as twc
@@ -51,6 +55,14 @@ def log(msg):
 def parse_args():
     parser = argparse.ArgumentParser(description="基座 vs LoRA 适配器诊断评测")
     parser.add_argument(
+        "--adapter", default=ADAPTER_PATH, metavar="PATH",
+        help=f"LoRA 适配器目录 (默认: {ADAPTER_PATH})",
+    )
+    parser.add_argument(
+        "--tag", default=None, metavar="TAG",
+        help="run 标签, 用于输出文件名与元数据 (默认: 取适配器目录名末尾, 如 meerkat_triz_adapter_v2 → v2)",
+    )
+    parser.add_argument(
         "--ppl",
         nargs="?",
         const=DEFAULT_PPL_DATA,
@@ -59,7 +71,10 @@ def parse_args():
         help="启用困惑度对比模式: 对给定 jsonl (默认 data/processed/test.jsonl, "
              "训练留出的 157 条 held-out test) 分别计算基座与适配器的平均 loss/困惑度",
     )
-    return parser.parse_args()
+    args = parser.parse_args()
+    if args.tag is None:
+        args.tag = os.path.basename(args.adapter.rstrip("/")).replace("meerkat_triz_adapter_", "")
+    return args
 
 
 def load_base_and_tokenizer():
@@ -145,14 +160,14 @@ def compute_ppl(model, tokenizer, jsonl_path, max_length=2048):
     }
 
 
-def run_ppl_comparison(tokenizer, base, jsonl_path):
+def run_ppl_comparison(tokenizer, base, jsonl_path, adapter_path, tag):
     """PPL 模式: 基座 vs 适配器在 held-out test 上的困惑度对比。"""
     log("=== BASE: held-out test 困惑度 ===")
     ppl_base = compute_ppl(base, tokenizer, jsonl_path)
     log(f"BASE   avg_loss={ppl_base['avg_loss']:.4f} ppl={ppl_base['perplexity']:.4f}")
 
-    log("挂载 LoRA 适配器...")
-    model = PeftModel.from_pretrained(base, ADAPTER_PATH)
+    log(f"挂载 LoRA 适配器: {adapter_path}")
+    model = PeftModel.from_pretrained(base, adapter_path)
     log("适配器挂载完成")
 
     log("=== ADAPTER: held-out test 困惑度 ===")
@@ -162,6 +177,8 @@ def run_ppl_comparison(tokenizer, base, jsonl_path):
     comparison = {
         "timestamp": datetime.now().isoformat(),
         "mode": "ppl",
+        "tag": tag,
+        "adapter_path": adapter_path,
         "ppl_data": jsonl_path,
         "base": ppl_base,
         "adapter": ppl_adapter,
@@ -171,7 +188,7 @@ def run_ppl_comparison(tokenizer, base, jsonl_path):
         },
     }
 
-    out = Path(RESULTS_DIR) / f"ppl_adapter_vs_base_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+    out = Path(RESULTS_DIR) / f"ppl_adapter_vs_base_{tag}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
     with open(out, "w", encoding="utf-8") as f:
         json.dump(comparison, f, ensure_ascii=False, indent=2)
 
@@ -187,7 +204,7 @@ def main():
 
     if args.ppl is not None:
         # 困惑度对比模式: 低成本 before/after 交叉验证
-        run_ppl_comparison(tokenizer, base, args.ppl)
+        run_ppl_comparison(tokenizer, base, args.ppl, args.adapter, args.tag)
         log(f"总耗时 {(time.time() - t0) / 60:.1f} 分钟")
         return
 
@@ -199,8 +216,8 @@ def main():
     log("=== BASE: Layer 3 性能评测 ===")
     perf_base = run_performance_benchmark(model=base, tokenizer=tokenizer, output_dir=RESULTS_DIR)
 
-    log("挂载 LoRA 适配器...")
-    model = PeftModel.from_pretrained(base, ADAPTER_PATH)
+    log(f"挂载 LoRA 适配器: {args.adapter}")
+    model = PeftModel.from_pretrained(base, args.adapter)
     log("适配器挂载完成")
 
     log("=== ADAPTER: Layer 2 TRIZ 评测 ===")
@@ -212,7 +229,7 @@ def main():
     perf_adapter = run_performance_benchmark(model=model, tokenizer=tokenizer, output_dir=RESULTS_DIR)
 
     base_summary = summarize("base_fp16", triz_base, perf_base)
-    adapter_summary = summarize("meerkat_triz_adapter_v1", triz_adapter, perf_adapter)
+    adapter_summary = summarize(f"meerkat_triz_adapter_{args.tag}", triz_adapter, perf_adapter)
 
     # 显式 None 传播: 任一缺失则 delta 记 None 并列入 delta_missing, 不再静默当 0
     delta = {}
@@ -231,6 +248,8 @@ def main():
 
     comparison = {
         "timestamp": datetime.now().isoformat(),
+        "tag": args.tag,
+        "adapter_path": args.adapter,
         "test_data": TEST_DATA,
         "base": base_summary,
         "adapter": adapter_summary,
@@ -240,7 +259,7 @@ def main():
         "full_triz_adapter": triz_adapter,
     }
 
-    out = Path(RESULTS_DIR) / f"adapter_vs_base_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+    out = Path(RESULTS_DIR) / f"adapter_vs_base_{args.tag}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
     with open(out, "w", encoding="utf-8") as f:
         json.dump(comparison, f, ensure_ascii=False, indent=2)
 
