@@ -10,6 +10,12 @@ sys.path.insert(0, ".")
 import os
 import json
 
+import pytest
+
+# synthetic_pipeline 模块级依赖 numpy/openai；裸环境下跳过而非收集期报错
+pytest.importorskip("numpy", reason="synthetic_pipeline 依赖 numpy")
+pytest.importorskip("openai", reason="synthetic_pipeline 依赖 openai")
+
 # Import synthetic_pipeline directly to avoid utils/__init__.py torch dependency
 import importlib.util
 spec = importlib.util.spec_from_file_location("synthetic_pipeline", "utils/synthetic_pipeline.py")

@@ -535,7 +535,8 @@ class TRIZBenchmark:
         logger.info("评测: 发明原理识别准确率")
 
         correct = 0
-        total = len(self.test_questions)
+        # 分母只统计 multiple_choice（原理识别）题；correct 也只累计该类题
+        total = sum(1 for q in self.test_questions if q["type"] == "multiple_choice")
 
         for q in self.test_questions:
             if q["type"] == "multiple_choice":
@@ -597,10 +598,11 @@ class TRIZBenchmark:
             if q["type"] == "generation":
                 prompt = self._build_prompt(q["question"])
                 response = self._generate_response(prompt)
-                predictions.append(response)
 
+                # BLEU/ROUGE 只对带 reference 的题成对累计，保证长度一致
                 ref = q.get("reference", "")
                 if ref:
+                    predictions.append(response)
                     references.append(ref)
 
                 keywords = q.get("expected_keywords", CASE_QUALITY_KEYWORDS)
@@ -613,18 +615,20 @@ class TRIZBenchmark:
 
         avg_coverage = sum(s["coverage"] for s in coverage_scores) / len(coverage_scores) if coverage_scores else 0
 
+        n_paired = len(references)
         bleu_result = {}
         rouge_result = {}
-        if predictions and references and len(predictions) == len(references):
+        if n_paired > 0:
             bleu_result = _compute_bleu(predictions, references)
             rouge_result = _compute_rouge(predictions, references)
         else:
-            logger.warning("参考文本不足，跳过BLEU/ROUGE计算")
+            logger.warning("无带 reference 的 generation 题，跳过BLEU/ROUGE计算")
 
         return {
             "average_coverage": avg_coverage,
             "bleu": bleu_result,
             "rouge": rouge_result,
+            "n_bleu_rouge": n_paired,
             "details": coverage_scores,
         }
     

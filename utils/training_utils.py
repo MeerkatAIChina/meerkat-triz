@@ -5,7 +5,8 @@
 兼容性: Transformers v5 + TRL v1.x + PEFT v0.18
 """
 
-import torch
+from __future__ import annotations  # 注解惰性求值: 无 torch 环境下模块仍可导入
+
 import logging
 import hashlib
 import os
@@ -13,23 +14,74 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional, Dict, Any, List
 
-from transformers import (
-    AutoModelForCausalLM,
-    AutoTokenizer,
-    TrainingArguments,
-    TrainerCallback,
-)
-from peft import (
-    LoraConfig,
-    get_peft_model,
-    prepare_model_for_kbit_training,
-    TaskType,
-    PeftModel,
-)
-from trl import SFTTrainer
+# ---- 惰性重依赖策略 (复盘整改: 让 `import utils` 零重依赖) ----
+# torch/transformers/peft/trl 仅在检测到 torch 的训练环境 (DGX) 中于模块级导入；
+# 无 torch 的开发机/CI 上本模块仍可正常 import，训练函数被调用时才报清晰错误。
+# 原位于 utils/__init__.py 的 fla monkey-patch 也移入本模块
+# (_apply_fla_device_ctx_patch)，在训练入口 load_model_and_tokenizer() 调用时执行。
+import importlib.util as _importlib_util
+
+_HAS_TORCH = _importlib_util.find_spec("torch") is not None
+
+if _HAS_TORCH:
+    import torch
+    from transformers import (
+        AutoModelForCausalLM,
+        AutoTokenizer,
+        TrainingArguments,
+        TrainerCallback,
+    )
+    from peft import (
+        LoraConfig,
+        get_peft_model,
+        prepare_model_for_kbit_training,
+        TaskType,
+        PeftModel,
+    )
+    from trl import SFTTrainer
+else:
+    # 占位基类: 仅保证 CheckpointValidationCallback 的类定义与模块可导入。
+    # 训练环境中 torch 必然存在，始终使用真实的 transformers.TrainerCallback。
+    TrainerCallback = object
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+
+def _require_training_deps():
+    """训练路径函数入口检查: 无 torch 环境下给出明确错误而非 NameError。"""
+    if not _HAS_TORCH:
+        raise ImportError(
+            "该函数依赖 torch/transformers/peft/trl，请在 DGX 训练环境中运行"
+        )
+
+
+def _apply_fla_device_ctx_patch():
+    """Monkey-patch flash-linear-attention device context bug (原位于 utils/__init__.py)。
+
+    fla caches torch.cpu as device_torch_lib when triton backend reports 'cpu',
+    then tries to call torch.cpu.device(index) which doesn't exist.
+    This breaks model.generate() on CUDA. We intercept the error and fall back
+    to torch.cuda.device or a no-op context.
+    仅在训练/推理入口调用时执行，import 本模块不会触发。
+    """
+    try:
+        import contextlib
+        import fla.utils as _fla_utils
+
+        _fla_orig_custom_device_ctx = _fla_utils.custom_device_ctx
+
+        def _fla_patched_custom_device_ctx(index: int):
+            try:
+                return _fla_orig_custom_device_ctx(index)
+            except AttributeError:
+                if torch.cuda.is_available() and index is not None:
+                    return torch.cuda.device(index)
+                return contextlib.nullcontext()
+
+        _fla_utils.custom_device_ctx = _fla_patched_custom_device_ctx
+    except Exception:
+        pass  # fla not installed or already fixed
 
 
 class CheckpointValidationCallback(TrainerCallback):
@@ -124,6 +176,9 @@ def load_model_and_tokenizer(
     Returns:
         (model, tokenizer) 元组
     """
+    _require_training_deps()
+    _apply_fla_device_ctx_patch()
+
     logger.info(f"加载模型: {model_name_or_path}")
     logger.info(f"设备映射: {device_map}")
 
@@ -131,6 +186,9 @@ def load_model_and_tokenizer(
     tokenizer = AutoTokenizer.from_pretrained(
         model_name_or_path,
         trust_remote_code=trust_remote_code,
+        # 训练场景有意使用 right padding: Qwen 官方推荐的 padding_side="left"
+        # 仅针对生成/推理场景 (batch generate 需左对齐)；训练 (teacher forcing +
+        # labels 位移) 用 right 是标准做法。此为有意选择，关闭审计项 MI-001。
         padding_side="right",
     )
 
@@ -266,6 +324,7 @@ def setup_qlora_config(
     - List[str]: 手动指定模块名列表
     - "all-linear": PEFT自动检测 (不推荐, 已知在混合架构上存在兼容性问题)
     """
+    _require_training_deps()
     if target_modules is None:
         target_modules = get_qwen36_target_modules()
         logger.info("使用Qwen3.6默认target_modules列表")
@@ -310,6 +369,7 @@ def prepare_qlora_model(model, lora_config: LoraConfig) -> Any:
     Returns:
         配置好的PEFT模型
     """
+    _require_training_deps()
     logger.info("准备QLoRA模型...")
 
     # 准备4-bit模型用于训练
@@ -348,13 +408,14 @@ def setup_training_arguments(
     DGX Spark推荐配置：
     - batch_size=1 (内存限制)
     - gradient_accumulation_steps=8 (有效batch=8)
-    - fp16=True (DGX Spark支持FP16)
+    - fp16=False / bf16=False (QLoRA 4-bit 下默认双关，原因见 args_dict 注释)
     - optim=paged_adamw_8bit (分页优化器省内存)
 
     兼容性说明 (Transformers v5):
     - 通过字典合并kwargs，避免硬编码参数与kwargs冲突
     - 调用方负责传入v5兼容的参数名 (如 eval_strategy 替代 evaluation_strategy)
     """
+    _require_training_deps()
     args_dict = {
         "output_dir": output_dir,
         "num_train_epochs": num_train_epochs,
@@ -370,7 +431,11 @@ def setup_training_arguments(
         "save_strategy": "steps",
         "eval_strategy": "steps",
         "logging_strategy": "steps",
-        "fp16": True,
+        # 默认 fp16=False: QLoRA 4-bit 场景下 fp16=True 会启用 GradScaler，
+        # 与 bitsandbytes 4-bit 量化权重的梯度路径冲突；实战配置
+        # (04_worked.ipynb 与 scripts/train_qlora.py) 均为 fp16/bf16 双关——
+        # 基座冻结为 4-bit、LoRA 参数以 FP32 训练，已被验证稳定。
+        "fp16": False,
         "bf16": False,
         "optim": "paged_adamw_8bit",
         "remove_unused_columns": False,
@@ -406,15 +471,21 @@ def create_trainer(
     """
     创建SFTTrainer进行监督微调
 
-    使用TRL库的SFTTrainer + formatting_func 正确处理ChatML格式：
-    - 通过formatting_func将messages列表转换为对话文本
-    - SFTTrainer内部自动只计算assistant回复部分的loss
+    使用TRL库的SFTTrainer + formatting_func 处理ChatML格式：
+    - 通过formatting_func将messages列表转换为整段对话纯文本
+    - 注意 (经2026-07复盘核实): formatting_func 返回整段纯文本时，TRL 对
+      全文 (system+user+assistant) 计 loss，并非只对 assistant 回复计 loss。
+      若需 completion-only loss，正确做法是:
+      a) 数据集改用 prompt/completion 两列，TRL 自动只对 completion 计 loss；或
+      b) SFTConfig(assistant_only_loss=True) 且 chat template 含 {% generation %}
+         标记 (Qwen 官方 template 支持)。
     - 不传入data_collator，避免与SFTTrainer内置逻辑冲突
 
     兼容性说明 (TRL v1.x):
     - 使用 processing_class 替代 tokenizer
     - 移除 max_seq_length 和 packing 参数 (v1.x 不支持)
     """
+    _require_training_deps()
     logger.info("创建SFTTrainer...")
 
     # 默认系统提示词
@@ -425,6 +496,13 @@ def create_trainer(
             "recommend invention principles, generate innovative solutions, and guide them through "
             "the ARIZ algorithm. Always provide structured, actionable advice grounded in TRIZ methodology."
         )
+
+    # WARN-05: 复用 utils/data_utils.py 的 format_messages 构建消息并套用
+    # chat template，消除重复逻辑。差异说明: format_messages 接收显式字段
+    # (user_content/system_message/assistant_content)，而本处的 formatting_func
+    # 接收原始 example dict 并负责 instruction+input 拼接，二者签名不同但可适配；
+    # 此处惰性导入以避免模块级拉入 data_utils 的 datasets 依赖。
+    from .data_utils import format_messages as _format_messages
 
     # 格式化函数: 将原始数据转换为对话文本
     def formatting_func(example):
@@ -440,20 +518,14 @@ def create_trainer(
         else:
             full_question = instruction
 
-        # 使用tokenizer的官方chat template生成对话格式
-        messages = [
-            {"role": "system", "content": sys_msg},
-            {"role": "user", "content": full_question},
-            {"role": "assistant", "content": output},
-        ]
-
-        # 应用chat template生成文本 (不添加generation prompt)
-        text = tokenizer.apply_chat_template(
-            messages,
-            tokenize=False,
-            add_generation_prompt=False,
+        # 复用 format_messages: 构建 system/user/assistant 消息并应用
+        # tokenizer官方chat template (不添加generation prompt)
+        return _format_messages(
+            tokenizer,
+            full_question,
+            system_message=sys_msg,
+            assistant_content=output,
         )
-        return text
 
     # 验证tokenizer是否支持apply_chat_template
     if not hasattr(tokenizer, 'apply_chat_template'):
@@ -522,6 +594,7 @@ def merge_and_save_model(
         push_to_hub: 是否推送到HuggingFace Hub
         hub_model_id: Hub模型ID
     """
+    _require_training_deps()
     logger.info("合并LoRA适配器与基座模型...")
     logger.info(f"基座模型: {base_model_path}")
     logger.info(f"适配器: {adapter_path}")
@@ -575,12 +648,36 @@ def compute_file_sha256(filepath: str) -> str:
     return sha256.hexdigest()
 
 
+def get_final_train_loss(log_history: Optional[List[Dict]]) -> Any:
+    """从 trainer.state.log_history 中提取最后一次训练 loss。
+
+    修复复盘确认的 final_loss 元数据 bug: log_history[-1] 可能是 eval 条目
+    (只含 eval_loss、无 loss 键)，导致 adapter 元数据 final_loss 落为 'N/A'。
+    改为向前扫描，返回最后一条含 'loss' 键的条目的值。
+
+    Args:
+        log_history: trainer.state.log_history (可为空或 None)
+
+    Returns:
+        最后一次训练 loss；无训练条目时返回 'N/A'
+    """
+    if not log_history:
+        return "N/A"
+    for entry in reversed(log_history):
+        if isinstance(entry, dict) and "loss" in entry:
+            return entry["loss"]
+    return "N/A"
+
+
 def save_adapter_only(model, tokenizer, output_path: str, metadata: Optional[Dict] = None):
     """
     仅保存LoRA适配器（不含基座模型，体积小）
 
     适配器大小通常只有100-200MB，便于版本管理和快速加载。
     保存的元数据包括: adapter类型、基座模型、时间戳、SHA-256哈希、训练参数等。
+
+    提示: 组装 metadata['final_loss'] 时请使用 get_final_train_loss(
+    trainer.state.log_history)，避免 log_history[-1] 为 eval 条目导致 'N/A'。
 
     Args:
         model: PEFT模型

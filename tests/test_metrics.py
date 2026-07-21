@@ -1,10 +1,5 @@
 import sys
-from unittest.mock import MagicMock
-
-# Mock heavy dependencies before import
-sys.modules['torch'] = MagicMock()
-sys.modules['jieba'] = MagicMock()
-sys.modules['jieba'].cut = lambda text: text.split()
+from unittest.mock import MagicMock, patch
 
 sys.path.insert(0, '.')
 
@@ -13,15 +8,23 @@ import importlib.util
 spec = importlib.util.spec_from_file_location("benchmark_utils", "utils/benchmark_utils.py")
 benchmark_utils = importlib.util.module_from_spec(spec)
 
-# We need to mock more dependencies before execution
-sys.modules['rouge_score'] = MagicMock()
-sys.modules['sacrebleu'] = MagicMock()
-sys.modules['lm_eval'] = MagicMock()
+# Mock heavy dependencies before execution, scoped with patch.dict so the
+# mocks cannot leak into other test modules (previously made suite results
+# order-dependent).
+_mock_jieba = MagicMock()
+_mock_jieba.cut = lambda text: text.split()
 
 # For this test, we'll test the functions by direct import if possible,
 # or verify they exist in the module
 try:
-    spec.loader.exec_module(benchmark_utils)
+    with patch.dict(sys.modules, {
+        "torch": MagicMock(),
+        "jieba": _mock_jieba,
+        "rouge_score": MagicMock(),
+        "sacrebleu": MagicMock(),
+        "lm_eval": MagicMock(),
+    }):
+        spec.loader.exec_module(benchmark_utils)
 except ImportError:
     pass  # Some dependencies may still be missing
 

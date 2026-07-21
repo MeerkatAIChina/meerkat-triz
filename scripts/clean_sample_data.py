@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Clean sample_data.json: fix typo, dedupe, and break rigid templates."""
 
+import argparse
 import json
 import re
 from collections import OrderedDict
@@ -28,6 +29,51 @@ def deduplicate(samples):
             seen.add(sig)
             unique.append(s)
     return unique
+
+
+def detect_instruction_conflicts(samples):
+    """Find instructions appearing >=2 times with differing outputs.
+
+    Returns a list of (instruction, [(index, output), ...]) conflict groups,
+    in first-seen order.
+    """
+    groups = OrderedDict()
+    for idx, s in enumerate(samples):
+        groups.setdefault(s.get("instruction", ""), []).append(
+            (idx, s.get("output", ""))
+        )
+    conflicts = []
+    for instr, items in groups.items():
+        if len(items) >= 2 and len({out for _, out in items}) >= 2:
+            conflicts.append((instr, items))
+    return conflicts
+
+
+def resolve_instruction_conflicts(samples):
+    """For each conflict group keep only the sample with the longest output.
+
+    Ties keep the first occurrence. Returns (new_samples, removed_count).
+    """
+    drop = set()
+    for _instr, items in detect_instruction_conflicts(samples):
+        keep_idx = max(items, key=lambda t: len(t[1]))[0]
+        for idx, _out in items:
+            if idx != keep_idx:
+                drop.add(idx)
+    kept = [s for i, s in enumerate(samples) if i not in drop]
+    return kept, len(drop)
+
+
+def report_instruction_conflicts(conflicts, subset):
+    """Print conflict groups for one subset (report only, no deletion)."""
+    for instr, items in conflicts:
+        print(
+            f"  [CONFLICT] {subset}: instruction x{len(items)} "
+            f"with differing outputs"
+        )
+        print(f"    instruction: {instr[:80]}")
+        for idx, out in items:
+            print(f"      - #{idx} (output {len(out)} chars): {out[:60]!r}")
 
 
 def vary_concept_explanation(samples):
@@ -398,11 +444,25 @@ def vary_innovation_assessment(samples):
 
 
 def main():
+    parser = argparse.ArgumentParser(
+        description="Clean sample_data.json: fix typo, dedupe, break rigid templates, "
+        "and detect instruction-level conflicts (same instruction, different outputs)."
+    )
+    parser.add_argument(
+        "--resolve",
+        action="store_true",
+        help="Resolve instruction conflicts by keeping the longest-output version "
+        "(default: report only, no deletion).",
+    )
+    args = parser.parse_args()
+
     with open(INPUT_PATH, "r", encoding="utf-8") as f:
         data = json.load(f)
 
     cleaned = OrderedDict()
     counts = {}
+    conflict_counts = {}
+    resolved_removed = {}
 
     for subset in data:
         samples = data[subset]
@@ -410,6 +470,15 @@ def main():
 
         samples = fix_typo(samples)
         samples = deduplicate(samples)
+
+        # Instruction-level conflict detection: same instruction, differing outputs
+        conflicts = detect_instruction_conflicts(samples)
+        conflict_counts[subset] = len(conflicts)
+        if conflicts:
+            report_instruction_conflicts(conflicts, subset)
+            if args.resolve:
+                samples, removed = resolve_instruction_conflicts(samples)
+                resolved_removed[subset] = removed
 
         if subset == "concept_explanation":
             samples = vary_concept_explanation(samples)
@@ -427,9 +496,17 @@ def main():
     print("Cleaning complete.")
     total_before = sum(b for b, _ in counts.values())
     total_after = sum(a for _, a in counts.values())
+    total_conflicts = sum(conflict_counts.values())
     print(f"Total: {total_before} → {total_after} samples")
+    print(f"Instruction conflicts: {total_conflicts} groups")
+    if args.resolve:
+        print(f"Resolved by removing {sum(resolved_removed.values())} samples "
+              f"(kept longest output per group)")
     for subset, (b, a) in counts.items():
-        print(f"  {subset}: {b} → {a}")
+        line = f"  {subset}: {b} → {a}, conflicts: {conflict_counts[subset]}"
+        if subset in resolved_removed:
+            line += f" (resolved: -{resolved_removed[subset]})"
+        print(line)
 
 
 if __name__ == "__main__":

@@ -8,7 +8,7 @@ importing the module under test.
 """
 
 import sys
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 import pathlib
 
 # Prevent config.py from trying to create /home/meerkat directories at import time.
@@ -16,7 +16,9 @@ _original_mkdir = pathlib.Path.mkdir
 pathlib.Path.mkdir = lambda self, *args, **kwargs: None
 
 try:
-    # Mock torch, numpy, and datasets before importing benchmark_utils
+    # Mock torch, numpy, and datasets before importing benchmark_utils.
+    # patch.dict scopes the injection to this import block only — leaving the
+    # mocks in sys.modules permanently made suite results order-dependent.
     _mock_torch = Mock()
     _mock_torch.tensor = Mock(return_value=Mock())
     _mock_torch.cuda = Mock()
@@ -25,9 +27,6 @@ try:
     _mock_torch.cuda.is_available = Mock(return_value=False)
     _mock_torch.cuda.synchronize = Mock()
     _mock_torch.no_grad = Mock(return_value=Mock(__enter__=Mock(return_value=None), __exit__=Mock(return_value=None)))
-    sys.modules["torch"] = _mock_torch
-    sys.modules["numpy"] = Mock()
-    sys.modules["datasets"] = Mock()
 
     # Mock config before data_utils imports it
     _mock_config = Mock()
@@ -37,21 +36,25 @@ try:
             "max_length": 4096,
         }
     }
-    sys.modules["config"] = _mock_config
 
     sys.path.insert(0, ".")
 
     import importlib.util
-    spec = importlib.util.spec_from_file_location(
-        "benchmark_utils", "utils/benchmark_utils.py"
-    )
-    benchmark_utils = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(benchmark_utils)
+    with patch.dict(sys.modules, {
+        "torch": _mock_torch,
+        "numpy": Mock(),
+        "datasets": Mock(),
+        "config": _mock_config,
+    }):
+        spec = importlib.util.spec_from_file_location(
+            "benchmark_utils", "utils/benchmark_utils.py"
+        )
+        benchmark_utils = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(benchmark_utils)
 finally:
     pathlib.Path.mkdir = _original_mkdir
 
 import pytest
-from unittest.mock import patch
 
 
 class TestKeywordMatching:
@@ -381,3 +384,91 @@ def test_evaluate_case_quality_calls_bleu_rouge():
     source = inspect.getsource(benchmark_utils.TRIZBenchmark.evaluate_case_quality)
     assert "_compute_bleu" in source
     assert "_compute_rouge" in source
+
+
+def test_principle_accuracy_perfect_score_is_1():
+    """分母 bug 回归：10 道选择题全对时 accuracy 必须等于 1.0。
+
+    历史 bug（benchmark_utils.py 原理识别评分）：分母用全部题型题数而分子只
+    统计 multiple_choice 题，导致即使选择题全对，accuracy 上限也只有 25-33%。
+    """
+    tokenizer = Mock()
+    model = Mock()
+    benchmark = benchmark_utils.TRIZBenchmark(model, tokenizer, device="cpu")
+
+    mc_questions = [
+        {
+            "category": "principle_identification",
+            "question": f"原理识别题 {i}",
+            "expected": "Nested doll",
+            "type": "multiple_choice",
+        }
+        for i in range(10)
+    ]
+    other_questions = [
+        {
+            "category": "contradiction_resolution",
+            "question": "开放题",
+            "expected_keywords": ["strength"],
+            "type": "open_ended",
+        }
+        for _ in range(30)
+    ]
+    benchmark.test_questions = mc_questions + other_questions
+    benchmark._build_prompt = Mock(side_effect=lambda q: q)
+    benchmark._generate_response = Mock(return_value="Nested doll（嵌套原理）")
+
+    result = benchmark.evaluate_principle_accuracy()
+    assert result["correct"] == 10
+    assert result["total"] == 10
+    assert result["accuracy"] == 1.0
+
+
+def test_evaluate_case_quality_pairs_predictions_and_references():
+    """BLEU/ROUGE 对齐回归：只对带 reference 的 generation 题成对累计。
+
+    历史 bug：predictions/references 长度判断恒为 False，BLEU/ROUGE 恒被跳过。
+    """
+    tokenizer = Mock()
+    model = Mock()
+    benchmark = benchmark_utils.TRIZBenchmark(model, tokenizer, device="cpu")
+    benchmark.test_questions = [
+        {
+            "category": "case_generation",
+            "question": "带参考的生成题",
+            "reference": "参考答案",
+            "expected_keywords": ["原理"],
+            "type": "generation",
+        },
+        {
+            "category": "case_generation",
+            "question": "无参考的生成题",
+            "expected_keywords": ["原理"],
+            "type": "generation",
+        },
+    ]
+    benchmark._build_prompt = Mock(side_effect=lambda q: q)
+    benchmark._generate_response = Mock(return_value="基于分割原理的方案")
+
+    captured = {}
+
+    def _fake_bleu(predictions, references):
+        captured["bleu"] = (list(predictions), list(references))
+        return {"bleu": 10.0}
+
+    def _fake_rouge(predictions, references):
+        captured["rouge"] = (list(predictions), list(references))
+        return {"rouge1": 0.5, "rouge2": 0.4, "rougeL": 0.45}
+
+    with patch.object(benchmark_utils, "_compute_bleu", side_effect=_fake_bleu), \
+         patch.object(benchmark_utils, "_compute_rouge", side_effect=_fake_rouge):
+        result = benchmark.evaluate_case_quality()
+
+    # 两题中只有 1 题带 reference → 只应累计 1 对，且两列表严格等长
+    assert result["n_bleu_rouge"] == 1
+    bleu_preds, bleu_refs = captured["bleu"]
+    rouge_preds, rouge_refs = captured["rouge"]
+    assert len(bleu_preds) == len(bleu_refs) == 1
+    assert len(rouge_preds) == len(rouge_refs) == 1
+    assert result["bleu"] == {"bleu": 10.0}
+    assert result["rouge"]["rouge1"] == 0.5

@@ -67,8 +67,8 @@ QLORA_CONFIG = {
     
     # 训练超参数
     "training": {
-        "output_dir": str(CHECKPOINTS_DIR / "qlora_trtiz_v1"),
-        "num_train_epochs": 2,              # TRIZ领域2个epoch通常足够
+        "output_dir": str(CHECKPOINTS_DIR / "qlora_triz_v1"),
+        "num_train_epochs": 4,              # 04_worked实证best eval_loss在末步(欠训练), 2→4; 10s/step下约3.7h
         "per_device_train_batch_size": 1,   # DGX Spark单卡batch_size=1
         "per_device_eval_batch_size": 1,
         "gradient_accumulation_steps": 8,   # 有效batch_size=8
@@ -77,17 +77,15 @@ QLORA_CONFIG = {
         "lr_scheduler_type": "cosine",      # 余弦退火
         "logging_steps": 10,
         "save_steps": 200,
-        "eval_steps": 200,
+        "eval_steps": 100,                # 配合4 epochs与EarlyStopping(patience=3), 200→100
         "save_total_limit": 3,              # 最多保留3个checkpoint
         "load_best_model_at_end": False,
         "metric_for_best_model": "eval_loss",
         "greater_is_better": False,
         "report_to": "tensorboard",         # 或 "wandb"
         "bf16": False,                      # DGX Spark可能不支持bf16
-        "fp16": True,                       # 使用fp16
+        "fp16": False,                      # 与实际训练运行一致 (04_worked: fp16/bf16均关闭, 避免GradScaler+BF16冲突)
         "optim": "paged_adamw_8bit",        # 分页优化器省内存
-        "group_by_length": True,            # 按长度分组提升效率
-        "length_column_name": "length",
     }
 }
 

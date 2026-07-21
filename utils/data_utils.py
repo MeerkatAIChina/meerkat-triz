@@ -66,7 +66,7 @@ def create_sample_data(data_dir: Optional[str] = None) -> Dict[str, List[Dict]]:
     """
     加载示例训练数据
 
-    从JSON文件加载预生成的548条高质量TRIZ领域训练数据，
+    从JSON文件加载预生成的385条高质量TRIZ领域训练数据，
     覆盖6个子集：概念解释、矛盾分析、原理推荐、案例生成、ARIZ指导、创新评估。
 
     如果JSON文件不存在，则创建仅含12条最小示例数据的回退数据集

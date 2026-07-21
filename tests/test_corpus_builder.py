@@ -9,6 +9,8 @@ import sys
 import tempfile
 from pathlib import Path
 
+import pytest
+
 sys.path.insert(0, ".")
 
 import importlib.util
@@ -26,6 +28,7 @@ FIXTURES_DIR = Path("tests/fixtures/corpus")
 
 
 def test_pdf_extractor():
+    pytest.importorskip("fitz", reason="pymupdf 未安装，跳过 PDF 提取测试")
     extractor = PDFExtractor(ocr_enabled=False)
     doc = extractor.extract(FIXTURES_DIR / "sample.pdf")
     assert doc.file_type == "pdf"
@@ -38,6 +41,7 @@ PptxExtractor = corpus_builder_mod.PptxExtractor
 
 
 def test_docx_extractor():
+    pytest.importorskip("docx", reason="python-docx 未安装，跳过 DOCX 提取测试")
     extractor = DocxExtractor()
     doc = extractor.extract(FIXTURES_DIR / "sample.docx")
     assert doc.file_type == "docx"
@@ -46,6 +50,7 @@ def test_docx_extractor():
 
 
 def test_pptx_extractor():
+    pytest.importorskip("pptx", reason="python-pptx 未安装，跳过 PPTX 提取测试")
     extractor = PptxExtractor()
     doc = extractor.extract(FIXTURES_DIR / "sample.pptx")
     assert doc.file_type == "pptx"
@@ -127,6 +132,7 @@ build_corpus = corpus_builder_mod.build_corpus
 
 
 def test_build_corpus(tmp_path):
+    pytest.importorskip("fitz", reason="pymupdf 未安装，跳过端到端语料构建测试")
     # 构造临时TRIZ-raw目录
     raw_dir = tmp_path / "TRIZ-raw" / "test_category"
     raw_dir.mkdir(parents=True)

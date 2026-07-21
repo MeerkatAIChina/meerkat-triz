@@ -16,7 +16,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple, Any
 
-from openai import OpenAI, RateLimitError, APIError
+from openai import OpenAI, RateLimitError, APIError, BadRequestError
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -60,6 +60,64 @@ SYSTEM_PROMPT = """你是一个TRIZ领域数据生成专家。你的任务是根
 """
 
 
+# ==================== V2: 多角度高质量生成 ====================
+
+SYSTEM_PROMPT_V2 = """你是一个TRIZ领域数据生成专家。你的任务是根据给定的TRIZ原始材料片段，生成高质量的中文指令微调样本。
+
+对每个输入片段，生成指定数量的样本，每个样本从不同角度切入（轮换使用）：
+- 概念角度：解释片段中的核心概念/原理/术语
+- 应用角度：如何将片段中的方法应用于实际工程问题
+- 案例角度：基于片段场景构造具体的问题解决案例
+- 对比角度：与相近概念/方法的辨析（如适用）
+
+每个样本是一个JSON对象，格式如下：
+{
+  "subset": "子集名称（必须是以下六个之一）",
+  "angle": "concept | application | case | comparison 之一",
+  "instruction": "用户向TRIZ专家提出的问题",
+  "input": "可选的补充上下文（通常为空字符串）",
+  "output": "基于材料片段生成的专业、完整、结构化的TRIZ回答"
+}
+
+子集必须是以下六个之一：
+- concept_explanation: 概念解释（定义、原理、术语说明）
+- contradiction_analysis: 矛盾分析（技术矛盾、物理矛盾、分离原理）
+- principle_recommendation: 原理推荐（根据问题推荐发明原理）
+- case_generation: 案例生成（基于场景生成创新方案/案例）
+- ariz_guidance: ARIZ指导（ARIZ算法步骤、问题转化、理想解）
+- innovation_assessment: 创新评估（方案评估、专利可行性、技术成熟度）
+
+质量要求：
+1. 问题必须紧密围绕材料片段内容，语法正确、表述自然，像真实用户咨询。
+2. 回答必须基于材料片段，专业准确，必要时分点论述，不少于250字。
+3. 不同样本的 instruction 必须有明显差异，禁止换汤不换药的改写。
+4. 输出必须是严格的JSON数组，不要输出任何JSON之外的解释文字。
+5. 如果提供了来源类别与推荐子集，优先使用推荐子集。
+"""
+
+# 来源类别 → 推荐子集（作为提示与解析兜底，修正 V1 自由分类导致的失衡）
+CATEGORY_SUBSET_HINTS = {
+    "40个发明原理": ["principle_recommendation", "concept_explanation"],
+    "TRIZ二级教材": ["concept_explanation", "contradiction_analysis"],
+    "二级课件": ["concept_explanation", "contradiction_analysis"],
+    "2019年创新方法培训班课件": ["concept_explanation", "ariz_guidance"],
+    "零散TRIZ课件": ["concept_explanation", "principle_recommendation"],
+    "TRIZ网课": ["concept_explanation", "ariz_guidance"],
+    "教材和测试题": ["contradiction_analysis", "ariz_guidance"],
+    "TRIZ面试官": ["contradiction_analysis", "innovation_assessment"],
+    "四级案例": ["case_generation"],
+    "阳光电源": ["case_generation", "innovation_assessment"],
+    "4-大华-基于TRIZ的全局摄像机开发": ["case_generation"],
+    "GEN-TRIZ": ["concept_explanation", "innovation_assessment"],
+    "Simon Litvin": ["concept_explanation", "innovation_assessment"],
+    "Jack Hipple": ["concept_explanation", "principle_recommendation"],
+    "Proceedings": ["innovation_assessment", "concept_explanation"],
+}
+
+# 样本角度轮换
+SAMPLE_ANGLES = ["concept", "application", "case", "comparison"]
+
+
 def _format_chunks_for_prompt(chunks: List[Dict[str, Any]]) -> str:
     """将多个 corpus chunk 格式化为一个 prompt。"""
     lines = []
@@ -75,7 +133,7 @@ def _format_chunks_for_prompt(chunks: List[Dict[str, Any]]) -> str:
     return "\n".join(lines)
 
 
-def _parse_json_response(content: str, expected_count: int) -> List[Dict[str, str]]:
+def _parse_json_response(content: str, expected_count: int, fallback_subset: str = "concept_explanation") -> List[Dict[str, str]]:
     """从模型响应中解析 JSON 样本列表。"""
     content = content.strip()
     samples = []
@@ -120,7 +178,7 @@ def _parse_json_response(content: str, expected_count: int) -> List[Dict[str, st
                 normalized = valid
                 break
         if normalized is None:
-            normalized = "concept_explanation"  # 兜底
+            normalized = fallback_subset  # 兜底 (V2: 按来源类别引导)
 
         instruction = str(s.get("instruction", "")).strip()
         output = str(s.get("output", "")).strip()
@@ -138,6 +196,51 @@ def _parse_json_response(content: str, expected_count: int) -> List[Dict[str, st
         logger.warning(f"解析到 {len(validated)} 条有效样本，期望 {expected_count} 条")
 
     return validated
+
+
+# ==================== V2: 质量门 ====================
+
+def _strip_think_blocks(text: str) -> str:
+    """移除空的 <think>...</think> 块 (V1 数据中发现 Qwen 模板注入的空思考块)。"""
+    import re
+    text = re.sub(r"<think>\s*</think>\s*", "", text)
+    return text.strip()
+
+
+def _normalize_instruction(instruction: str) -> str:
+    """归一化 instruction 用于去重：去空白/标点/大小写。"""
+    import re
+    return re.sub(r"[\s，。、？！,.?!'\"“”'']", "", instruction.lower())
+
+
+def apply_v2_quality_gates(
+    samples: List[Dict[str, str]],
+    min_output_chars: int = 150,
+) -> Tuple[List[Dict[str, str]], Dict[str, int]]:
+    """
+    V2 质量门：清洗 think 块、最短回答长度过滤、instruction 精确去重。
+
+    Returns:
+        (过滤后的样本列表, 统计信息)
+    """
+    stats = {"input": len(samples), "think_stripped": 0, "too_short": 0, "duplicate": 0}
+    seen = set()
+    cleaned = []
+    for s in samples:
+        output = _strip_think_blocks(s.get("output", ""))
+        if output != s.get("output", ""):
+            stats["think_stripped"] += 1
+        if len(output) < min_output_chars:
+            stats["too_short"] += 1
+            continue
+        key = _normalize_instruction(s.get("instruction", ""))
+        if not key or key in seen:
+            stats["duplicate"] += 1
+            continue
+        seen.add(key)
+        cleaned.append({**s, "output": output})
+    stats["kept"] = len(cleaned)
+    return cleaned, stats
 
 
 class CorpusSFTGenerator:
@@ -225,6 +328,76 @@ class CorpusSFTGenerator:
             logger.error(f"Moonshot API 错误: {e}")
             raise
 
+    def generate_batch_v2(
+        self,
+        chunks: List[Dict[str, Any]],
+        samples_per_chunk: int = 3,
+        max_tokens: int = 4096,
+        temperature: float = 0.7,
+        category_hints: bool = True,
+    ) -> List[Dict[str, str]]:
+        """V2: 为一批 chunk 各生成 samples_per_chunk 个多角度样本。"""
+        if not chunks:
+            return []
+
+        self._rate_limit_sleep()
+
+        prompt_body = _format_chunks_for_prompt(chunks)
+        expected = len(chunks) * samples_per_chunk
+
+        hints_text = ""
+        fallback_subset = "concept_explanation"
+        if category_hints:
+            # 汇总本批 chunk 的来源类别，给出推荐子集
+            batch_hints: List[str] = []
+            for chunk in chunks:
+                category = chunk.get("metadata", {}).get("category", "")
+                hinted = CATEGORY_SUBSET_HINTS.get(category)
+                if hinted:
+                    batch_hints.append(f"来源类别「{category}」推荐子集: {', '.join(hinted)}")
+            if batch_hints:
+                hints_text = "\n\n" + "\n".join(sorted(set(batch_hints)))
+                fallback_subset = CATEGORY_SUBSET_HINTS.get(
+                    chunks[0].get("metadata", {}).get("category", ""),
+                    [fallback_subset],
+                )[0]
+
+        user_prompt = (
+            f"请为以下 {len(chunks)} 个TRIZ材料片段各生成 {samples_per_chunk} 个微调样本"
+            f"（每个片段使用不同角度: concept/application/case/comparison 轮换），"
+            f"输出严格的JSON数组（共 {expected} 个JSON对象）:\n\n"
+            f"{prompt_body}{hints_text}"
+        )
+
+        try:
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=[
+                    {"role": "system", "content": SYSTEM_PROMPT_V2},
+                    {"role": "user", "content": user_prompt},
+                ],
+                temperature=temperature,
+                max_tokens=max_tokens,
+            )
+
+            self.last_request_time = time.time()
+            self.total_requests += 1
+            if response.usage:
+                self.total_tokens_used += response.usage.total_tokens
+
+            content = response.choices[0].message.content
+            return _parse_json_response(content, expected, fallback_subset=fallback_subset)
+
+        except RateLimitError:
+            logger.warning("触发 Moonshot 速率限制，等待60秒后重试...")
+            time.sleep(60)
+            return self.generate_batch_v2(
+                chunks, samples_per_chunk, max_tokens, temperature, category_hints
+            )
+        except APIError as e:
+            logger.error(f"Moonshot API 错误: {e}")
+            raise
+
     def generate_from_corpus(
         self,
         corpus_path: str,
@@ -233,6 +406,10 @@ class CorpusSFTGenerator:
         max_tokens: int = 2000,
         temperature: float = 0.7,
         seed: int = 42,
+        samples_per_chunk: int = 1,
+        min_output_chars: int = 0,
+        dedup: bool = False,
+        category_hints: bool = False,
     ) -> Tuple[Dict[str, List[Dict[str, str]]], Dict[str, Any]]:
         """
         从 corpus 文件生成 SFT 样本，按子集分组返回。
@@ -244,6 +421,10 @@ class CorpusSFTGenerator:
             max_tokens: 每次生成的最大 token 数
             temperature: 采样温度
             seed: 随机种子（用于采样）
+            samples_per_chunk: V2 — 每个 chunk 生成的样本数 (>1 启用多角度生成)
+            min_output_chars: V2 — 最短回答字符数 (0=不过滤)
+            dedup: V2 — 按归一化 instruction 精确去重
+            category_hints: V2 — 按来源类别引导子集分类与解析兜底
 
         Returns:
             (按子集分组的样本字典, 统计信息字典)
@@ -309,11 +490,20 @@ class CorpusSFTGenerator:
 
             logger.info(f"批次 {batch_num}/{total_batches}: 处理 {len(batch_chunks)} 条 chunk")
             try:
-                generated = self.generate_batch(
-                    batch_chunks,
-                    max_tokens=max_tokens,
-                    temperature=temperature,
-                )
+                if samples_per_chunk > 1:
+                    generated = self.generate_batch_v2(
+                        batch_chunks,
+                        samples_per_chunk=samples_per_chunk,
+                        max_tokens=max_tokens,
+                        temperature=temperature,
+                        category_hints=category_hints,
+                    )
+                else:
+                    generated = self.generate_batch(
+                        batch_chunks,
+                        max_tokens=max_tokens,
+                        temperature=temperature,
+                    )
                 all_samples.extend(generated)
 
                 for i in range(batch_idx, batch_idx + len(batch_chunks)):
@@ -321,10 +511,29 @@ class CorpusSFTGenerator:
 
                 self._save_checkpoint(checkpoint_file, completed_ids, all_samples)
 
+            except BadRequestError as e:
+                # 400 拒绝（如内容过滤）属提示词级确定性错误，重试同一批无效：
+                # 将该批 chunk 标记为已完成以永久跳过，保存检查点后继续后续批次
+                logger.warning(
+                    f"批次 {batch_num} 被 API 拒绝 (400 BadRequest，疑似内容过滤)，"
+                    f"跳过 {len(batch_chunks)} 条 chunk 并继续: {e}"
+                )
+                for i in range(batch_idx, batch_idx + len(batch_chunks)):
+                    completed_ids.add(i)
+                self._save_checkpoint(checkpoint_file, completed_ids, all_samples)
+                continue
             except Exception as e:
                 logger.error(f"批次 {batch_num} 失败: {e}")
                 self._save_checkpoint(checkpoint_file, completed_ids, all_samples)
                 raise
+
+        # V2: 质量门 (清洗 think 块 / 长度过滤 / 去重)
+        gate_stats = None
+        if dedup or min_output_chars > 0:
+            all_samples, gate_stats = apply_v2_quality_gates(
+                all_samples, min_output_chars=min_output_chars
+            )
+            logger.info(f"质量门: {gate_stats}")
 
         # 按子集分组
         grouped: Dict[str, List[Dict[str, str]]] = {s: [] for s in VALID_SUBSETS}
@@ -343,6 +552,10 @@ class CorpusSFTGenerator:
             "total_requests": self.total_requests,
             "total_tokens_used": self.total_tokens_used,
         }
+        if gate_stats:
+            stats["quality_gates"] = gate_stats
+        if samples_per_chunk > 1:
+            stats["samples_per_chunk"] = samples_per_chunk
 
         logger.info(f"生成完成: {stats['total_samples']} 条样本")
         return grouped, stats

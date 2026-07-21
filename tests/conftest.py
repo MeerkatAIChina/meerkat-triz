@@ -115,7 +115,9 @@ def sample_seeds():
 @pytest.fixture
 def mock_model_and_tokenizer():
     """Mock model and tokenizer for perplexity computation tests"""
-    import torch
+    # loss 需支持 torch.exp(loss).item()，无法用 Mock 替代真实张量；
+    # 无 torch 的裸环境（如本地 macOS）下跳过，而非让整个套件报错。
+    torch = pytest.importorskip("torch", reason="需要真实 torch 构造 loss 张量")
 
     # Mock tokenizer
     tokenizer = Mock()

@@ -1,12 +1,4 @@
 import sys
-from unittest.mock import MagicMock
-
-# Mock heavy dependencies
-sys.modules['torch'] = MagicMock()
-sys.modules['rouge_score'] = MagicMock()
-sys.modules['sacrebleu'] = MagicMock()
-sys.modules['jieba'] = MagicMock()
-sys.modules['lm_eval'] = MagicMock()
 
 sys.path.insert(0, '.')
 
