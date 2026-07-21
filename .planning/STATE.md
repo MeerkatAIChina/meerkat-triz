@@ -5,7 +5,7 @@ milestone_name: milestone
 status: Awaiting next milestone
 stopped_at: context exhaustion at 82% (2026-07-12)
 last_updated: "2026-07-12T01:49:21.496Z"
-last_activity: 2026-07-18 — DGX Spark deployment sync verified; 2026-06-19 corpus training run confirmed complete
+last_activity: 2026-07-20 — 七维复盘（docs/training_retrospective_2026-07-20.md）+ P0/P1 本地修复全部入库（评测 bug、测试隔离、训练基建、notebooks、v1.1 REQUIREMENTS）
 progress:
   total_phases: 4
   completed_phases: 4
