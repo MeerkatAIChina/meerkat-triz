@@ -1,0 +1,229 @@
+{
+  "timestamp": "2026-07-21T08:13:23.179903",
+  "test_data": "/home/meerkat/mongoose_ai/data/sample_data.json",
+  "base": {
+    "model": "base_fp16",
+    "overall_score": 0.3126388888888889,
+    "principle_accuracy": 0.2,
+    "contradiction_resolution": 0.3375,
+    "case_coverage": 0.3125,
+    "ariz_completeness": 0.4444444444444444,
+    "throughput_tokens_per_sec": 17.918055315634266,
+    "latency_p50_ms": 28559.21459197998,
+    "peak_memory_gb": null
+  },
+  "adapter": {
+    "model": "meerkat_triz_adapter_v2",
+    "overall_score": 0.3282638888888889,
+    "principle_accuracy": 0.175,
+    "contradiction_resolution": 0.38958333333333334,
+    "case_coverage": 0.6,
+    "ariz_completeness": 0.19444444444444442,
+    "throughput_tokens_per_sec": 15.504851431043273,
+    "latency_p50_ms": 32988.375425338745,
+    "peak_memory_gb": null
+  },
+  "delta": {
+    "overall_score": 0.015625,
+    "principle_accuracy": -0.025000000000000022,
+    "contradiction_resolution": 0.052083333333333315,
+    "case_coverage": 0.2875,
+    "ariz_completeness": -0.25
+  },
+  "full_triz_base": {
+    "principle_accuracy": {
+      "accuracy": 0.2,
+      "correct": 8,
+      "total": 40
+    },
+    "contradiction_resolution": {
+      "average_score": 0.3375,
+      "individual_scores": [
+        0.75,
+        0.0,
+        0.2,
+        0.5,
+        0.25,
+        0.25,
+        0.25,
+        0.5
+      ]
+    },
+    "case_quality": {
+      "average_coverage": 0.3125,
+      "bleu": {},
+      "rouge": {},
+      "details": [
+        {
+          "coverage": 0.2,
+          "response_length": 1826
+        },
+        {
+          "coverage": 0.8,
+          "response_length": 2057
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 1927
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 2013
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 1681
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 1884
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 2030
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 2008
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 2038
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 1992
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 1772
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 2061
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 2180
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 2178
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 2084
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 2207
+        }
+      ]
+    },
+    "ariz_completeness": {
+      "completeness": 0.4444444444444444,
+      "matched_steps": 2.6666666666666665,
+      "total_steps": 6,
+      "num_questions": 6
+    },
+    "overall_score": 0.3126388888888889
+  },
+  "full_triz_adapter": {
+    "principle_accuracy": {
+      "accuracy": 0.175,
+      "correct": 7,
+      "total": 40
+    },
+    "contradiction_resolution": {
+      "average_score": 0.38958333333333334,
+      "individual_scores": [
+        0.75,
+        0.6666666666666666,
+        0.2,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.5
+      ]
+    },
+    "case_quality": {
+      "average_coverage": 0.6,
+      "bleu": {},
+      "rouge": {},
+      "details": [
+        {
+          "coverage": 0.2,
+          "response_length": 2263
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 2322
+        },
+        {
+          "coverage": 0.8,
+          "response_length": 228
+        },
+        {
+          "coverage": 1.0,
+          "response_length": 468
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 2383
+        },
+        {
+          "coverage": 0.8,
+          "response_length": 540
+        },
+        {
+          "coverage": 1.0,
+          "response_length": 595
+        },
+        {
+          "coverage": 1.0,
+          "response_length": 737
+        },
+        {
+          "coverage": 0.8,
+          "response_length": 299
+        },
+        {
+          "coverage": 1.0,
+          "response_length": 529
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 1925
+        },
+        {
+          "coverage": 0.6,
+          "response_length": 2019
+        },
+        {
+          "coverage": 0.8,
+          "response_length": 698
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 173
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 209
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 2425
+        }
+      ]
+    },
+    "ariz_completeness": {
+      "completeness": 0.19444444444444442,
+      "matched_steps": 1.1666666666666667,
+      "total_steps": 6,
+      "num_questions": 6
+    },
+    "overall_score": 0.3282638888888889
+  }
+}

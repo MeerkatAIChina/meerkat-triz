@@ -1,0 +1,94 @@
+{
+  "adapter_type": "LORA",
+  "base_model": "/home/meerkat/mongoose_ai/models/Qwen3.6-35B-A3B",
+  "timestamp": "2026-07-21T07:01:53.144971",
+  "training_steps": 2116,
+  "num_train_epochs": 2,
+  "learning_rate": 0.0002,
+  "final_loss": "N/A",
+  "best_eval_loss": 1.0673376321792603,
+  "dataset": {
+    "train": 8458,
+    "validation": 995
+  },
+  "checkpoint_validation": [
+    {
+      "step": 200,
+      "timestamp": "2026-07-21T00:54:10.459668",
+      "size_mb": 161.57,
+      "status": "PASSED",
+      "loss": 3.3187
+    },
+    {
+      "step": 400,
+      "timestamp": "2026-07-21T01:32:11.033039",
+      "size_mb": 161.57,
+      "status": "PASSED",
+      "loss": 2.9703
+    },
+    {
+      "step": 600,
+      "timestamp": "2026-07-21T02:10:17.838298",
+      "size_mb": 161.57,
+      "status": "PASSED",
+      "loss": 3.0049
+    },
+    {
+      "step": 800,
+      "timestamp": "2026-07-21T02:48:28.250005",
+      "size_mb": 161.57,
+      "status": "PASSED",
+      "loss": 3.1393
+    },
+    {
+      "step": 1000,
+      "timestamp": "2026-07-21T03:26:44.764766",
+      "size_mb": 161.57,
+      "status": "PASSED",
+      "loss": 2.9989
+    },
+    {
+      "step": 1200,
+      "timestamp": "2026-07-21T04:04:50.635127",
+      "size_mb": 161.57,
+      "status": "PASSED",
+      "loss": 3.1128
+    },
+    {
+      "step": 1400,
+      "timestamp": "2026-07-21T04:43:01.339149",
+      "size_mb": 161.57,
+      "status": "PASSED",
+      "loss": 2.9117
+    },
+    {
+      "step": 1600,
+      "timestamp": "2026-07-21T05:21:07.564009",
+      "size_mb": 161.57,
+      "status": "PASSED",
+      "loss": 2.9259
+    },
+    {
+      "step": 1800,
+      "timestamp": "2026-07-21T05:59:11.169801",
+      "size_mb": 161.57,
+      "status": "PASSED",
+      "loss": 2.9104
+    },
+    {
+      "step": 2000,
+      "timestamp": "2026-07-21T06:37:14.507821",
+      "size_mb": 161.57,
+      "status": "PASSED",
+      "loss": 2.9159
+    },
+    {
+      "step": 2116,
+      "timestamp": "2026-07-21T07:01:52.535739",
+      "size_mb": 161.57,
+      "status": "PASSED",
+      "loss": 2.8949
+    }
+  ],
+  "sha256": "a7bb48a4f90eae03ff12f79e9e14476d4e5969dcedd71364b666300eb31bfd86"
+}

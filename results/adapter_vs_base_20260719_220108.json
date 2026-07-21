@@ -1,0 +1,229 @@
+{
+  "timestamp": "2026-07-19T22:01:08.786117",
+  "test_data": "/home/meerkat/mongoose_ai/data/sample_data.json",
+  "base": {
+    "model": "base_fp16",
+    "overall_score": 0.31270833333333337,
+    "principle_accuracy": 0.2,
+    "contradiction_resolution": 0.33125,
+    "case_coverage": 0.35000000000000003,
+    "ariz_completeness": 0.4166666666666667,
+    "throughput_tokens_per_sec": 18.2135380817376,
+    "latency_p50_ms": 28090.240478515625,
+    "peak_memory_gb": null
+  },
+  "adapter": {
+    "model": "meerkat_triz_adapter_v1",
+    "overall_score": 0.3309722222222223,
+    "principle_accuracy": 0.175,
+    "contradiction_resolution": 0.3625,
+    "case_coverage": 0.4875,
+    "ariz_completeness": 0.36111111111111116,
+    "throughput_tokens_per_sec": 15.4744368673031,
+    "latency_p50_ms": 9166.752815246582,
+    "peak_memory_gb": null
+  },
+  "delta": {
+    "overall_score": 0.018263888888888913,
+    "principle_accuracy": -0.025000000000000022,
+    "contradiction_resolution": 0.03125,
+    "case_coverage": 0.13749999999999996,
+    "ariz_completeness": -0.055555555555555525
+  },
+  "full_triz_base": {
+    "principle_accuracy": {
+      "accuracy": 0.2,
+      "correct": 8,
+      "total": 40
+    },
+    "contradiction_resolution": {
+      "average_score": 0.33125,
+      "individual_scores": [
+        0.5,
+        0.0,
+        0.4,
+        0.5,
+        0.25,
+        0.25,
+        0.25,
+        0.5
+      ]
+    },
+    "case_quality": {
+      "average_coverage": 0.35000000000000003,
+      "bleu": {},
+      "rouge": {},
+      "details": [
+        {
+          "coverage": 0.2,
+          "response_length": 1793
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 1808
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 2011
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 2155
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 1845
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 1979
+        },
+        {
+          "coverage": 1.0,
+          "response_length": 1680
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 2016
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 1987
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 1976
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 1964
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 2040
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 1886
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 2175
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 1996
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 2230
+        }
+      ]
+    },
+    "ariz_completeness": {
+      "completeness": 0.4166666666666667,
+      "matched_steps": 2.5,
+      "total_steps": 6,
+      "num_questions": 6
+    },
+    "overall_score": 0.31270833333333337
+  },
+  "full_triz_adapter": {
+    "principle_accuracy": {
+      "accuracy": 0.175,
+      "correct": 7,
+      "total": 40
+    },
+    "contradiction_resolution": {
+      "average_score": 0.3625,
+      "individual_scores": [
+        0.75,
+        0.0,
+        0.4,
+        0.25,
+        0.75,
+        0.0,
+        0.25,
+        0.5
+      ]
+    },
+    "case_quality": {
+      "average_coverage": 0.4875,
+      "bleu": {},
+      "rouge": {},
+      "details": [
+        {
+          "coverage": 0.6,
+          "response_length": 198
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 2138
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 2221
+        },
+        {
+          "coverage": 0.2,
+          "response_length": 2203
+        },
+        {
+          "coverage": 0.0,
+          "response_length": 119
+        },
+        {
+          "coverage": 0.8,
+          "response_length": 1858
+        },
+        {
+          "coverage": 0.6,
+          "response_length": 188
+        },
+        {
+          "coverage": 1.0,
+          "response_length": 131
+        },
+        {
+          "coverage": 0.8,
+          "response_length": 191
+        },
+        {
+          "coverage": 0.8,
+          "response_length": 250
+        },
+        {
+          "coverage": 0.8,
+          "response_length": 255
+        },
+        {
+          "coverage": 0.6,
+          "response_length": 1668
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 2104
+        },
+        {
+          "coverage": 0.0,
+          "response_length": 65
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 1947
+        },
+        {
+          "coverage": 0.4,
+          "response_length": 2251
+        }
+      ]
+    },
+    "ariz_completeness": {
+      "completeness": 0.36111111111111116,
+      "matched_steps": 2.1666666666666665,
+      "total_steps": 6,
+      "num_questions": 6
+    },
+    "overall_score": 0.3309722222222223
+  }
+}
