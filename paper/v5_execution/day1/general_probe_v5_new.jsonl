@@ -1,0 +1,90 @@
+{"id": "probe_cs_06", "category": "general_probe", "type": "open_ended", "subcategory": "common_sense", "question": "闰年有多少天？", "expected_keywords": ["366"]}
+{"id": "probe_cs_07", "category": "general_probe", "type": "open_ended", "subcategory": "common_sense", "question": "人体最大的器官是什么？", "expected_keywords": ["皮肤"]}
+{"id": "probe_cs_08", "category": "general_probe", "type": "open_ended", "subcategory": "common_sense", "question": "地球的自转周期是多少小时？", "expected_keywords": ["24"]}
+{"id": "probe_cs_09", "category": "general_probe", "type": "open_ended", "subcategory": "common_sense", "question": "血液的主要成分有哪些？", "expected_keywords": ["血浆", "血细胞"]}
+{"id": "probe_cs_10", "category": "general_probe", "type": "open_ended", "subcategory": "common_sense", "question": "一天有多少个小时？", "expected_keywords": ["24"]}
+{"id": "probe_cs_11", "category": "general_probe", "type": "open_ended", "subcategory": "common_sense", "question": "人体内最多的元素是什么？", "expected_keywords": ["氧"]}
+{"id": "probe_cs_12", "category": "general_probe", "type": "open_ended", "subcategory": "common_sense", "question": "地球的自转方向是顺时针还是逆时针？", "expected_keywords": ["逆时针"]}
+{"id": "probe_cs_13", "category": "general_probe", "type": "open_ended", "subcategory": "common_sense", "question": "电脑键盘上的'Ctrl'键全称是什么？", "expected_keywords": ["Control"]}
+{"id": "probe_cs_14", "category": "general_probe", "type": "open_ended", "subcategory": "common_sense", "question": "人类正常心跳次数每分钟大约是多少？", "expected_keywords": ["60-100"]}
+{"id": "probe_cs_15", "category": "general_probe", "type": "open_ended", "subcategory": "common_sense", "question": "成人正常血压的低压值大约是多少毫米汞柱？", "expected_keywords": ["60-90"]}
+{"id": "probe_cs_16", "category": "general_probe", "type": "open_ended", "subcategory": "common_sense", "question": "太阳系中哪颗行星以古罗马神话中的战神命名？", "expected_keywords": ["火星", "战神"]}
+{"id": "probe_cs_17", "category": "general_probe", "type": "open_ended", "subcategory": "common_sense", "question": "构成人类基因组的基本单位是什么？", "expected_keywords": ["DNA", "脱氧核糖核酸"]}
+{"id": "probe_cs_18", "category": "general_probe", "type": "open_ended", "subcategory": "common_sense", "question": "国际标准单位制中，电流的单位以哪位物理学家的名字命名？", "expected_keywords": ["安培"]}
+{"id": "probe_cs_19", "category": "general_probe", "type": "open_ended", "subcategory": "common_sense", "question": "中国的官方货币单位是什么？", "expected_keywords": ["人民币", "元"]}
+{"id": "probe_cs_20", "category": "general_probe", "type": "open_ended", "subcategory": "common_sense", "question": "人体中含量最多的元素是什么？", "expected_keywords": ["氧"]}
+{"id": "probe_math_06", "category": "general_probe", "type": "open_ended", "subcategory": "math", "question": "如果一个圆的半径是 7 厘米，那么这个圆的面积是多少平方厘米？", "expected_keywords": ["圆面积", "π", "49π"]}
+{"id": "probe_math_07", "category": "general_probe", "type": "open_ended", "subcategory": "math", "question": "计算表达式 3x - 4x + 5 的结果，其中 x 是 2。", "expected_keywords": ["-x", "1"]}
+{"id": "probe_math_08", "category": "general_probe", "type": "open_ended", "subcategory": "math", "question": "若一个数的 3 倍再加上 4 等于 19，求这个数。", "expected_keywords": ["3倍", "19", "x=5"]}
+{"id": "probe_math_09", "category": "general_probe", "type": "open_ended", "subcategory": "math", "question": "一个长方体的长是 5 厘米，宽是 3 厘米，高是 2 厘米，求这个长方体的体积是多少立方厘米？", "expected_keywords": ["长方体", "体积", "30"]}
+{"id": "probe_math_10", "category": "general_probe", "type": "open_ended", "subcategory": "math", "question": "若一个数的 4 倍减去 6 等于这个数的 2 倍，求这个数。", "expected_keywords": ["4倍", "2倍", "x=6"]}
+{"id": "probe_math_11", "category": "general_probe", "type": "open_ended", "subcategory": "math", "question": "一个数的两倍加上 10 等于 30，这个数是多少？", "expected_keywords": ["2倍", "10", "30"]}
+{"id": "probe_math_12", "category": "general_probe", "type": "open_ended", "subcategory": "math", "question": "如果一个长方形的长是 8 米，宽是 3 米，它的面积是多少平方米？", "expected_keywords": ["8米", "3米", "面积"]}
+{"id": "probe_math_13", "category": "general_probe", "type": "open_ended", "subcategory": "math", "question": "一辆汽车以每小时 60 公里的速度行驶，2 小时后它行驶了多少公里？", "expected_keywords": ["60公里/小时", "2小时", "距离"]}
+{"id": "probe_math_14", "category": "general_probe", "type": "open_ended", "subcategory": "math", "question": "一个正方形的边长是 4 厘米，它的周长是多少厘米？", "expected_keywords": ["正方形", "4厘米", "周长"]}
+{"id": "probe_math_15", "category": "general_probe", "type": "open_ended", "subcategory": "math", "question": "如果一个水果篮子里有 5 个苹果和 8 个橙子，总共有多少个水果？", "expected_keywords": ["5个苹果", "8个橙子", "总数"]}
+{"id": "probe_math_16", "category": "general_probe", "type": "open_ended", "subcategory": "math", "question": "一个长方形的长是 10 米，宽是 5 米，这个长方形的面积是多少平方米？", "expected_keywords": ["50"]}
+{"id": "probe_math_17", "category": "general_probe", "type": "open_ended", "subcategory": "math", "question": "如果一辆汽车以每小时 60 公里的速度行驶，那么它 2 小时可以行驶多少公里？", "expected_keywords": ["120"]}
+{"id": "probe_math_18", "category": "general_probe", "type": "open_ended", "subcategory": "math", "question": "一个数的 3 倍是 45，这个数是多少？", "expected_keywords": ["15"]}
+{"id": "probe_math_19", "category": "general_probe", "type": "open_ended", "subcategory": "math", "question": "一个西瓜被平均切成了 8 块，小明吃了其中的 3 块，他吃了这个西瓜的几分之几？", "expected_keywords": ["3/8"]}
+{"id": "probe_math_20", "category": "general_probe", "type": "open_ended", "subcategory": "math", "question": "50 减去 25 后，再乘以 4，结果是多少？", "expected_keywords": ["100"]}
+{"id": "probe_logic_06", "category": "general_probe", "type": "open_ended", "subcategory": "logic", "question": "如果所有的鸟都会飞，企鹅是鸟，那么企鹅会飞吗？", "expected_keywords": ["不会飞"]}
+{"id": "probe_logic_07", "category": "general_probe", "type": "open_ended", "subcategory": "logic", "question": "所有的植物都需要水，仙人掌是植物，请问仙人掌需要水吗？", "expected_keywords": ["需要"]}
+{"id": "probe_logic_08", "category": "general_probe", "type": "open_ended", "subcategory": "logic", "question": "如果张三比李四高，李四比王五高，那么三人中谁最矮？", "expected_keywords": ["王五"]}
+{"id": "probe_logic_09", "category": "general_probe", "type": "open_ended", "subcategory": "logic", "question": "在一个数列中，每个数字是前一个数字的两倍，数列开始为 2, 4, 8, 16, 那么下一个数字是什么？", "expected_keywords": ["32"]}
+{"id": "probe_logic_10", "category": "general_probe", "type": "open_ended", "subcategory": "logic", "question": "小华有 10 个橘子，他给了妹妹 3 个，然后妈妈又给了他 5 个，现在小华有多少个橘子？", "expected_keywords": ["12"]}
+{"id": "probe_logic_11", "category": "general_probe", "type": "open_ended", "subcategory": "logic", "question": "所有的植物都需要水来生长，玫瑰是一种植物。玫瑰需要水吗？", "expected_keywords": ["需要"]}
+{"id": "probe_logic_12", "category": "general_probe", "type": "open_ended", "subcategory": "logic", "question": "如果一个物体是红色的，那么它就是暖色调。苹果是红色的，所以苹果是什么色调？", "expected_keywords": ["暖色调"]}
+{"id": "probe_logic_13", "category": "general_probe", "type": "open_ended", "subcategory": "logic", "question": "所有会飞的动物都有翅膀，企鹅会飞。企鹅有翅膀吗？", "expected_keywords": ["有"]}
+{"id": "probe_logic_14", "category": "general_probe", "type": "open_ended", "subcategory": "logic", "question": "如果今天是周末，那么图书馆不开门。今天是工作日，图书馆开门吗？", "expected_keywords": ["开门"]}
+{"id": "probe_logic_15", "category": "general_probe", "type": "open_ended", "subcategory": "logic", "question": "所有的偶数都可以被2整除，14是一个偶数。14可以被2整除吗？", "expected_keywords": ["可以"]}
+{"id": "probe_logic_16", "category": "general_probe", "type": "open_ended", "subcategory": "logic", "question": "所有的海豚都是哺乳动物，小蓝是海豚。请问小蓝是哺乳动物吗？", "expected_keywords": ["是"]}
+{"id": "probe_logic_17", "category": "general_probe", "type": "open_ended", "subcategory": "logic", "question": "如果天晴，我们可以去野餐。如果下雨，我们就在家看电影。今天下雨了，我们该怎么办？", "expected_keywords": ["在家看电影"]}
+{"id": "probe_logic_18", "category": "general_probe", "type": "open_ended", "subcategory": "logic", "question": "所有的植物都需要阳光，玫瑰是植物。请问玫瑰需要阳光吗？", "expected_keywords": ["需要"]}
+{"id": "probe_logic_19", "category": "general_probe", "type": "open_ended", "subcategory": "logic", "question": "如果厨师生病，餐馆就会关闭。今天餐馆关闭了，厨师怎么了？", "expected_keywords": ["生病"]}
+{"id": "probe_logic_20", "category": "general_probe", "type": "open_ended", "subcategory": "logic", "question": "所有带翅膀的都能飞，企鹅有翅膀但不能飞。企鹅属于哪一类？", "expected_keywords": ["不能飞"]}
+{"id": "probe_write_06", "category": "general_probe", "type": "open_ended", "subcategory": "writing", "question": "请写一句话描述一个人非常高兴的样子，句子中必须包含“心花怒放”这个词。", "expected_keywords": ["心花怒放"]}
+{"id": "probe_write_07", "category": "general_probe", "type": "open_ended", "subcategory": "writing", "question": "请用“尽管……但是……”造句，表达一个坚持的观点。", "expected_keywords": ["尽管", "但是"]}
+{"id": "probe_write_08", "category": "general_probe", "type": "open_ended", "subcategory": "writing", "question": "请以“月光”为背景，写一句富有诗意的句子，并包含“银辉”这个词。", "expected_keywords": ["银辉"]}
+{"id": "probe_write_09", "category": "general_probe", "type": "open_ended", "subcategory": "writing", "question": "请用“秋高气爽”来形容一个秋天的场景。", "expected_keywords": ["秋高气爽"]}
+{"id": "probe_write_10", "category": "general_probe", "type": "open_ended", "subcategory": "writing", "question": "请用“滴水穿石”来造一个表达坚持和毅力的句子。", "expected_keywords": ["滴水穿石"]}
+{"id": "probe_write_11", "category": "general_probe", "type": "open_ended", "subcategory": "writing", "question": "请用“月色”一词描述一个夜晚的景象。", "expected_keywords": ["月色"]}
+{"id": "probe_write_12", "category": "general_probe", "type": "open_ended", "subcategory": "writing", "question": "请写一句关于时间宝贵的句子，必须使用“光阴似箭”这个成语。", "expected_keywords": ["光阴似箭"]}
+{"id": "probe_write_13", "category": "general_probe", "type": "open_ended", "subcategory": "writing", "question": "请用“秋意浓”作为句子的一部分，描述秋天的景色。", "expected_keywords": ["秋意浓"]}
+{"id": "probe_write_14", "category": "general_probe", "type": "open_ended", "subcategory": "writing", "question": "请用“柳暗花明”作为句子的一部分，表达困境中突然看到希望的心情。", "expected_keywords": ["柳暗花明"]}
+{"id": "probe_write_15", "category": "general_probe", "type": "open_ended", "subcategory": "writing", "question": "请用“风和日丽”这个成语，写一句描述好天气的句子。", "expected_keywords": ["风和日丽"]}
+{"id": "probe_write_16", "category": "general_probe", "type": "open_ended", "subcategory": "writing", "question": "请写一句体现在现代社会中信息传播迅速的句子，句中必须包含“日新月异”一词。", "expected_keywords": ["日新月异"]}
+{"id": "probe_write_17", "category": "general_probe", "type": "open_ended", "subcategory": "writing", "question": "请用“尽管……但……”造一个表达对比关系的句子。", "expected_keywords": ["尽管", "但"]}
+{"id": "probe_write_18", "category": "general_probe", "type": "open_ended", "subcategory": "writing", "question": "请把“她的声音很悦耳”改写成拟人句，句中必须包含“仿佛”字。", "expected_keywords": ["仿佛"]}
+{"id": "probe_write_19", "category": "general_probe", "type": "open_ended", "subcategory": "writing", "question": "请写一句包含成语“刻舟求剑”的句子，表达做事方法不当的含义。", "expected_keywords": ["刻舟求剑"]}
+{"id": "probe_write_20", "category": "general_probe", "type": "open_ended", "subcategory": "writing", "question": "请用“秋高气爽”写一句话描述秋天景色。", "expected_keywords": ["秋高气爽"]}
+{"id": "probe_code_06", "category": "general_probe", "type": "open_ended", "subcategory": "code", "question": "在 Python 中，如何将字符串 'hello' 和 'world' 通过加号连接起来？", "expected_keywords": ["+"]}
+{"id": "probe_code_07", "category": "general_probe", "type": "open_ended", "subcategory": "code", "question": "如果有一个 Python 列表 lst = [1, 2, 3]，用什么方法可以去掉列表中的最后一个元素？", "expected_keywords": ["pop"]}
+{"id": "probe_code_08", "category": "general_probe", "type": "open_ended", "subcategory": "code", "question": "在 Python 中，如何将整数 10 转换成字符串类型？", "expected_keywords": ["str"]}
+{"id": "probe_code_09", "category": "general_probe", "type": "open_ended", "subcategory": "code", "question": "在 Python 代码中，如何检查一个字符串是否包含子字符串 'test'？", "expected_keywords": ["in"]}
+{"id": "probe_code_10", "category": "general_probe", "type": "open_ended", "subcategory": "code", "question": "Python 中的元组 (tuple) 和列表 (list) 有什么区别？", "expected_keywords": ["不可变", "可变"]}
+{"id": "probe_code_11", "category": "general_probe", "type": "open_ended", "subcategory": "code", "question": "请写出 Python 中判断一个变量是否是列表类型的表达式。", "expected_keywords": ["isinstance", "list"]}
+{"id": "probe_code_12", "category": "general_probe", "type": "open_ended", "subcategory": "code", "question": "在 Python 中，如何创建一个值为 0 的布尔类型变量？", "expected_keywords": ["False"]}
+{"id": "probe_code_13", "category": "general_probe", "type": "open_ended", "subcategory": "code", "question": "请写出一个 Python 表达式，该表达式用于计算并返回两个数相加的结果。", "expected_keywords": ["+"]}
+{"id": "probe_code_14", "category": "general_probe", "type": "open_ended", "subcategory": "code", "question": "在 Python 中，如何将字符串 'hello' 转换为小写？", "expected_keywords": ["lower"]}
+{"id": "probe_code_15", "category": "general_probe", "type": "open_ended", "subcategory": "code", "question": "在Python中，使用什么关键字来创建一个循环，该循环将重复执行代码块直到满足某个条件？", "expected_keywords": ["while"]}
+{"id": "probe_code_16", "category": "general_probe", "type": "open_ended", "subcategory": "code", "question": "在Python中，如何检查一个变量是否是列表类型？", "expected_keywords": ["isinstance()", "list"]}
+{"id": "probe_code_17", "category": "general_probe", "type": "open_ended", "subcategory": "code", "question": "在Python中，'+='操作符的作用是什么？", "expected_keywords": ["加法赋值", "字符串拼接"]}
+{"id": "probe_code_18", "category": "general_probe", "type": "open_ended", "subcategory": "code", "question": "在Python中，如何交换两个变量的值而不使用临时变量？", "expected_keywords": ["变量解包", "tuple unpacking"]}
+{"id": "probe_code_19", "category": "general_probe", "type": "open_ended", "subcategory": "code", "question": "请写出 JavaScript 中用于创建一个名为 'myObject' 的空对象的代码。", "expected_keywords": ["JavaScript", "对象", "创建"]}
+{"id": "probe_code_20", "category": "general_probe", "type": "open_ended", "subcategory": "code", "question": "在 Java 中，如何声明一个具有初始值 10 的整型变量？", "expected_keywords": ["Java", "声明", "整型"]}
+{"id": "probe_if_06", "category": "general_probe", "type": "open_ended", "subcategory": "instruction_following", "question": "请用英语写出“人工智能”的对应单词。", "expected_keywords": ["Artificial", "Intelligence"]}
+{"id": "probe_if_07", "category": "general_probe", "type": "open_ended", "subcategory": "instruction_following", "question": "请将“春天来了”这句话翻译成英文。", "expected_keywords": ["Spring", "comes"]}
+{"id": "probe_if_08", "category": "general_probe", "type": "open_ended", "subcategory": "instruction_following", "question": "请将数字2023转换成中文读法。", "expected_keywords": ["二千", "零", "二十三"]}
+{"id": "probe_if_09", "category": "general_probe", "type": "open_ended", "subcategory": "instruction_following", "question": "请用英文回答：星期一是一周的第几天？", "expected_keywords": ["first", "Monday"]}
+{"id": "probe_if_10", "category": "general_probe", "type": "open_ended", "subcategory": "instruction_following", "question": "请用英文表述‘苹果’。", "expected_keywords": ["apple"]}
+{"id": "probe_if_11", "category": "general_probe", "type": "open_ended", "subcategory": "instruction_following", "question": "请按照格式‘姓名：张三，年龄：30’填写个人信息，姓名替换成‘李四’，年龄替换成‘25’。", "expected_keywords": ["姓名：李四", "年龄：25"]}
+{"id": "probe_if_12", "category": "general_probe", "type": "open_ended", "subcategory": "instruction_following", "question": "请用五笔输入法的编码回答‘猫’字怎么打？", "expected_keywords": ["trnr"]}
+{"id": "probe_if_13", "category": "general_probe", "type": "open_ended", "subcategory": "instruction_following", "question": "请将下列句子翻译成反问句：‘他是一个学生。’", "expected_keywords": ["他难道不是一个学生吗？"]}
+{"id": "probe_if_14", "category": "general_probe", "type": "open_ended", "subcategory": "instruction_following", "question": "请用不少于30字且不多于50字描述秋天的景色。", "expected_keywords": ["秋天", "景色"]}
+{"id": "probe_if_15", "category": "general_probe", "type": "open_ended", "subcategory": "instruction_following", "question": "请使用英文大写字母回答：'A'和'B'的后面一个英文字母是什么？", "expected_keywords": ["C"]}
+{"id": "probe_if_16", "category": "general_probe", "type": "open_ended", "subcategory": "instruction_following", "question": "请用中文回答：一周有几天？并以数字形式呈现。", "expected_keywords": ["7"]}
+{"id": "probe_if_17", "category": "general_probe", "type": "open_ended", "subcategory": "instruction_following", "question": "请将下列成语‘画蛇添足’用现代汉语解释一遍，并用一个逗号分隔成语和解释。", "expected_keywords": ["画蛇添足, 做了多余的事，反而不恰当"]}
+{"id": "probe_if_18", "category": "general_probe", "type": "open_ended", "subcategory": "instruction_following", "question": "请用五笔字型输入法的编码规则，写出‘龙’字的编码。", "expected_keywords": ["dx", "dxv"]}
+{"id": "probe_if_19", "category": "general_probe", "type": "open_ended", "subcategory": "instruction_following", "question": "请用不超过五个字回答：世界上最长的河流是？", "expected_keywords": ["尼罗河"]}
+{"id": "probe_if_20", "category": "general_probe", "type": "open_ended", "subcategory": "instruction_following", "question": "请仅使用英文单词回答：‘幸福’的英文是什么？", "expected_keywords": ["happiness"]}
