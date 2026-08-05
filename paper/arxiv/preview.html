@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.10.1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Siyuan HuangJia Luo Meerkat-AI {siyuan.huang, jia.luo}@meerkatai.cn Model: https://huggingface.co/Meerkat-AI/Meerkat-TRIZ-v1 Code &amp; benchmark: https://github.com/coidea-sys/meerkat-triz" />
+  <title>Meerkat-TRIZ: A Fine-Tuned Language Model for TRIZ-Based Inventive Problem Solving with Dual-Track Evaluation and Cross-Family Judge Verification</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    div.abstract {
+      margin: 2em 2em 2em 2em;
+      text-align: left;
+      font-size: 85%;
+    }
+    div.abstract-title {
+      font-weight: bold;
+      text-align: center;
+      padding: 0;
+      margin-bottom: 0.5em;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Meerkat-TRIZ: A Fine-Tuned Language Model for
+TRIZ-Based Inventive Problem Solving with Dual-Track Evaluation and
+Cross-Family Judge Verification</h1>
+<p class="author">Siyuan HuangJia Luo<br />
+Meerkat-AI<br />
+<code>{siyuan.huang, jia.luo}@meerkatai.cn</code><br />
+Model: <a href="https://huggingface.co/Meerkat-AI/Meerkat-TRIZ-v1"
+class="uri">https://huggingface.co/Meerkat-AI/Meerkat-TRIZ-v1</a><br />
+Code &amp; benchmark: <a
+href="https://github.com/coidea-sys/meerkat-triz"
+class="uri">https://github.com/coidea-sys/meerkat-triz</a></p>
+<p class="date">July 2026</p>
+<div class="abstract">
+<div class="abstract-title">Abstract</div>
+<p>TRIZ (Theory of Inventive Problem Solving) is the most widely used
+systematic innovation methodology in engineering practice, yet existing
+work combining TRIZ with large language models (LLMs) has relied
+exclusively on prompting, retrieval, or multi-agent orchestration of
+general-purpose models. We present Meerkat-TRIZ, to our knowledge the
+first publicly released TRIZ-domain <em>fine-tuned</em> LLM: a QLoRA
+adapter (0.24% of parameters) trained on a Qwen3.6-35B-A3B MoE base with
+an 11k-example curriculum covering six TRIZ task families plus safety
+refusals. Because domain claims are only as strong as their measurement,
+the paper’s second contribution is an evaluation methodology designed to
+survive adversarial scrutiny: (i) <strong>TRIZ-Bench</strong>, a
+300-item six-task benchmark whose questions and keyword sets are public;
+(ii) a <em>dual-track</em> protocol pairing an objective keyword track
+with an anti-verbosity LLM-judge track; (iii) paired-bootstrap
+significance testing with fixed seeds throughout; (iv) a
+<em>cross-family judge panel</em> with family recusal and a circuit
+breaker that freezes shipping when an in-family judge contradicts the
+external consensus; and (v) an eight-gate decision procedure (G0–G8)
+that has repeatedly caught regressions that single-metric leaderboards
+would have missed. Applying this apparatus, we show that Meerkat-TRIZ v1
+improves over its 35B base by <span class="math inline">\(+0.39\)</span>
+(<span class="math inline">\(\pm\)</span>0.10, 95% CI) on the in-family
+judge but only <span class="math inline">\(+0.09\)</span> to <span
+class="math inline">\(+0.10\)</span> under two external judges and <span
+class="math inline">\(-0.05\)</span> under a third—a <span
+class="math inline">\(\sim\)</span>4<span
+class="math inline">\(\times\)</span> inflation pattern that would have
+gone undetected with a single judge. An <em>equal-length control</em>
+then isolates the residual confound: when the base is instructed to
+match the fine-tune’s answer length, the in-family gain vanishes (<span
+class="math inline">\(-0.07\)</span>, n.s.) while the base’s own
+in-family score rises by <span class="math inline">\(+0.46\)</span> from
+brevity alone—yet under two of three <em>external</em> judges the same
+length-matched base falls <em>below</em> the fine-tune by <span
+class="math inline">\(+0.19\)</span> to <span
+class="math inline">\(+0.27\)</span> (significant). Length was masking a
+genuine content-quality gain: the fine-tune is better at a level length
+budget, and at natural lengths delivers that content at <span
+class="math inline">\(0.4\times\)</span> the answer length with keyword
+coverage the base cannot retain when compressed. On the objective
+keyword track, the fine-tune matches its base (<span
+class="math inline">\(\pm\)</span>0.0001) and both outscore GPT-5.4,
+Claude Sonnet 4.6, Claude Opus 4.8 and Gemini 3.5 Flash on TRIZ keyword
+coverage; on the judge track the best frontier models still lead, with
+Claude Opus 4.8 scoring significantly <em>below</em> the 35B base. A
+120-item general-ability probe shows no significant capability sacrifice
+from domain fine-tuning (<span class="math inline">\(-1.25\)</span>pp
+vs. predecessor, floor <span class="math inline">\(-5\)</span>pp). We
+release the model, the evaluation harness, the public benchmark, and all
+judge caches to make every number in this paper recomputable.</p>
+</div>
+</header>
+<h1 id="sec:intro">Introduction</h1>
+<p>TRIZ (<em>Teoriya Resheniya Izobretatelskikh Zadach</em>, Theory of
+Inventive Problem Solving), developed by Altshuller from the analysis of
+hundreds of thousands of patents, codifies invention as the resolution
+of <em>contradictions</em>: improving one engineering parameter while
+avoiding the degradation of another, using 40 inventive principles, a
+contradiction matrix, separation principles, and the ARIZ algorithm.
+Despite its industrial adoption, TRIZ remains expertise-bound: mapping a
+messy real-world problem onto the correct standard contradiction, and
+then committing to the right principles with defensible justification,
+is precisely the step practitioners find hardest.</p>
+<p>Large language models are a natural vehicle for lowering this
+barrier, and several groups have explored the combination <span
+class="citation"
+data-cites="autotriz trizgpt trizagents gusarov2026"></span>. All of
+these works, however, treat the LLM as a general-purpose reasoner
+steered by prompts, retrieval, or agent pipelines. None trains the model
+on the domain, and none evaluates with the statistical machinery that
+the LLM-as-judge literature has shown to be necessary <span
+class="citation" data-cites="mtbench panickssery2024"></span>. Two
+questions therefore remain open: (1) does domain fine-tuning actually
+move TRIZ task quality beyond what a strong base model or a frontier
+model already achieves? and (2) how should such a claim be measured when
+the most convenient instrument—an LLM judge from the same model family
+that generated the training data—is itself suspect?</p>
+<p>This paper answers both. Our contributions are:</p>
+<ol>
+<li><p><strong>The first public TRIZ fine-tuned LLM.</strong>
+Meerkat-TRIZ v1 is a QLoRA adapter on Qwen3.6-35B-A3B (MoE, 256 routed
+experts; adapters on 12 shared projections, 0.24% of parameters),
+trained on an 11k-example, seven-subset curriculum. Model, training
+configuration, and data-construction pipeline are public.</p></li>
+<li><p><strong>A measurement-first evaluation methodology.</strong>
+Dual-track scoring (objective keyword track <span
+class="math inline">\(+\)</span> anti-verbosity judge track),
+paired-bootstrap inference with fixed seeds, a 120-item general-ability
+probe, and an eight-gate shipping decision procedure (G0–G8) whose gates
+are machine-checkable and whose backtests reproduce our past
+ship/no-ship decisions exactly.</p></li>
+<li><p><strong>Cross-family judge verification.</strong> A panel of
+external judges from three vendors, with family recusal (a judge never
+scores its own family’s generations) and a circuit breaker (G8) that
+blocks shipping when in-family and external verdicts contradict. We
+quantify the resulting correction: the in-family judge’s headline effect
+(<span class="math inline">\(+0.39\)</span>) deflates to <span
+class="math inline">\(+0.09\)</span>/<span
+class="math inline">\(+0.10\)</span>/<span
+class="math inline">\(-0.05\)</span> under external judges, while
+external judges agree with each other at Spearman 0.63–0.75 but only
+0.27–0.31 with the in-family judge. An equal-length generation control
+completes the correction—and then reverses it upward: once the base is
+instructed to match the fine-tune’s answer length, the in-family effect
+vanishes (<span class="math inline">\(-0.07\)</span>, n.s.), exposing
+the headline as predominantly a length artifact, while two of three
+external judges score the fine-tune significantly <em>above</em> the
+length-matched base (<span class="math inline">\(+0.19\)</span>/<span
+class="math inline">\(+0.27\)</span>), isolating a genuine
+content-quality gain that length had masked.</p></li>
+<li><p><strong>A frontier baseline.</strong> TRIZ-Bench results for
+GPT-5.4, Claude Sonnet 4.6, Claude Opus 4.8, and Gemini 3.5 Flash under
+the identical protocol, with per-judge disclosure of every
+number.</p></li>
+<li><p><strong>A documented failure-driven iteration lineage.</strong>
+Five model generations (v2<span class="math inline">\(\to\)</span>v5b),
+each changed by a single variable and each decided by the gates,
+including three rejected generations and the attribution analyses that
+rejected them—evidence that the methodology, not luck, produces the
+improvement (Figure <a href="#fig:lineage" data-reference-type="ref"
+data-reference="fig:lineage">1</a>).</p></li>
+</ol>
+<figure id="fig:lineage" data-latex-placement="t">
+
+<figcaption>Single-variable lineage v2<span
+class="math inline">\(\to\)</span>v5b. Each generation changes exactly
+one factor (annotated below); red generations were rejected by the
+decision gates, blue repaired the measurement harness, and green shipped
+as Meerkat-TRIZ v1.</figcaption>
+</figure>
+<p>Section <a href="#sec:related" data-reference-type="ref"
+data-reference="sec:related">2</a> positions against prior TRIZ<span
+class="math inline">\(\times\)</span>LLM work and the LLM-as-judge
+literature. Section <a href="#sec:model" data-reference-type="ref"
+data-reference="sec:model">3</a> describes data and training. Section <a
+href="#sec:eval" data-reference-type="ref"
+data-reference="sec:eval">4</a> defines the evaluation apparatus.
+Section <a href="#sec:results" data-reference-type="ref"
+data-reference="sec:results">5</a> reports results, including the
+frontier leaderboard. Section <a href="#sec:analysis"
+data-reference-type="ref" data-reference="sec:analysis">6</a> analyzes
+failure modes and judge bias. Section <a href="#sec:limits"
+data-reference-type="ref" data-reference="sec:limits">7</a> is an
+unusually detailed limitations section; Section <a href="#sec:concl"
+data-reference-type="ref" data-reference="sec:concl">8</a>
+concludes.</p>
+<h1 id="sec:related">Related Work</h1>
+<h4 id="triz-meets-llms-prompting-not-training.">TRIZ meets LLMs:
+prompting, not training.</h4>
+<p>AutoTRIZ <span class="citation" data-cites="autotriz"></span>
+automates TRIZ ideation by prompt-structured LLM calls and evaluates on
+textbook cases; TRIZ-GPT <span class="citation"
+data-cites="trizgpt"></span> compares prompt strategies for GPT-3.5/4
+inside a TRIZ workflow; TRIZ Agents <span class="citation"
+data-cites="trizagents"></span> decomposes the methodology across a
+multi-agent pipeline; Gusarov <span class="citation"
+data-cites="gusarov2026"></span> frames TRIZ as a reasoning scaffold for
+materials science with local models. Common traits: the model weights
+are never touched; evaluation is by case study or heuristic LLM scoring
+without significance testing; and no public benchmark exists. Our work
+is complementary in spirit—we keep TRIZ’s structured problem formulation
+as the task definition—but orthogonal in mechanism: domain adaptation
+through supervised fine-tuning, with measurement treated as a
+first-class deliverable.</p>
+<h4 id="domain-fine-tuning.">Domain fine-tuning.</h4>
+<p>Parameter-efficient fine-tuning <span class="citation"
+data-cites="lora qlora"></span> has made single-GPU domain adaptation
+routine. What remains rare is discipline in what is claimed from it. Our
+training recipe is deliberately plain (QLoRA, fixed hyperparameters,
+two-epoch cosine horizon); the novelty is not the optimizer but the
+decision procedure around it: every generation changes one variable and
+must pass eight machine-checkable gates.</p>
+<h4 id="llm-as-judge-and-its-biases.">LLM-as-judge and its biases.</h4>
+<p>Zheng et al. <span class="citation" data-cites="mtbench"></span>
+established LLM judging at scale and documented position and verbosity
+biases; Panickssery et al. <span class="citation"
+data-cites="panickssery2024"></span> showed evaluators favor their own
+generations; length-controlled variants of automatic arenas <span
+class="citation" data-cites="alpacaeval"></span> exist precisely because
+judges reward length. Our design imports these lessons: an
+anti-verbosity clause in the rubric, position-swap validation in harness
+development, fixed-temperature scoring, and—most importantly—treating
+any single judge, especially one from the data generator’s family, as a
+hypothesis to be falsified by external judges rather than as ground
+truth.</p>
+<h4 id="benchmarks-and-contamination.">Benchmarks and
+contamination.</h4>
+<p>Holistic multi-metric evaluation <span class="citation"
+data-cites="helm"></span>, live refreshed benchmarks <span
+class="citation" data-cites="livebench"></span>, and public reproducible
+harnesses motivate our release shape: public questions and keyword sets,
+withheld reference answers, documented decontamination (character 3-gram
+Jaccard, threshold 0.5, with a 0.4–0.5 human-review band), versioned
+snapshots, and full judge-cache disclosure so that every table cell can
+be recomputed independently.</p>
+<h1 id="sec:model">Model and Training</h1>
+<h2 id="base-model-and-adapter">Base model and adapter</h2>
+<p>Meerkat-TRIZ v1 attaches QLoRA adapters <span class="citation"
+data-cites="lora qlora"></span> (<span
+class="math inline">\(r{=}64\)</span>, <span
+class="math inline">\(\alpha{=}128\)</span>, dropout 0, RSLoRA off) to
+twelve shared projection modules (<code>q,k,v,o_proj</code>,
+<code>in_proj_qkv,z,b,a</code>, <code>out_proj</code>,
+<code>gate,up,down_proj</code>) of Qwen3.6-35B-A3B <span
+class="citation" data-cites="qwen3"></span>, a Mixture-of-Experts base
+with 256 routed experts. Only 0.24% of parameters are trainable; the
+routed experts themselves are untouched. Training is supervised
+fine-tuning <span class="citation" data-cites="instructgpt"></span> in
+pure BF16 on a single unified-memory accelerator, batch 1 <span
+class="math inline">\(\times\)</span> grad-accum 8, lr <span
+class="math inline">\(2{\times}10^{-4}\)</span> with a cosine schedule
+whose horizon is two epochs (four-epoch cap as safety), max sequence
+2048, completion-only loss, seed 42. Hyperparameters were fixed by a
+small sweep at an earlier generation and then <em>frozen</em>: every
+subsequent generation changes data only, preserving single-variable
+comparability across the lineage (Table <a href="#tab:lineage"
+data-reference-type="ref" data-reference="tab:lineage">1</a>).</p>
+<h2 id="training-data">Training data</h2>
+<p>The v5-line corpus derives from a cleaned collection of Chinese TRIZ
+textbooks, courseware, and proceedings, expanded by model-generated
+long-form answers under hard quality gates (length bands, tail-template
+blacklists, dedup) and decontaminated against the evaluation gold set by
+character 3-gram Jaccard (<span class="math inline">\(\geq\)</span>0.5
+drop; 0.4–0.5 human review). The final v5b training set contains
+11<span>,</span>421 prompt–completion pairs in seven subsets: concept
+explanation (2<span>,</span>996), innovation assessment
+(3<span>,</span>037), case generation (2<span>,</span>857), ARIZ
+guidance (1<span>,</span>442), contradiction analysis (313), principle
+recommendation (521), and safety refusal (255).</p>
+<p>The principle-recommendation subset deserves note because it is the
+paper’s running case study (Section <a href="#sec:analysis"
+data-reference-type="ref" data-reference="sec:analysis">6</a>).
+Attribution on the previous generation found the subset to be the
+smallest (196 items), 72% of it “concise-mode” items capped at 300
+characters, and—most damning—42% mislabeled (ARIZ resource questions,
+standard-solution questions, and patent-analysis questions carrying a
+principle-recommendation tag). The v5b generation audits out the 83
+mislabeled items and injects 408 newly generated examples whose answers
+must commit to specific numbered principles with justification, pass a
+hedging filter (“may involve/one may consider” phrasing rejected), cover
+all 40 inventive principles without omission, and pass gold-set
+decontamination.</p>
+<table id="tab:lineage">
+<caption>Model lineage. Each row changes exactly one variable relative
+to its predecessor; ship/reject verdicts are produced by the G0–G8 gates
+(Section <a href="#sec:gates" data-reference-type="ref"
+data-reference="sec:gates">4.5</a>).</caption>
+<thead>
+<tr>
+<th style="text-align: left;">Generation</th>
+<th style="text-align: left;">Change</th>
+<th style="text-align: left;">Gate verdict</th>
+<th style="text-align: left;">Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">v2</td>
+<td style="text-align: left;">v5-line corpus rebuild</td>
+<td style="text-align: left;">ship</td>
+<td style="text-align: left;">baseline predecessor</td>
+</tr>
+<tr>
+<td style="text-align: left;">v3</td>
+<td style="text-align: left;">keyword-rich data push</td>
+<td style="text-align: left;"><strong>reject</strong></td>
+<td style="text-align: left;">judge track regressed</td>
+</tr>
+<tr>
+<td style="text-align: left;">v4</td>
+<td style="text-align: left;">data rebalance</td>
+<td style="text-align: left;"><strong>reject</strong></td>
+<td style="text-align: left;">concept-explanation <span
+class="math inline">\(-8\)</span> kw</td>
+</tr>
+<tr>
+<td style="text-align: left;">v5</td>
+<td style="text-align: left;">new gold + corpus</td>
+<td style="text-align: left;">superseded</td>
+<td style="text-align: left;">training-protocol defect</td>
+</tr>
+<tr>
+<td style="text-align: left;">v5a</td>
+<td style="text-align: left;">protocol fix (E0)</td>
+<td style="text-align: left;"><strong>ship</strong> (as v1)</td>
+<td style="text-align: left;">released model</td>
+</tr>
+<tr>
+<td style="text-align: left;">v5b</td>
+<td style="text-align: left;">PR audit <span
+class="math inline">\(+\)</span> injection</td>
+<td style="text-align: left;"><strong>reject</strong></td>
+<td style="text-align: left;">G7 fired <span
+class="math inline">\(\times\)</span>2; no external confirmation</td>
+</tr>
+</tbody>
+</table>
+<h1 id="sec:eval">Evaluation Methodology</h1>
+<h2 id="triz-bench">TRIZ-Bench</h2>
+<p>The benchmark contains 300 Chinese items in six task families
+(concept explanation, contradiction analysis, principle recommendation,
+ARIZ guidance, case generation, innovation assessment; 30–60 items per
+family), each with a question, a reference answer, and an expected
+keyword set. Questions and keyword sets are public (CC-BY-NC); reference
+answers are withheld to slow benchmark decay. Generation protocol for
+all models is identical: one TRIZ-expert system message, max 2048 new
+tokens, deterministic decoding where the API allows.</p>
+<h2 id="dual-track-scoring">Dual-track scoring</h2>
+<h4 id="keyword-track-objective.">Keyword track (objective).</h4>
+<p>Per-item hit rate of expected keywords under a curated alias map
+(substring plus confirmed synonyms), fully deterministic and
+recomputable by anyone from the public files.</p>
+<h4 id="judge-track-semantic-arm-a.">Judge track (semantic), Arm A.</h4>
+<p>An LLM judge scores each answer 0–4 on five dimensions (accuracy,
+completeness, TRIZ correctness, structure, overall) against the
+reference answer, with an explicit anti-verbosity clause (“length is not
+evidence of quality”), full untruncated input, temperature 0, five items
+per request, batch parse failures degrading to single-item retries, and
+a fixed judge system prompt. An Arm B variant judging only
+same-length-bucket pairs exists for length-confound control, but with
+only 17/300 qualifying pairs it is underpowered; we report Arm A and
+treat the length confound as an open measurement debt (Section <a
+href="#sec:limits" data-reference-type="ref"
+data-reference="sec:limits">7</a>).</p>
+<h2 id="inference">Inference</h2>
+<p>All comparisons are paired at item level: paired bootstrap on
+per-item differences (10<span>,</span>000 resamples, seed 42), McNemar’s
+exact test for pass-rate asymmetries, Wilson intervals for rates, and
+Spearman’s <span class="math inline">\(\rho\)</span> for judge–judge
+agreement. No claim in this paper is made without a confidence interval;
+“significant” always means a 95% CI excluding zero.</p>
+<h2 id="cross-family-judge-panel-and-recusal">Cross-family judge panel
+and recusal</h2>
+<p>Every arm is scored by the in-family judge (Moonshot) and by external
+judges from three vendors (Claude, GPT, Gemini families). Two rules make
+the panel adversarial: <em>family recusal</em>—a judge never scores
+generations of its own family—and <em>full per-judge disclosure</em>—no
+averaging across judges, because averaging hides exactly the
+disagreement we want to inspect.</p>
+<h2 id="sec:gates">Decision gates G0–G8</h2>
+<p>Shipping is decided by eight machine-checkable gates applied to the
+paired statistics: G0 over-refusal <span
+class="math inline">\(\leq\)</span>2%; G1 vs-base judge CI lower bound
+<span class="math inline">\(&gt;-0.15\)</span>; G2 vs-predecessor CI
+lower bound <span class="math inline">\(&gt;-0.05\)</span> with at least
+one track significantly positive; G3 keyword-regression attribution
+(distinguishing true regressions from scoring artifacts); G4 small-cell
+(<span class="math inline">\(n{&lt;}30\)</span>) subsets are descriptive
+only; G5 ARIZ rubric precedence; G6 general-ability probe degradation
+<span class="math inline">\(&gt;-5\)</span>pp; G7 dual-track
+contradiction circuit breaker (tracks significantly opposing); G8
+cross-family contradiction circuit breaker (in-family significantly
+positive while all or a majority of external judges are significantly
+negative <span class="math inline">\(\Rightarrow\)</span> fail). Any
+FAIL keeps the predecessor; any SKIP freezes the release pending data.
+Backtests of the gate suite reproduce all historical ship/reject
+decisions, including the two rejections in Table <a href="#tab:lineage"
+data-reference-type="ref" data-reference="tab:lineage">1</a>.</p>
+<h2 id="general-ability-probe">General-ability probe</h2>
+<p>A 120-item six-category general Chinese probe (no TRIZ content) is
+run on base, predecessor, and candidate under a neutral system prompt,
+to detect capability sacrifice from domain tuning.</p>
+<h1 id="sec:results">Results</h1>
+<h2
+id="fine-tune-vs.-base-the-judge-you-choose-changes-the-answer">Fine-tune
+vs. base: the judge you choose changes the answer</h2>
+<p>Table <a href="#tab:main" data-reference-type="ref"
+data-reference="tab:main">2</a> is the paper’s central table. Under the
+in-family judge, Meerkat-TRIZ v1 (v5a) improves over base by <span
+class="math inline">\(+0.393\)</span> [<span
+class="math inline">\(+0.297\)</span>, <span
+class="math inline">\(+0.490\)</span>] on the 0–4 scale—a headline any
+single-judge paper would print. Under external judges the same paired
+differences are <span class="math inline">\(+0.094\)</span> [<span
+class="math inline">\(+0.020\)</span>, <span
+class="math inline">\(+0.167\)</span>] (Claude), <span
+class="math inline">\(+0.104\)</span> [<span
+class="math inline">\(+0.020\)</span>, <span
+class="math inline">\(+0.184\)</span>] (GPT), and <span
+class="math inline">\(-0.048\)</span> [<span
+class="math inline">\(-0.144\)</span>, <span
+class="math inline">\(+0.045\)</span>] (Gemini): two significantly
+positive but <span class="math inline">\(\sim\)</span>4<span
+class="math inline">\(\times\)</span> smaller, one indistinguishable
+from zero. The direction survives verification; the magnitude does not
+(Figure <a href="#fig:inflation" data-reference-type="ref"
+data-reference="fig:inflation">2</a>). Even this deflated pattern has a
+residual length confound—base answers are much longer than the
+fine-tune’s—and Section <a href="#sec:eqlen" data-reference-type="ref"
+data-reference="sec:eqlen">5.5</a> shows that under an equal-length
+control the in-family difference disappears entirely, while two of three
+<em>external</em> judges on the same matched arm find the fine-tune
+significantly <em>better</em>; we restate the fine-tune’s benefit
+accordingly. Meanwhile the objective keyword track is an exact tie
+(<span class="math inline">\(0.6384\)</span> vs <span
+class="math inline">\(0.6383\)</span>, diff <span
+class="math inline">\(-0.0001\)</span> n.s.), so we report the honest
+composite: the fine-tune adds judged quality without adding keyword
+coverage, and the size of the quality gain depends on who judges—and,
+under the in-family judge, on how long the answers are.</p>
+<table id="tab:main">
+<caption>Meerkat-TRIZ v1 (v5a) vs. base on TRIZ-Bench (300 items). Judge
+cells: paired diff [95% CI] from 10<span>,</span>000 paired-bootstraps,
+seed 42. <span class="math inline">\(^*\)</span>CI excludes
+zero.</caption>
+<thead>
+<tr>
+<th style="text-align: left;">Track / judge</th>
+<th style="text-align: center;">diff (v5a <span
+class="math inline">\(-\)</span> base)</th>
+<th style="text-align: center;">sig.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Keyword (objective)</td>
+<td style="text-align: center;"><span
+class="math inline">\(-0.0001\)</span></td>
+<td style="text-align: center;">n.s.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Moonshot (in-family)</td>
+<td style="text-align: center;"><span
+class="math inline">\(+0.393\)</span> [<span
+class="math inline">\(+0.297\)</span>, <span
+class="math inline">\(+0.490\)</span>]</td>
+<td style="text-align: center;"><span
+class="math inline">\(^*\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Claude Sonnet 4.6</td>
+<td style="text-align: center;"><span
+class="math inline">\(+0.094\)</span> [<span
+class="math inline">\(+0.020\)</span>, <span
+class="math inline">\(+0.167\)</span>]</td>
+<td style="text-align: center;"><span
+class="math inline">\(^*\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">GPT-5.4</td>
+<td style="text-align: center;"><span
+class="math inline">\(+0.104\)</span> [<span
+class="math inline">\(+0.020\)</span>, <span
+class="math inline">\(+0.184\)</span>]</td>
+<td style="text-align: center;"><span
+class="math inline">\(^*\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Gemini 3.5 Flash</td>
+<td style="text-align: center;"><span
+class="math inline">\(-0.048\)</span> [<span
+class="math inline">\(-0.144\)</span>, <span
+class="math inline">\(+0.045\)</span>]</td>
+<td style="text-align: center;">n.s.</td>
+</tr>
+</tbody>
+</table>
+<figure id="fig:inflation" data-latex-placement="t">
+<img src="figures/fig_judge_inflation_preview.png"
+style="width:90.0%" />
+<figcaption>The in-family inflation pattern at a glance. Paired
+judge-track differences (v5a <span class="math inline">\(-\)</span>
+base) with 95% CIs under each judge. The in-family judge’s headline
+<span class="math inline">\(+0.393\)</span> deflates to <span
+class="math inline">\(+0.094\)</span>/<span
+class="math inline">\(+0.104\)</span>/ <span
+class="math inline">\(-0.048\)</span> under three external judges—the
+direction survives, the magnitude does not.</figcaption>
+</figure>
+<p>Judge–judge agreement explains why the correction matters (Table <a
+href="#tab:spearman" data-reference-type="ref"
+data-reference="tab:spearman">3</a>, Figure <a href="#fig:agreement"
+data-reference-type="ref" data-reference="fig:agreement">3</a>).
+External judges cohere with each other (<span
+class="math inline">\(\rho\)</span> 0.63–0.75) at roughly the level
+MT-Bench reports for GPT-4-vs-human agreement, but barely cohere with
+the in-family judge (<span class="math inline">\(\rho\)</span>
+0.27–0.31). The in-family judge is not merely more generous; it is
+measuring something related but different—consistent with
+self-preference findings <span class="citation"
+data-cites="panickssery2024"></span>, and the reason G8 exists.</p>
+<table id="tab:spearman">
+<caption>Judge–judge Spearman <span class="math inline">\(\rho\)</span>
+on the base arm (300 items).</caption>
+<thead>
+<tr>
+<th style="text-align: left;">Pair</th>
+<th style="text-align: center;"><span
+class="math inline">\(\rho\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Claude <span
+class="math inline">\(\sim\)</span> GPT</td>
+<td style="text-align: center;">0.738</td>
+</tr>
+<tr>
+<td style="text-align: left;">GPT <span
+class="math inline">\(\sim\)</span> Gemini</td>
+<td style="text-align: center;">0.692</td>
+</tr>
+<tr>
+<td style="text-align: left;">Claude <span
+class="math inline">\(\sim\)</span> Gemini</td>
+<td style="text-align: center;">0.628</td>
+</tr>
+<tr>
+<td style="text-align: left;">Moonshot <span
+class="math inline">\(\sim\)</span> any external</td>
+<td style="text-align: center;">0.27–0.31</td>
+</tr>
+</tbody>
+</table>
+<figure id="fig:agreement" data-latex-placement="t">
+<img src="figures/fig_judge_agreement_preview.png"
+style="width:62.0%" />
+<figcaption>Judge–judge Spearman <span
+class="math inline">\(\rho\)</span> on the base arm (<span
+class="math inline">\(n{=}300\)</span>). External judges form a coherent
+block (0.63–0.75); the in-family judge barely correlates with any of
+them (0.27–0.31)—it is measuring something related but
+different.</figcaption>
+</figure>
+<h2 id="sec:frontier">Frontier models on TRIZ-Bench</h2>
+<p>We ran GPT-5.4, Claude Sonnet 4.6, Claude Opus 4.8, and Gemini 3.5
+Flash as <em>contestants</em> under the identical protocol
+(5<span>,</span>983 valid scores; seven item-level scores lost to API
+safety refusals and treated as missing, never zero). Table <a
+href="#tab:leaderboard" data-reference-type="ref"
+data-reference="tab:leaderboard">4</a> condenses the full per-judge
+matrix.</p>
+<table id="tab:leaderboard">
+<caption>TRIZ-Bench contestant table. kw: keyword hit rate. Judge cells:
+overall mean (paired diff vs. base [95% CI]); “—” marks family
+recusal.</caption>
+<thead>
+<tr>
+<th style="text-align: left;">Contestant</th>
+<th style="text-align: center;">kw</th>
+<th style="text-align: center;">Claude</th>
+<th style="text-align: center;">Gemini</th>
+<th style="text-align: center;">GPT</th>
+<th style="text-align: center;">Moonshot</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">base</td>
+<td style="text-align: center;">0.638</td>
+<td style="text-align: center;">2.555</td>
+<td style="text-align: center;">2.871</td>
+<td style="text-align: center;">2.301</td>
+<td style="text-align: center;">3.030</td>
+</tr>
+<tr>
+<td style="text-align: left;">Meerkat-TRIZ v1</td>
+<td style="text-align: center;">0.638</td>
+<td style="text-align: center;">2.649 (<span
+class="math inline">\(+\)</span>0.09<span
+class="math inline">\(^*\)</span>)</td>
+<td style="text-align: center;">2.823 (<span
+class="math inline">\(-\)</span>0.05)</td>
+<td style="text-align: center;">2.405 (<span
+class="math inline">\(+\)</span>0.10<span
+class="math inline">\(^*\)</span>)</td>
+<td style="text-align: center;">3.423 (<span
+class="math inline">\(+\)</span>0.39<span
+class="math inline">\(^*\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">GPT-5.4</td>
+<td style="text-align: center;">0.628</td>
+<td style="text-align: center;">2.692 (<span
+class="math inline">\(+\)</span>0.14<span
+class="math inline">\(^*\)</span>)</td>
+<td style="text-align: center;">3.094 (<span
+class="math inline">\(+\)</span>0.23<span
+class="math inline">\(^*\)</span>)</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">3.213 (<span
+class="math inline">\(+\)</span>0.18<span
+class="math inline">\(^*\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Sonnet 4.6</td>
+<td style="text-align: center;">0.576</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">2.846 (<span
+class="math inline">\(-\)</span>0.04)</td>
+<td style="text-align: center;">2.299 (<span
+class="math inline">\(-\)</span>0.02)</td>
+<td style="text-align: center;">3.080 (<span
+class="math inline">\(+\)</span>0.05)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Opus 4.8</td>
+<td style="text-align: center;">0.576</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">2.776 (<span
+class="math inline">\(-\)</span>0.10)</td>
+<td style="text-align: center;">2.204 (<span
+class="math inline">\(-\)</span>0.10)</td>
+<td style="text-align: center;">2.572 (<span
+class="math inline">\(-\)</span>0.46<span
+class="math inline">\(^*\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Gemini 3.5F</td>
+<td style="text-align: center;">0.599</td>
+<td style="text-align: center;">2.863 (<span
+class="math inline">\(+\)</span>0.31<span
+class="math inline">\(^*\)</span>)</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">2.587 (<span
+class="math inline">\(+\)</span>0.29<span
+class="math inline">\(^*\)</span>)</td>
+<td style="text-align: center;">3.268 (<span
+class="math inline">\(+\)</span>0.23<span
+class="math inline">\(^*\)</span>)</td>
+</tr>
+</tbody>
+</table>
+<p>Three findings stand out. First, on the <em>objective</em> track the
+35B base and its fine-tune beat every frontier model we tested—domain
+keyword coverage is where specialization shows up with certainty.
+Second, on the judge track the strongest frontier models (Gemini,
+GPT-5.4) still lead the fine-tune; their answers are longer and more
+elaborately structured, and judges—even with an anti-verbosity
+rubric—reward some of that. We read the residual gap as partly real
+(elaboration quality) and partly the known length confound (Section <a
+href="#sec:limits" data-reference-type="ref"
+data-reference="sec:limits">7</a>); v5b’s targeted injection attacked
+the real part and was nonetheless rejected by the gates (Section <a
+href="#sec:v5b" data-reference-type="ref"
+data-reference="sec:v5b">5.4</a>). Third, Claude Opus 4.8 scores
+<em>below</em> the 35B base on every judge that is allowed to score it,
+and significantly so on the in-family judge (<span
+class="math inline">\(-0.458\)</span> [<span
+class="math inline">\(-0.575\)</span>, <span
+class="math inline">\(-0.344\)</span>])—a reminder that frontier general
+models do not automatically dominate narrow methodological domains, and
+a result we could not have credibly published without the
+recusal-and-disclosure protocol.</p>
+<h2 id="general-ability-is-not-sacrificed">General ability is not
+sacrificed</h2>
+<p>On the 120-item general probe: base 84.03%, predecessor (v2) 86.81%,
+Meerkat-TRIZ v1 85.56%. The candidate-vs-predecessor difference of <span
+class="math inline">\(-1.25\)</span>pp is far above the G6 floor (<span
+class="math inline">\(-5\)</span>pp), and the candidate sits
+<em>above</em> base. Domain fine-tuning at 0.24% of parameters did not
+buy domain skill with general regression.</p>
+<h2 id="sec:v5b">The v5b case study: a correctly rejected repair</h2>
+<p>Section <a href="#sec:analysis" data-reference-type="ref"
+data-reference="sec:analysis">6</a> attributes the previous generation’s
+principle-recommendation weakness to three data defects. v5b tested the
+repair with a single-variable change: 408 injected commit-style items
+(length band 800–1600 characters, all 40 inventive principles covered,
+gold-decontaminated) plus removal of the 83 mislabeled items, for
+11<span>,</span>421 training pairs; every other subset was
+byte-identical to v5a and every hyperparameter was frozen.</p>
+<p>The repair worked <em>behaviorally</em> and failed
+<em>measurably</em>. Qualitatively, v5b no longer hedges: sampled
+principle-recommendation answers now commit to numbered principles with
+application logic (“Principle one: segmentation…”), exactly the deficit
+the attribution identified. Quantitatively, the gates rejected the
+generation on two independent significant track-reversals (Table <a
+href="#tab:v5b" data-reference-type="ref"
+data-reference="tab:v5b">5</a>). Against base, the in-family judge-track
+gain grew to <span class="math inline">\(+0.430\)</span> while the
+objective track went significantly <em>negative</em> (<span
+class="math inline">\(-0.028\)</span>); against v2 on the targeted
+subset the same flip appeared in extreme form (judge <span
+class="math inline">\(+0.800\)</span> vs. keyword <span
+class="math inline">\(-0.135\)</span>). G7 fired. The external panel
+made the rejection unambiguous: all three external judges scored v5b
+statistically indistinguishable from base (<span
+class="math inline">\(+0.067\)</span>/<span
+class="math inline">\(-0.003\)</span>/<span
+class="math inline">\(+0.015\)</span>, all n.s.), so unlike v5a—whose
+small gain two of three external judges confirmed—v5b’s larger in-family
+headline has <em>zero</em> external confirmation.</p>
+<table id="tab:v5b">
+<caption>v5b dual-track outcome (paired diffs, 95% CI). The two
+significant reversals that fired G7 are marked <span
+class="math inline">\(\dagger\)</span>.</caption>
+<thead>
+<tr>
+<th style="text-align: left;">Comparison</th>
+<th style="text-align: center;">judge track</th>
+<th style="text-align: center;">keyword track</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">v5b <span class="math inline">\(-\)</span>
+base, overall<span class="math inline">\(\dagger\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(+0.430\)</span> [<span
+class="math inline">\(+0.323\)</span>, <span
+class="math inline">\(+0.537\)</span>]</td>
+<td style="text-align: center;"><span
+class="math inline">\(-0.028\)</span> [<span
+class="math inline">\(-0.048\)</span>, <span
+class="math inline">\(-0.009\)</span>]</td>
+</tr>
+<tr>
+<td style="text-align: left;">v5b <span class="math inline">\(-\)</span>
+base, principle rec. </td>
+<td style="text-align: center;"><span
+class="math inline">\(-0.033\)</span> [<span
+class="math inline">\(-0.217\)</span>, <span
+class="math inline">\(+0.167\)</span>]</td>
+<td style="text-align: center;"><span
+class="math inline">\(-0.104\)</span> [<span
+class="math inline">\(-0.159\)</span>, <span
+class="math inline">\(-0.049\)</span>]</td>
+</tr>
+<tr>
+<td style="text-align: left;">v5b <span class="math inline">\(-\)</span>
+v2, principle rec.<span class="math inline">\(\dagger\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(+0.800\)</span> [<span
+class="math inline">\(+0.617\)</span>, <span
+class="math inline">\(+1.000\)</span>]</td>
+<td style="text-align: center;"><span
+class="math inline">\(-0.135\)</span> [<span
+class="math inline">\(-0.193\)</span>, <span
+class="math inline">\(-0.082\)</span>]</td>
+</tr>
+<tr>
+<td style="text-align: left;">External judges (v5b <span
+class="math inline">\(-\)</span> base)</td>
+<td colspan="2" style="text-align: center;">claude <span
+class="math inline">\(+0.067\)</span> n.s.; gpt <span
+class="math inline">\(-0.003\)</span> n.s.; gemini <span
+class="math inline">\(+0.015\)</span> n.s.</td>
+</tr>
+</tbody>
+</table>
+<p>Attribution of the keyword regression found it to be primarily a
+measurement artifact rather than degraded principle selection. Of 59
+lost keyword instances on the 60-item subset, only 22% are
+principle-name mismatches (v5b recommending, e.g., segmentation where
+the reference chose prior action); 78% are generic framing tokens
+(<em>TRIZ</em>, <em>inventive principle</em>, <em>technical
+contradiction</em>) that base’s longer answers sprinkle and the terse
+commit-style format omits. v5b in fact hits expected keywords at
+<em>higher</em> density than base (1.88 vs. 1.03 per 1<span>,</span>000
+characters); its absolute hit count falls because its answers are
+0.39<span class="math inline">\(\times\)</span> as long (median
+1<span>,</span>055 vs. 2<span>,</span>792 characters), and a
+counterfactual holding base’s density fixed attributes the entire net
+drop to this length surface. The objective track thus measures a
+length-sensitive vocabulary contract rather than what the injection
+changed; meanwhile all judges, external included, scored the two arms
+equal, so no judged-quality gain offsets the contract loss. The decision
+gates’ verdict—G7 fail, G3 freeze pending formal attribution—is that
+this trade is not worth making: v5b is rejected, and Meerkat-TRIZ v1
+(v5a) remains the shipped model. We report v5b in detail precisely
+because a single-metric pipeline would have shipped it: its in-family
+headline (<span class="math inline">\(+0.430\)</span>) is the largest in
+the lineage. Section <a href="#sec:eqlen" data-reference-type="ref"
+data-reference="sec:eqlen">5.5</a> later shows that both of v5b’s
+significant tracks against base decompose into length-surface
+effects.</p>
+<h2 id="sec:eqlen">The equal-length control</h2>
+<p>Section 5.1 leaves one confound standing: base answers are much
+longer than v5a’s (median 3<span>,</span>242 vs. 1<span>,</span>344
+characters), and the in-family rubric explicitly penalizes verbosity. If
+the rubric works, part of v5a’s <span
+class="math inline">\(+0.393\)</span> could be a length artifact rather
+than a quality gain. An earlier attempt to isolate the effect by
+score-bucket pairing was underpowered (17/300 same-bucket pairs), so we
+ran a direct control: base regenerated all 300 items with a per-item
+length target equal to v5a’s answer length on that item (“keep the
+answer to about <span class="math inline">\(N\)</span> characters <span
+class="math inline">\(\pm 10\%\)</span>”), every other protocol element
+byte-identical; judging and inference are unchanged.</p>
+<p>Length compliance was partial. The instruction asked for a median of
+1<span>,</span>344 characters; base produced a median of
+1<span>,</span>750 (1.29<span class="math inline">\(\times\)</span>
+overshoot; 20/300 items inside the <span class="math inline">\(\pm
+10\%\)</span> band), compressing the base-to-v5a length ratio from
+2.4<span class="math inline">\(\times\)</span> to 1.3<span
+class="math inline">\(\times\)</span>. We report the control as-is
+rather than iterating toward perfect compliance.</p>
+<table id="tab:eqlen">
+<caption>Equal-length control, in-family judge (0–4), paired diffs with
+95% CIs (10<span>,</span>000 paired bootstraps, seed 42). Row 1
+recomputes Table <a href="#tab:main" data-reference-type="ref"
+data-reference="tab:main">2</a> on the control’s paired sample and
+reproduces it exactly; rows 4–5 apply the same control to the rejected
+v5b generation at zero additional generation cost.</caption>
+<thead>
+<tr>
+<th style="text-align: left;">Comparison</th>
+<th style="text-align: center;">diff [95% CI]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">v5a <span class="math inline">\(-\)</span>
+base (unconstrained)</td>
+<td style="text-align: center;"><span
+class="math inline">\(+0.393\)</span> [<span
+class="math inline">\(+0.297\)</span>, <span
+class="math inline">\(+0.490\)</span>]</td>
+</tr>
+<tr>
+<td style="text-align: left;">v5a <span class="math inline">\(-\)</span>
+base (length-matched)</td>
+<td style="text-align: center;"><span
+class="math inline">\(-0.070\)</span> [<span
+class="math inline">\(-0.140\)</span>, <span
+class="math inline">\(+0.000\)</span>]</td>
+</tr>
+<tr>
+<td style="text-align: left;">base (matched) <span
+class="math inline">\(-\)</span> base (unconstrained)</td>
+<td style="text-align: center;"><span
+class="math inline">\(+0.463\)</span> [<span
+class="math inline">\(+0.367\)</span>, <span
+class="math inline">\(+0.557\)</span>]</td>
+</tr>
+<tr>
+<td style="text-align: left;">v5b <span class="math inline">\(-\)</span>
+base (unconstrained)</td>
+<td style="text-align: center;"><span
+class="math inline">\(+0.430\)</span> [<span
+class="math inline">\(+0.323\)</span>, <span
+class="math inline">\(+0.537\)</span>]</td>
+</tr>
+<tr>
+<td style="text-align: left;">v5b <span class="math inline">\(-\)</span>
+base (length-matched)</td>
+<td style="text-align: center;"><span
+class="math inline">\(-0.033\)</span> [<span
+class="math inline">\(-0.110\)</span>, <span
+class="math inline">\(+0.043\)</span>]</td>
+</tr>
+</tbody>
+</table>
+<p>Table <a href="#tab:eqlen" data-reference-type="ref"
+data-reference="tab:eqlen">6</a> separates artifact from gain for the
+in-family judge, and two conclusions stand. First, <strong>v5a’s
+in-family advantage does not survive length control</strong>: with base
+constrained toward v5a’s length the paired difference is <span
+class="math inline">\(-0.070\)</span> and statistically null—the <span
+class="math inline">\(+0.393\)</span> headline is predominantly a length
+artifact. Mean scores make the mechanism visible: base 3.030
+unconstrained, 3.493 length-matched, v5a 3.423. Second, <strong>the
+anti-verbosity rubric is real</strong>: base’s only change was a length
+instruction, and its judged score rose by <span
+class="math inline">\(+0.463\)</span>—the judge penalizes verbosity
+itself, not capability.</p>
+<table id="tab:eqlen_ext">
+<caption>The equal-length control under <em>external</em> judges (v5a
+<span class="math inline">\(-\)</span> base, paired diffs [95% CI],
+<span class="math inline">\(n{=}299\)</span>). Matched-arm CIs are
+additionally widened by judge rerun-noise synthesis (Section <a
+href="#sec:limits" data-reference-type="ref"
+data-reference="sec:limits">7</a>, rule D6): Claude [<span
+class="math inline">\(+0.105\)</span>, <span
+class="math inline">\(+0.270\)</span>], GPT [<span
+class="math inline">\(+0.161\)</span>, <span
+class="math inline">\(+0.380\)</span>]—both remain
+significant.</caption>
+<thead>
+<tr>
+<th style="text-align: left;">Judge</th>
+<th style="text-align: center;">unconstrained</th>
+<th style="text-align: center;">length-matched</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Claude Sonnet 4.6</td>
+<td style="text-align: center;"><span
+class="math inline">\(+0.094\)</span> [<span
+class="math inline">\(+0.020\)</span>, <span
+class="math inline">\(+0.167\)</span>]</td>
+<td style="text-align: center;"><span
+class="math inline">\(\mathbf{+0.187}\)</span> [<span
+class="math inline">\(+0.110\)</span>, <span
+class="math inline">\(+0.264\)</span>]</td>
+</tr>
+<tr>
+<td style="text-align: left;">GPT-5.4</td>
+<td style="text-align: center;"><span
+class="math inline">\(+0.104\)</span> [<span
+class="math inline">\(+0.020\)</span>, <span
+class="math inline">\(+0.184\)</span>]</td>
+<td style="text-align: center;"><span
+class="math inline">\(\mathbf{+0.271}\)</span> [<span
+class="math inline">\(+0.177\)</span>, <span
+class="math inline">\(+0.368\)</span>]</td>
+</tr>
+<tr>
+<td style="text-align: left;">Gemini 3.5 Flash</td>
+<td style="text-align: center;"><span
+class="math inline">\(-0.048\)</span> [<span
+class="math inline">\(-0.144\)</span>, <span
+class="math inline">\(+0.045\)</span>]</td>
+<td style="text-align: center;"><span
+class="math inline">\(+0.025\)</span> [<span
+class="math inline">\(-0.074\)</span>, <span
+class="math inline">\(+0.120\)</span>]</td>
+</tr>
+</tbody>
+</table>
+<p>Third, <strong>the external judges reverse the
+picture—upward</strong> (Table <a href="#tab:eqlen_ext"
+data-reference-type="ref" data-reference="tab:eqlen_ext">7</a>). Scoring
+the same matched-length arm, two of three external judges rate v5a
+significantly <em>above</em> base. The mechanism mirrors the in-family
+one with the sign flipped: external judges <em>lower</em> base’s score
+when it is forced to write short (GPT <span class="math inline">\(2.301
+\to 2.134\)</span>; Claude <span class="math inline">\(2.555 \to
+2.462\)</span>)—they reward elaboration, so base’s unconstrained sprawl
+was itself buying judged quality. At a level length budget the
+fine-tune’s content is genuinely better; base closes most of the gap
+only by spending <span class="math inline">\(2.4\times\)</span> the
+tokens, and even then not all of it (the unconstrained residuals <span
+class="math inline">\(+0.09\)</span>/<span
+class="math inline">\(+0.10\)</span> of Section 5.1). The four readings
+now compose a single consistent picture: in-family <span
+class="math inline">\(+0.39\)</span> (anti-verbosity over-credits) <span
+class="math inline">\(\to\)</span> in-family matched <span
+class="math inline">\(-0.07\)</span> (rubric real but conservative)
+<span class="math inline">\(\to\)</span> external unconstrained <span
+class="math inline">\(+0.09\)</span>/<span
+class="math inline">\(+0.10\)</span> (length and content offset) <span
+class="math inline">\(\to\)</span> external matched <span
+class="math inline">\(+0.19\)</span>/<span
+class="math inline">\(+0.27\)</span> (content quality, isolated).</p>
+<p>The keyword track sharpens rather than contradicts this:
+unconstrained, v5a and base are tied (<span
+class="math inline">\(-0.0001\)</span> n.s.), but length-matched base
+<em>loses</em> keyword coverage relative to its unconstrained self
+(<span class="math inline">\(-0.023\)</span> [<span
+class="math inline">\(-0.040\)</span>, <span
+class="math inline">\(-0.005\)</span>]) while v5a does not—so at matched
+length v5a significantly <em>out-covers</em> base on keywords (<span
+class="math inline">\(+0.023\)</span> [<span
+class="math inline">\(+0.005\)</span>, <span
+class="math inline">\(+0.041\)</span>]). Brevity costs the base keyword
+surface that the fine-tune retains at <span
+class="math inline">\(0.4\times\)</span> the length. The same control
+applied to the rejected v5b generation (Table <a href="#tab:eqlen"
+data-reference-type="ref" data-reference="tab:eqlen">6</a>, rows 4–5)
+dissolves <em>both</em> of its significant tracks: the judge gain (<span
+class="math inline">\(+0.430 \to -0.033\)</span> n.s.) and the keyword
+loss (<span class="math inline">\(-0.028 \to -0.006\)</span> n.s.) are
+alike length-surface effects—v5b’s behavioral change is real, but every
+measured effect against base was a length phenomenon (its regression
+against v2 on the targeted subset is not length-controlled here and
+stands).</p>
+<p>The claim this paper makes is therefore stronger than parity: at
+matched length the fine-tune outperforms its base under two of three
+external judges, and at natural lengths it delivers that content at
+<span class="math inline">\(0.4\times\)</span> the answer length with
+keyword coverage the base cannot retain when compressed. We now require
+an equal-length control as a mandatory companion to any judge-track
+significance claim (harness rule D5), external panel included.</p>
+<h1 id="sec:analysis">Analysis</h1>
+<h2 id="what-was-actually-wrong-with-principle-recommendation">What was
+actually wrong with principle recommendation</h2>
+<p>The previous generation’s weakest subset illustrates why measurement
+must precede data work. Four judges agreed the fine-tune did not beat
+base on principle recommendation (<span
+class="math inline">\(+0.05\)</span>, <span
+class="math inline">\(+0.05\)</span>, <span
+class="math inline">\(-0.08\)</span> n.s.; <span
+class="math inline">\(-0.31\)</span> significant negative). Attribution
+found three independent defects: (i) <em>quantity</em>—196 training
+items, the smallest domain subset; (ii) <em>style</em>—72% of them
+concise-mode items capped at 300 characters, teaching terseness on a
+task whose gold answers argue; (iii) <em>labels</em>—42% mislabeled,
+including ARIZ resource questions and standard-solution questions.
+Qualitatively, the model had learned to answer “recommend two
+principles” prompts with a <em>methodology lecture</em> (“step one,
+restate the contradiction; step two, consult the matrix…”), hedging
+instead of committing, while the base model committed to numbered
+principles with application logic and was rewarded for it. The keyword
+track being significantly <em>positive</em> (<span
+class="math inline">\(+0.049\)</span>) on the same subset proves the
+model knew the vocabulary; what it lacked was the behavior, because the
+behavior existed in only 54 training examples (Figure <a href="#fig:pr"
+data-reference-type="ref" data-reference="fig:pr">4</a>).</p>
+<figure id="fig:pr" data-latex-placement="t">
+<img src="figures/fig_pr_attribution_preview.png" style="width:72.0%" />
+<figcaption>Principle-recommendation subset before and after
+attribution-driven injection. Left: the v5a subset (196 items)
+decomposed by the audit—83 mislabeled items removed, 83 concise-mode and
+30 detailed legacy items kept. Right: the v5b subset (521 items) adds
+408 injected commit-style items covering all 40 inventive principles.
+All other subsets are byte-identical between v5a and v5b.</figcaption>
+</figure>
+<h2 id="lessons-the-gates-enforced">Lessons the gates enforced</h2>
+<p>Three rejected generations anchor the methodology’s value. v3 pushed
+keyword-rich data: the objective track improved and the judge track
+significantly regressed—the G7 circuit breaker fired, and attribution
+showed keyword stuffing had degraded answer quality. v4 rebalanced data
+and quietly dropped eight expected keywords in concept explanation (true
+regression, not artifact): G3 fired. v5b repaired a documented
+behavioral deficit and produced the lineage’s largest in-family headline
+(<span class="math inline">\(+0.430\)</span>)—and was rejected when the
+objective track flipped sign on two comparisons and no external judge
+confirmed the gain (Section <a href="#sec:v5b" data-reference-type="ref"
+data-reference="sec:v5b">5.4</a>). All three rejections were of
+generations that single-metric evaluation would have shipped. The
+counter-discipline also matters: frozen hyperparameters made every
+comparison single-variable, and the decision to never “tune the learning
+rate” when a data fix was available is why the lineage reads as a
+sequence of interpretable experiments rather than a soup.</p>
+<h2 id="judge-bias-mapped">Judge bias, mapped</h2>
+<p>Our measurements localize four judge biases in this domain:
+<em>family inflation</em> (<span
+class="math inline">\(\sim\)</span>4<span
+class="math inline">\(\times\)</span> effect-size deflation when moving
+from in-family to external judges); <em>leniency offset</em> (Gemini
+scores all arms <span class="math inline">\(\sim\)</span>0.3–0.6 higher
+than GPT while agreeing on rankings, <span
+class="math inline">\(\rho{=}0.69\)</span>); <em>elaboration
+preference</em> (frontier models’ judge-track advantage co-occurring
+with 2–3<span class="math inline">\(\times\)</span> answer length
+despite an anti-verbosity rubric); and, newly evidenced by v5b,
+<em>data-generator–judge family alignment</em>: v5b’s injected training
+data was generated by a model of the same family as the in-family judge,
+and its in-family headline <em>grew</em> (<span
+class="math inline">\(+0.430\)</span> vs. v5a’s <span
+class="math inline">\(+0.393\)</span>) while external confirmation
+collapsed to zero (<span class="math inline">\(+0.067\)</span>/<span
+class="math inline">\(-0.003\)</span>/<span
+class="math inline">\(+0.015\)</span> n.s.). Family bias thus propagates
+through the data chain, not only the generation chain: when an
+intervention’s data comes from family <span
+class="math inline">\(X\)</span>, a family-<span
+class="math inline">\(X\)</span> judge is doubly compromised, and only
+the external panel is insulated. The first two biases are handled by
+recusal plus disclosure; the third is now resolved by the equal-length
+control (Section <a href="#sec:eqlen" data-reference-type="ref"
+data-reference="sec:eqlen">5.5</a>), which shows the in-family rubric’s
+verbosity penalty is genuine, that the fine-tune’s in-family advantage
+is predominantly a length artifact—and, symmetrically, that external
+judges <em>lower</em> the length-matched base (GPT <span
+class="math inline">\(2.301 \to 2.134\)</span>), a direct measurement of
+elaboration preference that isolates the fine-tune’s content-quality
+gain (<span class="math inline">\(+0.19\)</span>/<span
+class="math inline">\(+0.27\)</span>); the fourth is handled by treating
+any same-family intervention as automatically suspect under G8.</p>
+<h1 id="sec:limits">Limitations</h1>
+<p>(i) The judge-track effect is judge-dependent; the length-matched
+external spread (<span class="math inline">\(+0.03\)</span> to <span
+class="math inline">\(+0.27\)</span>) is our best estimate of the true
+content-quality effect, but it inherits each judge’s rubric
+idiosyncrasies. Relatedly, the external judges—served through an API
+gateway—are <em>not</em> deterministic at temperature 0 (per-item flip
+rates 0.18–0.80 over three repeated runs of 50 items; the in-family
+judge, called directly, had flip rate 0.000). Published external
+differences were computed without judge rerun variance; re-widening the
+CIs by rerun-noise synthesis leaves the significant results significant
+(<span class="math inline">\(+0.104 \to [+0.006, +0.202]\)</span>; <span
+class="math inline">\(+0.094 \to [+0.015,
++0.173]\)</span>; matched-arm <span
+class="math inline">\(+0.187\)</span>/<span
+class="math inline">\(+0.271\)</span> likewise survive), but single-run
+external numbers should be read with this noise budget in mind (harness
+rule D6 now gates judge determinism). (ii) The length confound on the
+judge track is bounded but not perfectly removed: the equal-length
+control (Section <a href="#sec:eqlen" data-reference-type="ref"
+data-reference="sec:eqlen">5.5</a>) overshot its per-item targets by 29%
+(median 1<span>,</span>750 vs. 1<span>,</span>344 characters), and a
+stricter-compliance replication is future work. (iii) The benchmark is
+Chinese-only and TRIZ-specific; nothing here tests cross-lingual or
+cross-domain transfer. (iv) Public benchmark questions derive from
+copyrighted source texts (model-generated derivatives); we publish
+questions and keywords but not reference answers, and a clean-room v2
+benchmark plus an English subset is planned. (v) Human-expert validation
+of judge reliability is scheduled (30-item blind paired study) but not
+yet complete at submission time; judge–human agreement is therefore
+asserted by proxy (inter-judge agreement), not measured. (vi) A single
+base model and a single adapter configuration are tested; routed-expert
+coverage and rank ablations are open engineering questions. (vii) v5b,
+the most recent generation and the only attempted data-level repair, was
+rejected by the gates (Section <a href="#sec:v5b"
+data-reference-type="ref" data-reference="sec:v5b">5.4</a>): how to fix
+principle recommendation in a way that satisfies both tracks remains an
+open problem. Preference optimization on judge-verified pairs (e.g., DPO
+<span class="citation" data-cites="dpo"></span>) is a natural next step
+but is deliberately deferred until judge reliability is human-validated,
+to avoid distilling a judge’s idiosyncrasies into weights.</p>
+<h1 id="sec:concl">Conclusion</h1>
+<p>We set out to answer whether a TRIZ-domain fine-tune is real, and
+built the measurement apparatus required to make the answer checkable.
+The answer is: real on the objective track, where the fine-tune matches
+its base and both beat every frontier model we tested; real as judged
+quality <em>efficiency</em>—at natural lengths it delivers its content
+at <span class="math inline">\(0.4\times\)</span> the base’s answer
+length—and, once length is controlled, real as a judged-quality
+<em>gain</em>: two of three external judges score the fine-tune
+significantly above the length-matched base (<span
+class="math inline">\(+0.19\)</span>/<span
+class="math inline">\(+0.27\)</span>), even though the in-family
+headline itself proved to be a length artifact (Section <a
+href="#sec:eqlen" data-reference-type="ref"
+data-reference="sec:eqlen">5.5</a>); achieved without general-capability
+sacrifice; and improving through a gated, failure-driven data lineage
+rather than through training heroics. We release model, harness,
+benchmark, and caches. If the field adopts one habit from this paper, we
+hope it is this: never let the family that generated the data be the
+only judge of the model—and never print a judge-track gain without a
+length control.</p>
+<h1 id="generation-and-judging-configurations">Generation and judging
+configurations</h1>
+<p>All contestant generations use the system message: “You are a TRIZ
+innovation-methodology expert assistant; answer professionally in
+Chinese on TRIZ theory, inventive principles, contradiction analysis and
+ARIZ” (translated), max 2048 tokens. Judges use the Arm-A rubric with
+five 0–4 dimensions, batch size 5, temperature 0, full untruncated
+input; batch parse failures degrade to single-item retries; API safety
+refusals are logged as missing. All bootstrap procedures use
+<code>random.Random(42)</code> with 10<span>,</span>000 resamples. Judge
+caches for every arm<span class="math inline">\(\times\)</span>judge
+cell are published alongside the harness.</p>
+<h1 id="gate-definitions-machine-checkable">Gate definitions
+(machine-checkable)</h1>
+<p>G0: refusal-template hit rate <span class="math inline">\(\leq
+2\%\)</span>. G1: vs-base Arm-A CI lower bound <span
+class="math inline">\(&gt; -0.15\)</span> (Arm B must not contradict).
+G2: vs-predecessor CI lower bound <span class="math inline">\(&gt;
+-0.05\)</span> and (judge or keyword significantly positive). G3: any
+subset keyword CI upper bound <span class="math inline">\(&lt;0\)</span>
+requires attribution; true-missing <span
+class="math inline">\(\Rightarrow\)</span> FAIL, artifact <span
+class="math inline">\(\Rightarrow\)</span> judge-track arbitration. G4:
+<span class="math inline">\(n&lt;30\)</span> subsets descriptive only.
+G5: ARIZ track divergence resolved for the rubric track. G6: probe diff
+<span class="math inline">\(&gt; -5\)</span>pp. G7: any dimension with
+both tracks significant in opposite directions <span
+class="math inline">\(\Rightarrow\)</span> FAIL. G8: missing external
+review <span class="math inline">\(\Rightarrow\)</span> SKIP; in-family
+significantly positive with all-external significantly negative <span
+class="math inline">\(\Rightarrow\)</span> FAIL; majority-external
+significantly negative <span class="math inline">\(\Rightarrow\)</span>
+FAIL.</p>
+<div class="thebibliography">
+<p><span>99</span></p>
+<p>S. Jiang and J. Luo. AutoTRIZ: Artificial ideation with TRIZ and
+large language models. <em>arXiv:2403.13002</em>, 2024.</p>
+<p>TRIZ-GPT: An LLM-augmented method for problem-solving.
+<em>arXiv:2408.05897</em>, 2024.</p>
+<p>K. Szczepanik and J. Chudziak. TRIZ Agents: A multi-agent LLM
+approach for TRIZ-based innovation. <em>arXiv:2506.18783</em>, 2025.</p>
+<p>S. Gusarov. Integrating the theory of inventive problem solving with
+large language models: Enhancing reasoning for innovation in materials
+science at the molecular scale. <em>Preprints</em> 202602.1398,
+2026.</p>
+<p>L. Zheng et al. Judging LLM-as-a-judge with MT-Bench and Chatbot
+Arena. <em>NeurIPS</em> (arXiv:2306.05685), 2023.</p>
+<p>A. Panickssery, S. Bowman, and S. Feng. LLM evaluators recognize and
+favor their own generations. <em>NeurIPS</em> (arXiv:2404.13076),
+2024.</p>
+<p>Y. Dubois et al. Length-controlled AlpacaEval: A simple way to debias
+automatic evaluators. <em>arXiv:2404.04475</em>, 2024.</p>
+<p>P. Liang et al. Holistic evaluation of language models (HELM).
+<em>arXiv:2211.09110</em>, 2022.</p>
+<p>C. White et al. LiveBench: A challenging, contamination-limited LLM
+benchmark. <em>arXiv:2406.19314</em>, 2024.</p>
+<p>E. J. Hu et al. LoRA: Low-rank adaptation of large language models.
+<em>arXiv:2106.09685</em>, 2021.</p>
+<p>T. Dettmers et al. QLoRA: Efficient finetuning of quantized LLMs.
+<em>arXiv:2305.14314</em>, 2023.</p>
+<p>Qwen Team. Qwen3 technical report. <em>arXiv:2505.09388</em>,
+2025.</p>
+<p>L. Ouyang et al. Training language models to follow instructions with
+human feedback. <em>arXiv:2203.02155</em>, 2022.</p>
+<p>R. Rafailov et al. Direct preference optimization: Your language
+model is secretly a reward model. <em>arXiv:2305.18290</em>, 2023.</p>
+<p>G. Altshuller. <em>The Innovation Algorithm: TRIZ, Systematic
+Innovation and Technical Creativity</em>. Technical Innovation Center,
+1999.</p>
+</div>
+</body>
+</html>
