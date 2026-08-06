@@ -8,7 +8,7 @@ arthur.lok@innoenterprise.com · siyuan.huang@insentek.com · christina.yang@cbc
 模型：https://huggingface.co/Meerkat-AI/Meerkat-TRIZ-v1  
 代码与基准：https://github.com/coidea-sys/meerkat-triz
 
-2026 年 7 月（中文版 2026 年 8 月，数据与英文版 v1.3 口径对齐）
+2026 年 7 月
 
 ---
 
@@ -270,4 +270,3 @@ G0：拒答模板命中率 ≤2%。G1：对 base 臂 A CI 下界 >−0.15（臂 
 
 ---
 
-*中文版说明：本文数据与英文版及白皮书 v1.3 口径逐项对齐；相对英文版的三处数据修正——v5a 训练样本数以发布的 adapter_info.json 为准（11,013→11,096）、适配器体积以实测为准（181MB→169.4MB）、训练口径统一为 LoRA + 纯 BF16 免量化（发布的 precision 字段，与"QLoRA"表述对齐实际流程）。图 3 的 Spearman 矩阵由公开评委缓存重新计算，与正文报告值一致。*

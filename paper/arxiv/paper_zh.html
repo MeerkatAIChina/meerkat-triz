@@ -39,7 +39,7 @@ li { margin: 2pt 0; }
 arthur.lok@innoenterprise.com · siyuan.huang@insentek.com · christina.yang@cbctech.com</p>
 <p>模型：https://huggingface.co/Meerkat-AI/Meerkat-TRIZ-v1<br />
 代码与基准：https://github.com/coidea-sys/meerkat-triz</p>
-<p>2026 年 7 月（中文版 2026 年 8 月，数据与英文版 v1.3 口径对齐）</p>
+<p>2026 年 7 月</p>
 <hr />
 <h2>摘要</h2>
 <p>TRIZ（发明问题解决理论）是工程实践中应用最广的系统性创新方法论，但既有将 TRIZ 与大语言模型（LLM）结合的工作全部停留在对通用模型的提示词、检索或多智能体编排层面。我们发布 <strong>Meerkat-TRIZ</strong>——据我们所知，首个公开发布的 TRIZ 领域<strong>微调</strong> LLM：在 Qwen3.6-35B-A3B MoE 基座上训练的 LoRA 适配器（可训练参数占 0.24%），训练语料为覆盖六类 TRIZ 任务与安全拒答的 1.1 万条课程样本。由于领域宣称的可信度不超出其测量的可信度，本文的第二贡献是一套能够经受对抗性审查的评测方法学：(i) <strong>TRIZ-Bench</strong>——300 题、六任务的基准，题目与关键词集公开；(ii) <strong>双轨</strong>协议——客观关键词轨与反冗长 LLM 评委轨配对；(iii) 全程固定种子的配对 bootstrap 显著性检验；(iv) <strong>跨家族评委面板</strong>——家族回避制度与断路器：当同族评委与外部共识矛盾时冻结发布；(v) 八门决策程序（G0–G8），曾多次捕获单指标排行榜会漏掉的回退。应用这套装置，我们发现：Meerkat-TRIZ v1 在同族评委下相对 35B 基座提升 +0.39（±0.10，95% CI），但在两位外部评委下仅 +0.09 ~ +0.10，第三位外部评委下为 −0.05——一种约 4 倍的膨胀模式，单一评委下无法察觉。<strong>等长对照</strong>随后分离了残余混淆：当基座被指示对齐微调模型的回答长度时，同族增益完全消失（−0.07，不显著），而基座仅靠写短自身得分即上升 +0.46——然而三位<strong>外部</strong>评委中的两位认为，等长后的基座显著<strong>低于</strong>微调模型（+0.19 ~ +0.27）。长度一直在掩盖一个真实的内容质量增益：微调模型在等长预算下更好，在自然长度下以 0.4× 的回答篇幅交付内容，并保住基座被迫写短时保不住的关键词覆盖。在客观关键词轨上，微调模型与基座完全持平（±0.0001），且两者的 TRIZ 关键词覆盖均超过 GPT-5.4、Claude Sonnet 4.6、Claude Opus 4.8 与 Gemini 3.5 Flash；在评委轨上最强前沿模型仍然领先，而 Claude Opus 4.8 得分显著<strong>低于</strong> 35B 基座。120 题通用能力探针显示领域微调未造成显著能力损失（相对前代 −1.25pp，门限 −5pp）。我们发布模型、评测 harness、公开基准与全部评委缓存，使本文每个数字都可独立复算。</p>
@@ -406,6 +406,5 @@ arthur.lok@innoenterprise.com · siyuan.huang@insentek.com · christina.yang@cbc
 <p>[14] G. Altshuller. <em>The Innovation Algorithm: TRIZ, Systematic Innovation and Technical Creativity</em>. Technical Innovation Center, 1999.</p>
 <p>[15] R. Rafailov et al. Direct preference optimization: Your language model is secretly a reward model. <em>arXiv:2305.18290</em>, 2023.</p>
 <hr />
-<p><em>中文版说明：本文数据与英文版及白皮书 v1.3 口径逐项对齐；相对英文版的三处数据修正——v5a 训练样本数以发布的 adapter_info.json 为准（11,013→11,096）、适配器体积以实测为准（181MB→169.4MB）、训练口径统一为 LoRA + 纯 BF16 免量化（发布的 precision 字段，与&quot;QLoRA&quot;表述对齐实际流程）。图 3 的 Spearman 矩阵由公开评委缓存重新计算，与正文报告值一致。</em></p>
 
 </body></html>
