@@ -1,0 +1,61 @@
+
+===== PAGE 1 =====
+IST-OS 项目进度报告
+里程碑：v1.4.0 — 生产就绪
+报告生成日期：2026-07-22
+总体进度：50%
+里程碑概览
+当前里程碑：v1.4.0 — 生产就绪
+状态：进行中
+目标：修复所有生产阻塞问题，完成协议兼容性整改与硬件验证，使系统达到可现场部署状态。
+起始：2026-05-23（PROTO-01 协议兼容需求提升为 Phase 27）
+阶段总数：4（Phase 26 ~ Phase 29）
+阶段状态
+阶段 名称 状态 关键指标
+26 关键缺陷修复与 OTA 修复 完成 319+ 测试通过，MISRA ≤17
+27 协议兼容性与多平台支持 进行中 / Wave 6 阻塞 Wave 1~5 完成，497 测试通过
+28 生产硬化 完成 503/503 测试，PRECOMMIT_FULL 通过
+29 现场验证与硬件验证 已规划，未开始 STOP 电流 <500µA 等目标
+近期完成工作
+•  Phase  28  生产硬化：完成提交  44317ec，503/503  主机测试通过，PRECOMMIT_FULL  全项通过，Tick
+回绕风险清零，栈审计文档完成。
+•  Phase  27  Wave  3.5  协议  1:1  差距修复：6  项关键差距  +  4  项协议差距全部修复，497/497
+测试通过，ARM 双产品构建通过。
+•  Phase  27  Wave  1~5  编码：二进制协议修正、CFG  配置解析器、cigem  20  命令、多平台上传器、OTA
+触发整改完成。
+关键决策
+• 协议头从 0xDD 修正为 0x0503 小端序，与原始裸机固件保持一致。
+• Tick 回绕安全统一使用 osal_ticks_elapsed() 包装器。
+• Sampler 任务栈从 1024 B 增大到 2048 B，消除调用链栈溢出风险。
+• 双层配置系统（cfg_state_t + app_config_manager）暂时保留，通过同步函数桥接。
+第 1 页
+===== PAGE 2 =====
+IST-OS 项目进度报告
+里程碑：v1.4.0 — 生产就绪
+报告生成日期：2026-07-22
+• MQTT 4 路并发扩展（GPRS_MAX_LINKS / MQTT_MAX_SERVERS）。
+• OTA 触发由 HTTP/MQTT 路径改为 FIRWARE_DOWNLOAD 二进制命令触发。
+阻塞项与风险
+• Phase 27 Wave 6 联调阻塞：需要 Insentek 测试/沙箱环境，当前无法验证端到端注册、CFG 下发、cigem
+命令往返、传感器数据解析、OTA 流程。
+• Phase 29 硬件依赖：需要 STM32L151 开发板 + 微安级电流表 + 校准参考标准。
+• 文档维护：根目录 ROADMAP.md 仍为 v1.3.0 已完成里程碑，当前工作应参考 ROADMAP-v1.4.md。
+质量指标
+指标 数值
+主机端单元测试 503/503 通过（Phase 28 完成后）
+HIL 测试 62/62 通过
+ARM 双产品构建 通过（SOIL + HYDROLOGY）
+MISRA C:2012 违规 ≤17
+覆盖率 ≥75% 维持
+RAM 占用 约 27 KB / 32 KB
+PRECOMMIT_FULL 全部通过
+下一步建议
+由于  Phase  27  Wave  6（云端联调）因缺少  Insentek  测试环境无法推进，且  Phase  28
+已完成，建议优先推进 Phase 29 现场验证与硬件验证的规划工作。
+推荐命令：/gsd-plan-phase 29 — 开始 Phase 29 规划（先做文档与准备工作，无需硬件环境）。
+其他可选动作：
+• /gsd-execute-phase 27 — 继续 Phase 27 Wave 6 联调（需要 Insentek 测试环境）。
+• /gsd-verify-work 27 — 对 Phase 27 已交付软件进行 UAT 复核。
+• /gsd-discuss-phase 29 — 先讨论 Phase 29 硬件验证策略再规划。
+• /gsd-capture "获取 Insentek 测试环境" — 记录环境依赖为待办。
+第 2 页

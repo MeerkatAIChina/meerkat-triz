@@ -1,0 +1,333 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+notes: 机会地图:价值×实施难度 2×2 散点,8 个候选场景;建议优先高价值低难度象限;教学盘点,供内部讨论。
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 40, 500, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: |-
+        06 落地行动 · 机会地图
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 38]
+    content:
+      style: "$h1"
+      wrap: false
+      text: |-
+        机会地图:先认领「高价值 × 低难度」的场景
+  # ---- 象限底 ----
+  - elementId: quad-highlight
+    elementType: shape
+    bounds: [130, 140, 245, 150]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+  - elementId: quad-label-tl
+    elementType: text
+    bounds: [140, 148, 90, 14]
+    content:
+      fontSize: 11
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: |-
+        优先启动区
+  - elementId: quad-label-tr
+    elementType: text
+    bounds: [524, 148, 90, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: |-
+        值得投入区
+  - elementId: quad-label-bl
+    elementType: text
+    bounds: [140, 418, 90, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: |-
+        轻松小赢区
+  - elementId: quad-label-br
+    elementType: text
+    bounds: [524, 418, 90, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: |-
+        暂缓评估区
+  # ---- 中线与坐标轴 ----
+  - elementId: mid-v
+    elementType: line
+    bounds: [374, 140, 2, 300]
+    viewBox: [2, 300]
+    points: "1,0 1,300"
+    curve: sharp
+    border: {style: dash, width: 1, color: "$hair"}
+  - elementId: mid-h
+    elementType: line
+    bounds: [130, 289, 490, 2]
+    viewBox: [490, 2]
+    points: "0,1 490,1"
+    curve: sharp
+    border: {style: dash, width: 1, color: "$hair"}
+  - elementId: axis-y
+    elementType: line
+    bounds: [129, 140, 2, 300]
+    viewBox: [2, 300]
+    points: "1,300 1,0"
+    curve: sharp
+    arrow: [null, arrow]
+    border: {style: solid, width: 2, color: "$pine"}
+  - elementId: axis-x
+    elementType: line
+    bounds: [130, 439, 490, 2]
+    viewBox: [490, 2]
+    points: "0,1 490,1"
+    curve: sharp
+    arrow: [null, arrow]
+    border: {style: solid, width: 2, color: "$pine"}
+  - elementId: axis-y-label
+    elementType: text
+    bounds: [96, 126, 34, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: |-
+        价值
+  - elementId: axis-x-label
+    elementType: text
+    bounds: [548, 446, 72, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: |-
+        实施难度
+  # ---- 8 个候选场景散点 ----
+  - elementId: dot1
+    elementType: shape
+    bounds: [203, 173, 14, 14]
+    shapeName: ellipse
+    fill: {type: solid, color: "$terra"}
+  - elementId: dot1-label
+    elementType: text
+    bounds: [224, 172, 100, 16]
+    content:
+      fontSize: 11
+      color: "$ink"
+      align: [left, middle]
+      wrap: false
+      text: |-
+        墒情巡检报告
+  - elementId: dot2
+    elementType: shape
+    bounds: [288, 218, 14, 14]
+    shapeName: ellipse
+    fill: {type: solid, color: "$terra"}
+  - elementId: dot2-label
+    elementType: text
+    bounds: [309, 217, 70, 16]
+    content:
+      fontSize: 11
+      color: "$ink"
+      align: [left, middle]
+      wrap: false
+      text: |-
+        会议纪要
+  - elementId: dot3
+    elementType: shape
+    bounds: [233, 251, 14, 14]
+    shapeName: ellipse
+    fill: {type: solid, color: "$terra"}
+  - elementId: dot3-label
+    elementType: text
+    bounds: [254, 250, 80, 16]
+    content:
+      fontSize: 11
+      color: "$ink"
+      align: [left, middle]
+      wrap: false
+      text: |-
+        知识库问答
+  - elementId: dot4
+    elementType: shape
+    bounds: [388, 168, 14, 14]
+    shapeName: ellipse
+    fill: {type: solid, color: "$pine"}
+  - elementId: dot4-label
+    elementType: text
+    bounds: [409, 167, 100, 16]
+    content:
+      fontSize: 11
+      color: "$ink"
+      align: [left, middle]
+      wrap: false
+      text: |-
+        异常值守排查
+  - elementId: dot5
+    elementType: shape
+    bounds: [433, 198, 14, 14]
+    shapeName: ellipse
+    fill: {type: solid, color: "$pine"}
+  - elementId: dot5-label
+    elementType: text
+    bounds: [454, 197, 70, 16]
+    content:
+      fontSize: 11
+      color: "$ink"
+      align: [left, middle]
+      wrap: false
+      text: |-
+        编码助手
+  - elementId: dot6
+    elementType: shape
+    bounds: [423, 243, 14, 14]
+    shapeName: ellipse
+    fill: {type: solid, color: "$pine"}
+  - elementId: dot6-label
+    elementType: text
+    bounds: [444, 242, 100, 16]
+    content:
+      fontSize: 11
+      color: "$ink"
+      align: [left, middle]
+      wrap: false
+      text: |-
+        方案初稿生成
+  - elementId: dot7
+    elementType: shape
+    bounds: [503, 293, 14, 14]
+    shapeName: ellipse
+    fill: {type: solid, color: "$pine"}
+  - elementId: dot7-label
+    elementType: text
+    bounds: [524, 292, 70, 16]
+    content:
+      fontSize: 11
+      color: "$ink"
+      align: [left, middle]
+      wrap: false
+      text: |-
+        标书框架
+  - elementId: dot8
+    elementType: shape
+    bounds: [218, 333, 14, 14]
+    shapeName: ellipse
+    fill: {type: solid, color: "$pine"}
+  - elementId: dot8-label
+    elementType: text
+    bounds: [239, 332, 80, 16]
+    content:
+      fontSize: 11
+      color: "$ink"
+      align: [left, middle]
+      wrap: false
+      text: |-
+        客户 FAQ
+  # ---- 右侧:读图说明 / 图例 / 行动 ----
+  - elementId: guide-h
+    elementType: text
+    bounds: [660, 140, 244, 20]
+    content:
+      style: "$h2"
+      wrap: false
+      text: |-
+        怎么读这张图
+  - elementId: guide-txt
+    elementType: text
+    bounds: [660, 166, 244, 56]
+    content:
+      style: "$small"
+      align: [left, top]
+      text: |-
+        横轴:实施难度(数据可得性、系统集成、流程改动);纵轴:业务价值(省时、提质、增收)。
+  - elementId: legend-dot1
+    elementType: shape
+    bounds: [660, 237, 10, 10]
+    shapeName: ellipse
+    fill: {type: solid, color: "$terra"}
+  - elementId: legend-txt1
+    elementType: text
+    bounds: [678, 234, 226, 16]
+    content:
+      fontSize: 11
+      color: "$ink"
+      align: [left, middle]
+      wrap: false
+      text: |-
+        建议优先:高价值 × 低难度
+  - elementId: legend-dot2
+    elementType: shape
+    bounds: [660, 259, 10, 10]
+    shapeName: ellipse
+    fill: {type: solid, color: "$pine"}
+  - elementId: legend-txt2
+    elementType: text
+    bounds: [678, 256, 226, 16]
+    content:
+      fontSize: 11
+      color: "$ink"
+      align: [left, middle]
+      wrap: false
+      text: |-
+        评估后推进
+  - elementId: right-divider
+    elementType: shape
+    bounds: [660, 284, 244, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: priority-txt
+    elementType: text
+    bounds: [660, 296, 244, 56]
+    content:
+      align: [left, top]
+      text: |-
+        <p><span style="font-size:12px; color:$ink;">建议优先三个:<strong>墒情巡检报告、会议纪要、知识库问答</strong>——本月就能跑通。</span></p>
+  - elementId: act-bg
+    elementType: shape
+    bounds: [660, 364, 244, 80]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+  - elementId: act-icon
+    elementType: icon
+    bounds: [676, 380, 14, 14]
+    iconName: "fas:flag"
+    fill: {type: solid, color: "$pine"}
+  - elementId: act-txt
+    elementType: text
+    bounds: [700, 372, 190, 64]
+    content:
+      align: [left, middle]
+      text: |-
+        <p><span style="font-size:12px; color:$pine;"><strong>行动</strong></span></p>
+        <p style="margin-top:2px"><span style="font-size:11px; color:$ink;">会后每个部门认领 1 个候选场景,填入部门机会清单。</span></p>
+  # ---- 页脚 ----
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-left
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: |-
+        教学盘点,供内部讨论 · 场景基于公开产品能力的教学推演
+  - elementId: footer-page
+    elementType: text
+    bounds: [804, 510, 100, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: |-
+        33 / 35

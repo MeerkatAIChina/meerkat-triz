@@ -1,0 +1,128 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 34, 500, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: 04 · 经验教训
+  - elementId: title
+    elementType: text
+    bounds: [56, 56, 840, 34]
+    content:
+      style: "$title"
+      wrap: false
+      text: 四类测量学故障：每个「提升」都要先怀疑测量
+  - elementId: f1
+    elementType: shape
+    bounds: [56, 110, 420, 118]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+    border: {style: solid, width: 1, color: "$terra"}
+  - elementId: f1-t
+    elementType: text
+    bounds: [72, 119, 390, 100]
+    content:
+      fontSize: 11.5
+      color: "$ink"
+      lineHeight: 1.5
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong><span style="color:$terra">① 基线污染：一个实际是 −0.30 的「+1.00 提升」</span></strong></p>
+        <p style="margin-top:4px">评测模板剥掉了空 think 块，基座基线被 format mismatch 打残，微调模型相对它虚涨。修复锚点谱系后真相是回退。→ E0 铁律由此而来。</p>
+  - elementId: f2
+    elementType: shape
+    bounds: [484, 110, 420, 118]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+    border: {style: solid, width: 1, color: "$terra"}
+  - elementId: f2-t
+    elementType: text
+    bounds: [500, 119, 390, 100]
+    content:
+      fontSize: 11.5
+      color: "$ink"
+      lineHeight: 1.5
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong><span style="color:$terra">② 评委位置偏差达文献振幅两倍</span></strong></p>
+        <p style="margin-top:4px">pairwise 评委对出场顺序高度敏感。→ 强制 AB/BA 双序，位置不一致率 >10% 自动作废单序数字。</p>
+  - elementId: f3
+    elementType: shape
+    bounds: [56, 240, 420, 118]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+    border: {style: solid, width: 1, color: "$terra"}
+  - elementId: f3-t
+    elementType: text
+    bounds: [72, 249, 390, 100]
+    content:
+      fontSize: 11.5
+      color: "$ink"
+      lineHeight: 1.5
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong><span style="color:$terra">③ 双轨分歧：两条轨投出相反的票</span></strong></p>
+        <p style="margin-top:4px">关键词轨 0 增长（−0.0001）vs judge 轨 +0.39——两轨测的是不同东西，混合加权会同时毁掉两者的可解释性。→ 永不混合，分开报告。</p>
+  - elementId: f4
+    elementType: shape
+    bounds: [484, 240, 420, 118]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+    border: {style: solid, width: 1, color: "$terra"}
+  - elementId: f4-t
+    elementType: text
+    bounds: [500, 249, 390, 100]
+    content:
+      fontSize: 11.5
+      color: "$ink"
+      lineHeight: 1.5
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong><span style="color:$terra">④ 长度构成的头条：+0.39 里大半是长度伪影</span></strong></p>
+        <p style="margin-top:4px">base 答案长度是发布模型的 2.4 倍，而 rubric 惩罚冗长。等长对照终审把长度差压到 1.3 倍后效应大幅缩水 → 异源终审 +0.09~+0.10 才是诚实数字。</p>
+  - elementId: lessons-title
+    elementType: text
+    bounds: [56, 376, 500, 18]
+    content:
+      fontSize: 14
+      bold: true
+      color: "$pine"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: 沉淀为工程纪律（全部已代码化）
+  - elementId: lessons
+    elementType: text
+    bounds: [56, 402, 848, 80]
+    content:
+      style: "$body"
+      fontSize: 12
+      lineHeight: 1.55
+      text: |
+        <p>· 每次训练 run 必须登记 METRICS_LEDGER；「未跑」是合法值但训练后评测为强制项，不许留空</p>
+        <p>· 事故不过夜：v1 日志丢失 → 训练日志强制持久化；v4 dtype 事故 → 三重 dtype 校正 + 发货验证项；v5b 续跑退化 → on_train_begin 回调兜底</p>
+        <p>· 每个版本线内超参冻结，保证跨版本对比永远只有一个移动变量</p>
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-src
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$small"
+      wrap: false
+      text: 来源：白皮书 §4 · results/METRICS_LEDGER.md
+  - elementId: footer-page
+    elementType: text
+    bounds: [864, 510, 40, 14]
+    content:
+      style: "$small"
+      align: [right, top]
+      wrap: false
+      text: "18"

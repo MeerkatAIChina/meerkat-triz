@@ -1,0 +1,283 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+notes: Loop Engineering 四要素方法页。顶部循环图:目标→行动→反馈→验证+回环线;每要素一条设计标准;下半页正反对照:散文反馈 vs 结构化 JSON 校验结果。检查:验证由谁做。
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 38, 500, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: 第三章 · HARNESS 与 LOOP ENGINEERING
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 36]
+    content:
+      style: "$h1"
+      wrap: false
+      text: Loop Engineering:四要素各有各的设计标准
+  # ---- 循环四要素 ----
+  - elementId: node-1
+    elementType: shape
+    bounds: [56, 140, 180, 52]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1.5, color: "$pine"}
+  - elementId: node-1-t
+    elementType: text
+    bounds: [56, 140, 180, 52]
+    content:
+      fontSize: 13
+      color: "$pine"
+      align: [center, middle]
+      wrap: false
+      text: |
+        <p style="text-align:center"><strong>① 目标</strong> GOAL</p>
+  - elementId: arr-1
+    elementType: line
+    bounds: [240, 165, 35, 2]
+    viewBox: [35, 2]
+    points: "0,1 35,1"
+    curve: sharp
+    arrow: [null, arrow]
+    border: {style: solid, width: 2, color: "$pine"}
+  - elementId: node-2
+    elementType: shape
+    bounds: [279, 140, 180, 52]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1.5, color: "$pine"}
+  - elementId: node-2-t
+    elementType: text
+    bounds: [279, 140, 180, 52]
+    content:
+      fontSize: 13
+      color: "$pine"
+      align: [center, middle]
+      wrap: false
+      text: |
+        <p style="text-align:center"><strong>② 行动</strong> ACT</p>
+  - elementId: arr-2
+    elementType: line
+    bounds: [463, 165, 35, 2]
+    viewBox: [35, 2]
+    points: "0,1 35,1"
+    curve: sharp
+    arrow: [null, arrow]
+    border: {style: solid, width: 2, color: "$pine"}
+  - elementId: node-3
+    elementType: shape
+    bounds: [502, 140, 180, 52]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1.5, color: "$pine"}
+  - elementId: node-3-t
+    elementType: text
+    bounds: [502, 140, 180, 52]
+    content:
+      fontSize: 13
+      color: "$pine"
+      align: [center, middle]
+      wrap: false
+      text: |
+        <p style="text-align:center"><strong>③ 反馈</strong> FEEDBACK</p>
+  - elementId: arr-3
+    elementType: line
+    bounds: [686, 165, 35, 2]
+    viewBox: [35, 2]
+    points: "0,1 35,1"
+    curve: sharp
+    arrow: [null, arrow]
+    border: {style: solid, width: 2, color: "$pine"}
+  - elementId: node-4
+    elementType: shape
+    bounds: [725, 140, 180, 52]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1.5, color: "$pine"}
+  - elementId: node-4-t
+    elementType: text
+    bounds: [725, 140, 180, 52]
+    content:
+      fontSize: 13
+      color: "$pine"
+      align: [center, middle]
+      wrap: false
+      text: |
+        <p style="text-align:center"><strong>④ 验证</strong> VERIFY</p>
+  - elementId: node-1-p
+    elementType: text
+    bounds: [56, 202, 180, 52]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.45
+      text: |
+        <p><strong>目标要可验收</strong>:完成标准写成能判对错的条件</p>
+  - elementId: node-2-p
+    elementType: text
+    bounds: [279, 202, 180, 52]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.45
+      text: |
+        <p><strong>行动要工具化</strong>:每一步都是可调用的接口</p>
+  - elementId: node-3-p
+    elementType: text
+    bounds: [502, 202, 180, 52]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.45
+      text: |
+        <p><strong>反馈要结构化</strong>:机器可读,而不是散文</p>
+  - elementId: node-4-p
+    elementType: text
+    bounds: [725, 202, 180, 52]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.45
+      text: |
+        <p><strong>验证要自动化</strong>:程序先查,人不盯梢</p>
+  - elementId: loop-back
+    elementType: line
+    bounds: [146, 268, 669, 32]
+    viewBox: [669, 32]
+    points: "669,0 669,28 0,28 0,4"
+    curve: sharp
+    arrow: [null, arrow]
+    border: {style: solid, width: 1.5, color: "$terra"}
+  - elementId: loop-back-t
+    elementType: text
+    bounds: [330, 302, 300, 14]
+    content:
+      fontSize: 10
+      color: "$muted"
+      align: [center, top]
+      wrap: false
+      text: 验证不通过 → 带着校验结果回到目标与行动,再跑一圈
+  # ---- 正反对照 ----
+  - elementId: vs-h
+    elementType: text
+    bounds: [56, 330, 500, 20]
+    content:
+      style: "$h2"
+      wrap: false
+      text: 反馈这一环,最容易做错
+  - elementId: bad-box
+    elementType: shape
+    bounds: [56, 356, 400, 100]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+  - elementId: bad-h
+    elementType: text
+    bounds: [72, 366, 368, 18]
+    content:
+      fontSize: 12
+      bold: true
+      color: "$terra"
+      wrap: false
+      text: ✗ 反例:反馈是一段散文
+  - elementId: bad-body
+    elementType: text
+    bounds: [72, 388, 368, 60]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.45
+      text: |
+        <p>"数据整体还行,个别站点好像缺数,墒情偏低的地方建议关注。"</p>
+        <p>——模型读完,不知道下一步该干什么。</p>
+  - elementId: vs-arr
+    elementType: line
+    bounds: [462, 405, 36, 2]
+    viewBox: [36, 2]
+    points: "0,1 36,1"
+    curve: sharp
+    arrow: [null, arrow]
+    border: {style: solid, width: 2, color: "$pine"}
+  - elementId: good-box
+    elementType: shape
+    bounds: [504, 356, 400, 100]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+  - elementId: good-h
+    elementType: text
+    bounds: [520, 366, 368, 18]
+    content:
+      fontSize: 12
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: ✓ 改为:结构化校验结果(机器可读)
+  - elementId: good-body-1
+    elementType: text
+    bounds: [520, 388, 368, 15]
+    content:
+      fontSize: 10
+      color: "$ink"
+      wrap: false
+      text: '{"pass": false,'
+  - elementId: good-body-2
+    elementType: text
+    bounds: [520, 404, 368, 15]
+    content:
+      fontSize: 10
+      color: "$ink"
+      wrap: false
+      text: ' "missing_sites": ["A-07","B-12"],'
+  - elementId: good-body-3
+    elementType: text
+    bounds: [520, 420, 368, 15]
+    content:
+      fontSize: 10
+      color: "$ink"
+      wrap: false
+      text: ' "breach": ["A-07 湿度低于阈值"],'
+  - elementId: good-body-4
+    elementType: text
+    bounds: [520, 436, 368, 15]
+    content:
+      fontSize: 10
+      color: "$ink"
+      wrap: false
+      text: ' "next_action": "重新取数并标记"}'
+  - elementId: chk-icon
+    elementType: icon
+    bounds: [56, 466, 15, 15]
+    iconName: "fas:circle-question"
+    fill: {type: solid, color: "$terra"}
+  - elementId: chk-body
+    elementType: text
+    bounds: [80, 464, 824, 18]
+    content:
+      fontSize: 12
+      bold: true
+      color: "$ink"
+      wrap: false
+      text: 判断题:好的循环里,验证由谁做?——程序校验 + 模型自检 + 人抽查,三者都在。
+  # ---- 页脚 ----
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-src
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: 方法框架据公开 Agent 工程资料整理;JSON 为教学示意
+  - elementId: footer-page
+    elementType: text
+    bounds: [824, 510, 80, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: 16 / 35

@@ -1,0 +1,744 @@
+[    0.3s] === 选手 gpt-5.4: 300 条回答, 评委 ['claude-sonnet-4-6', 'gemini-3.5-flash'] ===
+[    0.3s] claude-sonnet-4-6/gpt-5.4: 缓存 0, 待评 300
+[    7.1s]   claude-sonnet-4-6/gpt-5.4 进度 25/300
+[   72.6s]   claude-sonnet-4-6/gpt-5.4 进度 50/300
+[   75.3s]   claude-sonnet-4-6/gpt-5.4 进度 75/300
+[   78.9s]   claude-sonnet-4-6/gpt-5.4 进度 100/300
+[  205.8s]   claude-sonnet-4-6/gpt-5.4 进度 125/300
+[  209.2s]   claude-sonnet-4-6/gpt-5.4 进度 150/300
+[  273.9s]   claude-sonnet-4-6/gpt-5.4 进度 175/300
+[  283.4s]   claude-sonnet-4-6/gpt-5.4 进度 200/300
+[  343.9s]   claude-sonnet-4-6/gpt-5.4 进度 225/300
+[  346.3s]   judge claude-sonnet-4-6 被安全过滤 block (403)
+[  349.4s]   claude-sonnet-4-6/gpt-5.4 进度 250/300
+[  355.9s]   claude-sonnet-4-6/gpt-5.4 进度 276/300
+[  435.0s]   judge claude-sonnet-4-6 被安全过滤 block (403)
+[  435.0s]   claude-sonnet-4-6/gpt-5.4 进度 300/300
+[  435.0s] gemini-3.5-flash/gpt-5.4: 缓存 0, 待评 300
+[  449.7s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [
+  {"id": "v4_gold_020", "accuracy": 2, "completeness": 1, "triz_correctness": 2, "structure": 4, "overall
+[  450.6s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: onization这两个参考答案中明确要求的工具/原则)
+  - triz_correctness: 4 (TRIZ方法论运用非常好)
+  - structure: 4 (结构极佳)
+  - overall: 3 
+[  450.6s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [
+  {"id": "v4_gold_030", "accuracy": 2, "completeness": 1, "triz_correctness": 2, "structure": 4, "overall
+[  450.8s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [{"id": "v4_gold_025", "accuracy": 4, "completeness": 1, "triz_correctness": 4, "structure": 4, "overall": 
+[  450.9s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [{"id": "v4_gold_035", "accuracy": 4, "completeness": 3, "triz_correctness": 4, "structure": 4, "overall": 
+[  451.9s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: 系统复杂性": Yes, in Contradiction 1, 7, 11.
+    - "隐私保护": Did the AI mention "隐私保护"? No, it seems the AI missed
+[  518.8s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: ").
+
+    *   **【题目 v4_gold_043】(concept_explanation)**
+        *   *Question*: Explain the concept of 'Glob
+[  522.8s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: 的回答分析了XPCI的多个技术矛盾：
+    1. 相干性与辐射强度
+    2. 空间分辨率与信噪比/剂量
+    3. 相位衬度增强与系统紧凑性（提到了传播距离、光栅成像、系统体积变大、安装精度、机械稳定性）
+
+[  529.5s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: 引入一种新型的悬挂系统或可变刚度的车轮材料，以减少冲击并提升骑行效率。
+- **期望关键词**: 功能分析、裁剪、自行车、骑行效率、冲击、悬挂系统
+- **AI 回答**:
+  - 进行了功能分析，识别了系统组成（
+[  530.9s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: onization这两个参考答案中明确要求的工具/原则)
+  - triz_correctness: 4 (TRIZ方法论运用非常好)
+  - structure: 4 (结构极佳)
+  - overall: 3 
+[  531.2s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: [{"id": "v4_gold_025", "accuracy": 4, "completeness": 1, "triz_correctness": 4, "structure": 4, "overall": 
+[  531.3s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: thought
+
+[
+  {"id": "v4_gold_030", "accuracy": 3, "completeness": 1, "triz_correctness": 3, "structure": 4,
+[  532.4s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: [{"id": "v4_gold_035", "accuracy": 4, "completeness": 3, "triz_correctness": 4, "structure": 4, "overall": 
+[  534.6s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: 系统复杂性": Yes, in Contradiction 1, 7, 11.
+    - "隐私保护": Did the AI mention "隐私保护"? No, it seems the AI missed
+[  600.7s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: ").
+
+    *   **【题目 v4_gold_043】(concept_explanation)**
+        *   *Question*: Explain the concept of 'Glob
+[  604.5s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: [
+  {"id": "v4_gold_045", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall
+[  614.9s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: [
+  {"id": "v4_gold_020", "accuracy": 2, "completeness": 1, "triz_correctness": 2, "structure": 4, "overall
+[  616.7s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: thought
+
+[
+  {"id": "v4_gold_030", "accuracy": 3, "completeness": 1, "triz_correctness": 3, "structure": 4,
+[  617.0s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: [{"id": "v4_gold_000", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[  617.1s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: [{"id": "v4_gold_025", "accuracy": 4, "completeness": 1, "triz_correctness": 4, "structure": 4, "overall": 
+[  618.9s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: [{"id": "v4_gold_035", "accuracy": 4, "completeness": 3, "triz_correctness": 4, "structure": 4, "overall": 
+[  687.1s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [{"id": "v4_gold_050", "accuracy": 4, "completeness": 3, "triz_correctness": 4, "structure": 4, "overall": 
+[  688.0s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: ").
+
+    *   **【题目 v4_gold_043】(concept_explanation)**
+        *   *Question*: Explain the concept of 'Glob
+[  690.8s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: "创新性": Yes.
+            *   "可行性": Yes.
+            *   "潜在矛盾": Yes (extensively analyzed).
+        *   *Ac
+[  707.7s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: [{"id": "v4_gold_050", "accuracy": 4, "completeness": 3, "triz_correctness": 4, "structure": 4, "overall": 
+[  710.4s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: [
+  {"id": "v4_gold_020", "accuracy": 2, "completeness": 1, "triz_correctness": 2, "structure": 4, "overall
+[  712.5s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: onization这两个参考答案中明确要求的工具/原则)
+  - triz_correctness: 4 (TRIZ方法论运用非常好)
+  - structure: 4 (结构极佳)
+  - overall: 3 
+[  713.8s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: thought
+
+[
+  {"id": "v4_gold_030", "accuracy": 3, "completeness": 1, "triz_correctness": 3, "structure": 4,
+[  714.0s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: 缺失：理想最终结果（IFR）、物质-场模型（Su-Field models）。AI在回答中完全没有提到IFR和物-场模型，而参考答案把这两个作为核心步骤和工具。
+  - 评估：
+    - AI给出的案例非常具体且
+[  715.3s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: [{"id": "v4_gold_035", "accuracy": 4, "completeness": 3, "triz_correctness": 4, "structure": 4, "overall": 
+[  723.3s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: ").
+
+    *   **【题目 v4_gold_043】(concept_explanation)**
+        *   *Question*: Explain the concept of 'Glob
+[  726.8s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: 旋转对图像质量影响大。系统在追求高灵敏度的同时，带来了系统复杂性和对环境变化（温度、振动）的敏感性。
+- **期望关键词**: X射线相干成像、技术矛盾、可见性、系统灵敏度、光栅、环境变化
+- **AI 回答分析*
+[  732.3s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: [{"id": "v4_gold_050", "accuracy": 4, "completeness": 3, "triz_correctness": 4, "structure": 4, "overall": 
+[  764.7s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: [
+  {"id": "v4_gold_020", "accuracy": 2, "completeness": 1, "triz_correctness": 2, "structure": 4, "overall
+[  767.5s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: thought
+
+[
+  {"id": "v4_gold_030", "accuracy": 3, "completeness": 1, "triz_correctness": 3, "structure": 4,
+[  768.3s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: [{"id": "v4_gold_000", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[  768.3s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: [{"id": "v4_gold_025", "accuracy": 4, "completeness": 1, "triz_correctness": 4, "structure": 4, "overall": 
+[  768.3s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: [{"id": "v4_gold_050", "accuracy": 4, "completeness": 3, "triz_correctness": 4, "structure": 4, "overall": 
+[  771.0s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: time-consuming. Analyze using TRIZ and propose innovative solution.
+        *   *Reference Answer*: Use ide
+[  780.4s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: [{"id": "v4_gold_040", "accuracy": 4, "completeness": 2, "triz_correctness": 4, "structure": 4, "overall": 
+[  782.0s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: [
+  {"id": "v4_gold_045", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall
+[  824.4s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: [{"id": "v4_gold_050", "accuracy": 4, "completeness": 3, "triz_correctness": 4, "structure": 4, "overall": 
+[  866.9s]   gemini-3.5-flash/gpt-5.4 进度 44/300
+[  879.8s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [
+  {"id": "v4_gold_055", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall
+[  880.9s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: thought
+riz_correctness)：3/4（TRIZ 方法论本身没问题，但未按参考答案的 su-field model 和标准解来具体化那两个特定方案）。
+            *   结构 (st
+[  881.3s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [{"id": "v4_gold_060", "accuracy": 4, "completeness": 3, "triz_correctness": 4, "structure": 4, "overall": 
+[  885.8s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [
+  {
+    "id": "v4_gold_070",
+    "accuracy": 4,
+    "completeness": 2,
+    "triz_correctness": 4,
+    "st
+[  887.4s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [
+  {
+    "id": "v4_gold_075",
+    "accuracy": 4,
+    "completeness": 4,
+    "triz_correctness": 4,
+    "st
+[  897.7s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: [
+  {
+    "id": "v4_gold_055",
+    "accuracy": 4,
+    "completeness": 4,
+    "triz_correctness": 4,
+    "st
+[  899.5s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: )**
+        *   *问题*：从 TRIZ 角度评估 EMS（Evolution map system）技术方案的创新性、可行性与潜在矛盾，并解释为何这种评估方法对于专利发展的战略领域至关重要。
+   
+[  900.1s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: [{"id": "v4_gold_060", "accuracy": 4, "completeness": 3, "triz_correctness": 4, "structure": 4, "overall": 
+[  900.2s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: ”和“振动柔性锥”是某篇特定论文或案例的产物。
+            *   评估：
+                *   Accuracy: 4/4 (概念和分析非常准确)
+                *
+[  904.9s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: 会导致电弧柱偏移）。为了不妥协，通过考虑用“非常强的剩余磁场”替换“强剩余磁场”来加剧冲突。寻找元素“X”，既能保持非常强剩余磁场（用于无损检测检测腐蚀），又能保护电弧柱在焊接中不被偏移。
+- 期望关键词：管道焊接
+[  907.6s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: 完整性严重不足，未识别出参考答案要求的特定技术矛盾)
+  - triz_correctness: 2 (未针对题目背景材料中的特定矛盾进行分析)
+  - structure: 4
+  - overall: 2
+
+#
+[  981.4s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: 系统进化图谱（Evolution Map System）”软件来评估。
+            *   因此，AI 漏掉了参考答案中关于“30触点界面、60英寸显示屏、手势操作、口头沟通、跨物种进化（虽然提到了跨物
+[  984.1s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: [
+  {
+    "id": "v4_gold_055",
+    "accuracy": 4,
+    "completeness": 4,
+    "triz_correctness": 4,
+    "st
+[  985.5s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: [{"id": "v4_gold_060", "accuracy": 4, "completeness": 3, "triz_correctness": 4, "structure": 4, "overall": 
+[  986.5s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: thought
+riz_correctness)：3/4（TRIZ 方法论本身没问题，但未按参考答案的 su-field model 和标准解来具体化那两个特定方案）。
+            *   结构 (st
+[  991.2s]   gemini-3.5-flash/gpt-5.4 进度 53/300
+[  994.0s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: [
+  {
+    "id": "v4_gold_070",
+    "accuracy": 4,
+    "completeness": 2,
+    "triz_correctness": 4,
+    "st
+[  994.3s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: 完整性严重不足，未识别出参考答案要求的特定技术矛盾)
+  - triz_correctness: 2 (未针对题目背景材料中的特定矛盾进行分析)
+  - structure: 4
+  - overall: 2
+
+#
+[ 1006.3s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: t use Principle 13.
+    - Reference Principle 35 (Parameter change): AI recommended Principle 35 and linked
+[ 1006.8s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: [
+  {
+    "id": "v4_gold_080",
+    "accuracy": 4,
+    "completeness": 3,
+    "triz_correctness": 4,
+    "st
+[ 1017.4s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: (plastic plate protection insufficient, damages/ages), Construct contradiction (needs to protect sleeper un
+[ 1019.7s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: [
+  {
+    "id": "v4_gold_055",
+    "accuracy": 4,
+    "completeness": 4,
+    "triz_correctness": 4,
+    "st
+[ 1020.2s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: ”和“振动柔性锥”是某篇特定论文或案例的产物。
+            *   评估：
+                *   Accuracy: 4/4 (概念和分析非常准确)
+                *
+[ 1020.2s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: [{"id": "v4_gold_060", "accuracy": 4, "completeness": 3, "triz_correctness": 4, "structure": 4, "overall": 
+[ 1026.8s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: _gold_088: 推荐原理有差异，但AI的更合理。accuracy=4, completeness=3, triz_correctness=4, structure=4, overall=4。
+v4_gold_
+[ 1028.9s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: 完整性严重不足，未识别出参考答案要求的特定技术矛盾)
+  - triz_correctness: 2 (未针对题目背景材料中的特定矛盾进行分析)
+  - structure: 4
+  - overall: 2
+
+#
+[ 1030.2s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: 会导致电弧柱偏移）。为了不妥协，通过考虑用“非常强的剩余磁场”替换“强剩余磁场”来加剧冲突。寻找元素“X”，既能保持非常强剩余磁场（用于无损检测检测腐蚀），又能保护电弧柱在焊接中不被偏移。
+- 期望关键词：管道焊接
+[ 1075.1s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: ”和“振动柔性锥”是某篇特定论文或案例的产物。
+            *   评估：
+                *   Accuracy: 4/4 (概念和分析非常准确)
+                *
+[ 1075.2s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: [
+  {
+    "id": "v4_gold_055",
+    "accuracy": 4,
+    "completeness": 4,
+    "triz_correctness": 4,
+    "st
+[ 1076.1s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: [{"id": "v4_gold_060", "accuracy": 4, "completeness": 3, "triz_correctness": 4, "structure": 4, "overall": 
+[ 1083.9s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: 完整性严重不足，未识别出参考答案要求的特定技术矛盾)
+  - triz_correctness: 2 (未针对题目背景材料中的特定矛盾进行分析)
+  - structure: 4
+  - overall: 2
+
+#
+[ 1086.0s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: [
+  {
+    "id": "v4_gold_070",
+    "accuracy": 4,
+    "completeness": 2,
+    "triz_correctness": 4,
+    "st
+[ 1097.1s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: (plastic plate protection insufficient, damages/ages), Construct contradiction (needs to protect sleeper un
+[ 1103.1s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: 系统进化图谱（Evolution Map System）”软件来评估。
+            *   因此，AI 漏掉了参考答案中关于“30触点界面、60英寸显示屏、手势操作、口头沟通、跨物种进化（虽然提到了跨物
+[ 1158.8s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: )**
+        *   *问题*：从 TRIZ 角度评估 EMS（Evolution map system）技术方案的创新性、可行性与潜在矛盾，并解释为何这种评估方法对于专利发展的战略领域至关重要。
+   
+[ 1173.8s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: _gold_088: 推荐原理有差异，但AI的更合理。accuracy=4, completeness=3, triz_correctness=4, structure=4, overall=4。
+v4_gold_
+[ 1182.9s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: (plastic plate protection insufficient, damages/ages), Construct contradiction (needs to protect sleeper un
+[ 1190.3s]   gemini-3.5-flash/gpt-5.4 进度 82/300
+[ 1192.9s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: 改变摩擦力场方向”。AI 的方案中包含了“非对称纹理表面（单向导渣纹）”和“弹性微唇边”，利用水流和振动。虽然 AI 的方案很赞，但由于没有材料，它没有精准命中参考答案中“利用摩擦系数、重力场、摩擦力场、果汁”这些
+[ 1197.2s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_101",
+    "accuracy": 3,
+    "completeness": 2,
+    "triz_correctness": 3,
+    "st
+[ 1200.6s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: 复杂性、成本、维护难度、响应速度等。
+            *   *对比参考答案*：参考答案中，技术矛盾非常具体且独特：改善参数是“创新性”（问题解决的创新性），恶化参数是“改进的速度”（进化阶段进程缓慢）。
+
+[ 1205.4s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: overall is heavily weighted on TRIZ correctness, but missing the reference answer's specific "principles" i
+[ 1209.0s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: Let's evaluate the AI's response against the reference answer.
+  The reference answer has some highly non-s
+[ 1213.8s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: [
+  {
+    "id": "v4_gold_095",
+    "accuracy": 4,
+    "completeness": 4,
+    "triz_correctness": 4,
+    "st
+[ 1265.7s]   judge gemini-3.5-flash 失败 (4/5): Error code: 429 - {'error': {'code': 'api_key_rate_limited', 'message': 'API key is temporarily rate limited', 'param': 
+[ 1320.6s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: (plastic plate protection insufficient, damages/ages), Construct contradiction (needs to protect sleeper un
+[ 1327.0s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: t use Principle 13.
+    - Reference Principle 35 (Parameter change): AI recommended Principle 35 and linked
+[ 1336.5s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_121",
+    "accuracy": 3,
+    "completeness": 2,
+    "triz_correctness": 4,
+    "st
+[ 1339.6s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: 正确". In standard TRIZ, the AI is 100% correct. The reference answer's definition of MST as "four levels or 
+[ 1339.8s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: [{"id": "v5_gold_101", "accuracy": 3, "completeness": 2, "triz_correctness": 4, "structure": 4, "overall": 
+[ 1345.9s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: 复杂性、成本、维护难度、响应速度等。
+            *   *对比参考答案*：参考答案中，技术矛盾非常具体且独特：改善参数是“创新性”（问题解决的创新性），恶化参数是“改进的速度”（进化阶段进程缓慢）。
+
+[ 1347.0s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_111",
+    "accuracy": 4,
+    "completeness": 4,
+    "triz_correctness": 4,
+    "st
+[ 1357.1s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_121",
+    "accuracy": 3,
+    "completeness": 2,
+    "triz_correctness": 4,
+    "st
+[ 1360.2s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: 改变摩擦力场方向”。AI 的方案中包含了“非对称纹理表面（单向导渣纹）”和“弹性微唇边”，利用水流和振动。虽然 AI 的方案很赞，但由于没有材料，它没有精准命中参考答案中“利用摩擦系数、重力场、摩擦力场、果汁”这些
+[ 1361.5s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: 正确". In standard TRIZ, the AI is 100% correct. The reference answer's definition of MST as "four levels or 
+[ 1364.1s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: [{"id": "v5_gold_101", "accuracy": 3, "completeness": 2, "triz_correctness": 4, "structure": 4, "overall": 
+[ 1371.0s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: [{"id": "v5_gold_106", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[ 1372.8s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_111",
+    "accuracy": 4,
+    "completeness": 4,
+    "triz_correctness": 4,
+    "st
+[ 1399.6s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_101",
+    "accuracy": 3,
+    "completeness": 2,
+    "triz_correctness": 3,
+    "st
+[ 1408.4s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: 新方案）；2. 复合材料（结合不同材料增强性能）；3. 局部质量（改善特定区域提高效率）；4. 嵌套（节省空间提高效率）；5. 动态性（可变性解决矛盾）。
+- 期望关键词：TRIZ、发明原理、技术矛盾、问题解决、复
+[ 1409.0s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: overall is heavily weighted on TRIZ correctness, but missing the reference answer's specific "principles" i
+[ 1435.4s]   gemini-3.5-flash/gpt-5.4 进度 100/300
+[ 1442.6s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [{"id": "v5_gold_131", "accuracy": 4, "completeness": 2, "triz_correctness": 4, "structure": 4, "overall": 
+[ 1444.2s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: 有
+                *   创新：有
+                *   多个角度：有
+                *   不同领域：没有特别强调参考答案中提到的非技术领域（销售、人事等），
+[ 1447.8s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: 正确". In standard TRIZ, the AI is 100% correct. The reference answer's definition of MST as "four levels or 
+[ 1450.5s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: 大又小，快又慢，易流又防附着），并用分离原则解决。
+            *   检查期望关键词：
+                *   40 创新原则：有。
+                *   76 标准
+[ 1454.7s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: [{"id": "v5_gold_101", "accuracy": 4, "completeness": 3, "triz_correctness": 4, "structure": 4, "overall": 
+[ 1457.3s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: 改变摩擦力场方向”。AI 的方案中包含了“非对称纹理表面（单向导渣纹）”和“弹性微唇边”，利用水流和振动。虽然 AI 的方案很赞，但由于没有材料，它没有精准命中参考答案中“利用摩擦系数、重力场、摩擦力场、果汁”这些
+[ 1463.5s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: 对时，它们可能实现正反馈或负反馈。例如，Le Chatelier 原理实现了典型的负反馈...相比之下，与腐蚀过程相关的耦合功能则以典型的正反馈为特征...".
+    - The AI's explanation
+[ 1464.6s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: 新方案）；2. 复合材料（结合不同材料增强性能）；3. 局部质量（改善特定区域提高效率）；4. 嵌套（节省空间提高效率）；5. 动态性（可变性解决矛盾）。
+- 期望关键词：TRIZ、发明原理、技术矛盾、问题解决、复
+[ 1465.4s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: Wait, the prompt says: "只输出一个 JSON 数组, 不要输出任何其他文字或 markdown 围栏。"
+So I will output exactly:
+`
+[{"id": "v5_go
+[ 1470.1s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: 大又小，快又慢，易流又防附着），并用分离原则解决。
+            *   检查期望关键词：
+                *   40 创新原则：有。
+                *   76 标准
+[ 1480.0s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_121",
+    "accuracy": 3,
+    "completeness": 3,
+    "triz_correctness": 4,
+    "st
+[ 1483.5s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_126",
+    "accuracy": 2,
+    "completeness": 1,
+    "triz_correctness": 3,
+    "st
+[ 1536.7s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: which is about generating 10-20 paradoxical questions from different angles).
+  - AI missed the "10 to 20 p
+[ 1539.4s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: Standard TRIZ is correct, but fails the reference answer's specific key points).
+
+### Question 129 (case_ge
+[ 1550.1s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: [
+  {"id": "v5_gold_131", "accuracy": 4, "completeness": 2, "triz_correctness": 4, "structure": 4, "overall
+[ 1555.6s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: 大又小，快又慢，易流又防附着），并用分离原则解决。
+            *   检查期望关键词：
+                *   40 创新原则：有。
+                *   76 标准
+[ 1572.6s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: 改变摩擦力场方向”。AI 的方案中包含了“非对称纹理表面（单向导渣纹）”和“弹性微唇边”，利用水流和振动。虽然 AI 的方案很赞，但由于没有材料，它没有精准命中参考答案中“利用摩擦系数、重力场、摩擦力场、果汁”这些
+[ 1586.2s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_131",
+    "accuracy": 4,
+    "completeness": 2,
+    "triz_correctness": 4,
+    "st
+[ 1591.5s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_146",
+    "accuracy": 4,
+    "completeness": 4,
+    "triz_correctness": 4,
+    "st
+[ 1592.1s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: _gold_139】(case_generation)
+- **问题**: 请分析一个具体的工业产品案例，运用 TRIZ 方法中的 '40 创新原则' 和 '76 标准解决方案' 生成创新解决方案，并解释如何通过 
+[ 1610.3s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_146",
+    "accuracy": 4,
+    "completeness": 4,
+    "triz_correctness": 4,
+    "st
+[ 1646.2s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: 大又小，快又慢，易流又防附着），并用分离原则解决。
+            *   检查期望关键词：
+                *   40 创新原则：有。
+                *   76 标准
+[ 1682.3s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: , 创新性 (Innovativeness), 可行性 (Feasibility), 雷达技术 (Radar technology), 交通流量 (Traffic flow), 潜在矛盾 (Potential co
+[ 1692.9s]   gemini-3.5-flash/gpt-5.4 进度 131/300
+[ 1695.8s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: [{"id": "v5_gold_146", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[ 1702.2s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: [{"id": "v5_gold_131", "accuracy": 4, "completeness": 2, "triz_correctness": 4, "structure": 4, "overall": 
+[ 1702.3s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_156",
+    "accuracy": 4,
+    "completeness": 4,
+    "triz_correctness": 4,
+    "st
+[ 1702.6s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: [{"id": "v5_gold_151", "accuracy": 3, "completeness": 3, "triz_correctness": 4, "structure": 4, "overall": 
+[ 1703.2s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [
+  {"id": "v5_gold_141", "accuracy": 0, "completeness": 0, "triz_correctness": 0, "structure": 2, "overall
+[ 1709.1s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: 未命中标准答案的特定原理)
+    - completeness: 1 (完全没有提到34和35号原理)
+    - triz_correctness: 3 (推荐的其他原理及解释是符合TRIZ的)
+    - s
+[ 1718.9s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: 理想最终结果" explicitly (though it did "物质-场" and "IFR"), completeness is slightly affected compared to the gold
+[ 1722.1s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: [{"id": "v5_gold_156", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[ 1723.3s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_141",
+    "accuracy": 0,
+    "completeness": 0,
+    "triz_correctness": 0,
+    "st
+[ 1727.4s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: , 创新性 (Innovativeness), 可行性 (Feasibility), 雷达技术 (Radar technology), 交通流量 (Traffic flow), 潜在矛盾 (Potential co
+[ 1730.0s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_146",
+    "accuracy": 4,
+    "completeness": 4,
+    "triz_correctness": 4,
+    "st
+[ 1730.4s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [
+  {"id": "v5_gold_171", "accuracy": 4, "completeness": 3, "triz_correctness": 4, "structure": 4, "overall
+[ 1731.0s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: 未命中标准答案的特定原理)
+    - completeness: 1 (完全没有提到34和35号原理)
+    - triz_correctness: 3 (推荐的其他原理及解释是符合TRIZ的)
+    - s
+[ 1791.6s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_176",
+    "accuracy": 4,
+    "completeness": 4,
+    "triz_correctness": 4,
+    "st
+[ 1801.9s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: [{"id": "v5_gold_166", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[ 1807.7s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: [{"id": "v5_gold_156", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[ 1809.0s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: 。
+        *   分析了不同领域的应用：电子半导体、汽车、钢铁材料、显示、新能源电池、生物医疗。
+        *   提出了一个创新案例：新能源汽车动力电池模组散热与空间利用矛盾（技术矛盾：温度控制 
+[ 1811.1s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: [
+  {"id": "v5_gold_171", "accuracy": 4, "completeness": 3, "triz_correctness": 4, "structure": 4, "overall
+[ 1813.2s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: Invention Principles: Segmentation, Local Quality, Asymmetry, Dynamization, Another Dimension, Intermediary
+[ 1816.0s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [{"id": "v5_gold_181", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[ 1817.7s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: 未命中标准答案的特定原理)
+    - completeness: 1 (完全没有提到34和35号原理)
+    - triz_correctness: 3 (推荐的其他原理及解释是符合TRIZ的)
+    - s
+[ 1823.1s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: 's recommendations (Segmentation, Dynamization, etc.) are also very logical and correct in TRIZ, but since 
+[ 1829.1s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: [{"id": "v5_gold_166", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[ 1835.9s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: 可行性，并指出可能出现的矛盾。
+- **Reference Answer**: Innovation: new physical method (electric field) compared to tradit
+[ 1836.0s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: [{"id": "v5_gold_171", "accuracy": 4, "completeness": 3, "triz_correctness": 3, "structure": 4, "overall": 
+[ 1838.6s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_176",
+    "accuracy": 4,
+    "completeness": 4,
+    "triz_correctness": 4,
+    "st
+[ 1842.8s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: [{"id": "v5_gold_156", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[ 1844.8s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: 。
+        *   分析了不同领域的应用：电子半导体、汽车、钢铁材料、显示、新能源电池、生物医疗。
+        *   提出了一个创新案例：新能源汽车动力电池模组散热与空间利用矛盾（技术矛盾：温度控制 
+[ 1853.4s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: [{"id": "v5_gold_161", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[ 1861.7s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: 伞轴、可伸缩、空心、开口、功能、性能
+- **AI Answer Evaluation**:
+  - **Accuracy**: Medium-low. The AI answered a generic cont
+[ 1865.5s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: [{"id": "v5_gold_166", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[ 1870.0s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: [{"id": "v5_gold_171", "accuracy": 4, "completeness": 3, "triz_correctness": 3, "structure": 4, "overall": 
+[ 1875.3s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: [{"id": "v5_gold_176", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[ 1879.0s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: [{"id": "v5_gold_151", "accuracy": 3, "completeness": 3, "triz_correctness": 4, "structure": 4, "overall": 
+[ 1897.9s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: [{"id": "v5_gold_181", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[ 1900.0s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: [{"id": "v5_gold_156", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[ 1900.7s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: [{"id": "v5_gold_141", "accuracy": 0, "completeness": 0, "triz_correctness": 0, "structure": 1, "overall": 
+[ 1909.7s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: [{"id": "v5_gold_161", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[ 1917.9s]   gemini-3.5-flash/gpt-5.4 进度 154/300
+[ 1921.7s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: [{"id": "v5_gold_166", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[ 1922.8s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: 根据材料中提出的TRIZ新观点，分析如何通过增加产品对人类感官的针对性来预测产品演化方向，并提出一个算法来快速识别产品在满足人类感官需求方面的不足。
+        *   *参考答案*：TRIZ新观点强调技术系统
+[ 1930.7s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: Invention Principles: Segmentation, Local Quality, Asymmetry, Dynamization, Another Dimension, Intermediary
+[ 1994.1s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [{"id": "v5_gold_186", "accuracy": 1, "completeness": 1, "triz_correctness": 2, "structure": 3, "overall": 
+[ 2075.9s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: Excellent structure).
+  - *Overall*: 3 (Very strong, but missing the "废物利用" aspect which is in the referenc
+[ 2077.7s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: 17: Another dimension (转入另一维原理/多维空间原理) - YES
+  - Principle 10: Prior action (预先作用) - Additional
+  - Princip
+[ 2082.8s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [{"id": "v5_gold_191", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[ 2083.2s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: 中的时间分离原理，提出一个创新解决方案，并分析该方案如何解决物理矛盾。
+- **参考答案** 提及了：
+  - 运用时间分离原理。
+  - 设计一个在泵工作时自动打开，而在泵停止工作时自动关闭的阀门（气动或液动阀门
+[ 2145.3s]   gemini-3.5-flash/gpt-5.4 进度 182/300
+[ 2162.1s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: rubric：accuracy (事实准确性)，AI的TRIZ事实比参考答案准确得多。但从“相对参考答案的完整性(completeness)”来看，AI没有覆盖参考答案中的点。
+            *   打分
+[ 2162.6s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_206",
+    "accuracy": 4,
+    "completeness": 3,
+    "triz_correctness": 4,
+    "st
+[ 2164.0s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_191",
+    "accuracy": 4,
+    "completeness": 4,
+    "triz_correctness": 4,
+    "st
+[ 2164.7s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: [{"id": "v5_gold_196", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[ 2165.7s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_186",
+    "accuracy": 1,
+    "completeness": 1,
+    "triz_correctness": 1,
+    "st
+[ 2175.2s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: 部分：
+            *   AI 识别出 TNB 为马来西亚国家能源公司。
+            *   AI 从能源系统级创新、矛盾分析、低碳政策、标准化创新能力等方面阐述了如何支持。
+      
+[ 2178.2s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [{"id": "v5_gold_221", "accuracy": 4, "completeness": 2, "triz_correctness": 4, "structure": 4, "overall": 
+[ 2186.2s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: [{"id": "v5_gold_211", "accuracy": 2, "completeness": 2, "triz_correctness": 2, "structure": 4, "overall": 
+[ 2247.3s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [{"id": "v5_gold_226", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[ 2250.2s]   gemini-3.5-flash/gpt-5.4 进度 200/300
+[ 2251.1s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: 水、阀门。
+        *   *AI 回答分析*：
+            *   物理矛盾识别：入水口既要“封闭”又要“开放”。
+            *   时间分离：非抽水时刻->密封，抽水时刻->开
+[ 2253.1s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_231",
+    "accuracy": 3,
+    "completeness": 2,
+    "triz_correctness": 3,
+    "st
+[ 2256.9s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: **：分析一个汽车制造企业面临的生产效率低下问题，并运用TRIZ方法构建因果链分析以提出创新解决方案。
+    *   **参考答案**：通过功能性为什么分析(Functional Why-Why Analysis
+[ 2259.5s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: 有
+                *   创造性人格：未显式提及“创造性人格”（Gredynarova的FSA重点），AI回答偏向于一般的创新思维培育，且极度冗长。
+                *   教育过
+[ 2263.2s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: [{"id": "v5_gold_186", "accuracy": 1, "completeness": 1, "triz_correctness": 1, "structure": 4, "overall": 
+[ 2265.0s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: 使用发明原理：
+  - 原理1：分割原理（对应参考答案的分离原理？TRIZ中原理1是分割，虽然参考答案写的是“分离原理”，其实TRIZ中有原理1分割，原理2抽取/分离。不过AI解释了“把‘大就业’分解成‘小任务’”
+[ 2266.9s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: (Segmentation, Prior Action, Feedback, Parameter change, Local Quality) + TOC Drum-Buffer-Rope.
+- The case 
+[ 2273.1s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: 实际上“高强度和轻量化”是技术矛盾，物理冲突是“某部件既要重又要轻”或“材料既要厚又要薄”。
+- 期望关键词: ARIZ、资源分析、物理冲突、最终理想解、技术创新、理想状态
+- AI 回答:
+  - 详细定义了资源
+[ 2275.3s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: *   completeness: 2 (由于参考答案存在翻译/编号偏差，AI 虽给出了更合理的专业解答，但未覆盖“上下调节”、“颜色改变”、“废物利用”等期望词)
+                *   triz
+[ 2281.9s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: 运用了因果链分析（Cause-Effect Chain Analysis），列出了一级原因、二级原因。
+            *   提到了根本矛盾，应用了TRIZ原理提供解决方案。
+            * 
+[ 2284.2s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_221",
+    "accuracy": 4,
+    "completeness": 2,
+    "triz_correctness": 4,
+    "st
+[ 2284.7s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_196",
+    "accuracy": 4,
+    "completeness": 4,
+    "triz_correctness": 4,
+    "st
+[ 2340.8s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: pressure) and closes when stopped. Prevents air/water backflow, improves efficiency.
+- Keywords: 物理矛盾、排水泵、时
+[ 2352.0s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [{"id": "v5_gold_241", "accuracy": 4, "completeness": 3, "triz_correctness": 4, "structure": 4, "overall": 
+[ 2352.0s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_226",
+    "accuracy": 4,
+    "completeness": 4,
+    "triz_correctness": 4,
+    "st
+[ 2358.4s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_231",
+    "accuracy": 3,
+    "completeness": 2,
+    "triz_correctness": 3,
+    "st
+[ 2368.4s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_211",
+    "accuracy": 2,
+    "completeness": 1,
+    "triz_correctness": 2,
+    "st
+[ 2371.4s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: [{"id": "v5_gold_241", "accuracy": 4, "completeness": 2, "triz_correctness": 4, "structure": 4, "overall": 
+[ 2378.6s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: [{"id": "v5_gold_186", "accuracy": 1, "completeness": 1, "triz_correctness": 1, "structure": 4, "overall": 
+[ 2382.9s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: [{"id": "v5_gold_216", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[ 2383.2s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: 效率。
+- 理想解IFR：没有任何浪费的高效顺畅状态。
+- 资源分析：物质、信息、时间等。
+- 方案评估：可行性、成本效益、实施难度等。
+- 例子：流程优化、自动化等。
+**AI 回答**:
+- 问题分析：系统分析
+[ 2387.3s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: Completeness*: 2 (Failed to mention the key expected terms: ∑ F, ∑ C, 杜邦公式, 销售/成本. This is a significant om
+[ 2393.1s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: [{"id": "v5_gold_231", "accuracy": 4, "completeness": 2, "triz_correctness": 4, "structure": 4, "overall": 
+[ 2424.6s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: Expected: 局部质量原理, 上下调节原理, 复合材料原理, 颜色改变原理, 废物利用原理.
+            *   Let's check if the AI has these:
+        
+[ 2439.2s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: [{"id": "v5_gold_216", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[ 2439.3s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: 、系统思维、基于功能系统、FSA、创造性人格、教育过程.
+- **AI Answer**:
+  - Analyzes problem definition.
+  - Explains TRIZ system thi
+[ 2443.1s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: to optimize supply chain.
+  - Expected keywords: TRIZ, TOC, 高级制造系统 (advanced manufacturing system), 生产效率 (p
+[ 2447.7s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: [{"id": "v5_gold_231", "accuracy": 2, "completeness": 1, "triz_correctness": 2, "structure": 4, "overall": 
+[ 2521.2s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: "已有的应用包括电致发光显示器ELD"，AI在第四节对比中提到了区别，但没在应用中突出ELD，不过总体上应用覆盖挺全面）。
+- triz_correctness: AI在最后还补充了从TRIZ视角理解。
+- str
+[ 2521.3s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: 功能分析），这在标准TRIZ功能分析（尤其是现代TRIZ/CBI）中非常关键。
+  - **Triz_correctness**: 4分。对TRIZ功能分析的步骤和应用解释得很地道。
+  - **Structure
+[ 2602.3s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_251",
+    "accuracy": 3,
+    "completeness": 2,
+    "triz_correctness": 4,
+    "st
+[ 2603.0s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_246",
+    "accuracy": 4,
+    "completeness": 4,
+    "triz_correctness": 4,
+    "st
+[ 2603.3s]   gemini-3.5-flash/gpt-5.4 进度 235/300
+[ 2612.1s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_256",
+    "accuracy": 2,
+    "completeness": 1,
+    "triz_correctness": 2,
+    "st
+[ 2615.9s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: [
+  {"id": "v5_gold_241", "accuracy": 3, "completeness": 2, "triz_correctness": 4, "structure": 4, "overall
+[ 2617.9s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_261",
+    "accuracy": 2,
+    "completeness": 1,
+    "triz_correctness": 3,
+    "st
+[ 2622.0s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: 评估)
+- Question: Assess a technical scheme aimed at improving customer value and profitability based on TRIZ
+[ 2671.1s]   judge gemini-3.5-flash 被安全过滤 block (403)
+[ 2672.3s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: 功能分析、系统组件、相互作用矩阵、性能水平、组件成本
+- AI missed: 相互作用矩阵, 性能水平, 组件成本. It focused on classical function analysis (subj
+[ 2680.8s]   gemini-3.5-flash/gpt-5.4 进度 251/300
+[ 2688.3s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: 学习者中心：改善（个性化和创造力培养），恶化（标准化测试适应性和传统教学效率）。教师中心到学生中心：改善（主动参与和合作学习），恶化（教师对内容的控制力和进度的统一性）。
+    *   **期望关键词**：技术矛
+[ 2692.5s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [{"id": "v5_gold_281", "accuracy": 4, "completeness": 3, "triz_correctness": 4, "structure": 4, "overall": 
+[ 2693.4s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: 潜在矛盾：基础设施依赖和兼容性问题。涉及进化张力（evolutionary tension），包括牵引力（traction forces）、约束力（constraint forces）和选择力（selection 
+[ 2695.6s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [{"id": "v5_gold_286", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[ 2697.7s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: [{"id": "v5_gold_261", "accuracy": 2, "completeness": 1, "triz_correctness": 3, "structure": 4, "overall": 
+[ 2707.7s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: 、潜在矛盾、MPV、PV、PP
+- **AI Answer**:
+  - The AI discusses: Ideality (useful/harmful+cost), Innovation levels (1
+[ 2712.4s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: [{"id": "v5_gold_281", "accuracy": 4, "completeness": 3, "triz_correctness": 4, "structure": 4, "overall": 
+[ 2767.8s]   judge gemini-3.5-flash 被安全过滤 block (403)
+[ 2776.2s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: 领域的技术方案的创新性、可行性与潜在矛盾。
+   - 参考答案：Hao Xu 教授方案的创新性（TRIZ与实践结合，激发创新思维）、可行性（已有丰富实践经验，500人接受培训）、潜在矛盾（TRIZ复杂性与学生接受能
+[ 2780.9s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: 主导设计（dominant design）；潜在矛盾在于对现有基础设施的依赖和兼容性，涉及“进化张力”（包括牵引力、约束力和选择力）。
+- **期望关键词**: TRIZ、创新性、可行性、潜在矛盾、主导设计、进化张
+[ 2784.1s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: 。
+            *   *Completeness (完整性):* 4/4。非常完整，深入剖析了潜在的技术和物理矛盾。
+            *   *TRIZ Correctness (TRIZ 正
+[ 2784.3s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: 独立功能模块、分层叠置等。
+- 评分评估:
+  - 关于关键词“在时间上的过渡”：AI在“时间分离”中提到了“让系统在不同时间满足不同要求”，但没有直接使用“在时间上的过渡”这个词。关于“物理和化学及相变”：AI提
+[ 2789.5s]   judge gemini-3.5-flash 失败 (1/5): 未找到 JSON 数组: [{"id": "v5_gold_296", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[ 2798.8s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: [{"id": "v5_gold_281", "accuracy": 4, "completeness": 3, "triz_correctness": 4, "structure": 4, "overall": 
+[ 2800.8s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: [{"id": "v5_gold_286", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[ 2803.6s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: [
+  {"id": "v5_gold_251", "accuracy": 3, "completeness": 1, "triz_correctness": 3, "structure": 4, "overall
+[ 2804.0s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: “物理和化学及相变”#35）。参考答案推荐：系统的过渡（#3？或者是物态变化？）、时间上的过渡（#16？或者是周期性作用？）、物理和化学及相变（#35，参数变化）。
+- **期望关键词**: 在时间上的过渡、物理和
+[ 2809.0s]   judge gemini-3.5-flash 失败 (2/5): 未找到 JSON 数组: [{"id": "v5_gold_296", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[ 2830.1s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: transition to micro-level, transition in time等，常在系统进化法则或特定原理中出现）没有显式点出，但AI用“时间分离”和“参数变化”等经典40原理进行了很好的解答。
+评分
+[ 2832.9s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_281",
+    "accuracy": 4,
+    "completeness": 3,
+    "triz_correctness": 4,
+    "st
+[ 2833.5s]   judge gemini-3.5-flash 失败 (3/5): 未找到 JSON 数组: 工作 experience to the entire company or industry?
+**Reference Answer:**
+When enterprises apply the ARIZ algo
+[ 2836.8s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: [{"id": "v5_gold_286", "accuracy": 4, "completeness": 4, "triz_correctness": 4, "structure": 4, "overall": 
+[ 2839.9s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: 第3/4级创新，对应的原理35, 40, 3, 24, 10）；可行性（技术/工艺/经济可行性，系统兼容性，理想性公式）；潜在技术矛盾和物理矛盾（分辨率 vs 灵敏度，缺陷 vs 复杂度，分辨率 vs 工艺窗口，抗
+[ 2857.4s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: 性)**: 完全不完整。由于没有材料，AI给出了一个通用的教学矛盾分析，与参考答案完全不匹配。
+  - **TRIZ Correctness (TRIZ正确性)**: 概念上正确（技术矛盾的定义），但对于本题（特定
+[ 2868.7s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: Keywords**: ARIZ 算法、问题分析、理想解IFR、资源分析、方案评估、成长中心
+- **AI Answer**:
+    - Elaborates on how to scale TRIZ using
+[ 2878.8s]   judge gemini-3.5-flash 失败 (4/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_256",
+    "accuracy": 1,
+    "completeness": 1,
+    "triz_correctness": 1,
+    "st
+[ 2888.1s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: [
+  {
+    "id": "v5_gold_281",
+    "accuracy": 4,
+    "completeness": 3,
+    "triz_correctness": 4,
+    "st
+[ 2893.0s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: : 4/4 (Uses ARIZ-specific terms like Physical Contradiction, operational zone, substance-field resources et
+[ 2944.2s]   gemini-3.5-flash/gpt-5.4 进度 278/300
+[ 2991.1s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: "企业可以建立机制...", "知识平台...", "建立分层培养体系". It mentions "内部 TRIZ/ARIZ 教练", "人才机制", "知识平台", but does not explicitl
+[ 2995.0s]   judge gemini-3.5-flash 失败 (5/5): 未找到 JSON 数组: Phase Transition is No. 36? Wait. 40 Inventive Principles: No. 36 is "Phase Transition". No. 35 is "Paramet
+[ 3220.6s]   gemini-3.5-flash/gpt-5.4 进度 300/300
+[ 3220.6s] 全部评委任务完成

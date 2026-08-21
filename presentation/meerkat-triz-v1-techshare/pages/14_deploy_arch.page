@@ -1,0 +1,152 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 34, 500, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: 03 · 部署与运行
+  - elementId: title
+    elementType: text
+    bounds: [56, 56, 840, 34]
+    content:
+      style: "$title"
+      wrap: false
+      text: 部署架构：NVFP4 基座 + BF16 LoRA 运行时热挂
+  - elementId: arch1
+    elementType: shape
+    bounds: [56, 120, 200, 90]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+    border: {style: solid, width: 1, color: "$pine"}
+  - elementId: arch1-t
+    elementType: text
+    bounds: [68, 130, 176, 70]
+    content:
+      fontSize: 11.5
+      color: "$ink"
+      lineHeight: 1.5
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong><span style="color:$pine">浏览器 / 用户</span></strong></p>
+        <p>Open WebUI（meerkat-webui :12001，Tailscale / 局域网）</p>
+  - elementId: arch-a1
+    elementType: shape
+    bounds: [260, 152, 30, 26]
+    shapeName: rightArrow
+    adjustments: [40000, 45000]
+    fill: {type: solid, color: "$pine"}
+  - elementId: arch2
+    elementType: shape
+    bounds: [294, 110, 330, 110]
+    shapeName: rect
+    fill: {type: solid, color: "$paper"}
+    border: {style: solid, width: 1.5, color: "$pine"}
+  - elementId: arch2-t
+    elementType: text
+    bounds: [306, 118, 306, 96]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.5
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong><span style="color:$pine">vLLM 0.25.0（meerkat-vllm :8000，--network host）</span></strong></p>
+        <p style="margin-top:3px">· served model ① Qwen3.6-35B-A3B-NVFP4（unsloth 量化基座）</p>
+        <p>· served model ② <strong>Meerkat-TRIZ-v1</strong>（运行时 LoRA，发布版 v5 权重，sha256 核对一致）</p>
+        <p>· --enable-lora --max-lora-rank 64</p>
+  - elementId: arch3
+    elementType: shape
+    bounds: [640, 120, 264, 90]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+    border: {style: solid, width: 1, color: "$terra"}
+  - elementId: arch3-t
+    elementType: text
+    bounds: [652, 128, 240, 74]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.5
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong><span style="color:$terra">关键差异：--moe-backend auto</span></strong></p>
+        <p>参考仓库的 flashinfer_b12x 内核不支持 LoRA（vLLM 直接拒启）；auto 落到 MARLIN，支持 fused MoE LoRA，实测性能无损</p>
+  - elementId: profile-title
+    elementType: text
+    bounds: [56, 246, 500, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: 运行 profile（沿用验证过的配置）
+  - elementId: profile
+    elementType: table
+    bounds: [56, 270, 848, 90]
+    columnWidths: [0.25, 0.25, 0.25, 0.25]
+    rowHeights: [0.5, 0.5]
+    style: "$default"
+    rows:
+      - - text: "gpu-memory-utilization 0.83"
+        - text: "max-model-len 262144"
+        - text: "max-num-batched-tokens 8192"
+        - text: "max-num-seqs 64 · MTP 3 tokens"
+      - - text: "ENABLE_MULTIMODAL=0（纯文本）"
+        - text: "镜像 qwen36-dgx-spark:v0.1.1（arm64）"
+        - text: "OpenAI 兼容 API，模型名双挂"
+        - text: "启动约 5 分钟（含 SM121 内核编译）"
+  - elementId: perf-title
+    elementType: text
+    bounds: [56, 380, 500, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: 实测性能（2026-08-01，365 tok 输入 / 512 tok 输出，非流式）
+  - elementId: perf
+    elementType: table
+    bounds: [56, 404, 848, 78]
+    columnWidths: [0.40, 0.20, 0.40]
+    rowHeights: [0.25, 0.25, 0.25, 0.25]
+    style: "$default"
+    rows:
+      - - text: "模型 / 并发"
+        - text: "吞吐"
+        - text: "备注"
+      - - text: "NVFP4 基座 · C1"
+        - text: "88.8 tok/s"
+        - text: "与上游 flashinfer_b12x 的 91.5 tok/s 基本持平"
+      - - text: "Meerkat-TRIZ-v1 · C1"
+        - text: "77.3 tok/s"
+        - text: "LoRA 开销约 13%"
+      - - text: "Meerkat-TRIZ-v1 · C4"
+        - text: "196.7 tok/s（聚合）"
+        - text: "并发扩展性正常"
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-src
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$small"
+      wrap: false
+      text: 来源：deploy/MEERKAT-DGX-SPARK-OPS.md（2026-08-01 部署）
+  - elementId: footer-page
+    elementType: text
+    bounds: [864, 510, 40, 14]
+    content:
+      style: "$small"
+      align: [right, top]
+      wrap: false
+      text: "16"

@@ -1,0 +1,138 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 40, 600, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: |-
+        01 · 为什么是现在
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 36]
+    content:
+      style: "$h1"
+      wrap: false
+      text: |-
+        Prompt、Workflow、Agent：你的任务该用哪一级？
+  - elementId: spectrum-table
+    elementType: table
+    bounds: [56, 126, 848, 244]
+    columnWidths: [0.15, 0.27, 0.28, 0.30]
+    rowHeights: [0.18, 0.205, 0.205, 0.205, 0.205]
+    style: "$default"
+    rows:
+      - - text: |-
+            维度
+        - text: |-
+            Prompt · 一次问答
+        - text: |-
+            Workflow · 固定流程编排
+        - text: |-
+            Agent · 自主规划循环
+      - - text: |-
+            确定性
+          bold: true
+        - text: |-
+            当场一问一答，边界清晰
+        - text: |-
+            高：步骤预先写死
+        - text: |-
+            较低：路径由模型现场决定
+          fill: {type: solid, color: "$paleG"}
+      - - text: |-
+            灵活性
+          bold: true
+        - text: |-
+            低：只解决这一问
+        - text: |-
+            中：流程之内可调参数
+        - text: |-
+            高：可应对计划外的情况
+          fill: {type: solid, color: "$paleG"}
+      - - text: |-
+            典型场景
+          bold: true
+        - text: |-
+            解释名词、起草一段话
+        - text: |-
+            固定报表、定时数据同步
+        - text: |-
+            异常排查、跨系统完成任务
+          fill: {type: solid, color: "$paleG"}
+      - - text: |-
+            成本 / 风险
+          bold: true
+        - text: |-
+            几乎为零
+        - text: |-
+            低：错了也是固定的错法
+        - text: |-
+            较高：循环有成本，需验证与护栏
+          fill: {type: solid, color: "$paleG"}
+  - elementId: rule-bg
+    elementType: shape
+    bounds: [56, 388, 848, 46]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+  - elementId: rule-bar
+    elementType: shape
+    bounds: [56, 388, 4, 46]
+    shapeName: rect
+    fill: {type: solid, color: "$pine"}
+  - elementId: rule-text
+    elementType: text
+    bounds: [78, 388, 810, 46]
+    content:
+      fontSize: 14
+      bold: true
+      color: "$pine"
+      align: [left, middle]
+      wrap: false
+      text: |-
+        判断口诀：一次能解决用 Prompt；步骤能写死用 Workflow；路径要现场定用 Agent。
+  - elementId: quiz-label
+    elementType: text
+    bounds: [56, 446, 260, 18]
+    content:
+      style: "$small"
+      bold: true
+      color: "$terra"
+      wrap: false
+      text: |-
+        现场判断（教学演示 / 示例）
+  - elementId: quiz-text
+    elementType: text
+    bounds: [56, 468, 848, 18]
+    content:
+      fontSize: 12
+      color: "$ink"
+      wrap: false
+      text: |-
+        ① 每周自动生成并发出全域墒情巡检周报 → 该用哪一级？　② 向客户解释「土壤墒情」是什么 → 该用哪一级？
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-left
+    elementType: text
+    bounds: [56, 510, 500, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: |-
+        东方智感 · AI 内训第三期 · 场景为教学演示 / 示例
+  - elementId: footer-page
+    elementType: text
+    bounds: [854, 510, 50, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: |-
+        07

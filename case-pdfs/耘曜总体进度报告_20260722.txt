@@ -1,0 +1,98 @@
+
+===== PAGE 1 =====
+耘曜（Yunyao）智慧农业物联网系统 项目
+总进展报告 
+报告日期：2026-07-22 
+版本：v1.4（重构版持续调试阶段） 
+编制：研发组 
+一、项目概述 
+耘曜智慧农业物联网系统是一套运行于树莓派的嵌入式 C 应用，通过 MQTT 将农业传感
+器（气象、土壤、虫情、 苗情）数据上报至 ThingVerse 云平台，并支持音频播报、LED 显
+示屏、电子锁控制与 OTA 升级。 
+近期工作重点：将 v1.3 遗留的单体阻塞式代码重构为事件驱动架构（epoll + timerfd） ，并
+在现场部署中持续调试，解决重构引入的稳定性问题。 
+二、架构重构成果（已完成） 
+事件驱动：全部进程改用  epoll + timerfd 事件循环  + 状态机
+（INIT/CONNECTING/CONNECTED/RUNNING/ERROR/RECOVERY）。 
+去全局变量：引入 DeviceContext_t 设备上下文，替代 66 个全局变量。 
+日志系统：结构化日志替代 442 处 printf，支持按模块分文件、自动轮转。 
+安全执行：system() 统一替换为白名单机制 safe_execute()。 
+配置管理：/home/yy/config 原子写入（备份 + 临时文件替换） ，防止断电写坏。 
+图像压缩：苗情/虫情照片压缩后上传，带宽下降约 95%。 
+Web 配置：新增 8080 端口本地 Web 配置界面。 
+GPIO 兼容层：wiringPi 迁移到 libgpiod，兼容新内核。 
+三、现场调试已修复的关键问题 
+3.1 MQTT 通信与时序 
+MQTT 消息接收时序错乱、收到消息后停不下来导致崩溃，已修复。 
+cJSON 解析崩溃、MQTT 日志时间戳与 clientId 协议兼容问题，已修复。 
+async_mqtt 的 pipe() 默认阻塞导致事件循环卡死，已改为 O_NONBLOCK。 
+async_mqtt 连接失败回调对旧版 Paho 的字段访问导致潜在崩溃，已修复。 
+===== PAGE 2 =====
+3.2 传感器采集（devsensor） 
+485 总线采集不到数据： 根因是串口初始化时序与原版不一致 （需先开串口接收噪声，90 秒
+上电等待后关串口、开电压采集电源、再重新开串口） ，已恢复原版时序。 
+485 数据校验错误、 数据"发布成功"实际未到达服务器 （批量发布在 cleanup 前缺少 sleep），
+已改为采集一个设备发送一个设备。 
+初始设备上电等待由 30 秒延长至 60 秒以上。 
+pH、EC 传感器接入完成。 
+3.3 看门狗误杀（重大） 
+现象：devsensor 重启后仅正常运行约 20 分钟即瘫痪，485 总线出现乱码。 
+根因：重构后看门狗 PID 文件机制缺陷，导致两个 devsensor 进程同时运行、撞 485 总
+线。 
+修复： watchdog 与 devsensor 均增加文件锁（ flock）保证单实例； pidfile_create 改为 
+open+write 原子写入；watchdog 健康检查跳过自身。 
+3.4 断网恢复（当前核心问题） 
+现象：设备断网后长期不上线（示例：某日 17:40 断网，次日 09:15 仍未恢复） 。 
+根因分析： 
+  - 常驻 watchdog 仅依赖 async_mqtt 的连接状态标志， 断网后旧进程处于"假登录"状态
+（socket 半开） ，health check 被骗过，不会触发重启； 
+  - watchdog --cron-check（每 15 分钟兜底检查）在代码中已实现，但 crontab 从未实
+际部署该行 （system_generate_cron 仅在首次创建配置时生成，cron.txt 模板缺该行，cron.sh 
+用相对路径找不到文件） 。 
+修复（按与原版一致的策略） ： 
+  - cron-check 尝试同步 MQTT 登录，连续 12 次失败直接 sudo reboot； 
+  - 不做单独拨号恢复——现场验证拨号恢复后旧进程仍是假登录状态， 平台依旧收不到数
+据，只有重启系统能可靠恢复； 
+  - cron.txt 模板补齐 watchdog --cron-check 与苗情整点任务； 
+  - cron.sh 改为绝对路径并跳过注释/空行； 
+  - compile.sh 编译时同步复制 cron.txt； 
+  - yunyao 每次启动都重新生成 crontab，保证兜底机制始终部署。 
+3.5 苗情上传 
+现象：重构后苗情只有开机上传一次，后续不再上传。 
+根因：sendlingCondition 被改为常驻 daemon，内部定时器硬编码 9/11/13/15，且未解析
+云端配置的 seedlingCameraCollectionHours。 
+修复： 回退为原版模式——sendlingCondition 短生命周期 （连 MQTT→拍照→上传→退出） ，
+===== PAGE 3 =====
+由 crontab 按云端配置的小时整点启动。 
+3.6 音频播放 
+cron 自启动后平台下发 playAudio 无声音：cron 最小化环境缺变量导致 MQTT 收不到消
+息，yunyao 改为 /bin/bash -lc 登录 shell 启动。 
+/my_shm 共享内存权限 root/yy 混用导致 Permission denied，权限放宽为 0666。 
+音频播放次数 bug（设置多次只播一次）已修复。 
+3.7 SIM 与定位（msg 进程） 
+epoll_event.data 共用体误用导致 msg 启动异常，timer 与 fd handler 改用 node->fd，已
+修复。 
+SIM 卡信息（IMEI/ICCID/IMSI）读取时序错误、未填入发送数据结构，已调试通过。 
+四、当前状态 
+传感器采集、苗情/虫情拍照上传、音频、显示屏、电子锁、OTA 均已联调通过。 
+断网恢复机制已按"12 次失败直接重启系统"策略完成代码修改与 crontab 部署修复， 待现
+场长时间验证。 
+最近提交： 
+  - 4ae22ab 网络恢复机制依旧存在问题，已调整，待验证 
+  - c194a3a 苗情机制回退到原始版本，后续继续测试 
+  - 5300d05 devsensor 停发故障再次调试 
+五、遗留风险与后续计划 
+断网恢复需在现场连续观察 1-2 周，验证 15 分钟 cron-check + 12 次失败重启是否覆盖
+所有断网场景。 
+devsensor 曾出现运行一段时间后停发的故障，需继续跟踪日志。 
+苗情、虫情时间配置依赖 crontab 下发，云端修改配置后需确认 crontab 及时更新。 
+safe_execute.c 为 GB2312/CRLF 编码，后续修改需注意字节级编辑，避免破坏编码。 
+建议后续补充：yunyao 登录后主动发布设备 online 状态，缩短平台离线判定时间。 
+六、部署检查清单 
+[ ] 编译：cd src && ./compile.sh 
+[ ] 更新 crontab：crontab /home/yy/yy004/cron.txt 
+[ ] 验证：crontab -l | grep cron-check 应存在 */15 行 
+[ ] 验证：crontab -l 应包含苗情整点任务（0 9,11,13,15） 
+[ ] 重启系统后观察 /home/yy/log/watchdog.log 中 cron-check 运行记录 
+===== PAGE 4 =====
+ 

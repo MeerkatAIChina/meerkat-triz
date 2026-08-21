@@ -1,0 +1,185 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 34, 500, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: 00 · 全景
+  - elementId: title
+    elementType: text
+    bounds: [56, 56, 840, 34]
+    content:
+      style: "$title"
+      wrap: false
+      text: 端到端管线：五个阶段，一台桌面机跑完
+  - elementId: stage1
+    elementType: shape
+    bounds: [56, 130, 152, 120]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+    border: {style: solid, width: 1, color: "$pine"}
+  - elementId: stage1-t
+    elementType: text
+    bounds: [66, 140, 132, 100]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.45
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong><span style="color:$pine">① 数据构建</span></strong></p>
+        <p style="margin-top:4px">种子 → 合成扩展 → 质量门漏斗 → ChatML prompt/completion</p>
+        <p style="margin-top:4px"><span style="color:$muted; font-size:10px">data_build_v5.py 等 12 个脚本</span></p>
+  - elementId: a1
+    elementType: shape
+    bounds: [212, 178, 26, 24]
+    shapeName: rightArrow
+    adjustments: [40000, 45000]
+    fill: {type: solid, color: "$pine"}
+  - elementId: stage2
+    elementType: shape
+    bounds: [242, 130, 152, 120]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+    border: {style: solid, width: 1, color: "$pine"}
+  - elementId: stage2-t
+    elementType: text
+    bounds: [252, 140, 132, 100]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.45
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong><span style="color:$pine">② 训练</span></strong></p>
+        <p style="margin-top:4px">纯 BF16 LoRA SFT，completion-only loss，4 epochs / 5,548 步 / 23.0h</p>
+        <p style="margin-top:4px"><span style="color:$muted; font-size:10px">train.py 571 行</span></p>
+  - elementId: a2
+    elementType: shape
+    bounds: [398, 178, 26, 24]
+    shapeName: rightArrow
+    adjustments: [40000, 45000]
+    fill: {type: solid, color: "$pine"}
+  - elementId: stage3
+    elementType: shape
+    bounds: [428, 130, 152, 120]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+    border: {style: solid, width: 1, color: "$pine"}
+  - elementId: stage3-t
+    elementType: text
+    bounds: [438, 140, 132, 100]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.45
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong><span style="color:$pine">③ 评测</span></strong></p>
+        <p style="margin-top:4px">双轨 harness：关键词轨 + LLM 评委轨，逐题配对统计</p>
+        <p style="margin-top:4px"><span style="color:$muted; font-size:10px">eval/ 11 个模块</span></p>
+  - elementId: a3
+    elementType: shape
+    bounds: [584, 178, 26, 24]
+    shapeName: rightArrow
+    adjustments: [40000, 45000]
+    fill: {type: solid, color: "$pine"}
+  - elementId: stage4
+    elementType: shape
+    bounds: [614, 130, 134, 120]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+    border: {style: solid, width: 1, color: "$pine"}
+  - elementId: stage4-t
+    elementType: text
+    bounds: [624, 140, 114, 100]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.45
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong><span style="color:$pine">④ 发货</span></strong></p>
+        <p style="margin-top:4px">best/ 复制 + 9 项验证 + sha256 登记</p>
+        <p style="margin-top:4px"><span style="color:$muted; font-size:10px">checkpointing.py</span></p>
+  - elementId: a4
+    elementType: shape
+    bounds: [752, 178, 26, 24]
+    shapeName: rightArrow
+    adjustments: [40000, 45000]
+    fill: {type: solid, color: "$pine"}
+  - elementId: stage5
+    elementType: shape
+    bounds: [782, 130, 122, 120]
+    shapeName: rect
+    fill: {type: solid, color: "$pine"}
+  - elementId: stage5-t
+    elementType: text
+    bounds: [792, 140, 102, 100]
+    content:
+      fontSize: 11
+      color: "#F7F5F0"
+      lineHeight: 1.45
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong>⑤ 运行</strong></p>
+        <p style="margin-top:4px">vLLM 运行时 LoRA 热挂 + Open WebUI</p>
+        <p style="margin-top:4px"><span style="font-size:10px; color:#D8D3C8">deploy/ 运维手册</span></p>
+  - elementId: facts-title
+    elementType: text
+    bounds: [56, 286, 400, 20]
+    content:
+      fontSize: 14
+      bold: true
+      color: "$pine"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: 一张名片看懂这个模型
+  - elementId: facts
+    elementType: table
+    bounds: [56, 314, 848, 160]
+    columnWidths: [0.16, 0.34, 0.16, 0.34]
+    rowHeights: [0.25, 0.25, 0.25, 0.25]
+    style: "$default"
+    rows:
+      - - text: "基座模型"
+        - text: "Qwen3.6-35B-A3B（35B 总参 / 3B 激活，40 层混合架构，256 专家 MoE，262K 上下文，Apache-2.0）"
+        - text: "适配器"
+        - text: "LoRA r=64 / α=128 / dropout=0，12 个投影矩阵，可训练 84.66M（0.24%），169.4MB BF16"
+      - - text: "训练数据"
+        - text: "11,096 条中文 TRIZ ChatML SFT（六类任务子集），1,050 条验证集；训练集因版权不公开"
+        - text: "训练成本"
+        - text: "DGX Spark 单机 23.0 小时，峰值显存 69.7GB，纯 BF16 免量化"
+      - - text: "头条结论"
+        - text: "异源评委终审：+0.09 ~ +0.10（3 个外部评委中 2 个显著）；同族读数 +0.39 不可外推"
+        - text: "部署形态"
+        - text: "NVFP4 量化基座 + BF16 LoRA 运行时热挂，C1 77.3 tok/s，C4 聚合 196.7 tok/s"
+      - - text: "硬件"
+        - text: "NVIDIA DGX Spark：GB10 Grace Blackwell，121GB 统一内存，aarch64，CUDA 13"
+        - text: "本分享结构"
+        - text: "01 模型与训练 → 02 评测与发货 → 03 部署运行 → 经验教训"
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-src
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$small"
+      wrap: false
+      text: 来源：README.md · adapter_info.json · deploy/MEERKAT-DGX-SPARK-OPS.md
+  - elementId: footer-page
+    elementType: text
+    bounds: [864, 510, 40, 14]
+    content:
+      style: "$small"
+      align: [right, top]
+      wrap: false
+      text: "02"

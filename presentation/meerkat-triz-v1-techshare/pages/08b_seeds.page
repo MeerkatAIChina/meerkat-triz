@@ -1,0 +1,124 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 34, 500, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: 01 · 模型与训练
+  - elementId: title
+    elementType: text
+    bounds: [56, 56, 840, 34]
+    content:
+      style: "$title"
+      wrap: false
+      text: 数据深潜（上）：种子来源、二次清洗与合成扩展数量
+  - elementId: seed-title
+    elementType: text
+    bounds: [56, 106, 400, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: 种子谱系：385 → 365，被弃 306 条扩写救回
+  - elementId: seed-table
+    elementType: table
+    bounds: [56, 130, 420, 168]
+    columnWidths: [0.34, 0.66]
+    rowHeights: [0.16, 0.21, 0.21, 0.21, 0.21]
+    style: "$default"
+    rows:
+      - - text: "阶段"
+        - text: "处理与数量"
+      - - text: "原始种子"
+        - text: "data/sample_data.json，实为 385 条（文档长期误写 548，去重 −163）；六任务子集"
+      - - text: "R1 冲突组"
+        - text: "同题不同答整组丢弃：385 → 365"
+      - - text: "R2 / R3 短答案"
+        - text: "模板截尾后 <150 弃 196 条 + 原始 <150 弃 110 条"
+      - - text: "扩写救回"
+        - text: "306 条由 kimi-k2.5 扩写为 150–600 字，过门合并 → cleaned_seeds 365 条，总装 ×3 上采样"
+  - elementId: seed-note
+    elementType: shape
+    bounds: [56, 310, 420, 76]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+    border: {style: solid, width: 1, color: "$terra"}
+  - elementId: seed-note-t
+    elementType: text
+    bounds: [68, 317, 396, 62]
+    content:
+      fontSize: 10.5
+      color: "$ink"
+      lineHeight: 1.5
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong><span style="color:$terra">治理欠账（复盘原文）：</span></strong>种子由谁编写、是否经 TRIZ 专家审核，仓库无任何记录；方案要求的「顾问人工审核 ≥95%」环节被绕开。v5 的 R1–R3 规则即对此的代码化补救。</p>
+  - elementId: pipe-title
+    elementType: text
+    bounds: [512, 106, 400, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: v5 总装漏斗（v5_data_report.json 实测）
+  - elementId: pipe
+    elementType: text
+    bounds: [512, 130, 392, 250]
+    content:
+      style: "$code"
+      fontSize: 10.5
+      lineHeight: 1.6
+      text: |
+        <p>gated_corpus（短答臂）        8,613</p>
+        <p>styleC 长答（kimi-k2.5）     3,441</p>
+        <p>种子 365 ×3 上采样          1,095</p>
+        <p>safety_refusal                300（≤5% 断言）</p>
+        <p>────────────────────────────</p>
+        <p>池合计                       13,449</p>
+        <p>双重去污 Jaccard≥0.5         −1,145</p>
+        <p>  · 金标 A 集 200 题         0 命中 ✓</p>
+        <p>  · B 集 585 剔除率 8.51%    告警记录不中断</p>
+        <p>划分交叉检查整组移回 train      235 组</p>
+        <p>────────────────────────────</p>
+        <p><strong>train 10,698 / val 1,050 / test 556</strong></p>
+        <p>7,932 个分组 · 85/10/5 · seed=42</p>
+  - elementId: pub-note
+    elementType: text
+    bounds: [56, 400, 848, 80]
+    content:
+      style: "$body"
+      fontSize: 12
+      lineHeight: 1.55
+      text: |
+        <p>· 发布版 <strong>Meerkat-TRIZ-v1（v5a）训练集 11,096 条</strong>（day1 后 ARIZ 增补）；后续 v5b 世代 11,421 条。</p>
+        <p>· v5b 子集分布：概念讲解 2,996 / 创新评估 3,037 / 案例生成 2,857 / ARIZ 1,442 / 矛盾分析 313 / 原理推荐 521 / 安全拒答 255。</p>
+        <p>· 早期 02b 合成路径（config.py）：每子集目标 1,000，按子集差异化倍数 ×6/×6/×11/×11/×16/×16，moonshot-v1-8k 生成，distinct-1 ≥0.30 / distinct-2 ≥0.15 多样性门。</p>
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-src
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$small"
+      wrap: false
+      text: 来源：data_build_v5.py · seed_expand_*.py · paper/v5_execution/day1/final/v5_data_report.json
+  - elementId: footer-page
+    elementType: text
+    bounds: [864, 510, 40, 14]
+    content:
+      style: "$small"
+      align: [right, top]
+      wrap: false
+      text: "09"

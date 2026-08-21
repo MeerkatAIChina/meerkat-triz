@@ -1,0 +1,256 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 40, 600, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: |-
+        01 · 为什么是现在
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 36]
+    content:
+      style: "$h1"
+      wrap: false
+      text: |-
+        2022 → 2026：AI 的四年三级跳
+  - elementId: axis
+    elementType: line
+    bounds: [60, 207, 840, 2]
+    viewBox: [840, 2]
+    points: "0,1 840,1"
+    arrow: [null, "arrow"]
+    border: {style: solid, width: 2, color: "$pine"}
+  - elementId: y2022
+    elementType: text
+    bounds: [60, 158, 160, 24]
+    content:
+      fontSize: 18
+      bold: true
+      color: "$pine"
+      align: [center, top]
+      wrap: false
+      text: |-
+        2022
+  - elementId: y2023
+    elementType: text
+    bounds: [240, 158, 160, 24]
+    content:
+      fontSize: 18
+      bold: true
+      color: "$pine"
+      align: [center, top]
+      wrap: false
+      text: |-
+        2023
+  - elementId: y2024
+    elementType: text
+    bounds: [420, 158, 160, 24]
+    content:
+      fontSize: 18
+      bold: true
+      color: "$pine"
+      align: [center, top]
+      wrap: false
+      text: |-
+        2024
+  - elementId: y2025
+    elementType: text
+    bounds: [600, 158, 160, 24]
+    content:
+      fontSize: 18
+      bold: true
+      color: "$terra"
+      align: [center, top]
+      wrap: false
+      text: |-
+        2025
+  - elementId: y2026
+    elementType: text
+    bounds: [760, 158, 160, 24]
+    content:
+      fontSize: 18
+      bold: true
+      color: "$terra"
+      align: [center, top]
+      wrap: false
+      text: |-
+        2026
+  - elementId: n2022
+    elementType: shape
+    bounds: [133, 201, 14, 14]
+    shapeName: ellipse
+    fill: {type: solid, color: "$pine"}
+  - elementId: n2023
+    elementType: shape
+    bounds: [313, 201, 14, 14]
+    shapeName: ellipse
+    fill: {type: solid, color: "$pine"}
+  - elementId: n2024
+    elementType: shape
+    bounds: [493, 201, 14, 14]
+    shapeName: ellipse
+    fill: {type: solid, color: "$pine"}
+  - elementId: n2025
+    elementType: shape
+    bounds: [673, 201, 14, 14]
+    shapeName: ellipse
+    fill: {type: solid, color: "$terra"}
+  - elementId: n2026
+    elementType: shape
+    bounds: [833, 201, 14, 14]
+    shapeName: ellipse
+    fill: {type: solid, color: "$terra"}
+  - elementId: t2022
+    elementType: text
+    bounds: [60, 232, 160, 18]
+    content:
+      fontSize: 12
+      bold: true
+      color: "$ink"
+      align: [center, top]
+      wrap: false
+      text: |-
+        ChatGPT 会对话
+  - elementId: t2023
+    elementType: text
+    bounds: [240, 232, 160, 18]
+    content:
+      fontSize: 12
+      bold: true
+      color: "$ink"
+      align: [center, top]
+      wrap: false
+      text: |-
+        函数调用接工具
+  - elementId: t2024
+    elementType: text
+    bounds: [420, 232, 160, 18]
+    content:
+      fontSize: 12
+      bold: true
+      color: "$ink"
+      align: [center, top]
+      wrap: false
+      text: |-
+        推理模型会思考
+  - elementId: t2025
+    elementType: text
+    bounds: [600, 232, 160, 18]
+    content:
+      fontSize: 12
+      bold: true
+      color: "$ink"
+      align: [center, top]
+      wrap: false
+      text: |-
+        Agent 元年会干活
+  - elementId: t2026
+    elementType: text
+    bounds: [760, 232, 160, 18]
+    content:
+      fontSize: 12
+      bold: true
+      color: "$ink"
+      align: [center, top]
+      wrap: false
+      text: |-
+        多智能体工程化
+  - elementId: d2022
+    elementType: text
+    bounds: [60, 254, 160, 46]
+    content:
+      style: "$caption"
+      align: [center, top]
+      text: |-
+        自然语言成为入口，AI 走进大众
+  - elementId: d2023
+    elementType: text
+    bounds: [240, 254, 160, 46]
+    content:
+      style: "$caption"
+      align: [center, top]
+      text: |-
+        模型学会调用外部接口与插件（GPTs）
+  - elementId: d2024
+    elementType: text
+    bounds: [420, 254, 160, 46]
+    content:
+      style: "$caption"
+      align: [center, top]
+      text: |-
+        o1 / R1 让长链推理可用、可负担
+  - elementId: d2025
+    elementType: text
+    bounds: [600, 254, 160, 46]
+    content:
+      style: "$caption"
+      align: [center, top]
+      text: |-
+        <p>Deep Research、</p>
+        <p>Coding Agent 相继落地</p>
+  - elementId: d2026
+    elementType: text
+    bounds: [760, 254, 160, 46]
+    content:
+      style: "$caption"
+      align: [center, top]
+      text: |-
+        <p>多智能体协作，</p>
+        <p>Harness / Loop 成为显学</p>
+  - elementId: q-bg
+    elementType: shape
+    bounds: [56, 384, 848, 76]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+  - elementId: q-bar
+    elementType: shape
+    bounds: [56, 384, 4, 76]
+    shapeName: rect
+    fill: {type: solid, color: "$pine"}
+  - elementId: q-title
+    elementType: text
+    bounds: [78, 396, 500, 22]
+    content:
+      fontSize: 15
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: |-
+        提问：我们处于哪一级？
+  - elementId: q-desc
+    elementType: text
+    bounds: [78, 422, 810, 28]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.5
+      text: |-
+        多数人的日常还停留在「对话级」，部分工作到了「接工具级」。本期课程的目标：带大家走进「会派活」的一级。
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-left
+    elementType: text
+    bounds: [56, 510, 500, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: |-
+        来源：据公开产品发布信息整理（2022–2026）
+  - elementId: footer-page
+    elementType: text
+    bounds: [854, 510, 50, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: |-
+        05

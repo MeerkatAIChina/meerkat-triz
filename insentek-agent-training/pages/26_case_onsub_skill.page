@@ -1,0 +1,134 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+notes: 案例①(上)onsub.pub 策略 Skill:左栏事实速览为报告原文事实(产品定位、策略 Skill 上线、每日 8 点判灌切换 Skill 版本、分组 AI 助手、18 次有效提交、分层墒情);右栏讲师点评用 Loop 四要素拆解(目标/行动/反馈/验证),呼应第 11 页委派单、第 16 页 Loop 四要素、第 18 页人在回路;底部亮点条:规则文档化=把上下文工程交给业务,呼应第 13 页。
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 38, 600, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: |-
+        05 内部案例 · 案例①(上)
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 36]
+    content:
+      style: "$h1"
+      wrap: false
+      text: |-
+        onsub.pub:策略 Skill + 每日判灌 = 生产环境里的 Loop
+  # ---- 左栏:事实速览 ----
+  - elementId: fact-label
+    elementType: text
+    bounds: [56, 116, 396, 18]
+    content:
+      fontSize: 14
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: |-
+        事实速览 · 报告原文
+  - elementId: fact-bar
+    elementType: shape
+    bounds: [56, 142, 32, 3]
+    shapeName: rect
+    fill: {type: solid, color: "$pine"}
+  - elementId: fact-body
+    elementType: text
+    bounds: [56, 158, 400, 244]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.5
+      text: |-
+        <p><strong>产品:</strong>面向田间管理者与农技运营的智能灌溉产品——管理后台 + 小程序「放心灌」,把墒情监测转成可执行的灌溉建议,并短信触达用户。</p>
+        <p style="margin-top:10px"><strong>本期主线:</strong>灌溉规则从写死在代码里的「灌溉方法」升级为「策略 Skill」——可配置、可对话修订、可发布;服务点绑定 Skill,替代旧主配置路径。</p>
+        <p style="margin-top:10px"><strong>已上线:</strong>每日 8 点自动判灌切换为 Skill 版本;分组 AI 助手上线,对话可引用墒情、判灌等上下文。</p>
+        <p style="margin-top:10px"><strong>数据:</strong>后台本期 18 次有效提交;小程序 7/13 合入「分层墒情」展示。</p>
+  # ---- 中缝分隔线 ----
+  - elementId: mid-divider
+    elementType: shape
+    bounds: [480, 116, 1, 286]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  # ---- 右栏:讲师点评 ----
+  - elementId: cmt-label
+    elementType: text
+    bounds: [504, 116, 400, 18]
+    content:
+      fontSize: 14
+      bold: true
+      color: "$terra"
+      wrap: false
+      text: |-
+        讲师点评 · 用 Loop 四要素拆解(见第 16 页)
+  - elementId: cmt-bar
+    elementType: shape
+    bounds: [504, 142, 32, 3]
+    shapeName: rect
+    fill: {type: solid, color: "$terra"}
+  - elementId: cmt-body
+    elementType: text
+    bounds: [504, 158, 400, 244]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.5
+      text: |-
+        <p><span style="color:$pine"><strong>目标</strong></span> =「今日是否该灌」:每日一次、结果可验收,就是一张活的「委派单」(见第 11 页)。</p>
+        <p style="margin-top:10px"><span style="color:$pine"><strong>行动</strong></span> = 判灌引擎读取墒情、天气、生育期阈值,按 Skill 规则自动计算。</p>
+        <p style="margin-top:10px"><span style="color:$pine"><strong>反馈</strong></span> = 结构化判灌结论:是否该灌 + 按微灌/喷灌给出建议水量。</p>
+        <p style="margin-top:10px"><span style="color:$pine"><strong>验证</strong></span> = 判读说明展示研判依据,业务人员核对「为什么这样判」——人在回路(见第 18 页)。</p>
+        <p style="margin-top:10px"><span style="color:$muted">四要素齐备、每天自动跑一圈:这就是生产环境里的 Loop。</span></p>
+  # ---- 底部亮点条 ----
+  - elementId: hi-box
+    elementType: shape
+    bounds: [56, 420, 848, 58]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+  - elementId: hi-bar
+    elementType: shape
+    bounds: [56, 420, 4, 58]
+    shapeName: rect
+    fill: {type: solid, color: "$pine"}
+  - elementId: hi-icon
+    elementType: icon
+    bounds: [76, 440, 18, 18]
+    iconName: "fas:lightbulb"
+    fill: {type: solid, color: "$pine"}
+  - elementId: hi-body
+    elementType: text
+    bounds: [106, 437, 782, 24]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.5
+      align: [left, middle]
+      text: |-
+        <p><strong>亮点:</strong>规则从代码变成可对话修订的 Skill 文档,运营自行迭代、少依赖发版——把上下文工程交给了业务(见第 13 页)。</p>
+  # ---- 页脚 ----
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-src
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: |-
+        来源:onsub.pub 项目进展汇报(2026-07-22)
+  - elementId: footer-page
+    elementType: text
+    bounds: [824, 510, 80, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: |-
+        26 / 35

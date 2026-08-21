@@ -1,0 +1,113 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 34, 500, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: 03 · 部署与运行
+  - elementId: title
+    elementType: text
+    bounds: [56, 56, 840, 34]
+    content:
+      style: "$title"
+      wrap: false
+      text: 运行参数：两个线上事故改出来的生成默认值
+  - elementId: acc1
+    elementType: shape
+    bounds: [56, 110, 420, 130]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+    border: {style: solid, width: 1, color: "$terra"}
+  - elementId: acc1-t
+    elementType: text
+    bounds: [72, 120, 390, 112]
+    content:
+      fontSize: 11.5
+      color: "$ink"
+      lineHeight: 1.5
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong><span style="color:$terra">事故 ① 贪心解码死循环</span></strong></p>
+        <p style="margin-top:4px">参考仓库默认 temperature:0，模型在闲聊/身份类问题上陷入无限重复——实测同一 60 字块重复 41 次。</p>
+        <p style="margin-top:4px"><strong>处理：</strong>改用 Qwen 官方思考模式推荐采样 temperature 0.6 / top_p 0.95 / repetition_penalty 1.05，全部正常收尾。</p>
+  - elementId: acc2
+    elementType: shape
+    bounds: [484, 110, 420, 130]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+    border: {style: solid, width: 1, color: "$terra"}
+  - elementId: acc2-t
+    elementType: text
+    bounds: [500, 120, 390, 112]
+    content:
+      fontSize: 11.5
+      color: "$ink"
+      lineHeight: 1.5
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong><span style="color:$terra">事故 ② 单请求生成 23 分钟</span></strong></p>
+        <p style="margin-top:4px">客户端不传 max_tokens 时，vLLM 按 262K 上下文放开生成——实测一次 WebUI 多轮调用连续生成约 12 万 token 不停。</p>
+        <p style="margin-top:4px"><strong>处理：</strong>服务器默认 max_new_tokens 16384，把最坏情况约束在约 3.5 分钟内。</p>
+  - elementId: gen-title
+    elementType: text
+    bounds: [56, 260, 500, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: OVERRIDE_GENERATION_CONFIG（.env，值必须带单引号）
+  - elementId: gen-code
+    elementType: shape
+    bounds: [56, 284, 848, 44]
+    shapeName: rect
+    fill: {type: solid, color: "#22211E"}
+  - elementId: gen-code-t
+    elementType: text
+    bounds: [72, 292, 816, 30]
+    content:
+      fontSize: 11.5
+      color: "#E8E4DA"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      align: [left, middle]
+      wrap: false
+      text: '{"temperature":0.6,"top_p":0.95,"repetition_penalty":1.05,"max_new_tokens":16384}'
+  - elementId: notes
+    elementType: text
+    bounds: [56, 346, 848, 132]
+    content:
+      style: "$body"
+      fontSize: 12
+      lineHeight: 1.55
+      text: |
+        <p>· <strong>评测不受默认值影响：</strong>harness 需要确定性时在请求里显式传 temperature=0 / 自定义 max_tokens，可覆盖服务器默认（已验证兼容）。</p>
+        <p>· <strong>reasoning 模型的 max_tokens 要够大：</strong>LoRA 版思维链更长，建议 ≥4096，否则思考耗尽额度导致 content 为空（finish_reason=length）。</p>
+        <p>· <strong>E0 铁律延续到推理侧：</strong>prompt 必须保留空 think 块（&lt;think&gt;\n\n&lt;/think&gt;）。模板若剥离它，judge 分实测掉约 −0.2——README 用 ⚠️ 置顶警示。</p>
+        <p>· <strong>口径披露：</strong>部署为「BF16 训练、NVFP4 基座 + BF16 LoRA 热挂」，与训练评测口径不同；发布前建议在本地金标补一轮 NVFP4+LoRA 评测确认无量化漂移。</p>
+        <p>· <strong>安全：</strong>8000 端口 API 无认证，仅 Tailscale/局域网；WebUI 注册改审批制（DEFAULT_USER_ROLE=pending，DB+env 双写）。</p>
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-src
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$small"
+      wrap: false
+      text: 来源：deploy/MEERKAT-DGX-SPARK-OPS.md · hf_model_repo/README.md
+  - elementId: footer-page
+    elementType: text
+    bounds: [864, 510, 40, 14]
+    content:
+      style: "$small"
+      align: [right, top]
+      wrap: false
+      text: "17"

@@ -1,0 +1,38 @@
+pageType: chapter
+background:
+  type: solid
+  color: "$pine"
+elements:
+  - elementId: ch-num
+    elementType: text
+    bounds: [72, 120, 220, 110]
+    content:
+      fontSize: 88
+      bold: true
+      color: "#F7F5F033"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: "01"
+  - elementId: ch-title
+    elementType: text
+    bounds: [72, 240, 700, 48]
+    content:
+      fontSize: 36
+      bold: true
+      color: "$paper"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: 模型与训练
+  - elementId: ch-sub
+    elementType: text
+    bounds: [72, 300, 700, 80]
+    content:
+      fontSize: 14
+      color: "#D8D3C8"
+      lineHeight: 1.7
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p>· 为什么选 Qwen3.6-35B-A3B？混合架构下 LoRA 该挂在哪些模块？</p>
+        <p>· train_v5a.json 每个超参的设计理由（含被修复的历史事故）</p>
+        <p>· train.py 里 6 个"不信任框架"的防御性机制</p>
+        <p>· 23 小时训练曲线告诉我们什么</p>

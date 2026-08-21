@@ -1,0 +1,270 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+notes: 交付与运维岗位页:异常排查智能体循环五步,最后一步人确认派单;价值在夜间周末自动值守。
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 40, 500, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: |-
+        04 岗位结合 · 交付与运维
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 38]
+    content:
+      style: "$h1"
+      wrap: false
+      text: |-
+        让智能体先查一遍:人从「盯屏幕」变成「处理异常」
+  # ---- 左侧:异常排查智能体循环(纵向五步) ----
+  - elementId: flow1-circle
+    elementType: shape
+    bounds: [56, 154, 28, 28]
+    shapeName: ellipse
+    fill: {type: solid, color: "$pine"}
+  - elementId: flow1-num
+    elementType: text
+    bounds: [56, 154, 28, 28]
+    content:
+      color: "$white"
+      fontSize: 13
+      bold: true
+      align: [center, middle]
+      wrap: false
+      text: |-
+        1
+  - elementId: flow1-txt
+    elementType: text
+    bounds: [100, 148, 340, 48]
+    content:
+      align: [left, top]
+      text: |-
+        <p><span style="font-size:13px; color:$ink;"><strong>监测数据接入</strong></span></p>
+        <p><span style="font-size:11px; color:$muted;">墒情 · 水位 · 雨量:智墒、天圻、山境站点数据(教学演示)</span></p>
+  - elementId: flow-conn1
+    elementType: shape
+    bounds: [69, 182, 2, 36]
+    shapeName: rect
+    fill: {type: solid, color: "$pine"}
+  - elementId: flow2-circle
+    elementType: shape
+    bounds: [56, 218, 28, 28]
+    shapeName: ellipse
+    fill: {type: solid, color: "$pine"}
+  - elementId: flow2-num
+    elementType: text
+    bounds: [56, 218, 28, 28]
+    content:
+      color: "$white"
+      fontSize: 13
+      bold: true
+      align: [center, middle]
+      wrap: false
+      text: |-
+        2
+  - elementId: flow2-txt
+    elementType: text
+    bounds: [100, 212, 340, 48]
+    content:
+      align: [left, top]
+      text: |-
+        <p><span style="font-size:13px; color:$ink;"><strong>自动巡检</strong></span></p>
+        <p><span style="font-size:11px; color:$muted;">缺数、漂移、超限——巡检规则就是循环的验证器</span></p>
+  - elementId: flow-conn2
+    elementType: shape
+    bounds: [69, 246, 2, 36]
+    shapeName: rect
+    fill: {type: solid, color: "$pine"}
+  - elementId: flow3-circle
+    elementType: shape
+    bounds: [56, 282, 28, 28]
+    shapeName: ellipse
+    fill: {type: solid, color: "$pine"}
+  - elementId: flow3-num
+    elementType: text
+    bounds: [56, 282, 28, 28]
+    content:
+      color: "$white"
+      fontSize: 13
+      bold: true
+      align: [center, middle]
+      wrap: false
+      text: |-
+        3
+  - elementId: flow3-txt
+    elementType: text
+    bounds: [100, 276, 340, 48]
+    content:
+      align: [left, top]
+      text: |-
+        <p><span style="font-size:13px; color:$ink;"><strong>异常初判</strong></span></p>
+        <p><span style="font-size:11px; color:$muted;">设备?网络?环境?附上判断依据与相关曲线</span></p>
+  - elementId: flow-conn3
+    elementType: shape
+    bounds: [69, 310, 2, 36]
+    shapeName: rect
+    fill: {type: solid, color: "$pine"}
+  - elementId: flow4-circle
+    elementType: shape
+    bounds: [56, 346, 28, 28]
+    shapeName: ellipse
+    fill: {type: solid, color: "$pine"}
+  - elementId: flow4-num
+    elementType: text
+    bounds: [56, 346, 28, 28]
+    content:
+      color: "$white"
+      fontSize: 13
+      bold: true
+      align: [center, middle]
+      wrap: false
+      text: |-
+        4
+  - elementId: flow4-txt
+    elementType: text
+    bounds: [100, 340, 340, 48]
+    content:
+      align: [left, top]
+      text: |-
+        <p><span style="font-size:13px; color:$ink;"><strong>工单草稿</strong></span></p>
+        <p><span style="font-size:11px; color:$muted;">异常描述 + 初判结论 + 建议处置动作,自动生成</span></p>
+  - elementId: flow-conn4
+    elementType: shape
+    bounds: [69, 374, 2, 36]
+    shapeName: rect
+    fill: {type: solid, color: "$pine"}
+  - elementId: flow5-circle
+    elementType: shape
+    bounds: [56, 410, 28, 28]
+    shapeName: ellipse
+    fill: {type: solid, color: "$terra"}
+  - elementId: flow5-num
+    elementType: text
+    bounds: [56, 410, 28, 28]
+    content:
+      color: "$white"
+      fontSize: 13
+      bold: true
+      align: [center, middle]
+      wrap: false
+      text: |-
+        5
+  - elementId: flow5-txt
+    elementType: text
+    bounds: [100, 404, 340, 48]
+    content:
+      align: [left, top]
+      text: |-
+        <p><span style="font-size:13px; color:$terra;"><strong>人确认派单</strong></span></p>
+        <p><span style="font-size:11px; color:$muted;">确认后派单;处置结果回流,下轮巡检更准</span></p>
+  - elementId: flow-loop-icon
+    elementType: icon
+    bounds: [100, 462, 15, 15]
+    iconName: "fas:arrows-rotate"
+    fill: {type: solid, color: "$pine"}
+  - elementId: flow-loop-txt
+    elementType: text
+    bounds: [124, 460, 316, 18]
+    content:
+      style: "$small"
+      wrap: false
+      text: |-
+        循环 7×24 持续运转,夜间与周末不间断
+  # ---- 右侧:场景 / 价值 / 行动 ----
+  - elementId: scene-h
+    elementType: text
+    bounds: [460, 140, 300, 20]
+    content:
+      style: "$h2"
+      wrap: false
+      text: |-
+        落地场景(教学演示)
+  - elementId: scene1-icon
+    elementType: icon
+    bounds: [460, 172, 18, 18]
+    iconName: "fas:mountain"
+    fill: {type: solid, color: "$pine"}
+  - elementId: scene1-txt
+    elementType: text
+    bounds: [490, 168, 414, 42]
+    content:
+      align: [left, top]
+      text: |-
+        <p><span style="font-size:13px; color:$ink;"><strong>山境地灾监测</strong></span></p>
+        <p><span style="font-size:11px; color:$muted;">雨量与位移数据异常,智能体先初判、再叫醒值守人</span></p>
+  - elementId: scene2-icon
+    elementType: icon
+    bounds: [460, 220, 18, 18]
+    iconName: "fas:tower-broadcast"
+    fill: {type: solid, color: "$pine"}
+  - elementId: scene2-txt
+    elementType: text
+    bounds: [490, 216, 414, 42]
+    content:
+      align: [left, top]
+      text: |-
+        <p><span style="font-size:13px; color:$ink;"><strong>天圻生态站运维</strong></span></p>
+        <p><span style="font-size:11px; color:$muted;">多要素站数据自动巡检,漂移早发现、少跑现场</span></p>
+  - elementId: right-divider
+    elementType: shape
+    bounds: [460, 272, 444, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: value-icon
+    elementType: icon
+    bounds: [460, 292, 18, 18]
+    iconName: "fas:moon"
+    fill: {type: solid, color: "$terra"}
+  - elementId: value-txt
+    elementType: text
+    bounds: [490, 288, 414, 60]
+    content:
+      align: [left, top]
+      text: |-
+        <p><span style="font-size:13px; color:$pine;"><strong>夜间与周末自动值守</strong></span></p>
+        <p><span style="font-size:11px; color:$muted;">智能体先查一遍,人只做确认与处置——异常时刻有人在看,屏幕前不必有人。</span></p>
+  - elementId: act-bg
+    elementType: shape
+    bounds: [460, 368, 444, 96]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+  - elementId: act-icon
+    elementType: icon
+    bounds: [476, 384, 16, 16]
+    iconName: "fas:clipboard-check"
+    fill: {type: solid, color: "$pine"}
+  - elementId: act-txt
+    elementType: text
+    bounds: [504, 378, 384, 76]
+    content:
+      align: [left, middle]
+      text: |-
+        <p><span style="font-size:13px; color:$pine;"><strong>本周行动</strong></span></p>
+        <p style="margin-top:4px"><span style="font-size:11px; color:$ink;">盘点本月重复出现的 3 类告警,评估哪一类可以交给智能体自动巡检、人只做确认。</span></p>
+  # ---- 页脚 ----
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-left
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: |-
+        东方智感 · AI 内训第三期 | 场景为教学演示,基于公开产品能力整理
+  - elementId: footer-page
+    elementType: text
+    bounds: [804, 510, 100, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: |-
+        23 / 35

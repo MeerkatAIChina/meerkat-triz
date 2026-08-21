@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meerkat-TRIZ-v1 · 训练及应用 — FDE 团队介绍</title>
+<style>
+  :root{
+    --bg:#0b0e14; --bg2:#111623; --panel:#151b2b; --line:#26304a;
+    --fg:#e8ecf4; --dim:#9aa5bd; --faint:#5d6b85;
+    --accent:#f0a35e; --accent2:#7cc7ff; --good:#5fd68b; --bad:#ff7a7a; --warn:#ffd166;
+    --mono:"SF Mono",Menlo,Consolas,"Courier New",monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:var(--bg);color:var(--fg);
+    font-family:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    -webkit-font-smoothing:antialiased;overflow:hidden}
+  .deck{position:relative;width:100vw;height:100vh}
+  .slide{position:absolute;inset:0;display:none;flex-direction:column;
+    padding:56px 72px 72px;overflow-y:auto}
+  .slide.active{display:flex}
+  .kicker{font-size:13px;letter-spacing:.22em;color:var(--accent);text-transform:uppercase;margin-bottom:14px}
+  h1{font-size:52px;line-height:1.18;font-weight:700}
+  h2{font-size:34px;line-height:1.25;font-weight:700;margin-bottom:22px}
+  h3{font-size:19px;color:var(--accent2);margin:20px 0 10px}
+  p,li{font-size:17px;line-height:1.75;color:var(--fg)}
+  .dim{color:var(--dim)} .small{font-size:14px} .tiny{font-size:12.5px;color:var(--dim)}
+  ul{padding-left:22px} li{margin:7px 0}
+  b,strong{color:#fff}
+  .accent{color:var(--accent)} .blue{color:var(--accent2)}
+  .good{color:var(--good)} .bad{color:var(--bad)} .warn{color:var(--warn)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+  .card h3{margin-top:0}
+  .metric{font-size:38px;font-weight:800;line-height:1.1}
+  .metric-label{font-size:13.5px;color:var(--dim);margin-top:6px;line-height:1.5}
+  table{width:100%;border-collapse:collapse;font-size:15px;margin:10px 0}
+  th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{color:var(--accent2);font-weight:600;font-size:13.5px;letter-spacing:.04em}
+  td.num{font-family:var(--mono);font-size:13.5px}
+  .tag{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600;margin-left:8px;vertical-align:middle}
+  .tag.good{background:rgba(95,214,139,.14);color:var(--good)}
+  .tag.bad{background:rgba(255,122,122,.14);color:var(--bad)}
+  .tag.warn{background:rgba(255,209,102,.14);color:var(--warn)}
+  .tag.ns{background:rgba(154,165,189,.14);color:var(--dim)}
+  code{font-family:var(--mono);font-size:.92em;background:rgba(124,199,255,.10);color:var(--accent2);padding:1px 6px;border-radius:5px}
+  pre{background:#0d1220;border:1px solid var(--line);border-radius:12px;padding:18px 20px;
+    font-family:var(--mono);font-size:13.5px;line-height:1.65;overflow-x:auto;color:#cdd6e8}
+  pre .c{color:#5d6b85} pre .s{color:#a8d8a8}
+  blockquote{border-left:3px solid var(--accent);padding:6px 0 6px 18px;color:var(--dim);font-size:16px;margin:14px 0}
+  .flow{display:flex;align-items:stretch;gap:0;margin:16px 0}
+  .flow .step{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;position:relative}
+  .flow .step + .step{margin-left:34px}
+  .flow .step + .step::before{content:"→";position:absolute;left:-30px;top:50%;transform:translateY(-50%);color:var(--accent);font-size:20px}
+  .flow .step .t{font-size:14px;font-weight:700;margin-bottom:5px}
+  .flow .step .d{font-size:12.5px;color:var(--dim);line-height:1.55}
+  .bar-row{display:flex;align-items:center;gap:12px;margin:6px 0;font-size:13.5px}
+  .bar-row .lbl{width:170px;text-align:right;color:var(--dim);flex-shrink:0;font-family:var(--mono);font-size:12.5px}
+  .bar-row .track{flex:1;height:20px;background:rgba(255,255,255,.05);border-radius:5px;position:relative}
+  .bar-row .fill{height:100%;border-radius:5px;background:linear-gradient(90deg,#3d6ea8,var(--accent2))}
+  .bar-row .fill.hot{background:linear-gradient(90deg,#b8742e,var(--accent))}
+  .bar-row .val{width:120px;font-family:var(--mono);font-size:12.5px;color:var(--dim)}
+  .footer{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;
+    padding:12px 24px;font-size:12.5px;color:var(--dim);background:linear-gradient(transparent,rgba(11,14,20,.92) 40%);
+    pointer-events:none;z-index:50}
+  .footer .nav{pointer-events:auto;display:flex;gap:10px}
+  .footer button{background:var(--panel);color:var(--fg);border:1px solid var(--line);border-radius:8px;
+    padding:6px 16px;font-size:13px;cursor:pointer}
+  .footer button:hover{border-color:var(--accent)}
+  .progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:60;transition:width .25s}
+  .title-slide{justify-content:center;align-items:flex-start}
+  .title-slide h1{font-size:64px}
+  .subtitle{font-size:22px;color:var(--dim);margin-top:18px;line-height:1.6}
+  .title-meta{margin-top:44px;font-size:14px;color:var(--dim);line-height:2}
+  .toc li{font-size:18px;margin:11px 0}
+  .toc .n{display:inline-block;width:38px;color:var(--accent);font-family:var(--mono)}
+  .callout{background:rgba(240,163,94,.08);border:1px solid rgba(240,163,94,.35);border-radius:12px;padding:16px 20px;margin:14px 0;font-size:15.5px;line-height:1.7}
+  .callout.blue{background:rgba(124,199,255,.07);border-color:rgba(124,199,255,.35)}
+  .two-col-list{columns:2;column-gap:36px}
+  @media print{
+    html,body{overflow:visible;height:auto}
+    .slide{position:relative;display:flex;page-break-after:always;height:100vh;overflow:hidden}
+    .footer,.progress{display:none}
+  }
+  @page{size:338.7mm 190.5mm;margin:0}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="deck" id="deck">
+
+<!-- 1 封面 -->
+<section class="slide title-slide">
+  <div class="kicker">FDE 团队技术介绍 · 内部资料</div>
+  <h1>Meerkat-TRIZ-v1<br><span class="dim" style="font-size:40px">训练方法、评测证据与落地应用</span></h1>
+  <div class="subtitle">TRIZ 领域首个公开发布的 LLM 微调模型<br>以及让它保持诚实的评测基础设施</div>
+  <div class="title-meta">
+    Meerkat AI · 2026 年 8 月<br>
+    产物：<span class="blue">HF 模型</span> Meerkat-AI/Meerkat-TRIZ-v1 ·
+    <span class="blue">基准</span> triz-gold-benchmark ·
+    <span class="blue">代码</span> github.com/coidea-sys/meerkat-triz<br>
+    本文全部数字源自白皮书 v1.3、发货物 adapter_info.json 与部署运维记录，可逐项复核
+  </div>
+</section>
+
+<!-- 2 议程 -->
+<section class="slide">
+  <div class="kicker">Agenda</div>
+  <h2>今天讲什么</h2>
+  <ul class="toc">
+    <li><span class="n">01</span>为什么做：TRIZ 与企业创新的断层</li>
+    <li><span class="n">02</span>是什么：模型、基座与发布产物</li>
+    <li><span class="n">03</span>怎么训：数据管线、冻结超参与训练实况</li>
+    <li><span class="n">04</span>怎么评：双轨 harness 与五类测量学故障</li>
+    <li><span class="n">05</span>评得怎样：全部结果，包括打平的那个</li>
+    <li><span class="n">06</span>怎么部署：DGX Spark 生产架构</li>
+    <li><span class="n">07</span>怎么用：六类任务场景 · 企业视角（角色/行业/工作流/话术）· FDE 接入指南</li>
+    <li><span class="n">08</span>往哪走：路线图与开放问题</li>
+  </ul>
+</section>
+
+<!-- 3 TRIZ 是什么 -->
+<section class="slide">
+  <div class="kicker">01 · 为什么做</div>
+  <h2>TRIZ：把创新从"灵光一现"变成"可查的方法"</h2>
+  <div class="grid2">
+    <div>
+      <p>TRIZ（发明问题解决理论）由根里奇·阿奇舒勒自 1946 年起，从<b>数十万件专利</b>的分析中提炼。核心洞察：<b class="accent">创新不是随机的天才灵光</b>——同样的技术矛盾在不同行业反复出现，解法遵循可复用的模式。</p>
+      <h3>结构化工具体系</h3>
+      <ul>
+        <li><b>40 个发明原理</b> + 矛盾矩阵——解决技术矛盾（改善一个参数而不恶化另一个）</li>
+        <li><b>分离原理</b>——处理物理矛盾</li>
+        <li><b>ARIZ</b>——重构与求解难题的完整算法</li>
+        <li><b>技术系统进化法则</b>——路线图思考</li>
+      </ul>
+    </div>
+    <div>
+      <div class="card">
+        <h3>产业现状：分发方式极原始</h3>
+        <p class="small dim">三星、西门子、GE、波音曾用 TRIZ 内训数以千计的工程师；在中国，TRIZ 是国家创新方法推广工作的组成部分。</p>
+        <div style="margin-top:16px">
+          <div class="metric accent">~10³<span style="font-size:18px"> 人</span></div>
+          <div class="metric-label">全球活跃 TRIZ 持证咨询师量级</div>
+          <div class="metric" style="margin-top:14px">~10⁶<span style="font-size:18px"> 人</span></div>
+          <div class="metric-label">需要这套方法论的工程师量级</div>
+        </div>
+        <p class="small" style="margin-top:16px">一家企业的 TRIZ 能力 ≈ 它养得起几个持证专家。方法论几乎只存在于昂贵的培训课程与咨询师身上。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 为什么微调 -->
+<section class="slide">
+  <div class="kicker">01 · 为什么做</div>
+  <h2>为什么是微调，而不是提示词工程</h2>
+  <p class="dim" style="margin-bottom:18px">此前的 LLM+TRIZ 工作全部是提示词工程。微调能买到三样提示词买不到的东西：</p>
+  <div class="grid3">
+    <div class="card">
+      <h3>术语纪律</h3>
+      <p class="small">原理编号引用、分析步骤完整性，<b>固化进权重</b>，而不是在 prompt 里恳求。每次调用都稳定交付，不随 prompt 漂移。</p>
+    </div>
+    <div class="card">
+      <h3>行为风格</h3>
+      <p class="small">直接可执行的回答，而非冗长思考流：基座中位 3,242 字符的 think 式作答，被压缩到 <b class="accent">0.4× 篇幅</b>（1,344 字符）且关键词覆盖持平。</p>
+    </div>
+    <div class="card">
+      <h3>能力内嵌</h3>
+      <p class="small">"查书答题"与"学会方法"的区别——在案例生成等生成类任务上最明显：模型输出的是方法论的应用，而非检索结果的复述。</p>
+    </div>
+  </div>
+  <div class="callout" style="margin-top:22px">
+    <b>商业本质：</b>微调模型把方法论的应用能力，从<b>按人天计费的咨询服务</b>，变成<b>边际成本为零的基础设施</b>。企业创新的瓶颈往往不是点子，而是问题表述——大多数工程团队在创意阶段之前就卡住了：说不清自己真正面对的矛盾是什么。常驻模型恰好在这个断点上起作用。
+  </div>
+</section>
+
+<!-- 5 模型一览 -->
+<section class="slide">
+  <div class="kicker">02 · 是什么</div>
+  <h2>Meerkat-TRIZ-v1：模型与发布产物</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3>基座 · Qwen3.6-35B-A3B（Apache-2.0）</h3>
+      <table>
+        <tr><td>总参 / 激活</td><td class="num">35B / 3B（MoE 稀疏激活）</td></tr>
+        <tr><td>架构</td><td class="num">40 层混合 Gated DeltaNet（线性注意力）<br>× Gated Attention，256 专家 MoE</td></tr>
+        <tr><td>对话模板</td><td class="num">thinking-native（空 think 块是格式锚点）</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>适配器 · LoRA（发货物实测）</h3>
+      <table>
+        <tr><td>秩 / α / dropout</td><td class="num">r=64, α=128, dropout 0</td></tr>
+        <tr><td>覆盖</td><td class="num">12 个共享投影（含 DeltaNet in_proj_* 族）<br>620 张量 = 310×lora_A + 310×lora_B</td></tr>
+        <tr><td>可训练参数</td><td class="num">84.66M（占 0.24%）· 全 BF16 非零</td></tr>
+        <tr><td>体积</td><td class="num">169.4 MB，sha256 全文件记录</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="grid3" style="margin-top:20px">
+    <div class="card"><h3>🤖 模型</h3><p class="small">HF: Meerkat-AI/Meerkat-TRIZ-v1，Apache-2.0，model card 含完整结论纪律（含"打平"声明）</p></div>
+    <div class="card"><h3>📊 基准</h3><p class="small">triz-gold-benchmark：双金标 100+300 题，六类任务，CC-BY-NC-4.0（版权原因不含参考答案）</p></div>
+    <div class="card"><h3>🛠️ 代码</h3><p class="small">meerkat-triz：可 pip 安装的评测 harness + 数据构建层 + 冻结训练配置 + 中英白皮书</p></div>
+  </div>
+</section>
+
+<!-- 6 数据管线 -->
+<section class="slide">
+  <div class="kicker">03 · 怎么训</div>
+  <h2>v5a 数据管线：11,096 条训练样本怎么来的</h2>
+  <div class="flow">
+    <div class="step"><div class="t">① 语料构建</div><div class="d">v2 检查点语料 + ARIZ 增强 + 合成数据，过门 1–5（含门 5 修复）→ gated corpus 8,613 条</div></div>
+    <div class="step"><div class="t">② 种子扩写</div><div class="d">三规则清洗 385→365；每粒种子 ×3 衍生物；styleC 长答 3,441/3,445（4 条未完结如实记录）</div></div>
+    <div class="step"><div class="t">③ 双风格合并</div><div class="d">同一 instruction 生成短答/长答双版本；safety 300 条（5 类×60，占比 ≤5% 断言）</div></div>
+    <div class="step"><div class="t">④ 双重去污</div><div class="d">3-gram Jaccard vs 参照集 A（金标 200）+ B（eval2 465 + probe 120）；J≥0.5 剔除，[0.4,0.5) 人工审查队列；精确 brute-force，0 漏检</div></div>
+    <div class="step"><div class="t">⑤ 分组划分</div><div class="d">长短双风格、种子×3、v4 前缀12聚类 union-find 同组同侧；划分后 test/val vs train 交叉检查，命中整组移回 train</div></div>
+    <div class="step"><div class="t">⑥ ChatML 渲染</div><div class="d">E0 协议：空 think 块<b>保留</b>（与生成侧一致，训练/推理格式一致优先）；>2048 token 丢弃</div></div>
+  </div>
+  <div class="grid3" style="margin-top:18px">
+    <div class="card"><div class="metric accent">11,096</div><div class="metric-label">训练样本（+ 1,050 验证集），每一步计数、sha256、退化声明写入 MANIFEST.md 与 v5_data_report.json</div></div>
+    <div class="card"><div class="metric accent">0</div><div class="metric-label">训练集对双金标的污染命中（3-gram Jaccard≥0.5 扫描）</div></div>
+    <div class="card"><div class="metric accent">双实现</div><div class="metric-label">独立复核：verify_build_v5.py 自包含重算去污/划分/终态安全网，与构建器数字完全一致（exit 0 = PASS）</div></div>
+  </div>
+</section>
+
+<!-- 7 五版本演进 -->
+<section class="slide">
+  <div class="kicker">03 · 怎么训</div>
+  <h2>五个版本的学费：这是数据与质量门的故事，不是超参故事</h2>
+  <table>
+    <tr><th>版本</th><th>数据策略</th><th>结果</th><th>教训</th></tr>
+    <tr><td class="num">v1</td><td>2.7k 样本，无质量门</td><td><span class="tag bad">整体回退</span></td><td>没有门的数据是负债</td></tr>
+    <tr><td class="num">v2</td><td>8.5k 多角度样本 + 基础门</td><td><span class="tag good">成为最强基线</span></td><td>干净锚点下的内部标杆</td></tr>
+    <tr><td class="num">v3</td><td>ARIZ 定向注入</td><td><span class="tag warn">双轨反向</span></td><td>关键词 +0.056（显著）但 judge −0.068（显著）：学会堆关键词，语义质量反降</td></tr>
+    <tr><td class="num">v4</td><td>七道门漏斗 11,001→5,739</td><td><span class="tag warn">CE 退化</span></td><td>concept_explanation 子集受损，暴露"整体指标掩盖子集退化"</td></tr>
+    <tr><td class="num">v4.1</td><td>单变量 rebalance</td><td><span class="tag good">修复 CE</span></td><td>定向修复无显著代价（kw vs v2 差值 CI 含 0）</td></tr>
+    <tr><td class="num">v5a</td><td>双风格/双解耦/分组划分 + E0 空 think 保留</td><td><span class="tag good">发布模型</span></td><td>首个把行为压缩转化为原生口径真实增益的版本</td></tr>
+  </table>
+  <blockquote>每条线内超参冻结，保证每次对比只有一个移动变量——v1→v5a 的进步几乎全部来自数据与质量门，超参贡献为零。这条纪律由 configs/train_v5a.json 固化并随仓发布。</blockquote>
+</section>
+
+<!-- 8 训练实况 -->
+<section class="slide">
+  <div class="kicker">03 · 怎么训</div>
+  <h2>训练实况：桌面级机器上的 23 小时</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3>硬件与效率</h3>
+      <table>
+        <tr><td>机器</td><td class="num">NVIDIA DGX Spark GB10（121GB 统一内存）</td></tr>
+        <tr><td>精度</td><td class="num">BF16，免量化训练</td></tr>
+        <tr><td>时长 / 显存峰值</td><td class="num">23.0 小时 / 69.72 GB</td></tr>
+        <tr><td>吞吐</td><td class="num">batch 1 × grad accum 8，1,387 steps/epoch</td></tr>
+      </table>
+      <p class="small dim" style="margin-top:10px">35B MoE 全量微调不可行；LoRA 0.24% 参数让领域适配在桌面级机器上完成——这对客户的私有化部署同样是好消息。</p>
+    </div>
+    <div class="card">
+      <h3>过程与发货裁决（adapter_info.json 实录）</h3>
+      <table>
+        <tr><td>训练</td><td class="num">4 epochs / 5,548 steps 完整跑完，未 early stop</td></tr>
+        <tr><td>损失</td><td class="num">train 0.604 · eval 最低 1.5266 @ step 2700<br>（后段回升至 1.626，典型过拟合曲线）</td></tr>
+        <tr><td>发货裁决</td><td class="num"><b class="accent">不发最后一版，发最好的 checkpoint</b>：<br>shipped_from = best/（step 2700, eval_loss 1.5266）</td></tr>
+        <tr><td>发货前体检</td><td class="num">9 项全 PASS：620 张量、310/310 A/B、全 BF16 非零、sha256 记录</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="callout blue" style="margin-top:16px">
+    <b>v5b 的教训（已固化进训练代码）：</b>后续 v5b 实验发现续跑时 LoRA dtype 漂移会导致权重异常——train.py 已加入 <code>_LoraDtypeRecastCallback</code> 续跑校正 + 发货前 safetensors BF16 兜底校正，开源仓与内部管线逐行对齐。
+  </div>
+</section>
+
+<!-- 9 评测 harness -->
+<section class="slide">
+  <div class="kicker">04 · 怎么评</div>
+  <h2>评测 harness：双轨评分，四条机检纪律</h2>
+  <div class="grid2">
+    <div>
+      <h3>两条永不混合加权的轨</h3>
+      <ul>
+        <li><b>关键词轨</b>：逐题期望术语命中率（子串 + 人工别名表；报告别名表更新前/后双分数；漏判审计队列监控别名表本身）</li>
+        <li><b>judge 轨</b>：LLM 评委四维 rubric 打 0–4 分（钉版 + T=0 硬断言）；臂 A 反冗长不截断，臂 B 同长度桶配对</li>
+      </ul>
+      <h3>统计协议</h3>
+      <ul class="small">
+        <li>全部对比逐题配对：bootstrap 10,000 次（stdlib Random(42)，指纹自检）95% CI</li>
+        <li>pass 率 Wilson CI + McNemar 精确检验；n&lt;30 子集标"描述性"</li>
+        <li>pairwise 强制 AB/BA 双序；位置不一致率 &gt;10% 自动作废单序</li>
+      </ul>
+    </div>
+    <div>
+      <h3>四条纪律，全部由代码强制</h3>
+      <table>
+        <tr><td class="num">① 锚点谱系</td><td class="small">base 锚点 tag 非 base_goldfix 谱系 → exit 2 一票否决；双锚点 |Δkw|&gt;0.2 题数 &gt;10% → 冻结报警</td></tr>
+        <tr><td class="num">② E0 铁律</td><td class="small">每题生成前冒烟断言空 think 块保留；剥离即污染（§故障 1 的根源）</td></tr>
+        <tr><td class="num">③ 生成质量门</td><td class="small">think 残留/非空/中文占比/长度/英文草稿五道门 + 一次兜底重生成；持续 invalid 冻结评测而非静默混入</td></tr>
+        <tr><td class="num">④ 拒答监控</td><td class="small">拒答模板命中率 &gt;2% 不过门（v5a 实测 0/300）</td></tr>
+      </table>
+      <p class="small dim" style="margin-top:10px">确定性：贪心生成、T=0 评委（同族直连实测翻转率 0.000）、每份结果内嵌配置快照——同环境重跑逐位相同。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 10 测量学故障 -->
+<section class="slide">
+  <div class="kicker">04 · 怎么评 · 本项目最有普适价值的部分</div>
+  <h2>五类测量学故障——每一类都足以反转或作废结论</h2>
+  <table>
+    <tr><th style="width:190px">故障</th><th>事实</th><th style="width:250px">代价 / 沉淀的门规</th></tr>
+    <tr><td><b>1. 基线污染</b></td><td class="small">harness 剥离了 thinking-native 基座必需的空 think 块 → 基座 91/100 题输出未闭合英文思考草稿，两条轨评的都是草稿</td><td class="small">连续三个版本的 "+1.00 提升" 修复后反号为 <b class="bad">−0.30</b>；E0 铁律入代码</td></tr>
+    <tr><td><b>2. 评委位置偏差</b></td><td class="small">pairwise 评委位置不一致率 0.87：放第二位的候选赢 81%；文献摆动约 25pp，我们实测 62pp</td><td class="small">任何单序 pairwise 结论都是噪声 → AB/BA 双序合并成为唯一有效口径</td></tr>
+    <tr><td><b>3. 双轨系统性分歧</b></td><td class="small">关键词轨与 judge 轨仅共享约 10% 方差（Spearman r≈0.32）；v3 两轨显著反向；ARIZ 覆盖漏判率 31.7%</td><td class="small">门规：<b>发布门必须双轨，任何单轨结论不得独立下判</b></td></tr>
+    <tr><td><b>4. 同族评委膨胀</b></td><td class="small">评委与数据生成器同族（Moonshot）；异源终审（Claude/GPT/Gemini 逐字复刻协议）方向确认但量级仅约 1/4</td><td class="small">同族 +0.39 中约 3/4 是评委家族效应；外部面板进决策门</td></tr>
+    <tr><td><b>5. 长度混淆</b></td><td class="small">base 篇幅 2.4×，rubric 惩罚冗长；等长对照下同族差值归零（−0.07 ns），而 base 仅靠压长指令自身 +0.46</td><td class="small">门规 D5：judge 显著结论必须附等长对照；D6：非确定评委结论附复跑噪声合成 CI</td></tr>
+  </table>
+  <blockquote>对 FDE 的意义：客户拿任何"微调提升 X 分"的宣称来问，我们有一套经过实战检验的审查清单——先查 prompt 渲染，再查评委构成，再查长度分布，最后才谈数字。</blockquote>
+</section>
+
+<!-- 11 结果 v5 金标 -->
+<section class="slide">
+  <div class="kicker">05 · 评得怎样</div>
+  <h2>结果①：v5 金标口径（300 题，逐题配对）</h2>
+  <p class="dim small" style="margin-bottom:12px">本表 judge 轨为同族（Moonshot）评委读数——异源终审见下页，方向获确认、量级更小。我们把它放在第一页，也把它打上标签。</p>
+  <div class="grid2">
+    <div>
+      <table>
+        <tr><th>指标</th><th>base</th><th>v1</th><th>配对差值 [95% CI]</th></tr>
+        <tr><td>关键词均值</td><td class="num">0.6384</td><td class="num">0.6383</td><td class="num">−0.0001 [−0.017, +0.017] <span class="tag ns">持平</span></td></tr>
+        <tr><td>judge 臂A 均值</td><td class="num">3.0300</td><td class="num"><b>3.4233</b></td><td class="num"><b class="good">+0.3933 [+0.297, +0.490]</b> <span class="tag good">显著*</span></td></tr>
+        <tr><td>judge pass 率</td><td class="num">0.843</td><td class="num"><b>0.947</b></td><td class="num">McNemar p=1.5e-05</td></tr>
+      </table>
+      <p class="tiny" style="margin-top:8px">质量门 299/300 过门 · overrefusal 0/300 · 训练集对双金标污染扫描 0 命中<br>* 同族读数：后续证明基本为长度伪影 + 约 3/4 家族效应，不得外推</p>
+    </div>
+    <div>
+      <h3 style="margin-top:0">judge 子集增益（同族读数）</h3>
+      <div class="bar-row"><span class="lbl">concept_explanation</span><div class="track"><div class="fill hot" style="width:100%"></div></div><span class="val">+0.733 显著</span></div>
+      <div class="bar-row"><span class="lbl">innovation_assessment</span><div class="track"><div class="fill hot" style="width:82%"></div></div><span class="val">+0.600 显著</span></div>
+      <div class="bar-row"><span class="lbl">contradiction_analysis</span><div class="track"><div class="fill hot" style="width:64%"></div></div><span class="val">+0.467 显著</span></div>
+      <div class="bar-row"><span class="lbl">case_generation</span><div class="track"><div class="fill hot" style="width:52%"></div></div><span class="val">+0.378 显著</span></div>
+      <div class="bar-row"><span class="lbl">ariz_guidance</span><div class="track"><div class="fill hot" style="width:43%"></div></div><span class="val">+0.317 显著</span></div>
+      <div class="bar-row"><span class="lbl">principle_recommendation</span><div class="track"><div class="fill" style="width:7%"></div></div><span class="val">+0.050 不显著</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 结果 异源终审 + 等长 -->
+<section class="slide">
+  <div class="kicker">05 · 评得怎样 · 发布后的两轮终审</div>
+  <h2>结果②：换三个外部评委 + 等长对照，结论才真正钉死</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3>异源评委终审（299 题配对，协议逐字复刻，仅换评委）</h3>
+      <table>
+        <tr><th>评委</th><th>无约束</th><th>等长臂</th></tr>
+        <tr><td class="num">moonshot（同族参照）</td><td class="num">+0.393 <span class="tag warn">家族效应</span></td><td class="num">−0.070 <span class="tag ns">消失</span></td></tr>
+        <tr><td class="num">claude-sonnet-4-6</td><td class="num">+0.094 <span class="tag good">显著</span></td><td class="num"><b class="good">+0.187 显著</b></td></tr>
+        <tr><td class="num">gpt-5.4</td><td class="num">+0.104 <span class="tag good">显著</span></td><td class="num"><b class="good">+0.271 显著</b></td></tr>
+        <tr><td class="num">gemini-3.5-flash</td><td class="num">−0.048 <span class="tag ns">不显著</span></td><td class="num">+0.025 <span class="tag ns">不显著</span></td></tr>
+      </table>
+      <p class="tiny" style="margin-top:8px">外部评委互相 Spearman 0.63–0.75，与 moonshot 仅 0.27–0.31——这是评分体系差异，不是噪声。显著结论均已过复跑噪声合成 CI（门规 D6）。</p>
+    </div>
+    <div class="card">
+      <h3>等长对照揭示的机制</h3>
+      <p class="small">让 base 按发布模型的逐题长度目标重答 300 题（实际超写 1.29×，如实报告）：</p>
+      <ul class="small">
+        <li>同族差值 <b>完全消失</b>（−0.07 ns）——同族头条基本全是长度伪影</li>
+        <li>base 仅靠"写短"指令自身 <b class="warn">+0.46</b>——反冗长 rubric 一直在尽职</li>
+        <li>外部评委反而给压短的 base <b>降分</b>——它们奖励展开阐述，base 的长篇本身在买分</li>
+        <li>等长下微调的关键词覆盖显著<b class="good">高于</b> base（+0.023）：base 被迫写短时丢覆盖，微调模型不会</li>
+      </ul>
+      <div class="callout" style="margin-top:12px">
+        <b>现行发布口径：</b>等长预算下经外部验证的质量优势（2/3 外部评委 +0.19/+0.27），以 <b class="accent">0.4× 自然篇幅</b>交付，并保住 base 被迫写短时保不住的关键词覆盖。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 六方对比 -->
+<section class="slide">
+  <div class="kicker">05 · 评得怎样 · 全部结果，包括打平的那个</div>
+  <h2>结果③：v4 金标六方对比（100 题）——打平也写在 model card 里</h2>
+  <table>
+    <tr><th>模型</th><th>关键词轨</th><th>judge 轨</th><th>judge pass 率</th><th>备注</th></tr>
+    <tr><td class="num">base（旧锚点，think 污染）</td><td class="num">0.3661</td><td class="num">1.5700</td><td class="num">0.120</td><td class="small">仅供参考——这就是被污染的基线长什么样</td></tr>
+    <tr><td class="num">v2（干净锚点，最强基线）</td><td class="num">0.5483</td><td class="num">2.5800</td><td class="num">0.620</td><td class="small"></td></tr>
+    <tr><td class="num">v3</td><td class="num">0.5716</td><td class="num">2.2800</td><td class="num">0.430</td><td class="small">堆关键词的双轨反向案例</td></tr>
+    <tr><td class="num">v4</td><td class="num">0.5568</td><td class="num">2.5700</td><td class="num">0.630</td><td class="small"></td></tr>
+    <tr><td class="num">v4.1</td><td class="num">0.5289</td><td class="num">2.6200</td><td class="num">0.630</td><td class="small">CE 定向修复，无显著代价</td></tr>
+    <tr><td class="num"><b>Meerkat-TRIZ-v1（v5a）</b></td><td class="num">0.5391</td><td class="num">2.3600</td><td class="num">0.600</td><td class="small"></td></tr>
+  </table>
+  <div class="grid2" style="margin-top:14px">
+    <div class="callout blue">
+      <b>v5a vs v2 配对：</b>关键词 −0.009 [−0.062, +0.039] 不显著；judge −0.220 [−0.470, +0.010] 不显著——<b>与内部最强基线统计打平</b>。v4 harness 剥离空 think 块（与 v5a 训练格式失配），负方向部分可归因于此，"打平"应读作下界估计。
+    </div>
+    <div class="callout">
+      <b>为什么敢把打平写出来：</b>"打平"意为"未检出显著差异"，而非已证等价。100 题口径子集 n=10–20 全为描述性。诚实口径是 FDE 面对客户技术质询时最硬的底气——我们的每个数字都有配对 CI，每个否定结论都如实标注。
+    </div>
+  </div>
+</section>
+
+<!-- 14 微调到底带来了什么 -->
+<section class="slide">
+  <div class="kicker">05 · 评得怎样 · 一句话定价</div>
+  <h2>微调到底带来了什么</h2>
+  <div class="grid3">
+    <div class="card" style="text-align:center;padding-top:28px;padding-bottom:28px">
+      <div class="metric accent">0.4×</div>
+      <div class="metric-label">回答篇幅：中位 1,344 vs 3,242 字符<br>think 式长作答 → 直接可执行作答</div>
+    </div>
+    <div class="card" style="text-align:center;padding-top:28px;padding-bottom:28px">
+      <div class="metric good">+0.19 / +0.27</div>
+      <div class="metric-label">等长预算下的 judge 增益<br>2/3 外部评委统计显著（复跑噪声合成 CI 后仍成立）</div>
+    </div>
+    <div class="card" style="text-align:center;padding-top:28px;padding-bottom:28px">
+      <div class="metric good">+0.023</div>
+      <div class="metric-label">等长下关键词覆盖显著高于 base<br>base 写短就丢的术语覆盖，微调模型保了下来</div>
+    </div>
+  </div>
+  <h3>机制理解</h3>
+  <ul>
+    <li><b>行为压缩是主线：</b>微调把"先想后答"的冗长推理流，压成结构化直接作答——这对企业场景（API 计费、时延、可读性）本身就是价值，与质量增益相互独立。</li>
+    <li><b>外部评委与外部评委才是仪器：</b>同族读数 +0.39 被证明是"长度伪影 + 家族效应"的复合物；外部等长面板（+0.19/+0.27 显著）才把真实内容增益隔离出来。</li>
+    <li><b>最强共识是定向修复的 concept_explanation：</b>v4.1 再平衡修复的子集，在三个外部评委下全部显著（+0.24/+0.31/+0.29）——证明"测量 → 定向数据 → 门验收"的迭代闭环真实有效。</li>
+    <li><b>被否决的 v5b 也已回溯溶解：</b>其全部表观增益/损失经等长对照证明同为长度表面效应——行为改变是真的，对 base 的可测效果全是长度现象。</li>
+  </ul>
+</section>
+
+<!-- 15 部署架构 -->
+<section class="slide">
+  <div class="kicker">06 · 怎么部署</div>
+  <h2>生产部署：DGX Spark 上的完整栈</h2>
+  <div class="flow" style="margin-bottom:18px">
+    <div class="step"><div class="t">用户入口</div><div class="d">Open WebUI :12001（注册 + admin 审批制）<br>pi Web UI :12002（录屏/演示）<br>OpenAI 兼容 API :8000</div></div>
+    <div class="step"><div class="t">服务层</div><div class="d">容器 meerkat-webui（Open WebUI）<br>身份系统提示已注入 Meerkat 人格</div></div>
+    <div class="step"><div class="t">推理层</div><div class="d">容器 meerkat-vllm（vLLM 0.25）<br>NVFP4 基座 + BF16 LoRA 热挂<br>MARLIN 后端</div></div>
+    <div class="step"><div class="t">硬件层</div><div class="d">DGX Spark GB10<br>121GB 统一内存<br>训练/推理同机</div></div>
+    <div class="step"><div class="t">回流层</div><div class="d">每周日 09:17 定时任务<br>使用数据周回流管线<br>→ 下轮数据迭代素材</div></div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>生成参数（服务端默认）</h3>
+      <pre>{
+  "temperature": 0.6,  "top_p": 0.95,
+  "repetition_penalty": 1.05,
+  "max_new_tokens": 16384
+}
+<span class="c"># 模型名: Meerkat-TRIZ-v1（同时挂 Qwen3.6-35B-A3B-NVFP4 基座用于 A/B）</span></pre>
+    </div>
+    <div class="card">
+      <h3>运维要点（全部写入 MEERKAT-OPS.md）</h3>
+      <ul class="small">
+        <li><b>推理长度：</b>reasoning 系模型且 LoRA 思维链更长，max_tokens 建议 ≥4096，否则思考耗尽额度导致 content 为空</li>
+        <li><b>网络：</b>8000 无认证，仅 Tailscale/局域网，不暴露公网</li>
+        <li><b>量化口径：</b>部署为"BF16 训练、NVFP4 基座 + BF16 LoRA 热挂"——与训练评测口径不同，发布前已在本地金标补测确认无漂移</li>
+        <li><b>多用户：</b>Open WebUI 自助注册，新用户 pending 角色，admin 审批后可用</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 16 FDE 接入指南 -->
+<section class="slide">
+  <div class="kicker">07 · 怎么用</div>
+  <h2>FDE 接入指南：三条路径</h2>
+  <div class="grid3" style="margin-bottom:16px">
+    <div class="card"><h3>① 演示</h3><p class="small">Open WebUI :12001（客户开账号 → admin 审批）或 pi Web UI :12002 现场操作。默认模型已是 Meerkat-TRIZ-v1，中文回答。</p></div>
+    <div class="card"><h3>② API 集成</h3><p class="small">OpenAI 兼容端点 :8000/v1，模型名 <code>Meerkat-TRIZ-v1</code>。客户系统（IM bot、工单、知识库）直接对接。</p></div>
+    <div class="card"><h3>③ 私有化</h3><p class="small">客户自有 GPU：HF 拉取基座 + 169MB LoRA，peft 热挂；或打包 vLLM 容器镜像交付。</p></div>
+  </div>
+  <pre><span class="c"># 路径②：OpenAI 兼容调用（DGX Spark 实例）</span>
+import openai
+client = openai.OpenAI(base_url=<span class="s">"http://&lt;dgx-spark&gt;:8000/v1"</span>, api_key=<span class="s">"local"</span>)
+resp = client.chat.completions.create(
+    model=<span class="s">"Meerkat-TRIZ-v1"</span>,
+    messages=[{<span class="s">"role"</span>: <span class="s">"user"</span>,
+               <span class="s">"content"</span>: <span class="s">"我们的锂电池想提升能量密度，但安全测试通不过，该用哪些发明原理？"</span>}],
+    temperature=0.6, top_p=0.95, max_tokens=4096)   <span class="c"># ⚠️ max_tokens 别低于 4096</span>
+
+<span class="c"># 路径③：客户侧 peft 热挂（HF 公开权重）</span>
+from peft import PeftModel
+model = PeftModel.from_pretrained(base, <span class="s">"Meerkat-AI/Meerkat-TRIZ-v1"</span>)
+<span class="c"># ⚠️ 必须保留 prompt 模板中的空 think 块——模型在该格式下训练，剥离会可测量地损害质量</span></pre>
+  <div class="callout" style="margin-top:14px">
+    <b>两条红线（写进 model card，也是 FDE 话术）：</b>① 保留空 think 块（E0 铁律，剥离 = 可测量的质量损害）；② max_tokens ≥ 4096（思维链长，额度不够会拿到空 content）。这两条犯了，客户会以为模型坏了——其实是用法错了。
+  </div>
+</section>
+
+<!-- 17 应用场景 -->
+<section class="slide">
+  <div class="kicker">07 · 怎么用</div>
+  <h2>六类任务场景与演示脚本</h2>
+  <table>
+    <tr><th>任务类型</th><th>客户语言</th><th>演示提问示例</th><th>子集证据</th></tr>
+    <tr><td class="num">concept_explanation</td><td>概念讲解</td><td class="small">"什么是技术矛盾？和物理矛盾有什么区别？"</td><td class="num good">三外部评委全显著 +0.24/+0.31/+0.29</td></tr>
+    <tr><td class="num">principle_recommendation</td><td>原理推荐</td><td class="small">"提升屏幕亮度但功耗超标，用哪几条原理？"</td><td class="num">入门层规模化主力（观察项：Gemini 单评委负差，跟进中）</td></tr>
+    <tr><td class="num">contradiction_analysis</td><td>矛盾分析</td><td class="small">"帮我把这个散热问题表述成标准技术矛盾"</td><td class="num good">同族 +0.467 显著</td></tr>
+    <tr><td class="num">ariz_guidance</td><td>ARIZ 引导</td><td class="small">"带我用 ARIZ 走一遍这个良率问题"</td><td class="num good">同族 +0.317 显著</td></tr>
+    <tr><td class="num">innovation_assessment</td><td>创新评估</td><td class="small">"评估这个专利规避方案的创新等级"</td><td class="num good">同族 +0.600 显著</td></tr>
+    <tr><td class="num">case_generation</td><td>案例生成</td><td class="small">"给一个用原理 35（参数变化）解决包装难题的案例"</td><td class="num good">同族 +0.378 显著</td></tr>
+  </table>
+  <div class="grid2" style="margin-top:12px">
+    <div class="callout blue"><b>价值定位（对客户说）：</b>在需要的时刻在场（设计评审前夜凌晨两点）、入门层规模化（方法论素养从培训预算条目降为一次 API 调用）、成为专家的初稿层（模型起草、咨询师把关，专家时间从"生产"转移到"判断"）。</div>
+    <div class="callout"><b>边界声明（也必须说）：</b>这是助手，不是替代。复杂创新项目仍需人类咨询师。改变的是下限——每个工程师都有了一位懂方法论的同事，专家获得了杠杆。</div>
+  </div>
+</section>
+
+
+<!-- 17b 企业视角:类比与先进性 -->
+<section class="slide">
+  <div class="kicker">07 · 怎么用 · 企业视角（融合企业讲解页）</div>
+  <h2>对客户讲：不是更大的模型，而是受过 TRIZ 训练的创新工程助手</h2>
+  <div class="grid2" style="margin-bottom:16px">
+    <div class="card" style="background:#1a2032">
+      <h3>通用大模型</h3>
+      <p class="small dim">知识面广，能聊很多话题；但每次都要靠提示词告诉它"请扮演 TRIZ 专家"——换一个用户、换一个问题，输出就漂移。</p>
+    </div>
+    <div class="card" style="border-color:rgba(240,163,94,.5)">
+      <h3 class="accent">Meerkat-TRIZ-v1</h3>
+      <p class="small">把 TRIZ 的术语、分析步骤和推荐方式<b>训练进权重</b>。不是临时扮演，而是受过系统训练——输出一致性不依赖提示词手艺。</p>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="card"><h3>专业化 · 不靠提示词"装懂"</h3><p class="small">术语纪律、分析步骤、原理推荐方式固化进模型；换问题、换用户，输出仍一致。</p></div>
+    <div class="card"><h3>效率 · 更短但不靠省略</h3><p class="small">3,242 字 → 1,344 字：工程师读起来更快，API 成本更低；关键是 base 被迫写短时丢覆盖，v1 保得住。</p></div>
+    <div class="card"><h3>可信评测 · 不"自己说自己好"</h3><p class="small">同族 +0.39 不作为质量证据（等长后基本消失）；正式口径用外部评委等长验证：Claude/GPT 显著为正。好看的说法让位于可辩护的说法。</p></div>
+    <div class="card"><h3>客观指标 · 不只会"说好听话"</h3><p class="small">关键词轨不调用 LLM 评委，只检查 TRIZ 术语是否出现：v1 与基座同为 0.638，高于擂台中的 GPT/Claude/Gemini 参赛模型——窄领域专业化训练真实有效。</p></div>
+  </div>
+</section>
+
+<!-- 17c 按角色 -->
+<section class="slide">
+  <div class="kicker">07 · 怎么用 · 企业视角</div>
+  <h2>按角色：同一模型，九类企业用户的不同价值</h2>
+  <div class="grid3">
+    <div class="card"><h3>CEO / 总经理</h3><p class="small dim">"AI 概念还是创新能力？"</p><p class="small">把依赖少数专家的 TRIZ 方法变成员工随时可调用的<b>基础设施</b>；专家时间从重复讲解转向判断决策。</p></div>
+    <div class="card"><h3>CTO / 技术负责人</h3><p class="small dim">"能接入现有系统吗？成本高吗？"</p><p class="small">169MB LoRA，不重训 35B；挂在现有模型服务上，以较低成本获得可内部化的领域助手。</p></div>
+    <div class="card"><h3>研发总监 / 总工程师</h3><p class="small dim">"真能帮工程师解决问题吗？"</p><p class="small">问题澄清、矛盾分析、原理推荐、方案草稿、ARIZ 引导——不做最终设计，但让团队更快进入有结构的讨论。</p></div>
+    <div class="card"><h3>创新负责人</h3><p class="small dim">"已有创新流程，加什么价值？"</p><p class="small">把头脑风暴变成围绕矛盾、资源、发明原理的<b>方法论驱动</b>方案生成。</p></div>
+    <div class="card"><h3>知识产权 / 专利团队</h3><p class="small dim">"能帮专利布局吗？"</p><p class="small">从矛盾、替代原理、系统进化角度扩展思路，辅助交底书初稿与规避设计讨论。<b>边界：不是专利检索系统，不替代律师意见。</b></p></div>
+    <div class="card"><h3>产品经理</h3><p class="small dim">"我不懂 TRIZ，能帮我什么？"</p><p class="small">把"要更轻但不能牺牲强度"这类模糊诉求整理成可讨论的技术矛盾——<b>产品语言转工程语言</b>。</p></div>
+    <div class="card"><h3>工艺 / 制造 / 质量工程师</h3><p class="small dim">"现场问题能用吗？"</p><p class="small">密封与散热、轻量化与强度、成本与可靠性、效率与噪音——TRIZ 擅长的权衡问题，帮现场经验进入结构化改进。</p></div>
+    <div class="card"><h3>HR / 培训负责人</h3><p class="small dim">"能降低培训成本吗？"</p><p class="small">TRIZ 入门教练：解释概念、生成练习、批改答案、提供案例——培训不必每次都从外部顾问开始。</p></div>
+    <div class="card"><h3>咨询顾问 / 专家委员会</h3><p class="small dim">"会替代专家吗？"</p><p class="small">不会。它是专家的初级助理：结构化初稿、扩展候选方向、检查术语步骤；<b>判断、取舍、背书仍归专家</b>。</p></div>
+  </div>
+</section>
+
+<!-- 17d 按行业 -->
+<section class="slide">
+  <div class="kicker">07 · 怎么用 · 企业视角</div>
+  <h2>按行业：优先选"一个参数变好、另一个变差"的场景</h2>
+  <div class="grid3">
+    <div class="card"><h3>汽车与零部件</h3><p class="small">轻量化、安全、成本之间的权衡</p><ul class="small dim"><li>轻量化 vs 碰撞安全</li><li>续航 vs 成本</li><li>密封性 vs 散热</li></ul></div>
+    <div class="card"><h3>电子与消费电子</h3><p class="small">小型化与可靠性的长期拉扯</p><ul class="small dim"><li>更薄 vs 更强散热</li><li>高集成度 vs 可维修性</li><li>防水 vs 声学性能</li></ul></div>
+    <div class="card"><h3>工业装备</h3><p class="small">把经验调参变成原理驱动</p><ul class="small dim"><li>提高速度 vs 降低振动</li><li>自动化 vs 维护复杂度</li><li>精度 vs 成本</li></ul></div>
+    <div class="card"><h3>能源、材料与化工</h3><p class="small">辅助技术路线讨论</p><ul class="small dim"><li>能量密度 vs 安全性</li><li>催化效率 vs 成本</li><li>材料强度 vs 可加工性</li></ul></div>
+    <div class="card"><h3>医疗与精密设备</h3><p class="small">设计输入阶段的结构化预分析</p><ul class="small dim"><li>小型化 vs 操作稳定性</li><li>无菌要求 vs 装配效率</li><li>安全性 vs 使用便利性</li></ul></div>
+    <div class="card"><h3>软件与智能硬件</h3><p class="small">把产品矛盾说清楚</p><ul class="small dim"><li>功能更多 vs 产品更简单</li><li>自动化 vs 用户可控性</li><li>数据丰富 vs 隐私保护</li></ul></div>
+  </div>
+</section>
+
+<!-- 17e 工作流 + 话术 + 边界 -->
+<section class="slide">
+  <div class="kicker">07 · 怎么用 · 企业视角</div>
+  <h2>企业工作流、对外话术与边界</h2>
+  <div class="flow" style="margin-bottom:16px">
+    <div class="step"><div class="t">① 把问题说清楚</div><div class="d">"电池包要更轻，但强度不能降" → 改善参数、恶化参数、技术矛盾</div></div>
+    <div class="step"><div class="t">② 生成解决方向</div><div class="d">从分割、嵌套、预先作用、动态化、复合材料等原理中找候选路径</div></div>
+    <div class="step"><div class="t">③ 形成评审材料</div><div class="d">问题定义、矛盾分析、候选原理、方案草案、风险与验证建议</div></div>
+    <div class="step"><div class="t">④ 专家做判断</div><div class="d">专家不再从空白页开始，经验用在取舍与背书上</div></div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>对外介绍时可直接用的三句话</h3>
+      <p class="small" style="margin:8px 0"><b class="accent">给管理层：</b>把 TRIZ 从少数专家手里的方法论，变成可规模化部署的 AI 基础设施；显著提高工程师进入结构化创新讨论的速度。</p>
+      <p class="small" style="margin:8px 0"><b class="accent">给技术团队：</b>面向 TRIZ 微调的 35B LoRA；300 题金标上以 0.4× 篇幅交付，等长对照下获 2/3 外部评委显著质量确认。</p>
+      <p class="small" style="margin:8px 0"><b class="accent">给工程团队：</b>把它当随时在线的 TRIZ 助教：定义矛盾、推荐原理、生成草稿；最终判断仍由工程师和专家完成。</p>
+    </div>
+    <div class="card" style="border-color:rgba(255,209,102,.4)">
+      <h3 class="warn">对外始终说清楚的边界</h3>
+      <ul class="small">
+        <li>目前主要面向<b>中文</b> TRIZ 问答与创新分析</li>
+        <li>不是通用大模型的全面替代品</li>
+        <li>不是专利检索系统，不替代律师意见</li>
+        <li>不替代实验、仿真、安全验证与专家评审</li>
+        <li>优势宣称限定在公开评测口径内，不外推成"全面超过所有大模型"</li>
+      </ul>
+      <p class="tiny" style="margin-top:10px">这些边界不是削弱说服力，而是让企业客户敢相信。最准确的定位：把一个高价值、低供给的专业方法域，做成可部署、可测量、可复现的模型能力。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 18 路线图 -->
+<section class="slide">
+  <div class="kicker">08 · 往哪走</div>
+  <h2>路线图：先证明是真的，再让它变大</h2>
+  <table>
+    <tr><th style="width:150px">阶段</th><th>动作</th><th style="width:300px">状态 / 判据</th></tr>
+    <tr><td class="num">已完成</td><td class="small">异源评委终审（Claude/GPT/Gemini 面板）· 等长对照 · 通用能力探针（120 题 vs base）· 决策门多评委化（Moonshot 主轨 + 外部复核轨）</td><td class="small"><span class="tag good">已入发布口径</span></td></tr>
+    <tr><td class="num">数据侧</td><td class="small">principle_recommendation 定向补强（v5b 教训：先归因、双轨过门、必附等长对照）· case_generation E2 式归因 · <b>专利语料升级</b>——专利是天然 TRIZ 素材（Altshuller 本人路径），版权形态友好，既扩容又改善可发布性</td><td class="small"><span class="tag warn">下一迭代主线</span></td></tr>
+    <tr><td class="num">训练侧</td><td class="small">E5 消融：路由专家覆盖（现 LoRA 只挂 12 个共享投影 0.24%，256 个路由专家未动；专家感知 LoRA 是一号技术悬念）· rank 消融 r=32/128</td><td class="small"><span class="tag ns">未启动</span></td></tr>
+    <tr><td class="num">偏好优化</td><td class="small">DPO：用 judge 分构造偏好对——但须等异源面板验证 judge 可靠性之后，否则是在蒸馏评委的癖好而非质量</td><td class="small"><span class="tag ns">等前置条件</span></td></tr>
+    <tr><td class="num">明确不做</td><td class="small">❌ 追关键词轨（已持平，且 v3 证明堆词反噬 judge 轨）❌ 调超参（四条线冻结证据：超参不是杠杆）❌ 更大 base / 全参微调（无证据是瓶颈，且破坏单变量可比性）</td><td class="small"><span class="tag bad">纪律</span></td></tr>
+  </table>
+  <blockquote>学术线：测量学故障案例研究（"When the Baseline Lies"）arXiv 论文在备；白皮书 v1.3 为可引用数字的唯一来源。</blockquote>
+</section>
+
+<!-- 19 总结 -->
+<section class="slide title-slide">
+  <div class="kicker">总结</div>
+  <h1 style="font-size:44px">三句话带走</h1>
+  <div style="margin-top:26px;max-width:980px">
+    <p style="font-size:20px;margin:16px 0"><b class="accent">①</b> 我们交付的不是"一个微调模型"，而是<b>模型 + 基准 + 评测纪律</b>三件套——后者才是面对客户技术质询时最硬的资产。</p>
+    <p style="font-size:20px;margin:16px 0"><b class="accent">②</b> 经外部验证的诚实口径：<b>等长预算下质量显著更好（2/3 外部评委），以 0.4× 篇幅交付，关键词覆盖更稳</b>；旧口径与最强基线打平——这句话同样写在 model card 里。</p>
+    <p style="font-size:20px;margin:16px 0"><b class="accent">③</b> 落地路径已通：DGX Spark 生产栈在跑，OpenAI 兼容 API + 审批制 WebUI + 周回流管线；FDE 只需记住两条红线——<b>保留空 think 块、max_tokens ≥ 4096</b>。</p>
+  </div>
+  <div class="title-meta">
+    参考：白皮书 v1.3（中英）· adapter_info.json · MEERKAT-OPS.md · 本页数字均可逐项复核<br>
+    Q &amp; A · Meerkat AI · 2026-08
+  </div>
+</section>
+
+</div>
+
+<div class="footer">
+  <div>Meerkat-TRIZ-v1 · FDE 团队介绍 · <span id="pageinfo">1 / 23</span></div>
+  <div class="nav">
+    <button onclick="go(-1)">← 上一页</button>
+    <button onclick="go(1)">下一页 →</button>
+  </div>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+let cur = 0;
+function show(i){
+  cur = Math.max(0, Math.min(slides.length-1, i));
+  slides.forEach((s,k)=>s.classList.toggle('active', k===cur));
+  document.getElementById('pageinfo').textContent = (cur+1) + ' / ' + slides.length;
+  document.getElementById('progress').style.width = ((cur+1)/slides.length*100) + '%';
+  location.hash = 's' + (cur+1);
+}
+function go(d){ show(cur+d); }
+document.addEventListener('keydown', e=>{
+  if(['ArrowRight','PageDown',' '].includes(e.key)) go(1);
+  if(['ArrowLeft','PageUp'].includes(e.key)) go(-1);
+  if(e.key==='Home') show(0);
+  if(e.key==='End') show(slides.length-1);
+});
+const m = location.hash.match(/s(\d+)/);
+show(m ? parseInt(m[1])-1 : 0);
+</script>
+</body>
+</html>

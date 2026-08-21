@@ -1,0 +1,188 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+notes: 案例③ IST-OS:左栏事实速览(503/503主机测试、62/62 HIL、MISRA≤17、PRECOMMIT_FULL全通过;Wave 6云端联调因缺Insentek测试/沙箱环境阻塞);右栏讲师点评:验证自动化=护栏(第16页Loop·验证、第18页)、缺沙箱=Harness断点(第15页)、造环境与写代码同等重要(第17页工具设计)。
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 38, 600, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: |-
+        05 内部案例 · 案例③ IST-OS 固件
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 36]
+    content:
+      style: "$h1"
+      wrap: false
+      text: |-
+        测试即护栏,缺环境即断点
+  # ---- 左栏:事实速览 ----
+  - elementId: facts-h
+    elementType: text
+    bounds: [56, 120, 460, 20]
+    content:
+      style: "$h2"
+      wrap: false
+      text: |-
+        事实速览 · 验证体系全绿,断点在环境
+  - elementId: stat-1-num
+    elementType: text
+    bounds: [56, 150, 116, 36]
+    content:
+      fontSize: 24
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: |-
+        503/503
+  - elementId: stat-1-desc
+    elementType: text
+    bounds: [180, 150, 336, 46]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.4
+      text: |-
+        <p>主机端单元测试全部通过(Phase 28 生产硬化完成,Tick 回绕风险清零)</p>
+  - elementId: stat-2-num
+    elementType: text
+    bounds: [56, 204, 116, 36]
+    content:
+      fontSize: 24
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: |-
+        62/62
+  - elementId: stat-2-desc
+    elementType: text
+    bounds: [180, 204, 336, 46]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.4
+      text: |-
+        <p>HIL 硬件在环测试全部通过;ARM 双产品构建通过(SOIL + HYDROLOGY)</p>
+  - elementId: stat-3-num
+    elementType: text
+    bounds: [56, 258, 116, 36]
+    content:
+      fontSize: 24
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: |-
+        ≤17
+  - elementId: stat-3-desc
+    elementType: text
+    bounds: [180, 258, 336, 46]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.4
+      text: |-
+        <p>MISRA C:2012 违规数;PRECOMMIT_FULL 全项通过,覆盖率 ≥75% 维持</p>
+  - elementId: facts-div
+    elementType: shape
+    bounds: [56, 314, 460, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: facts-more
+    elementType: text
+    bounds: [56, 326, 460, 150]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.55
+      text: |-
+        <p>· 里程碑 v1.4.0「生产就绪」总体进度 50%:Phase 26 / 28 已完成,Phase 29 现场与硬件验证待启动</p>
+        <p style="margin-top:6px">· Phase 27 Wave 1~5 完成:协议 1:1 差距全部修复,497 项测试通过</p>
+        <p style="margin-top:6px">· <span style="color:$terra"><strong>Wave 6 云端联调阻塞</strong></span>:缺 Insentek 测试/沙箱环境,端到端注册、CFG 下发、cigem 命令往返、OTA 流程无法验证</p>
+  # ---- 中缝 ----
+  - elementId: mid-div
+    elementType: shape
+    bounds: [536, 120, 1, 358]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  # ---- 右栏:讲师点评 ----
+  - elementId: cmt-box
+    elementType: shape
+    bounds: [556, 120, 348, 358]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+  - elementId: cmt-icon
+    elementType: icon
+    bounds: [572, 132, 16, 16]
+    iconName: "fas:chalkboard-user"
+    fill: {type: solid, color: "$terra"}
+  - elementId: cmt-label
+    elementType: text
+    bounds: [596, 131, 160, 20]
+    content:
+      fontSize: 14
+      bold: true
+      color: "$terra"
+      wrap: false
+      text: |-
+        讲师点评
+  - elementId: cmt-sub
+    elementType: text
+    bounds: [572, 156, 316, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: |-
+        用第二、三章的课程概念拆这个项目
+  - elementId: cmt-body
+    elementType: text
+    bounds: [572, 180, 316, 244]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.5
+      text: |-
+        <p><strong>正面:验证即护栏。</strong>每一圈迭代都有程序化验证——单测 / HIL / MISRA / 预提交全自动;验证自动化,Coding Agent 才敢快跑(呼应第 16 页 Loop 四要素 · 验证、第 18 页验证与护栏)</p>
+        <p style="margin-top:8px"><strong>反面:缺沙箱 = 断点。</strong>没有测试环境,端到端循环断裂,进展停在 Wave 6——Harness 缺一块,智能体就跑不动(呼应第 15 页 Harness)</p>
+        <p style="margin-top:8px"><strong>启示:造环境与写代码同样重要。</strong>沙箱 / 仿真先行,循环才闭得上(呼应第 17 页工具设计)</p>
+  - elementId: cmt-div
+    elementType: shape
+    bounds: [572, 430, 316, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: cmt-bottom
+    elementType: text
+    bounds: [572, 438, 316, 36]
+    content:
+      fontSize: 12
+      bold: true
+      color: "$terra"
+      lineHeight: 1.3
+      text: |-
+        <p>一句话:测试全绿 ≠ 能交付——缺一块环境,循环就停在 Wave 6。</p>
+  # ---- 页脚 ----
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-src
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: |-
+        来源:IST-OS 项目进度报告(2026-07-22)
+  - elementId: footer-page
+    elementType: text
+    bounds: [824, 510, 80, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: |-
+        29 / 35

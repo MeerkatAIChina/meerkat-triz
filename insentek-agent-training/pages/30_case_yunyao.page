@@ -1,0 +1,236 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+notes: 案例④耘曜:左栏为报告事实(架构重构成果/现场调试关键问题/cron 兜底未部署教训),右栏讲师点评挂回课程概念——代码层可加速(第 11 页委派单)、物理验证循环不可压缩(第 16 页 Loop 四要素)、反馈断在环境侧(第 15 页 Harness)、回退原版的智慧(第 18 页验证护栏)。
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 38, 600, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: |-
+        05 内部案例 · 案例④ 耘曜
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 36]
+    content:
+      style: "$h1"
+      wrap: false
+      text: |-
+        代码重构快,物理现场慢——智能体的边界课
+  # ---- 左栏:事实速览 ----
+  - elementId: fact-h
+    elementType: text
+    bounds: [56, 120, 300, 18]
+    content:
+      style: "$h2"
+      wrap: false
+      text: |-
+        事实速览 · 报告原文要点
+  - elementId: s1-label
+    elementType: text
+    bounds: [56, 148, 300, 15]
+    content:
+      fontSize: 11
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: |-
+        ① 架构重构(已完成)
+  - elementId: s1-body
+    elementType: text
+    bounds: [56, 167, 424, 90]
+    content:
+      fontSize: 11.5
+      color: "$ink"
+      lineHeight: 1.5
+      text: |-
+        <p>· 单体阻塞式 → 事件驱动:epoll + timerfd + 状态机</p>
+        <p>· DeviceContext 替代 66 个全局变量;442 处 printf → 结构化日志</p>
+        <p>· system() → 白名单 safe_execute();配置原子写入防断电写坏</p>
+        <p>· 苗情/虫情照片压缩后上传,带宽下降约 95%</p>
+  - elementId: s2-label
+    elementType: text
+    bounds: [56, 267, 300, 15]
+    content:
+      fontSize: 11
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: |-
+        ② 现场调试:修复的关键问题
+  - elementId: s2-body
+    elementType: text
+    bounds: [56, 286, 424, 90]
+    content:
+      fontSize: 11.5
+      color: "$ink"
+      lineHeight: 1.5
+      text: |-
+        <p>· 485 采集:串口初始化时序须与原版一致,上电等待 30 → 60 秒</p>
+        <p>· 看门狗误杀:PID 文件缺陷致双进程撞 485 总线,flock 保证单实例</p>
+        <p>· 断网「假登录」:socket 半开骗过健康检查 → 连续 12 次失败直接重启系统</p>
+        <p>· 苗情回退原版:短生命周期模式,由 crontab 按云端配置整点启动</p>
+  - elementId: s3-box
+    elementType: shape
+    bounds: [56, 388, 424, 88]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+  - elementId: s3-label
+    elementType: text
+    bounds: [72, 398, 392, 15]
+    content:
+      fontSize: 11
+      bold: true
+      color: "$terra"
+      wrap: false
+      text: |-
+        ③ 教训:代码实现了 ≠ 部署到位
+  - elementId: s3-body
+    elementType: text
+    bounds: [72, 417, 392, 52]
+    content:
+      fontSize: 11.5
+      color: "$ink"
+      lineHeight: 1.5
+      text: |-
+        <p>cron 兜底代码早已实现,但 crontab 从未实际部署,断网后兜底从未生效;断网恢复机制待现场连续观察 1–2 周,已补部署检查清单。</p>
+  # ---- 中缝分隔线 ----
+  - elementId: col-div
+    elementType: shape
+    bounds: [496, 120, 1, 356]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  # ---- 右栏:讲师点评 ----
+  - elementId: rv-tag-bg
+    elementType: shape
+    bounds: [512, 120, 78, 20]
+    shapeName: rect
+    fill: {type: solid, color: "$terra"}
+  - elementId: rv-tag
+    elementType: text
+    bounds: [512, 120, 78, 20]
+    content:
+      fontSize: 11
+      bold: true
+      color: "#FFFFFF"
+      align: [center, middle]
+      wrap: false
+      text: |-
+        讲师点评
+  - elementId: rv-p1-t
+    elementType: text
+    bounds: [512, 152, 392, 17]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: |-
+        代码层可以被 AI 加速
+  - elementId: rv-p1-d
+    elementType: text
+    bounds: [512, 172, 392, 38]
+    content:
+      fontSize: 11.5
+      color: "$ink"
+      lineHeight: 1.5
+      text: |-
+        <p>重构目标清晰、验收明确,正是 Coding Agent 的主场。<span style="color:$muted">呼应第 11 页 · 委派单</span></p>
+  - elementId: rv-d1
+    elementType: shape
+    bounds: [512, 220, 392, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: rv-p2-t
+    elementType: text
+    bounds: [512, 230, 392, 17]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: |-
+        物理验证循环不可压缩
+  - elementId: rv-p2-d
+    elementType: text
+    bounds: [512, 250, 392, 38]
+    content:
+      fontSize: 11.5
+      color: "$ink"
+      lineHeight: 1.5
+      text: |-
+        <p>断网恢复要现场连续观察 1–2 周——「反馈」环节省不掉,模型再强也快不了。<span style="color:$muted">呼应第 16 页 · Loop 四要素</span></p>
+  - elementId: rv-d2
+    elementType: shape
+    bounds: [512, 298, 392, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: rv-p3-t
+    elementType: text
+    bounds: [512, 308, 392, 17]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: |-
+        反馈断在环境侧 = 循环未闭环
+  - elementId: rv-p3-d
+    elementType: text
+    bounds: [512, 328, 392, 56]
+    content:
+      fontSize: 11.5
+      color: "$ink"
+      lineHeight: 1.5
+      text: |-
+        <p>cron 兜底「代码实现了但环境没部署」:Harness 缺一块,智能体就跑不动。<span style="color:$muted">呼应第 15 页 · Harness、第 16 页 · Loop 四要素</span></p>
+  - elementId: rv-d3
+    elementType: shape
+    bounds: [512, 392, 392, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: rv-p4-t
+    elementType: text
+    bounds: [512, 402, 392, 17]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: |-
+        回退原版的智慧
+  - elementId: rv-p4-d
+    elementType: text
+    bounds: [512, 422, 392, 54]
+    content:
+      fontSize: 11.5
+      color: "$ink"
+      lineHeight: 1.5
+      text: |-
+        <p>苗情回退原版模式 = 知道何时不用新方案;验证不通过,就回到已知可行解。<span style="color:$muted">呼应第 18 页 · 验证护栏</span></p>
+  # ---- 页脚 ----
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-src
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: |-
+        来源:耘曜总体进度报告(2026-07-22)
+  - elementId: footer-page
+    elementType: text
+    bounds: [804, 510, 100, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: |-
+        30 / 35

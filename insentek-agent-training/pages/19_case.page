@@ -1,0 +1,295 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+notes: 案例演示:墒情巡检报告智能体五步流程(目标→行动→反馈→验证→交付),每步标注对应 Loop 要素;验证不通过回到行动;效果对比为教学演示数据;检查提问聚焦最容易被省掉的环节。
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 38, 500, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: 第三章 · HARNESS 与 LOOP ENGINEERING
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 36]
+    content:
+      style: "$h1"
+      wrap: false
+      text: 案例:墒情巡检报告智能体,完整跑一圈
+  # ---- 五步横向流程 ----
+  - elementId: step-1-tag
+    elementType: text
+    bounds: [56, 132, 152, 14]
+    content:
+      fontSize: 10
+      bold: true
+      color: "$terra"
+      align: [center, top]
+      wrap: false
+      text: LOOP · 目标
+  - elementId: step-1
+    elementType: shape
+    bounds: [56, 152, 152, 118]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1, color: "$pine"}
+  - elementId: step-1-t
+    elementType: text
+    bounds: [68, 164, 128, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: ① 目标
+  - elementId: step-1-d
+    elementType: text
+    bounds: [68, 188, 128, 70]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.45
+      text: |
+        <p>每周一 8:00,自动生成全域墒情周报</p>
+  - elementId: chev-1
+    elementType: shape
+    bounds: [212, 198, 22, 26]
+    shapeName: chevron
+    fill: {type: solid, color: "$pine"}
+  - elementId: step-2-tag
+    elementType: text
+    bounds: [238, 132, 152, 14]
+    content:
+      fontSize: 10
+      bold: true
+      color: "$terra"
+      align: [center, top]
+      wrap: false
+      text: LOOP · 行动
+  - elementId: step-2
+    elementType: shape
+    bounds: [238, 152, 152, 118]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1, color: "$pine"}
+  - elementId: step-2-t
+    elementType: text
+    bounds: [250, 164, 128, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: ② 行动
+  - elementId: step-2-d
+    elementType: text
+    bounds: [250, 188, 128, 70]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.45
+      text: |
+        <p>调平台接口,取站点状态与墒情时序数据</p>
+  - elementId: chev-2
+    elementType: shape
+    bounds: [394, 198, 22, 26]
+    shapeName: chevron
+    fill: {type: solid, color: "$pine"}
+  - elementId: step-3-tag
+    elementType: text
+    bounds: [420, 132, 152, 14]
+    content:
+      fontSize: 10
+      bold: true
+      color: "$terra"
+      align: [center, top]
+      wrap: false
+      text: LOOP · 反馈
+  - elementId: step-3
+    elementType: shape
+    bounds: [420, 152, 152, 118]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1, color: "$pine"}
+  - elementId: step-3-t
+    elementType: text
+    bounds: [432, 164, 128, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: ③ 反馈
+  - elementId: step-3-d
+    elementType: text
+    bounds: [432, 188, 128, 70]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.45
+      text: |
+        <p>拿到结构化校验:缺数站点 2 个、阈值超限 1 处</p>
+  - elementId: chev-3
+    elementType: shape
+    bounds: [576, 198, 22, 26]
+    shapeName: chevron
+    fill: {type: solid, color: "$pine"}
+  - elementId: step-4-tag
+    elementType: text
+    bounds: [602, 132, 152, 14]
+    content:
+      fontSize: 10
+      bold: true
+      color: "$terra"
+      align: [center, top]
+      wrap: false
+      text: LOOP · 验证
+  - elementId: step-4
+    elementType: shape
+    bounds: [602, 152, 152, 118]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1, color: "$pine"}
+  - elementId: step-4-t
+    elementType: text
+    bounds: [614, 164, 128, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: ④ 验证
+  - elementId: step-4-d
+    elementType: text
+    bounds: [614, 188, 128, 70]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.45
+      text: |
+        <p>程序校验 + 农艺规则复核;不通过回到第②步</p>
+  - elementId: chev-4
+    elementType: shape
+    bounds: [758, 198, 22, 26]
+    shapeName: chevron
+    fill: {type: solid, color: "$pine"}
+  - elementId: step-5-tag
+    elementType: text
+    bounds: [784, 132, 120, 14]
+    content:
+      fontSize: 10
+      bold: true
+      color: "$terra"
+      align: [center, top]
+      wrap: false
+      text: 人在回路 · 交付
+  - elementId: step-5
+    elementType: shape
+    bounds: [784, 152, 120, 118]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+    border: {style: solid, width: 1, color: "$terra"}
+  - elementId: step-5-t
+    elementType: text
+    bounds: [796, 164, 96, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$terra"
+      wrap: false
+      text: ⑤ 交付
+  - elementId: step-5-d
+    elementType: text
+    bounds: [796, 188, 96, 70]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.45
+      text: |
+        <p>报告草稿 + 异常清单;人确认后发出</p>
+  # ---- 验证回环线 ----
+  - elementId: loop-back
+    elementType: line
+    bounds: [314, 274, 364, 28]
+    viewBox: [364, 28]
+    points: "364,0 364,24 0,24 0,4"
+    curve: sharp
+    arrow: [null, arrow]
+    border: {style: dash, width: 1.5, color: "$terra"}
+  - elementId: loop-back-t
+    elementType: text
+    bounds: [386, 304, 220, 14]
+    content:
+      fontSize: 10
+      color: "$muted"
+      align: [center, top]
+      wrap: false
+      text: 验证不通过:回到行动,重新取数或补数
+  # ---- 效果对比 ----
+  - elementId: eff-box
+    elementType: shape
+    bounds: [56, 334, 848, 46]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+  - elementId: eff-icon
+    elementType: icon
+    bounds: [72, 348, 18, 18]
+    iconName: "fas:clock"
+    fill: {type: solid, color: "$pine"}
+  - elementId: eff-body
+    elementType: text
+    bounds: [100, 344, 788, 26]
+    content:
+      fontSize: 12
+      color: "$ink"
+      align: [left, middle]
+      wrap: false
+      text: |
+        <p><strong>效果对比(教学演示数据):</strong>人工做这份周报约 90 分钟 → 智能体跑一圈约 4 分钟,人只在第⑤步花 2 分钟确认。</p>
+  # ---- 检查提问 ----
+  - elementId: chk-box
+    elementType: shape
+    bounds: [56, 396, 848, 68]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+  - elementId: chk-h
+    elementType: text
+    bounds: [72, 406, 200, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$terra"
+      wrap: false
+      text: 检查提问
+  - elementId: chk-body
+    elementType: text
+    bounds: [72, 428, 816, 28]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.45
+      text: |
+        <p>哪个环节最容易被省掉?——第③④步的反馈与验证。省掉它们,报告里的错误数字会原样流到收件人手里。</p>
+  # ---- 页脚 ----
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-src
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: 教学演示:基于智墒 / 天圻公开产品能力的示例场景,数据为示例
+  - elementId: footer-page
+    elementType: text
+    bounds: [824, 510, 80, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: 19 / 35

@@ -1,0 +1,254 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+notes: 验证与护栏三层:程序化校验→模型自检→人在回路。左侧三层带升级箭头;右侧公司映射、结论"护栏不是不信任 AI,是让循环可托付"与检查提问。
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 38, 500, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: 第三章 · HARNESS 与 LOOP ENGINEERING
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 36]
+    content:
+      style: "$h1"
+      wrap: false
+      text: 验证与护栏:让循环自己纠偏,人只做抽查
+  # ---- 左列:三层护栏 ----
+  - elementId: layer-1
+    elementType: shape
+    bounds: [56, 140, 460, 84]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+  - elementId: layer-1-icon
+    elementType: icon
+    bounds: [74, 168, 24, 24]
+    iconName: "fas:filter"
+    fill: {type: solid, color: "$pine"}
+  - elementId: layer-1-t
+    elementType: text
+    bounds: [112, 152, 390, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: ① 程序化校验 —— 最便宜,先跑
+  - elementId: layer-1-d
+    elementType: text
+    bounds: [112, 174, 390, 38]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.45
+      text: |
+        <p>格式、阈值、范围,代码秒级检查,拦截绝大多数低级错误。</p>
+  - elementId: layer-arr-1
+    elementType: line
+    bounds: [284, 226, 2, 16]
+    viewBox: [2, 16]
+    points: "1,0 1,16"
+    curve: sharp
+    arrow: [null, arrow]
+    border: {style: solid, width: 1.5, color: "$pine"}
+  - elementId: layer-arr-1-t
+    elementType: text
+    bounds: [300, 225, 216, 16]
+    content:
+      fontSize: 10
+      color: "$muted"
+      wrap: false
+      text: 通过进入下一层;未通过回到循环
+  - elementId: layer-2
+    elementType: shape
+    bounds: [56, 244, 460, 84]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1, color: "$pine"}
+  - elementId: layer-2-icon
+    elementType: icon
+    bounds: [74, 272, 24, 24]
+    iconName: "fas:check-double"
+    fill: {type: solid, color: "$pine"}
+  - elementId: layer-2-t
+    elementType: text
+    bounds: [112, 256, 390, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: ② 模型自检 —— 换个视角再查一遍
+  - elementId: layer-2-d
+    elementType: text
+    bounds: [112, 278, 390, 38]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.45
+      text: |
+        <p>交叉验证、引用溯源:关键数字要有出处、能复核。</p>
+  - elementId: layer-arr-2
+    elementType: line
+    bounds: [284, 330, 2, 16]
+    viewBox: [2, 16]
+    points: "1,0 1,16"
+    curve: sharp
+    arrow: [null, arrow]
+    border: {style: solid, width: 1.5, color: "$pine"}
+  - elementId: layer-arr-2-t
+    elementType: text
+    bounds: [300, 329, 216, 16]
+    content:
+      fontSize: 10
+      color: "$muted"
+      wrap: false
+      text: 仅高风险动作升级到第③层
+  - elementId: layer-3
+    elementType: shape
+    bounds: [56, 348, 460, 84]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+  - elementId: layer-3-icon
+    elementType: icon
+    bounds: [74, 376, 24, 24]
+    iconName: "fas:user-check"
+    fill: {type: solid, color: "$terra"}
+  - elementId: layer-3-t
+    elementType: text
+    bounds: [112, 360, 390, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$terra"
+      wrap: false
+      text: ③ 人在回路 —— 只守高风险动作
+  - elementId: layer-3-d
+    elementType: text
+    bounds: [112, 382, 390, 38]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.45
+      text: |
+        <p>对外发送、写入生产系统前,必须有人确认。</p>
+  - elementId: cost-note
+    elementType: text
+    bounds: [56, 444, 460, 34]
+    content:
+      fontSize: 11
+      color: "$muted"
+      lineHeight: 1.45
+      text: |
+        <p>越往下越贵:第①层几乎零成本,第③层消耗人的时间——能程序化的,一定先程序化。</p>
+  # ---- 右列:公司映射 + 结论 + 检查 ----
+  - elementId: map-h
+    elementType: text
+    bounds: [540, 140, 364, 20]
+    content:
+      style: "$h2"
+      wrap: false
+      text: 对应到我们公司
+  - elementId: map-1-dot
+    elementType: shape
+    bounds: [542, 174, 8, 8]
+    shapeName: rect
+    fill: {type: solid, color: "$pine"}
+  - elementId: map-1-t
+    elementType: text
+    bounds: [560, 168, 344, 20]
+    content:
+      fontSize: 12
+      color: "$ink"
+      wrap: false
+      text: |
+        <p><strong>数据清洗算法的阈值校验</strong> = 第①层</p>
+  - elementId: map-2-dot
+    elementType: shape
+    bounds: [542, 206, 8, 8]
+    shapeName: rect
+    fill: {type: solid, color: "$terra"}
+  - elementId: map-2-t
+    elementType: text
+    bounds: [560, 200, 344, 20]
+    content:
+      fontSize: 12
+      color: "$ink"
+      wrap: false
+      text: |
+        <p><strong>对外报告发出前人工复核</strong> = 第③层</p>
+  - elementId: map-div
+    elementType: shape
+    bounds: [540, 238, 364, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: concl-t
+    elementType: text
+    bounds: [540, 258, 364, 28]
+    content:
+      fontSize: 17
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: 护栏不是不信任 AI,是让循环可托付。
+  - elementId: concl-d
+    elementType: text
+    bounds: [540, 292, 364, 20]
+    content:
+      fontSize: 11
+      color: "$muted"
+      wrap: false
+      text: 人从"盯着每一步",变成"守住关键的几道门"。
+  - elementId: chk-box
+    elementType: shape
+    bounds: [540, 340, 364, 92]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+  - elementId: chk-icon
+    elementType: icon
+    bounds: [556, 356, 18, 18]
+    iconName: "fas:circle-question"
+    fill: {type: solid, color: "$terra"}
+  - elementId: chk-h
+    elementType: text
+    bounds: [584, 355, 304, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$terra"
+      wrap: false
+      text: 检查
+  - elementId: chk-body
+    elementType: text
+    bounds: [556, 380, 332, 24]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.45
+      text: |
+        <p>除了对外发送、生产写入,我们还有哪些动作该进第③层?</p>
+  # ---- 页脚 ----
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-src
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: 框架据公开 Agent 工程实践整理;公司场景为教学映射
+  - elementId: footer-page
+    elementType: text
+    bounds: [824, 510, 80, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: 18 / 35

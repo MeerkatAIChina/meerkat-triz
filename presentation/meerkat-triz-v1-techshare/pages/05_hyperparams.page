@@ -1,0 +1,93 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 34, 500, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: 01 · 模型与训练
+  - elementId: title
+    elementType: text
+    bounds: [56, 56, 840, 34]
+    content:
+      style: "$title"
+      wrap: false
+      text: 冻结超参：train_v5a.json 每一项都有出处
+  - elementId: hp-table
+    elementType: table
+    bounds: [56, 110, 848, 300]
+    columnWidths: [0.24, 0.17, 0.59]
+    rowHeights: [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
+    style: "$default"
+    rows:
+      - - text: "参数"
+        - text: "值"
+        - text: "设计理由（配置 _notes 原文要点）"
+      - - text: "num_train_epochs"
+        - text: "4（安全帽）"
+        - text: "2-epoch 设计，4 仅作上限；v1 实证 2 epoch 欠训练（best 在末步）"
+      - - text: "lr_scheduler_type"
+        - text: "cosine"
+        - text: "horizon = ceil(D/8)×2 = 1387×2 = 2774 步；修 v4「早停时 lr 从未退火」"
+      - - text: "learning_rate / warmup"
+        - text: "2e-4 / 5%"
+        - text: "P0 六组小扫 + 40 题金标双轨冒烟终裁；warmup 为 QLoRA 推荐区间"
+      - - text: "batch / grad_accum"
+        - text: "1 / 8"
+        - text: "单卡统一内存，有效 batch = 8；steps/epoch = ceil(11096/8) = 1387"
+      - - text: "max_length"
+        - text: "2048（断言项）"
+        - text: "v1 曾静默截断长样本；v5 起不等即退出码 3，防回归"
+      - - text: "optim"
+        - text: "adamw_torch"
+        - text: "显式锁定；不切 paged_adamw_8bit（与 v4 实际运行口径一致）"
+      - - text: "precision"
+        - text: "纯 BF16"
+        - text: "121GB 统一内存装得下；不用 bitsandbytes 量化，消除量化噪声变量"
+      - - text: "eval_steps / save_steps"
+        - text: "100 / 100"
+        - text: "强制相等（train.py 启动校验），每个 eval 步都有落盘 checkpoint 可精确归因"
+      - - text: "early_stopping"
+        - text: "patience=999 / thr=0.002"
+        - text: "threshold = v2 平台噪声 0.0002 的 10 倍；v4 用默认 0 导致噪声触发"
+  - elementId: hp-note
+    elementType: shape
+    bounds: [56, 418, 848, 62]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+    border: {style: solid, width: 1, color: "$terra"}
+  - elementId: hp-note-t
+    elementType: text
+    bounds: [70, 424, 820, 52]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.5
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong><span style="color:$terra">读法：</span></strong>这不是一份「调出来的」配置，而是一份「修出来的」配置——几乎每个值都对应一次历史事故的修复（v1 静默截断、v4 lr 未退火、早停噪声）。</p>
+        <p>环境同样冻结：venv_v5 = peft 0.19.1 / transformers 5.10.1 / trl 1.5.1 / torch 2.12.0，与 v4 完全相同，保证跨版本对比只有一个移动变量。</p>
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-src
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$small"
+      wrap: false
+      text: 来源：meerkat-triz/configs/train_v5a.json（含 _notes 字段）
+  - elementId: footer-page
+    elementType: text
+    bounds: [864, 510, 40, 14]
+    content:
+      style: "$small"
+      align: [right, top]
+      wrap: false
+      text: "05"

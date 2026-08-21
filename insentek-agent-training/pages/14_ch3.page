@@ -1,0 +1,96 @@
+pageType: chapter
+background:
+  type: solid
+  color: "$pine"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 64, 420, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: |-
+        AI 内训第三期 · 从会问到会派活
+  - elementId: deco-icon
+    elementType: icon
+    bounds: [640, 150, 200, 200]
+    iconName: "fas:gauge-high"
+    fill: {type: solid, color: "#2A5C47"}
+    opacity: 0.3
+  - elementId: chapter-num
+    elementType: text
+    bounds: [56, 128, 220, 82]
+    content:
+      style: "$chapterNum"
+      wrap: false
+      text: |-
+        03
+  - elementId: terra-bar
+    elementType: shape
+    bounds: [56, 224, 56, 4]
+    shapeName: rect
+    fill: {type: solid, color: "$terra"}
+  - elementId: chapter-title
+    elementType: text
+    bounds: [56, 246, 760, 48]
+    content:
+      style: "$chapterTitle"
+      wrap: false
+      text: |-
+        Harness 与 Loop Engineering
+  - elementId: chapter-subtitle
+    elementType: text
+    bounds: [56, 302, 700, 26]
+    content:
+      fontSize: 18
+      color: "#D8D3C8"
+      wrap: false
+      text: |-
+        给智能体造驾驶舱
+  - elementId: question-icon
+    elementType: icon
+    bounds: [56, 366, 18, 18]
+    iconName: "fas:circle-question"
+    fill: {type: solid, color: "$terra"}
+  - elementId: question-text
+    elementType: text
+    bounds: [84, 364, 760, 22]
+    content:
+      fontSize: 14
+      color: "$paper"
+      wrap: false
+      text: |-
+        本章学习问题:模型是发动机,谁来造方向盘、仪表盘和刹车?
+  - elementId: keywords-icon
+    elementType: icon
+    bounds: [56, 404, 14, 14]
+    iconName: "fas:tags"
+    fill: {type: solid, color: "$hair"}
+  - elementId: keywords-text
+    elementType: text
+    bounds: [84, 402, 720, 20]
+    content:
+      fontSize: 12
+      color: "$hair"
+      wrap: false
+      text: |-
+        <p><strong>关键词:</strong>环境 · 工具 · 反馈 · 护栏</p>
+  - elementId: footer-left
+    elementType: text
+    bounds: [56, 508, 300, 14]
+    content:
+      style: "$caption"
+      color: "$hair"
+      wrap: false
+      text: |-
+        东方智感 · AI 内训第三期
+  - elementId: footer-right
+    elementType: text
+    bounds: [860, 508, 44, 14]
+    content:
+      style: "$caption"
+      color: "$hair"
+      align: [right, top]
+      wrap: false
+      text: |-
+        14

@@ -1,0 +1,43 @@
+[waiter] 等待生成满 100 ...
+[waiter] 生成满 100, 等 judge 驱动收尾 (最多 10 分钟) ...
+[waiter] harness 汇总 (全缓存命中) ...
+[05:54:59] 金标集: 100 题 (/home/chinux/jupyterlab/meerkatai/data/processed/v4_gold.jsonl) | tag=base_goldfix | dry_run=False
+[05:54:59] 生成缓存完整 (100 条), 复用 /home/chinux/jupyterlab/meerkatai/results/results/v4_gen_base_goldfix.jsonl, 不碰 GPU
+[05:54:59] judge 探测 kimi-k2-0711-preview: FAIL (Error code: 404 - {'error': {'message': 'Not found the model kimi-k2-0711-preview or Permission denied', 'type': 'resource_not_found_error'}})
+[05:55:01] judge 探测 moonshot-v1-32k: OK (ok)
+[05:55:02] judge 探测 moonshot-v1-8k: OK (ok)
+[05:55:03] judge: 缓存 100 条, 待评 0 条 (model=moonshot-v1-32k)
+[05:55:03] 基线配对: eval_v4_base_gold_20260723_105438.json (共同题 100)
+[05:55:03] 结果: /home/chinux/jupyterlab/meerkatai/results/eval_v4_base_goldfix_20260724_055459.json
+[05:55:03] Markdown 摘要: /home/chinux/jupyterlab/meerkatai/results/eval_v4_base_goldfix_20260724_055459.md
+{
+  "status": "OK",
+  "tag": "base_goldfix",
+  "result_json": "/home/chinux/jupyterlab/meerkatai/results/eval_v4_base_goldfix_20260724_055459.json",
+  "keyword_mean": 0.5641785714285714,
+  "judge_mean": 2.87,
+  "judge_model": "moonshot-v1-32k",
+  "same_origin_fallback": false
+}
+[waiter] 统计: baseline=results/eval_v4_base_goldfix_20260724_055459.json
+{
+  "status": "OK",
+  "decision": "keep_v2",
+  "v4_vs_basefix_judge": {
+    "diff": -0.3,
+    "ci95": [
+      -0.46,
+      -0.14
+    ],
+    "n": 100
+  },
+  "v4_vs_basefix_kw": {
+    "diff": -0.0073928571428571385,
+    "ci95": [
+      -0.04966666666666666,
+      0.034464285714285725
+    ],
+    "n": 100
+  }
+}
+[waiter] E0_FINISH_DONE

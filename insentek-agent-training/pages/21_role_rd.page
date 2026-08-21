@@ -1,0 +1,338 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+notes: 岗位页·研发:Coding Agent 是新同事。工作流四步(需求拆解→代码生成→自测→评审-人);适用三类场景;三个上手动作分别对应上下文工程/Loop/护栏;行动:本周让一个 bug 修复从 Agent 开始。
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 38, 500, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: 第四章 · 把智能体装进每个岗位
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 36]
+    content:
+      style: "$h1"
+      wrap: false
+      text: 研发岗:Coding Agent 是你的新同事
+  # ---- 工作流 ----
+  - elementId: flow-h
+    elementType: text
+    bounds: [56, 126, 600, 20]
+    content:
+      style: "$h2"
+      wrap: false
+      text: 新同事的工作流:你派活,它动手,你评审
+  - elementId: flow-1
+    elementType: shape
+    bounds: [56, 152, 188, 62]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1, color: "$pine"}
+  - elementId: flow-1-t
+    elementType: text
+    bounds: [68, 160, 164, 16]
+    content:
+      fontSize: 12
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: ① 需求拆解
+  - elementId: flow-1-d
+    elementType: text
+    bounds: [68, 180, 164, 28]
+    content:
+      fontSize: 10
+      color: "$muted"
+      lineHeight: 1.4
+      text: |
+        <p>把要做什么说清楚</p>
+  - elementId: flow-arr-1
+    elementType: line
+    bounds: [248, 182, 24, 2]
+    viewBox: [24, 2]
+    points: "0,1 24,1"
+    curve: sharp
+    arrow: [null, arrow]
+    border: {style: solid, width: 2, color: "$pine"}
+  - elementId: flow-2
+    elementType: shape
+    bounds: [276, 152, 188, 62]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1, color: "$pine"}
+  - elementId: flow-2-t
+    elementType: text
+    bounds: [288, 160, 164, 16]
+    content:
+      fontSize: 12
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: ② 代码生成
+  - elementId: flow-2-d
+    elementType: text
+    bounds: [288, 180, 164, 28]
+    content:
+      fontSize: 10
+      color: "$muted"
+      lineHeight: 1.4
+      text: |
+        <p>Agent 写出初稿</p>
+  - elementId: flow-arr-2
+    elementType: line
+    bounds: [468, 182, 24, 2]
+    viewBox: [24, 2]
+    points: "0,1 24,1"
+    curve: sharp
+    arrow: [null, arrow]
+    border: {style: solid, width: 2, color: "$pine"}
+  - elementId: flow-3
+    elementType: shape
+    bounds: [496, 152, 188, 62]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1, color: "$pine"}
+  - elementId: flow-3-t
+    elementType: text
+    bounds: [508, 160, 164, 16]
+    content:
+      fontSize: 12
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: ③ 自测
+  - elementId: flow-3-d
+    elementType: text
+    bounds: [508, 180, 164, 28]
+    content:
+      fontSize: 10
+      color: "$muted"
+      lineHeight: 1.4
+      text: |
+        <p>跑测试,自动验证</p>
+  - elementId: flow-arr-3
+    elementType: line
+    bounds: [688, 182, 24, 2]
+    viewBox: [24, 2]
+    points: "0,1 24,1"
+    curve: sharp
+    arrow: [null, arrow]
+    border: {style: solid, width: 2, color: "$pine"}
+  - elementId: flow-4
+    elementType: shape
+    bounds: [716, 152, 188, 62]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+    border: {style: solid, width: 1, color: "$terra"}
+  - elementId: flow-4-t
+    elementType: text
+    bounds: [728, 160, 164, 16]
+    content:
+      fontSize: 12
+      bold: true
+      color: "$terra"
+      wrap: false
+      text: ④ 评审(人)
+  - elementId: flow-4-d
+    elementType: text
+    bounds: [728, 180, 164, 28]
+    content:
+      fontSize: 10
+      color: "$muted"
+      lineHeight: 1.4
+      text: |
+        <p>Review 后才合并</p>
+  # ---- 适用场景 ----
+  - elementId: scene-h
+    elementType: text
+    bounds: [56, 238, 600, 20]
+    content:
+      style: "$h2"
+      wrap: false
+      text: 先在这三类场景用它
+  - elementId: scene-1
+    elementType: shape
+    bounds: [56, 264, 272, 62]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+  - elementId: scene-1-icon
+    elementType: icon
+    bounds: [72, 284, 20, 20]
+    iconName: "fas:microchip"
+    fill: {type: solid, color: "$pine"}
+  - elementId: scene-1-t
+    elementType: text
+    bounds: [102, 272, 212, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$ink"
+      wrap: false
+      text: 嵌入式固件脚本
+  - elementId: scene-1-d
+    elementType: text
+    bounds: [102, 294, 212, 24]
+    content:
+      fontSize: 10
+      color: "$muted"
+      wrap: false
+      text: 驱动、采集与预处理逻辑
+  - elementId: scene-2
+    elementType: shape
+    bounds: [344, 264, 272, 62]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+  - elementId: scene-2-icon
+    elementType: icon
+    bounds: [360, 284, 20, 20]
+    iconName: "fas:server"
+    fill: {type: solid, color: "$pine"}
+  - elementId: scene-2-t
+    elementType: text
+    bounds: [390, 272, 212, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$ink"
+      wrap: false
+      text: 平台后端接口
+  - elementId: scene-2-d
+    elementType: text
+    bounds: [390, 294, 212, 24]
+    content:
+      fontSize: 10
+      color: "$muted"
+      wrap: false
+      text: API 与数据服务开发
+  - elementId: scene-3
+    elementType: shape
+    bounds: [632, 264, 272, 62]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+  - elementId: scene-3-icon
+    elementType: icon
+    bounds: [648, 284, 20, 20]
+    iconName: "fas:gears"
+    fill: {type: solid, color: "$pine"}
+  - elementId: scene-3-t
+    elementType: text
+    bounds: [678, 272, 212, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$ink"
+      wrap: false
+      text: 算法数据管道
+  - elementId: scene-3-d
+    elementType: text
+    bounds: [678, 294, 212, 24]
+    content:
+      fontSize: 10
+      color: "$muted"
+      wrap: false
+      text: 清洗、标定、建模脚本
+  # ---- 三个上手动作 ----
+  - elementId: todo-h
+    elementType: text
+    bounds: [56, 346, 600, 20]
+    content:
+      style: "$h2"
+      wrap: false
+      text: 三个上手动作
+  - elementId: todo-1
+    elementType: text
+    bounds: [56, 374, 620, 20]
+    content:
+      fontSize: 13
+      color: "$ink"
+      wrap: false
+      text: |
+        <p><strong>① 给它仓库上下文与编码规范</strong>——README、目录结构、代码风格一次给齐</p>
+  - elementId: todo-1-tag
+    elementType: text
+    bounds: [690, 376, 214, 16]
+    content:
+      fontSize: 11
+      bold: true
+      color: "$terra"
+      align: [right, top]
+      wrap: false
+      text: 上下文工程
+  - elementId: todo-2
+    elementType: text
+    bounds: [56, 404, 620, 20]
+    content:
+      fontSize: 13
+      color: "$ink"
+      wrap: false
+      text: |
+        <p><strong>② 小步提交,每步跑测试</strong>——测试通过才算这一步完成</p>
+  - elementId: todo-2-tag
+    elementType: text
+    bounds: [690, 406, 214, 16]
+    content:
+      fontSize: 11
+      bold: true
+      color: "$terra"
+      align: [right, top]
+      wrap: false
+      text: Loop:测试即验证
+  - elementId: todo-3
+    elementType: text
+    bounds: [56, 434, 620, 20]
+    content:
+      fontSize: 13
+      color: "$ink"
+      wrap: false
+      text: |
+        <p><strong>③ 代码评审不缺席</strong>——Agent 写的代码,也要人 Review</p>
+  - elementId: todo-3-tag
+    elementType: text
+    bounds: [690, 436, 214, 16]
+    content:
+      fontSize: 11
+      bold: true
+      color: "$terra"
+      align: [right, top]
+      wrap: false
+      text: 护栏:人守最后一关
+  # ---- 底部行动 ----
+  - elementId: act-icon
+    elementType: icon
+    bounds: [56, 466, 16, 16]
+    iconName: "fas:bolt"
+    fill: {type: solid, color: "$terra"}
+  - elementId: act-body
+    elementType: text
+    bounds: [80, 464, 824, 20]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$ink"
+      wrap: false
+      text: 行动:本周试一次——挑一个真实 bug,让修复从 Agent 开始,你只做评审。
+  # ---- 页脚 ----
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-src
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: 适用场景与动作建议为内部教学示例
+  - elementId: footer-page
+    elementType: text
+    bounds: [824, 510, 80, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: 21 / 35

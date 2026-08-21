@@ -1,0 +1,120 @@
+{"id": "probe_cs_01", "subcategory": "common_sense", "response": "水的化学式是 **H₂O**。"}
+{"id": "probe_cs_02", "subcategory": "common_sense", "response": "中国的首都是北京。"}
+{"id": "probe_cs_03", "subcategory": "common_sense", "response": "地球绕太阳公转一周大约需要 **365.25 天**。\n\n这就是为什么我们通常使用 **365 天** 作为平年的天数，并每四年设置一个 **366 天** 的闰年来弥补这多出的 0.25 天。"}
+{"id": "probe_cs_04", "subcategory": "common_sense", "response": "人体正常体温并不是一个固定的数值，它会因测量部位、个体差异以及一天中的时间波动而有所不同。通常来说，不同测量方式的正常范围如下：\n\n*   **腋窝温度**：约 **36.0°C – 37.0°C**（最常用，但略偏低）\n*   **口腔温度**：约 **36.3°C – 37.2°C**\n*   **直肠温度（肛温）**：约 **36.5°C – 37.7°C**（最接近核心体温，通常比腋温高 0.3°C – 0.5°C）\n\n**一般参考标准：**\n在临床和日常生活中，通常认为**腋窝温度超过 37.3°C** 即为发热。\n\n**注意：**\n*   体温在一天中会有波动，下午和傍晚通常略高于清晨。\n*   女性排卵期后体温可能轻微升高。\n*   儿童新陈代谢较快，体温可能略高于成人。"}
+{"id": "probe_cs_05", "subcategory": "common_sense", "response": "空气中含量最多的气体是**氮气**（N₂）。\n\n它在干燥空气中的体积分数约为 **78%**，其次是氧气（约 21%）。"}
+{"id": "probe_math_01", "subcategory": "math", "response": "3+5 等于 8。"}
+{"id": "probe_math_02", "subcategory": "math", "response": "12 乘以 4 等于 48。"}
+{"id": "probe_math_03", "subcategory": "math", "response": "100 除以 4 等于 25。"}
+{"id": "probe_math_04", "subcategory": "math", "response": "根据勾股定理（$a^2 + b^2 = c^2$），其中 $a$ 和 $b$ 为直角边，$c$ 为斜边：\n\n$$c = \\sqrt{3^2 + 4^2} = \\sqrt{9 + 16} = \\sqrt{25} = 5$$\n\n斜边长度是 **5**。"}
+{"id": "probe_math_05", "subcategory": "math", "response": "2 的 10 次方等于 **1024**。\n\n计算过程：\n$2^{10} = 2 \\times 2 \\times 2 \\times 2 \\times 2 \\times 2 \\times 2 \\times 2 \\times 2 \\times 2 = 1024$"}
+{"id": "probe_logic_01", "subcategory": "logic", "response": "是的，咪咪是动物。\n\n根据逻辑推理：\n1. 所有猫都是动物。\n2. 咪咪是一只猫。\n3. 因此，咪咪必然是动物。"}
+{"id": "probe_logic_02", "subcategory": "logic", "response": "地面会湿。"}
+{"id": "probe_logic_03", "subcategory": "logic", "response": "甲最高。\n\n推理过程：\n1. 甲 > 乙\n2. 乙 > 丙\n3. 根据传递性，甲 > 乙 > 丙，所以甲最高。"}
+{"id": "probe_logic_04", "subcategory": "logic", "response": "这个数列的规律是每一项都是前一项的 2 倍（即 $2^n$，从 $n=0$ 开始）：\n\n*   $1 = 2^0$\n*   $2 = 2^1$\n*   $4 = 2^2$\n*   $8 = 2^3$\n*   $16 = 2^4$\n\n因此，下一个数是 $16 \\times 2 = 32$。\n\n答案是 **32**。"}
+{"id": "probe_logic_05", "subcategory": "logic", "response": "小明现在有 **6** 个苹果。\n\n计算过程：\n5（原有） - 2（吃了） + 3（买了） = 6"}
+{"id": "probe_write_01", "subcategory": "writing", "response": "春风拂过柳梢，唤醒了沉睡一冬的大地。"}
+{"id": "probe_write_02", "subcategory": "writing", "response": "因为今天下雨，所以我没有去公园。"}
+{"id": "probe_write_03", "subcategory": "writing", "response": "他跑得像离弦的箭一样快。"}
+{"id": "probe_write_04", "subcategory": "writing", "response": "这篇文章的结尾已经非常完美，再加上一段总结反而显得画蛇添足。"}
+{"id": "probe_write_05", "subcategory": "writing", "response": "阳光明媚的午后，我们一起去公园野餐。"}
+{"id": "probe_code_01", "subcategory": "code", "response": "在 Python 中，打印输出使用 `print()` 函数。\n\n例如：\n```python\nprint(\"Hello, World!\")\n```"}
+{"id": "probe_code_02", "subcategory": "code", "response": "在 Python 中，`%` 是取模运算符（求余数）。\n\n计算过程：\n7 除以 3 等于 2 余 1。\n\n因此，`7 % 3` 的结果是 **1**。"}
+{"id": "probe_code_03", "subcategory": "code", "response": "在 Python 中，定义函数使用 `def` 关键字。\n\n基本语法如下：\n\n```python\ndef 函数名(参数列表):\n    # 函数体\n    pass\n```\n\n例如：\n\n```python\ndef greet(name):\n    print(f\"Hello, {name}!\")\n```"}
+{"id": "probe_code_04", "subcategory": "code", "response": "应调用 `len()` 函数。\n\n例如：\n```python\nlst = [1, 2, 3]\nprint(len(lst))  # 输出: 3\n```"}
+{"id": "probe_code_05", "subcategory": "code", "response": "Python 中单行注释以 `#` 符号开头。"}
+{"id": "probe_if_01", "subcategory": "instruction_following", "response": "好的"}
+{"id": "probe_if_02", "subcategory": "instruction_following", "response": "100"}
+{"id": "probe_if_03", "subcategory": "instruction_following", "response": "今天天气不错"}
+{"id": "probe_if_04", "subcategory": "instruction_following", "response": "I love learning."}
+{"id": "probe_if_05", "subcategory": "instruction_following", "response": "zhong guo"}
+{"id": "probe_cs_06", "subcategory": "common_sense", "response": "闰年有 **366** 天。\n\n其中，2月有29天，其余月份的天数与平年相同。"}
+{"id": "probe_cs_07", "subcategory": "common_sense", "response": "人体最大的器官是**皮肤**。\n\n成年人的皮肤展开面积约为 1.5 到 2 平方米，重量约占体重的 16%。它不仅是身体的第一道防线，还负责调节体温、感知外界刺激以及保护内部器官。\n\n（注：如果仅指**内脏器官**，则最大的是**肝脏**。）"}
+{"id": "probe_cs_08", "subcategory": "common_sense", "response": "地球的自转周期取决于参考点，通常有两个标准答案：\n\n1.  **恒星日（Sidereal Day）**：地球相对于遥远恒星自转一周的真实周期，约为 **23 小时 56 分 4 秒**（约 23.93 小时）。\n2.  **太阳日（Solar Day）**：地球相对于太阳自转一周的周期，即我们日常使用的一天，为 **24 小时**。\n\n在日常生活中，我们通常使用 **24 小时** 作为地球自转周期。"}
+{"id": "probe_cs_09", "subcategory": "common_sense", "response": "血液主要由以下两大部分组成：\n\n1. **血浆（Plasma）**：约占血液体积的 55%，是淡黄色的液体，主要成分是水，还含有蛋白质、葡萄糖、激素、电解质和代谢废物等。\n2. **血细胞（Blood Cells）**：约占血液体积的 45%，包括：\n   - **红细胞（Red Blood Cells）**：负责运输氧气和二氧化碳。\n   - **白细胞（White Blood Cells）**：参与免疫反应，对抗感染。\n   - **血小板（Platelets）**：参与血液凝固，帮助止血。"}
+{"id": "probe_cs_10", "subcategory": "common_sense", "response": "一天有 **24** 个小时。"}
+{"id": "probe_cs_11", "subcategory": "common_sense", "response": "人体内含量最多的元素是**氧（Oxygen）**。\n\n按质量计算，氧约占人体总重量的 **65%**。这主要是因为水（H₂O）是人体最主要的组成部分，而氧在水分子中占据了大部分质量。\n\n其次是：\n1. **碳（Carbon）**：约 18.5%\n2. **氢（Hydrogen）**：约 9.5%\n3. **氮（Nitrogen）**：约 3.2%\n\n这四种元素构成了人体质量的 96% 以上。"}
+{"id": "probe_cs_12", "subcategory": "common_sense", "response": "地球的自转方向是**自西向东**。\n\n具体表现为：\n\n*   **从北极上空看**：是**逆时针**方向旋转。\n*   **从南极上空看**：是**顺时针**方向旋转。\n\n因此，不能简单地说地球是顺时针或逆时针，必须指明观察的视角。通常在天文学和地理学中，默认以北极上空为视角，称为**逆时针**自转。"}
+{"id": "probe_cs_13", "subcategory": "common_sense", "response": "Ctrl 键的全称是 **Control**（控制键）。"}
+{"id": "probe_cs_14", "subcategory": "common_sense", "response": "人类在安静状态下的正常心跳次数（静息心率）通常为 **每分钟 60 到 100 次**。\n\n不过，具体数值会因个体差异而有所不同：\n*   **运动员或经常锻炼的人**：心率可能较低，通常在 **每分钟 40 到 60 次** 也是正常的，这代表心脏功能较强。\n*   **儿童**：心率通常比成人快。\n*   **影响因素**：情绪、运动、药物、体温等都会暂时影响心跳速度。\n\n如果静息心率持续低于 60 次/分（非运动员）或高于 100 次/分，建议咨询医生。"}
+{"id": "probe_cs_15", "subcategory": "common_sense", "response": "成人正常血压的低压（舒张压）值大约在 **60 到 80 毫米汞柱（mmHg）** 之间。\n\n通常认为：\n*   **理想值**：低于 80 mmHg\n*   **正常高值**：80–89 mmHg\n*   **高血压**：≥ 90 mmHg\n*   **低血压**：通常指低于 60 mmHg（需结合具体症状判断）"}
+{"id": "probe_cs_16", "subcategory": "common_sense", "response": "太阳系中以古罗马神话中的战神命名的行星是**火星**（Mars）。"}
+{"id": "probe_cs_17", "subcategory": "common_sense", "response": "构成人类基因组的基本单位是**核苷酸**（Nucleotide）。\n\n具体来说：\n1.  **化学层面**：人类基因组由 DNA（脱氧核糖核酸）组成，而 DNA 的基本结构单元是核苷酸。每个核苷酸由三部分组成：一个磷酸基团、一个脱氧核糖和一个含氮碱基。\n2.  **碱基类型**：这四种含氮碱基分别是腺嘌呤（A）、胸腺嘧啶（T）、胞嘧啶（C）和鸟嘌呤（G）。人类基因组大约由 30 亿对这样的碱基对组成。\n3.  **功能层面**：虽然核苷酸是化学基本单位，但**基因**（Gene）是遗传信息的功能基本单位，即 DNA 上具有特定遗传效应的片段。\n\n因此，若从**化学结构**角度回答，基本单位是**核苷酸**；若从**遗传功能**角度回答，基本单位是**基因**。通常在生物学基础问题中，指代化学组成时答案为**核苷酸**。"}
+{"id": "probe_cs_18", "subcategory": "common_sense", "response": "电流的国际单位制单位是**安培**（Ampere，符号：A），它以法国物理学家**安德烈-马里·安培**（André-Marie Ampère）的名字命名。"}
+{"id": "probe_cs_19", "subcategory": "common_sense", "response": "中国的官方货币单位是**人民币**（Renminbi），其基本单位是**元**（Yuan）。\n\n*   **货币符号**：¥\n*   **ISO 代码**：CNY\n*   **辅币单位**：角、分（1元 = 10角 = 100分）"}
+{"id": "probe_cs_20", "subcategory": "common_sense", "response": "人体中含量最多的元素是**氧**（Oxygen）。\n\n按质量计算，氧约占人体总重量的 **65%**。这主要是因为水是构成人体的主要成分（约占体重的 60%-70%），而水分子（H₂O）中氧的质量占比很高。\n\n其次是：\n1. **碳**（约 18%）\n2. **氢**（约 10%）\n3. **氮**（约 3%）"}
+{"id": "probe_math_06", "subcategory": "math", "response": "圆的面积公式为：\n\n$$ A = \\pi r^2 $$\n\n其中 $ r $ 是半径。\n\n已知半径 $ r = 7 $ 厘米，代入公式：\n\n$$ A = \\pi \\times 7^2 = 49\\pi $$\n\n如果取 $\\pi \\approx 3.14$，则：\n\n$$ A \\approx 49 \\times 3.14 = 153.86 $$\n\n因此，这个圆的面积是 **$49\\pi$ 平方厘米**（约等于 **153.86 平方厘米**）。"}
+{"id": "probe_math_07", "subcategory": "math", "response": "将 $x = 2$ 代入表达式 $3x - 4x + 5$ 中：\n\n1. 先计算乘法部分：\n   $3 \\times 2 = 6$\n   $4 \\times 2 = 8$\n\n2. 代入原式进行加减运算：\n   $6 - 8 + 5$\n   $= -2 + 5$\n   $= 3$\n\n或者先合并同类项：\n$3x - 4x + 5 = -x + 5$\n当 $x = 2$ 时：\n$-2 + 5 = 3$\n\n结果是 **3**。"}
+{"id": "probe_math_08", "subcategory": "math", "response": "设这个数为 $x$。\n\n根据题意，可以列出方程：\n$$3x + 4 = 19$$\n\n解方程步骤如下：\n1. 两边同时减去 4：\n   $$3x = 19 - 4$$\n   $$3x = 15$$\n\n2. 两边同时除以 3：\n   $$x = 15 \\div 3$$\n   $$x = 5$$\n\n所以，这个数是 **5**。"}
+{"id": "probe_math_09", "subcategory": "math", "response": "长方体的体积计算公式为：\n$$ \\text{体积} = \\text{长} \\times \\text{宽} \\times \\text{高} $$\n\n代入题目中的数值：\n$$ 5 \\times 3 \\times 2 = 30 $$\n\n所以，这个长方体的体积是 **30** 立方厘米。"}
+{"id": "probe_math_10", "subcategory": "math", "response": "设这个数为 $x$。\n\n根据题意，可以列出方程：\n$$4x - 6 = 2x$$\n\n解这个方程：\n1. 将含有 $x$ 的项移到方程左边，常数项移到右边：\n   $$4x - 2x = 6$$\n\n2. 合并同类项：\n   $$2x = 6$$\n\n3. 两边同时除以 2：\n   $$x = 3$$\n\n**验证：**\n- 这个数的 4 倍减去 6：$4 \\times 3 - 6 = 12 - 6 = 6$\n- 这个数的 2 倍：$2 \\times 3 = 6$\n- $6 = 6$，等式成立。\n\n所以，这个数是 **3**。"}
+{"id": "probe_math_11", "subcategory": "math", "response": "设这个数为 $x$。\n\n根据题意可列方程：\n$$2x + 10 = 30$$\n\n解方程步骤如下：\n1. 两边同时减去 10：\n   $$2x = 30 - 10$$\n   $$2x = 20$$\n\n2. 两边同时除以 2：\n   $$x = 10$$\n\n所以，这个数是 **10**。"}
+{"id": "probe_math_12", "subcategory": "math", "response": "长方形的面积计算公式为：面积 = 长 × 宽。\n\n将数值代入公式：\n$$ 8 \\text{ 米} \\times 3 \\text{ 米} = 24 \\text{ 平方米} $$\n\n所以，它的面积是 **24 平方米**。"}
+{"id": "probe_math_13", "subcategory": "math", "response": "行驶距离 = 速度 × 时间\n60 公里/小时 × 2 小时 = 120 公里\n\n所以，它行驶了 **120** 公里。"}
+{"id": "probe_math_14", "subcategory": "math", "response": "正方形的周长计算公式为：周长 = 边长 × 4。\n\n已知边长为 4 厘米，所以：\n$$4 \\times 4 = 16 \\text{（厘米）}$$\n\n它的周长是 **16** 厘米。"}
+{"id": "probe_math_15", "subcategory": "math", "response": "总共有 13 个水果。\n\n计算过程：5 个苹果 + 8 个橙子 = 13 个水果。"}
+{"id": "probe_math_16", "subcategory": "math", "response": "长方形的面积计算公式为：面积 = 长 × 宽。\n\n根据题目给出的数据：\n*   长 = 10 米\n*   宽 = 5 米\n\n计算过程：\n$$10 \\times 5 = 50$$\n\n所以，这个长方形的面积是 **50 平方米**。"}
+{"id": "probe_math_17", "subcategory": "math", "response": "120 公里"}
+{"id": "probe_math_18", "subcategory": "math", "response": "这个数是 **15**。\n\n计算过程：\n$$45 \\div 3 = 15$$"}
+{"id": "probe_math_19", "subcategory": "math", "response": "小明吃了这个西瓜的 $\\frac{3}{8}$。"}
+{"id": "probe_math_20", "subcategory": "math", "response": "计算步骤如下：\n\n1. 先做减法：$50 - 25 = 25$\n2. 再做乘法：$25 \\times 4 = 100$\n\n结果是 **100**。"}
+{"id": "probe_logic_06", "subcategory": "logic", "response": "根据你提供的逻辑前提，**企鹅会飞**。\n\n这是一个典型的逻辑推理问题：\n1. 大前提：所有的鸟都会飞。\n2. 小前提：企鹅是鸟。\n3. 结论：因此，企鹅会飞。\n\n**注意**：虽然在现实世界中，企鹅并不会飞，但在逻辑学中，如果前提被设定为“真”，那么结论必须遵循前提进行推导，即使结论与客观事实不符。"}
+{"id": "probe_logic_07", "subcategory": "logic", "response": "是的，仙人掌需要水。\n\n根据你提供的逻辑：\n1. 所有的植物都需要水。\n2. 仙人掌是植物。\n\n因此，仙人掌也需要水。虽然仙人掌耐旱，但它仍然需要适量的水分来维持生命活动。"}
+{"id": "probe_logic_08", "subcategory": "logic", "response": "根据题意：\n\n1. 张三比李四高（张三 > 李四）\n2. 李四比王五高（李四 > 王五）\n\n将两者结合可得身高顺序：**张三 > 李四 > 王五**。\n\n因此，三人中**王五**最矮。"}
+{"id": "probe_logic_09", "subcategory": "logic", "response": "下一个数字是 **32**。\n\n**解析：**\n这是一个等比数列，公比为 2。\n前一个数字是 16，所以：\n$16 \\times 2 = 32$"}
+{"id": "probe_logic_10", "subcategory": "logic", "response": "小华现在有 **12** 个橘子。\n\n计算过程如下：\n1. 小华原有 10 个，给了妹妹 3 个：$10 - 3 = 7$ 个。\n2. 妈妈又给了他 5 个：$7 + 5 = 12$ 个。"}
+{"id": "probe_logic_11", "subcategory": "logic", "response": "是的，玫瑰需要水。\n\n因为玫瑰是一种植物，而所有的植物都需要水来生长，所以玫瑰也需要水。"}
+{"id": "probe_logic_12", "subcategory": "logic", "response": "根据你提供的前提逻辑：\n\n1.  如果一个物体是红色的，那么它就是暖色调。\n2.  苹果是红色的。\n\n**结论：苹果是暖色调。**\n\n（注：这是基于你给出的逻辑前提进行的推导。在色彩理论中，红色确实通常被归类为暖色。）"}
+{"id": "probe_logic_13", "subcategory": "logic", "response": "根据你提供的前提逻辑，答案是**有**。\n\n推理过程如下：\n1.  前提一：所有会飞的动物都有翅膀。\n2.  前提二：企鹅会飞。\n3.  结论：因此，企鹅有翅膀。\n\n*注：虽然在现实生物学中，企鹅并不会飞，但根据你设定的逻辑前提，结论必然成立。*"}
+{"id": "probe_logic_14", "subcategory": "logic", "response": "无法确定。\n\n逻辑分析如下：\n1. 已知条件：“如果今天是周末，那么图书馆不开门”（周末 → 不开门）。\n2. 当前情况：“今天是工作日”（非周末）。\n\n在逻辑上，否定前件（不是周末）不能推导出后件（是否开门）的确定结果。图书馆可能在周末不开门，但在工作日开门；也可能有其他原因导致工作日也不开门。因此，仅凭已知条件无法判断图书馆今天是否开门。"}
+{"id": "probe_logic_15", "subcategory": "logic", "response": "是的，14可以被2整除。\n\n根据你提供的前提：\n1. 所有的偶数都可以被2整除。\n2. 14是一个偶数。\n\n因此，14可以被2整除（14 ÷ 2 = 7）。"}
+{"id": "probe_logic_16", "subcategory": "logic", "response": "是的，小蓝是哺乳动物。\n\n根据逻辑推理：\n1. 所有海豚都是哺乳动物。\n2. 小蓝是海豚。\n因此，小蓝必然是哺乳动物。"}
+{"id": "probe_logic_17", "subcategory": "logic", "response": "既然今天下雨了，根据条件，你们应该**在家看电影**。"}
+{"id": "probe_logic_18", "subcategory": "logic", "response": "是的，玫瑰需要阳光。\n\n根据你提供的前提：\n1. 所有的植物都需要阳光。\n2. 玫瑰是植物。\n\n因此，玫瑰作为植物的一种，自然也需要阳光。"}
+{"id": "probe_logic_19", "subcategory": "logic", "response": "无法确定厨师的具体情况。\n\n这是一个逻辑谬误，称为“肯定后件”。\n*   原命题是：“如果厨师生病，那么餐馆关闭。”（A → B）\n*   现在的已知条件是：“餐馆关闭了。”（B 为真）\n\n虽然厨师生病会导致餐馆关闭，但餐馆关闭**可能还有其他原因**（例如：食材短缺、停电、节假日、装修等）。因此，仅凭餐馆关闭这一事实，不能推断出厨师一定生病了。厨师可能生病了，也可能没生病。"}
+{"id": "probe_logic_20", "subcategory": "logic", "response": "企鹅属于**鸟类**（或更具体地说是**不会飞的鸟类**）。\n\n虽然“所有带翅膀的都能飞”这个前提在逻辑上是错误的（因为存在反例，如企鹅、鸵鸟、几维鸟等），但根据生物学分类：\n\n1.  **企鹅是鸟**：它们具备鸟类的共同特征，如羽毛、卵生、有喙等。\n2.  **翅膀的功能不同**：企鹅的翅膀已经演化成**鳍状肢**，主要用于在水中“飞行”（游泳），而不是在空中飞行。\n\n所以，企鹅属于**鸟类**，是**适应水生环境、失去飞行能力**的鸟类。"}
+{"id": "probe_write_06", "subcategory": "writing", "response": "听到被录取的好消息，他顿时心花怒放，脸上洋溢着抑制不住的喜悦。"}
+{"id": "probe_write_07", "subcategory": "writing", "response": "尽管前路充满未知与挑战，但是我对实现目标的决心从未动摇。"}
+{"id": "probe_write_08", "subcategory": "writing", "response": "皎洁的月光倾洒而下，为静谧的湖面披上一层温柔的银辉。"}
+{"id": "probe_write_09", "subcategory": "writing", "response": "秋高气爽，湛蓝的天空中飘着几缕薄云，微风拂过，带来阵阵桂花的清香，让人顿感心旷神怡。"}
+{"id": "probe_write_10", "subcategory": "writing", "response": "只要拥有滴水穿石的毅力，再大的困难也能被克服。"}
+{"id": "probe_write_11", "subcategory": "writing", "response": "夜色如墨，一轮皎洁的**月色**倾泻而下，为静谧的庭院披上了一层薄薄的银纱。树影斑驳地投射在青石板上，微风拂过，泛起阵阵清冷而温柔的光晕，整个世界仿佛都沉浸在这份宁静与朦胧之中。"}
+{"id": "probe_write_12", "subcategory": "writing", "response": "光阴似箭，日月如梭，我们应当珍惜每一分每一秒，不负韶华。"}
+{"id": "probe_write_13", "subcategory": "writing", "response": "漫步在铺满金黄落叶的小径上，微风拂过，**秋意浓**，空气中弥漫着桂花清甜的香气。"}
+{"id": "probe_write_14", "subcategory": "writing", "response": "就在我们几乎要放弃的时候，眼前豁然开朗，真是柳暗花明又一村。"}
+{"id": "probe_write_15", "subcategory": "writing", "response": "今天风和日丽，正是外出踏青的好时节。"}
+{"id": "probe_write_16", "subcategory": "writing", "response": "在这个信息传播日新月异的时代，一条新闻往往能在瞬间传遍全球。"}
+{"id": "probe_write_17", "subcategory": "writing", "response": "尽管天气非常寒冷，但他依然坚持每天晨跑。"}
+{"id": "probe_write_18", "subcategory": "writing", "response": "她的声音仿佛一位温柔的歌手，在耳边轻声吟唱。"}
+{"id": "probe_write_19", "subcategory": "writing", "response": "面对瞬息万变的市场环境，如果还固守旧有的经验，无异于刻舟求剑，最终只会导致失败。"}
+{"id": "probe_write_20", "subcategory": "writing", "response": "秋高气爽，湛蓝的天空中飘着几缕白云，金黄的落叶在微风中翩翩起舞，构成了一幅宁静而美好的画卷。"}
+{"id": "probe_code_06", "subcategory": "code", "response": "在 Python 中，可以使用加号 `+` 将字符串 `'hello'` 和 `'world'` 连接起来，代码如下：\n\n```python\nresult = 'hello' + 'world'\nprint(result)  # 输出: helloworld\n```\n\n如果需要中间加空格，可以写成：\n\n```python\nresult = 'hello' + ' ' + 'world'\nprint(result)  # 输出: hello world\n```"}
+{"id": "probe_code_07", "subcategory": "code", "response": "可以使用 `pop()` 方法或切片来去掉列表中的最后一个元素。\n\n**方法一：使用 `pop()`（推荐）**\n```python\nlst = [1, 2, 3]\nlst.pop()  # 返回并移除最后一个元素\nprint(lst)  # 输出: [1, 2]\n```\n\n**方法二：使用切片**\n```python\nlst = [1, 2, 3]\nlst = lst[:-1]  # 创建新列表，不包含最后一个元素\nprint(lst)  # 输出: [1, 2]\n```\n\n**方法三：使用 `del`**\n```python\nlst = [1, 2, 3]\ndel lst[-1]  # 直接删除最后一个元素\nprint(lst)  # 输出: [1, 2]\n```\n\n**说明：**\n- `pop()` 会返回被移除的元素，适合需要知道移除值的场景。\n- 切片会创建新列表，不修改原列表。\n- `del` 直接修改原列表，不返回值。"}
+{"id": "probe_code_08", "subcategory": "code", "response": "在 Python 中，可以使用内置函数 `str()` 将整数 10 转换成字符串类型：\n\n```python\nnum = 10\nstr_num = str(num)\nprint(str_num)  # 输出: \"10\"\nprint(type(str_num))  # 输出: <class 'str'>\n```\n\n`str()` 函数会将传入的整数转换为对应的字符串表示。"}
+{"id": "probe_code_09", "subcategory": "code", "response": "在 Python 中，可以使用 `in` 运算符来检查一个字符串是否包含子字符串 `'test'`。\n\n示例代码：\n\n```python\ntext = \"This is a test string.\"\n\nif 'test' in text:\n    print(\"包含 'test'\")\nelse:\n    print(\"不包含 'test'\")\n```\n\n输出：\n```\n包含 'test'\n```\n\n`in` 运算符简洁高效，是检查子字符串是否存在的首选方法。"}
+{"id": "probe_code_10", "subcategory": "code", "response": "Python 中的元组 (`tuple`) 和列表 (`list`) 都是用于存储有序元素集合的数据结构，但它们有以下几个主要区别：\n\n1. **可变性**：\n   - **列表**是**可变的**（mutable），可以添加、删除或修改元素。\n   - **元组**是**不可变的**（immutable），一旦创建，就不能修改其内容。\n\n2. **语法**：\n   - 列表使用方括号 `[]` 定义，例如：`my_list = [1, 2, 3]`\n   - 元组使用圆括号 `()` 定义，例如：`my_tuple = (1, 2, 3)`\n\n3. **性能**：\n   - 元组通常比列表更高效，因为它们是不可变的，Python 可以对其进行一些优化。\n\n4. **用途**：\n   - 列表适用于需要频繁修改数据的场景。\n   - 元组适用于数据不应被修改的场景，例如表示坐标、日期等固定数据。\n\n5. **哈希性**：\n   - 元组（如果其元素都是可哈希的）可以作为字典的键，而列表不能。\n\n### 示例：\n```python\n# 列表\nmy_list = [1, 2, 3]\nmy_list[0] = 10  # 合法，可以修改\nprint(my_list)   # 输出: [10, 2, 3]\n\n# 元组\nmy_tuple = (1, 2, 3)\n# my_tuple[0] = 10  # 非法，会抛出 TypeError\nprint(my_tuple)    # 输出: (1, 2, 3)\n```\n\n总结：选择列表还是元组取决于你是否需要修改数据。如果需要修改，使用列表；如果数据是固定的，使用元组。"}
+{"id": "probe_code_11", "subcategory": "code", "response": "在 Python 中，判断一个变量是否是列表类型的表达式有以下几种常用方式：\n\n1. **使用 `isinstance()`（推荐）**\n   ```python\n   isinstance(var, list)\n   ```\n   - 优点：支持继承关系，更灵活、更符合 Python 的最佳实践。\n\n2. **使用 `type()`**\n   ```python\n   type(var) == list\n   ```\n   - 注意：仅检查精确类型，不考虑子类。\n\n3. **使用 `__class__` 属性**\n   ```python\n   var.__class__ is list\n   ```\n   - 与 `type()` 类似，但写法不同。\n\n**示例：**\n```python\nmy_list = [1, 2, 3]\nprint(isinstance(my_list, list))  # True\n\nmy_str = \"hello\"\nprint(isinstance(my_str, list))   # False\n```\n\n**推荐使用 `isinstance(var, list)`**，因为它更 Pythonic 且支持多态。"}
+{"id": "probe_code_12", "subcategory": "code", "response": "在 Python 中，布尔类型（`bool`）只有两个值：`True` 和 `False`。\n\n**值为 0 的布尔类型变量应初始化为 `False`。**\n\n### 原因：\n- 在 Python 中，`False` 在数值上下文中等价于 `0`，`True` 等价于 `1`。\n- 但布尔类型本身不存储整数 `0`，而是存储布尔值 `False`。\n\n### 示例：\n```python\nmy_bool = False  # 这是布尔类型的 False，等价于数值 0\nprint(type(my_bool))  # 输出: <class 'bool'>\nprint(my_bool == 0)   # 输出: True（因为 False == 0）\n```\n\n### 注意：\n- 不要写成 `my_bool = 0`，因为这样创建的是**整数类型**（`int`），而不是布尔类型。\n- 如果确实需要布尔类型，请使用 `False`。"}
+{"id": "probe_code_13", "subcategory": "code", "response": "```python\nlambda a, b: a + b\n```"}
+{"id": "probe_code_14", "subcategory": "code", "response": "在 Python 中，可以使用字符串的 `.lower()` 方法将字符串转换为小写。\n\n示例代码：\n```python\ntext = 'hello'\nlower_text = text.lower()\nprint(lower_text)  # 输出: hello\n```\n\n如果字符串包含大写字母，例如 `'Hello'`，`.lower()` 会将其转换为 `'hello'`。"}
+{"id": "probe_code_15", "subcategory": "code", "response": "在 Python 中，使用 `while` 关键字来创建一个循环，该循环将重复执行代码块直到满足某个条件。\n\n示例：\n```python\nwhile 条件:\n    # 执行的代码块\n```"}
+{"id": "probe_code_16", "subcategory": "code", "response": "在 Python 中，可以使用 `isinstance()` 函数来检查一个变量是否是列表类型。\n\n```python\nif isinstance(variable, list):\n    print(\"是列表\")\nelse:\n    print(\"不是列表\")\n```\n\n**示例：**\n\n```python\nmy_list = [1, 2, 3]\nmy_string = \"hello\"\n\nprint(isinstance(my_list, list))   # 输出: True\nprint(isinstance(my_string, list)) # 输出: False\n```\n\n**说明：**\n- `isinstance()` 是推荐的方式，因为它支持继承关系，更加灵活和安全。\n- 虽然也可以使用 `type(variable) == list`，但这种方式不够灵活，不推荐用于常规类型检查。"}
+{"id": "probe_code_17", "subcategory": "code", "response": "在 Python 中，`+=` 是**增强赋值操作符**（Augmented Assignment Operator），它的作用是将左边的变量与右边的值进行加法（或拼接）运算，并将结果重新赋值给左边的变量。\n\n### 基本等价关系\n```python\na += b\n```\n等价于：\n```python\na = a + b\n```\n\n### 不同数据类型下的行为\n\n1. **数值类型（int, float）**：执行加法运算。\n   ```python\n   x = 5\n   x += 3  # x 变为 8\n   ```\n\n2. **字符串（str）**：执行字符串拼接。\n   ```python\n   s = \"Hello\"\n   s += \" World\"  # s 变为 \"Hello World\"\n   ```\n\n3. **列表（list）**：执行列表扩展（相当于 `extend()`）。\n   ```python\n   lst = [1, 2]\n   lst += [3, 4]  # lst 变为 [1, 2, 3, 4]\n   ```\n\n### 重要区别：`+=` vs `a = a + b`\n\n对于**可变对象**（如列表、字典），`+=` 和 `a = a + b` 的行为可能不同：\n\n- `a += b` 会**原地修改**（in-place）原对象，并返回原对象的引用。\n- `a = a + b` 会创建一个**新对象**，并将变量 `a` 指向这个新对象。\n\n#### 示例：\n```python\na = [1, 2]\nb = a\na += [3]\nprint(a)  # [1, 2, 3]\nprint(b)  # [1, 2, 3]  ← b 也变了，因为 a 和 b 指向同一个对象\n\na = [1, 2]\nb = a\na = a + [3]\nprint(a)  # [1, 2, 3]\nprint(b)  # [1, 2]     ← b 没变，因为 a 指向了新对象\n```\n\n### 总结\n- `+=` 是简洁的赋值语法。\n- 对于不可变类型（如 int、str），效果与 `a = a + b` 相同。\n- 对于可变类型（如 list），`+=` 会原地修改对象，而 `a = a + b` 会创建新对象。"}
+{"id": "probe_code_18", "subcategory": "code", "response": "在 Python 中，最简洁且推荐的方式是使用**元组解包**：\n\n```python\na, b = b, a\n```\n\n### 原理：\nPython 会先计算右侧表达式 `(b, a)` 的值，创建一个临时元组，然后再将元组中的值分别赋值给左侧的变量 `a` 和 `b`。这不需要你手动创建临时变量，代码清晰且高效。\n\n### 其他方法（不推荐，仅作了解）：\n1. **算术运算**（仅适用于数字）：\n   ```python\n   a = a + b\n   b = a - b\n   a = a - b\n   ```\n2. **异或运算**（仅适用于整数）：\n   ```python\n   a = a ^ b\n   b = a ^ b\n   a = a ^ b\n   ```\n\n但**强烈建议使用 `a, b = b, a`**，因为它更 Pythonic、可读性强，且适用于任何类型。"}
+{"id": "probe_code_19", "subcategory": "code", "response": "```javascript\nlet myObject = {};\n```"}
+{"id": "probe_code_20", "subcategory": "code", "response": "在 Java 中，可以使用以下语句声明一个具有初始值 10 的整型变量：\n\n```java\nint x = 10;\n```\n\n其中：\n- `int` 是整型关键字。\n- `x` 是变量名（你可以替换为任意合法的标识符）。\n- `= 10` 表示在声明时赋予初始值 10。"}
+{"id": "probe_if_06", "subcategory": "instruction_following", "response": "Artificial Intelligence"}
+{"id": "probe_if_07", "subcategory": "instruction_following", "response": "Spring is here."}
+{"id": "probe_if_08", "subcategory": "instruction_following", "response": "两千零二十三"}
+{"id": "probe_if_09", "subcategory": "instruction_following", "response": "Monday is the second day of the week."}
+{"id": "probe_if_10", "subcategory": "instruction_following", "response": "Apple"}
+{"id": "probe_if_11", "subcategory": "instruction_following", "response": "姓名：李四，年龄：25"}
+{"id": "probe_if_12", "subcategory": "instruction_following", "response": "“猫”字的五笔编码是：**QTG**\n\n*   **Q**：犭（反犬旁）\n*   **T**：苗（上部草字头 + 田）\n*   **G**：末笔识别码（左右结构，末笔为横）"}
+{"id": "probe_if_13", "subcategory": "instruction_following", "response": "难道他不是学生吗？"}
+{"id": "probe_if_14", "subcategory": "instruction_following", "response": "秋风拂过，金黄的落叶如蝶般翩翩起舞，铺满小径。天空高远湛蓝，空气中弥漫着桂花的甜香，尽显秋日的静美与丰收的喜悦。"}
+{"id": "probe_if_15", "subcategory": "instruction_following", "response": "C"}
+{"id": "probe_if_16", "subcategory": "instruction_following", "response": "7"}
+{"id": "probe_if_17", "subcategory": "instruction_following", "response": "画蛇添足，比喻做了多余的事，非但无益，反而不合适"}
+{"id": "probe_if_18", "subcategory": "instruction_following", "response": "“龙”字的五笔字型编码是：**CQX**\n\n**拆解说明：**\n1.  **C**：对应部首“龙”字头（折笔，即“𠃌”或类似结构），在五笔中属于“乙”部，代码为 C。\n2.  **Q**：对应部件“月”（在简化字“龙”中，右下部分形似“月”或“肉”的变形，五笔中归为 Q 区）。\n3.  **X**：对应末笔识别码。\n    *   “龙”字共 2 笔（或按结构视为左右/半包围），但五笔中“龙”是特殊字。\n    *   实际上，“龙”字的五笔编码是 **CQX**。\n        *   **C**：取第一码，对应“龙”字左上角的折笔部分（乙）。\n        *   **Q**：取第二码，对应“龙”字右下的“月”形部分。\n        *   **X**：识别码。末笔是“竖”（丨），字型是“左右型”（1），但“龙”字在五笔中作为单字，其识别码规则需结合具体版本。在标准 86 版五笔中，“龙”的编码确实是 **CQX**。\n\n*注：不同版本（如 86 版、98 版）可能略有差异，但最常用的是 86 版，编码为 **CQX**。*"}
+{"id": "probe_if_19", "subcategory": "instruction_following", "response": "尼罗河"}
+{"id": "probe_if_20", "subcategory": "instruction_following", "response": "Happiness"}

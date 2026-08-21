@@ -1,0 +1,239 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 40, 600, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: |-
+        AI 内训第三期 · 学习路线
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 36]
+    content:
+      style: "$h1"
+      wrap: false
+      text: |-
+        前两期学会「用模型」，这一期学会「用智能体」
+  - elementId: phase1-label
+    elementType: text
+    bounds: [100, 150, 160, 16]
+    content:
+      style: "$small"
+      bold: true
+      color: "$pine"
+      align: [center, top]
+      wrap: false
+      text: |-
+        第一期 · 已完成
+  - elementId: phase2-label
+    elementType: text
+    bounds: [400, 150, 160, 16]
+    content:
+      style: "$small"
+      bold: true
+      color: "$pine"
+      align: [center, top]
+      wrap: false
+      text: |-
+        第二期 · 已完成
+  - elementId: phase3-label
+    elementType: text
+    bounds: [700, 150, 160, 16]
+    content:
+      style: "$small"
+      bold: true
+      color: "$terra"
+      align: [center, top]
+      wrap: false
+      text: |-
+        第三期 · 本期
+  - elementId: track
+    elementType: line
+    bounds: [96, 176, 768, 2]
+    viewBox: [768, 2]
+    points: "0,1 768,1"
+    arrow: [null, "arrow"]
+    border: {style: solid, width: 2, color: "$pine"}
+  - elementId: node1
+    elementType: shape
+    bounds: [172, 169, 16, 16]
+    shapeName: ellipse
+    fill: {type: solid, color: "$pine"}
+  - elementId: node2
+    elementType: shape
+    bounds: [472, 169, 16, 16]
+    shapeName: ellipse
+    fill: {type: solid, color: "$pine"}
+  - elementId: node3
+    elementType: shape
+    bounds: [772, 169, 16, 16]
+    shapeName: ellipse
+    fill: {type: solid, color: "$terra"}
+  - elementId: phase1-name
+    elementType: text
+    bounds: [100, 198, 160, 20]
+    content:
+      fontSize: 14
+      bold: true
+      color: "$ink"
+      align: [center, top]
+      wrap: false
+      text: |-
+        机器学习基础
+  - elementId: phase2-name
+    elementType: text
+    bounds: [400, 198, 160, 20]
+    content:
+      fontSize: 14
+      bold: true
+      color: "$ink"
+      align: [center, top]
+      wrap: false
+      text: |-
+        Prompt Engineering
+  - elementId: phase3-name
+    elementType: text
+    bounds: [700, 198, 160, 20]
+    content:
+      fontSize: 14
+      bold: true
+      color: "$terra"
+      align: [center, top]
+      wrap: false
+      text: |-
+        智能体思维
+  - elementId: phase1-desc
+    elementType: text
+    bounds: [100, 224, 160, 36]
+    content:
+      style: "$small"
+      align: [center, top]
+      text: |-
+        理解数据与模型的基本原理
+  - elementId: phase2-desc
+    elementType: text
+    bounds: [400, 224, 160, 36]
+    content:
+      style: "$small"
+      align: [center, top]
+      text: |-
+        把话说清楚，让模型听懂意图
+  - elementId: phase3-desc
+    elementType: text
+    bounds: [700, 224, 160, 36]
+    content:
+      style: "$small"
+      align: [center, top]
+      text: |-
+        把活派出去，并对结果验收
+  - elementId: outcome-head
+    elementType: text
+    bounds: [56, 300, 500, 22]
+    content:
+      style: "$h2"
+      wrap: false
+      text: |-
+        学完本期，你能做到（本期 4 条出口能力）
+  - elementId: out1-num
+    elementType: text
+    bounds: [56, 334, 36, 24]
+    content:
+      fontSize: 18
+      bold: true
+      color: "$terra"
+      wrap: false
+      text: |-
+        01
+  - elementId: out1-text
+    elementType: text
+    bounds: [98, 336, 372, 22]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.5
+      text: |-
+        复述智能体的定义与要素，说清它与单次问答的边界
+  - elementId: out2-num
+    elementType: text
+    bounds: [490, 334, 36, 24]
+    content:
+      fontSize: 18
+      bold: true
+      color: "$terra"
+      wrap: false
+      text: |-
+        02
+  - elementId: out2-text
+    elementType: text
+    bounds: [532, 336, 372, 22]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.5
+      text: |-
+        判断一个任务该用 Prompt、Workflow 还是 Agent
+  - elementId: out3-num
+    elementType: text
+    bounds: [56, 398, 36, 24]
+    content:
+      fontSize: 18
+      bold: true
+      color: "$terra"
+      wrap: false
+      text: |-
+        03
+  - elementId: out3-text
+    elementType: text
+    bounds: [98, 400, 372, 22]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.5
+      text: |-
+        解释 Harness 与 Loop Engineering，指出循环缺失环节的风险
+  - elementId: out4-num
+    elementType: text
+    bounds: [490, 398, 36, 24]
+    content:
+      fontSize: 18
+      bold: true
+      color: "$terra"
+      wrap: false
+      text: |-
+        04
+  - elementId: out4-text
+    elementType: text
+    bounds: [532, 400, 372, 22]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.5
+      text: |-
+        结合本岗位，写出 1–2 个可落地的智能体场景
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-left
+    elementType: text
+    bounds: [56, 510, 400, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: |-
+        东方智感 · AI 内训第三期
+  - elementId: footer-page
+    elementType: text
+    bounds: [854, 510, 50, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: |-
+        02

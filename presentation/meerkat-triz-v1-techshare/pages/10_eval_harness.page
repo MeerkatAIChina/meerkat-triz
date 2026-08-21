@@ -1,0 +1,98 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 34, 500, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: 02 · 评测与发货
+  - elementId: title
+    elementType: text
+    bounds: [56, 56, 840, 34]
+    content:
+      style: "$title"
+      wrap: false
+      text: 双轨评测 harness：两轨永不混合，四条纪律代码强制
+  - elementId: track1
+    elementType: shape
+    bounds: [56, 110, 420, 120]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+    border: {style: solid, width: 1, color: "$pine"}
+  - elementId: track1-t
+    elementType: text
+    bounds: [72, 120, 390, 100]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.5
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong><span style="color:$pine">关键词轨（keyword_scorer.py）</span></strong></p>
+        <p style="margin-top:4px">逐题期望术语命中率：子串匹配 + 人工维护别名表；报告别名表更新前/后双分数；漏判审计队列持续监控别名表本身。客观、确定，但测不出「答得好」。</p>
+  - elementId: track2
+    elementType: shape
+    bounds: [484, 110, 420, 120]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+    border: {style: solid, width: 1, color: "$pine"}
+  - elementId: track2-t
+    elementType: text
+    bounds: [500, 120, 390, 100]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.5
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong><span style="color:$pine">judge 轨（judge_arms.py）</span></strong></p>
+        <p style="margin-top:4px">LLM 评委钉死 moonshot-v1-32k、温度 0 硬断言，四维 rubric 打 0–4 分。臂 A 反冗长 + 不截断；臂 B 同长度桶配对控制长度偏置。发布后追加三外部评委终审。</p>
+  - elementId: rules-title
+    elementType: text
+    bounds: [56, 248, 500, 20]
+    content:
+      fontSize: 14
+      bold: true
+      color: "$pine"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: 四条纪律（harness.py / quality_gates.py / pairwise.py 强制）
+  - elementId: rules
+    elementType: table
+    bounds: [56, 274, 848, 196]
+    columnWidths: [0.22, 0.78]
+    rowHeights: [0.25, 0.25, 0.25, 0.25]
+    style: "$default"
+    rows:
+      - - text: "1 锚点谱系"
+        - text: "base 锚点 tag 必须属于 base_goldfix 谱系，否则 harness 直接退出（一票否决）；双锚点一致性 |Δkw|>0.2 的题数 >10% 即冻结报警"
+      - - text: "2 空 think 块（E0 铁律）"
+        - text: "每题 prompt 冒烟断言保留 &lt;think&gt;\n\n&lt;/think&gt; 空块；剥离它正是当初污染基线、制造假提升的根因"
+      - - text: "3 生成质量门"
+        - text: "think 残留 / 非空 / 中文占比 / 长度下限 / 英文草稿检测；不过门触发一次 bad_words_ids 兜底重生成，持续 invalid 则冻结评测而非静默混入"
+      - - text: "4 统计协议"
+        - text: "全部逐题配对：bootstrap 10,000 次（Random(42) 指纹自检）95% CI、Wilson CI、McNemar 精确检验；n<30 子集只标「描述性」；pairwise 强制 AB/BA 双序，位置不一致率 >10% 单序数字作废"
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-src
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$small"
+      wrap: false
+      text: 来源：meerkat-triz/src/meerkat_triz/eval/ · 白皮书 §3
+  - elementId: footer-page
+    elementType: text
+    bounds: [864, 510, 40, 14]
+    content:
+      style: "$small"
+      align: [right, top]
+      wrap: false
+      text: "12"

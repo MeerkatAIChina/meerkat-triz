@@ -1,0 +1,111 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 34, 500, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: 01 · 模型与训练
+  - elementId: title
+    elementType: text
+    bounds: [56, 56, 840, 34]
+    content:
+      style: "$title"
+      wrap: false
+      text: 数据管线演进：五个版本是质量门的故事，不是超参的故事
+  - elementId: evo-table
+    elementType: table
+    bounds: [56, 110, 848, 240]
+    columnWidths: [0.09, 0.28, 0.30, 0.33]
+    rowHeights: [0.13, 0.145, 0.145, 0.145, 0.145, 0.145, 0.145]
+    style: "$default"
+    rows:
+      - - text: "版本"
+        - text: "数据"
+        - text: "质量门"
+        - text: "结果 / 教训"
+      - - text: "v1"
+        - text: "2,662 条 corpus SFT"
+        - text: "无"
+        - text: "整体回退 −0.057；逐步 loss 日志永久丢失"
+      - - text: "v2"
+        - text: "8,458 条多角度"
+        - text: "基础门"
+        - text: "整体 +0.060，案例 +0.363；ARIZ −0.139 暴露短板"
+      - - text: "v3"
+        - text: "ARIZ 定向注入"
+        - text: "基础门"
+        - text: "ARIZ 修复尝试（judge 轨 2.28，未超 v2）"
+      - - text: "v4"
+        - text: "七道门漏斗 11,001 → 5,739 条"
+        - text: "七道门"
+        - text: "concept_explanation 退化 → 触发 v4.1 单变量 rebalance"
+      - - text: "v4.1"
+        - text: "单变量 rebalance"
+        - text: "七道门"
+        - text: "定向修复，后被外部评委证实（+0.24/+0.31/+0.29）"
+      - - text: "v5a = 发布版"
+        - text: "11,096 条 · 双风格/双解耦/分组划分 · 空 think 块保留"
+        - text: "七道门 + 分组防泄漏"
+        - text: "即 Meerkat-TRIZ-v1；污染扫描 0 命中"
+  - elementId: data-title
+    elementType: text
+    bounds: [56, 368, 500, 20]
+    content:
+      fontSize: 14
+      bold: true
+      color: "$pine"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: v5a 数据设计三个关键词
+  - elementId: d1
+    elementType: text
+    bounds: [56, 396, 272, 84]
+    content:
+      style: "$body"
+      fontSize: 11.5
+      text: |
+        <p><strong><span style="color:$pine">双风格 / 双解耦</span></strong></p>
+        <p style="margin-top:4px">同一知识点以多种问答风格与问题分解方式呈现，防模型死记单一表述。</p>
+  - elementId: d2
+    elementType: text
+    bounds: [344, 396, 272, 84]
+    content:
+      style: "$body"
+      fontSize: 11.5
+      text: |
+        <p><strong><span style="color:$pine">分组划分（grouped split）</span></strong></p>
+        <p style="margin-top:4px">同源样本整体进训练或验证，杜绝「改写题泄漏进验证集」造成 eval_loss 虚低。</p>
+  - elementId: d3
+    elementType: text
+    bounds: [632, 396, 272, 84]
+    content:
+      style: "$body"
+      fontSize: 11.5
+      text: |
+        <p><strong><span style="color:$pine">污染扫描</span></strong></p>
+        <p style="margin-top:4px">训练集对双金标做 3-gram Jaccard ≥0.5 扫描：<strong>0 题命中</strong>；训练集因教科书版权不公开。</p>
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-src
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$small"
+      wrap: false
+      text: 来源：results/METRICS_LEDGER.md · 白皮书 §2 · hf_dataset_repo（金标公开，训练集不公开）
+  - elementId: footer-page
+    elementType: text
+    bounds: [864, 510, 40, 14]
+    content:
+      style: "$small"
+      align: [right, top]
+      wrap: false
+      text: "08"

@@ -1,0 +1,282 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+elements:
+  # ---------- 页眉 ----------
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 40, 420, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: |-
+        02 · 智能体思维
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 36]
+    content:
+      style: "$h1"
+      wrap: false
+      text: |-
+        快答、深思考、深研究、智能体:什么时候用谁
+
+  # ---------- 左区:2×2 判断矩阵 ----------
+  - elementId: grid-vline
+    elementType: line
+    bounds: [339, 150, 2, 280]
+    viewBox: [2, 280]
+    points: "1,0 1,280"
+    border: {style: solid, width: 1, color: "$hair"}
+  - elementId: grid-hline
+    elementType: line
+    bounds: [110, 289, 460, 2]
+    viewBox: [460, 2]
+    points: "0,1 460,1"
+    border: {style: solid, width: 1, color: "$hair"}
+  - elementId: axis-y-label
+    elementType: text
+    bounds: [8, 262, 130, 16]
+    rotation: 270
+    content:
+      fontSize: 11
+      color: "$muted"
+      align: [center, middle]
+      wrap: false
+      text: |-
+        路径确定性:低 → 高
+  - elementId: axis-x-label
+    elementType: text
+    bounds: [110, 440, 460, 16]
+    content:
+      fontSize: 11
+      color: "$muted"
+      align: [center, middle]
+      wrap: false
+      text: |-
+        任务时长:短 → 长
+  # 左上:即时问答(短 × 确定)
+  - elementId: cellA-icon
+    elementType: icon
+    bounds: [124, 162, 15, 15]
+    iconName: "fas:bolt"
+    fill: {type: solid, color: "$pine"}
+  - elementId: cellA-title
+    elementType: text
+    bounds: [148, 160, 180, 20]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: |-
+        即时问答 · 快模型
+  - elementId: cellA-when
+    elementType: text
+    bounds: [124, 188, 200, 16]
+    content:
+      fontSize: 11
+      color: "$muted"
+      wrap: false
+      text: |-
+        一步出结果,路径确定
+  - elementId: cellA-example
+    elementType: text
+    bounds: [124, 210, 204, 40]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.5
+      align: [left, top]
+      text: |-
+        <p>例:解释「田间持水量」、</p>
+        <p>把一段话改写成公告口吻</p>
+  # 右上:广域调研(长 × 确定)
+  - elementId: cellB-icon
+    elementType: icon
+    bounds: [354, 162, 15, 15]
+    iconName: "fas:magnifying-glass-chart"
+    fill: {type: solid, color: "$pine"}
+  - elementId: cellB-title
+    elementType: text
+    bounds: [378, 160, 186, 20]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: |-
+        广域调研 · Deep Research
+  - elementId: cellB-when
+    elementType: text
+    bounds: [354, 188, 200, 16]
+    content:
+      fontSize: 11
+      color: "$muted"
+      wrap: false
+      text: |-
+        流程固定但步骤多、耗时长
+  - elementId: cellB-example
+    elementType: text
+    bounds: [354, 210, 204, 40]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.5
+      align: [left, top]
+      text: |-
+        <p>例:竞品与水利政策调研,</p>
+        <p>自动检索后产出综述报告</p>
+  # 左下:复杂推理(短 × 不确定)
+  - elementId: cellC-icon
+    elementType: icon
+    bounds: [124, 302, 15, 15]
+    iconName: "fas:brain"
+    fill: {type: solid, color: "$pine"}
+  - elementId: cellC-title
+    elementType: text
+    bounds: [148, 300, 180, 20]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: |-
+        复杂推理 · 推理模型
+  - elementId: cellC-when
+    elementType: text
+    bounds: [124, 328, 200, 16]
+    content:
+      fontSize: 11
+      color: "$muted"
+      wrap: false
+      text: |-
+        路径不确定,需要深度思考
+  - elementId: cellC-example
+    elementType: text
+    bounds: [124, 350, 204, 40]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.5
+      align: [left, top]
+      text: |-
+        <p>例:灌溉模型调参的推导、</p>
+        <p>一次复杂的方案比选</p>
+  # 右下:多步干活(长 × 不确定)——本期主角
+  - elementId: cellD-icon
+    elementType: icon
+    bounds: [354, 302, 15, 15]
+    iconName: "fas:robot"
+    fill: {type: solid, color: "$terra"}
+  - elementId: cellD-title
+    elementType: text
+    bounds: [378, 300, 186, 20]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$terra"
+      wrap: false
+      text: |-
+        多步干活 · Agent(本期主角)
+  - elementId: cellD-when
+    elementType: text
+    bounds: [354, 328, 200, 16]
+    content:
+      fontSize: 11
+      color: "$muted"
+      wrap: false
+      text: |-
+        边做边看,路径现场定
+  - elementId: cellD-example
+    elementType: text
+    bounds: [354, 350, 204, 40]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.5
+      align: [left, top]
+      text: |-
+        <p>例:生成并发送巡检报告、</p>
+        <p>数据异常自动排查几圈</p>
+
+  # ---------- 右栏:判断顺序 + 误区提醒 ----------
+  - elementId: order-label
+    elementType: text
+    bounds: [610, 150, 294, 20]
+    content:
+      style: "$h2"
+      wrap: false
+      text: |-
+        判断顺序:先简后繁
+  - elementId: order-list
+    elementType: text
+    bounds: [610, 180, 294, 104]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.5
+      align: [left, top]
+      text: |-
+        <p><strong>1</strong> 一次问答能解决 → 快答</p>
+        <p style="margin-top:6px"><strong>2</strong> 要想很久但一步到位 → 推理模型</p>
+        <p style="margin-top:6px"><strong>3</strong> 要查大量资料再综述 → Deep Research</p>
+        <p style="margin-top:6px"><strong>4</strong> 要多步操作、看结果再定 → Agent</p>
+  - elementId: trap-box
+    elementType: shape
+    bounds: [610, 300, 294, 118]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+  - elementId: trap-title
+    elementType: text
+    bounds: [626, 312, 262, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$ink"
+      wrap: false
+      text: |-
+        误区提醒
+  - elementId: trap-desc
+    elementType: text
+    bounds: [626, 336, 262, 70]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.55
+      align: [left, top]
+      text: |-
+        不要什么都开 Agent。循环有成本——更慢、更贵、出错环节更多。能一次答完的,别派活。
+  - elementId: check-tip
+    elementType: text
+    bounds: [610, 436, 294, 36]
+    content:
+      style: "$small"
+      align: [left, top]
+      text: |-
+        检查:拿到任务先问两句——路径能写死吗?大概要多久?
+
+  # ---------- 页脚 ----------
+  - elementId: footer-line
+    elementType: line
+    bounds: [56, 501, 848, 2]
+    viewBox: [848, 2]
+    points: "0,1 848,1"
+    border: {style: solid, width: 1, color: "$hair"}
+  - elementId: footer-left
+    elementType: text
+    bounds: [56, 510, 620, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: |-
+        模式名称据公开产品发布信息整理 · 公司例子为教学演示 · 东方智感 AI 内训第三期
+  - elementId: footer-right
+    elementType: text
+    bounds: [804, 510, 100, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: |-
+        12

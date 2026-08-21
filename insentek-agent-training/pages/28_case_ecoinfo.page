@@ -1,0 +1,190 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+notes: 案例② e生态平台重构:左栏事实速览(14个VEP/7已交付、98.6%满足率、9模块仅经api包通信、VEP-0007目录规范支撑AI协作、VEP-0003数字人探索不阻塞主线);右栏讲师点评:目录规范=给Coding Agent的可导航环境(第15页Harness)、VEP提案=委派单(第11页)、两轮评审=人在回路(第18页)、探索性提案单列=风险分级(第16页)。
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 38, 600, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: |-
+        05 内部案例 · 案例② e生态平台重构
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 36]
+    content:
+      style: "$h1"
+      wrap: false
+      text: |-
+        为「人与 AI 协作」而设计的架构
+  # ---- 左栏:事实速览 ----
+  - elementId: facts-h
+    elementType: text
+    bounds: [56, 120, 460, 20]
+    content:
+      style: "$h2"
+      wrap: false
+      text: |-
+        事实速览 · 报告里的关键数字
+  - elementId: stat-1-num
+    elementType: text
+    bounds: [56, 150, 110, 36]
+    content:
+      fontSize: 26
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: |-
+        14
+  - elementId: stat-1-desc
+    elementType: text
+    bounds: [174, 150, 342, 46]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.4
+      text: |-
+        <p>个 VEP 提案立项(VEP-0001~0014):7 已交付、1 已批准、3 细化中、3 草稿</p>
+  - elementId: stat-2-num
+    elementType: text
+    bounds: [56, 204, 110, 36]
+    content:
+      fontSize: 26
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: |-
+        98.6%
+  - elementId: stat-2-desc
+    elementType: text
+    bounds: [174, 204, 342, 46]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.4
+      text: |-
+        <p>前端 v1.0 需求满足率(8 阶段 / 44 计划 / 71 需求,05-22 交付);v1.1 已交付 12 种设备详情页</p>
+  - elementId: stat-3-num
+    elementType: text
+    bounds: [56, 258, 110, 36]
+    content:
+      fontSize: 26
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: |-
+        9
+  - elementId: stat-3-desc
+    elementType: text
+    bounds: [174, 258, 342, 46]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.4
+      text: |-
+        <p>个 Spring Modulith 后端模块(identity→ticket),模块间仅经 api 包与事件通信</p>
+  - elementId: facts-div
+    elementType: shape
+    bounds: [56, 314, 460, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: facts-more
+    elementType: text
+    bounds: [56, 326, 460, 150]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.55
+      text: |-
+        <p>· VEP-0007 统一目录规范:web / core / satellites / contracts / deploy 顶层结构,明确「支撑多技术栈与 AI 协作」</p>
+        <p style="margin-top:6px">· VEP-0010 / 0011 于 07-22 合入:设备批量创建 + Principal/Passport 身份模型构成 P2 核心</p>
+        <p style="margin-top:6px">· VEP-0014 已批准待实施:07-22 通过两轮评审,三条决策项待评审会定案</p>
+        <p style="margin-top:6px">· VEP-0003 LLM+TTS 数字人讲解实验:草稿、探索性,不阻塞主线</p>
+  # ---- 中缝 ----
+  - elementId: mid-div
+    elementType: shape
+    bounds: [536, 120, 1, 358]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  # ---- 右栏:讲师点评 ----
+  - elementId: cmt-box
+    elementType: shape
+    bounds: [556, 120, 348, 358]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+  - elementId: cmt-icon
+    elementType: icon
+    bounds: [572, 132, 16, 16]
+    iconName: "fas:chalkboard-user"
+    fill: {type: solid, color: "$terra"}
+  - elementId: cmt-label
+    elementType: text
+    bounds: [596, 131, 160, 20]
+    content:
+      fontSize: 14
+      bold: true
+      color: "$terra"
+      wrap: false
+      text: |-
+        讲师点评
+  - elementId: cmt-sub
+    elementType: text
+    bounds: [572, 156, 316, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: |-
+        用第二、三章的课程概念拆这个项目
+  - elementId: cmt-body
+    elementType: text
+    bounds: [572, 180, 316, 244]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.5
+      text: |-
+        <p><strong>目录规范 + 模块边界 = 可导航环境。</strong>仓库结构本身就是给 Coding Agent 的上下文工程(呼应第 15 页 Harness)</p>
+        <p style="margin-top:8px"><strong>VEP 提案 = 委派单。</strong>目标、边界、验收标准先行,再动工(呼应第 11 页委派单)</p>
+        <p style="margin-top:8px"><strong>两轮评审 = 人在回路。</strong>产出可以加速,定案权留给人(呼应第 18 页验证与护栏)</p>
+        <p style="margin-top:8px"><strong>探索性提案单列 = 风险分级。</strong>数字人实验不阻塞主循环(呼应第 16 页 Loop 四要素)</p>
+  - elementId: cmt-div
+    elementType: shape
+    bounds: [572, 430, 316, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: cmt-bottom
+    elementType: text
+    bounds: [572, 438, 316, 36]
+    content:
+      fontSize: 12
+      bold: true
+      color: "$terra"
+      lineHeight: 1.3
+      text: |-
+        <p>一句话:把 Harness 思维用在工程组织上——环境先于人,边界先于代码。</p>
+  # ---- 页脚 ----
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-src
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: |-
+        来源:e生态平台重构项目进展报告(2026-07-22)
+  - elementId: footer-page
+    elementType: text
+    bounds: [824, 510, 80, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: |-
+        28 / 35

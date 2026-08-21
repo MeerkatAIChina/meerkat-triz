@@ -47,3 +47,22 @@ Thumbs.db
 
 # Project specific
 mai/
+
+# 临时脚本 (含 token, 一次性诊断/上传脚本)
+hf_*.py
+check_ms*.py
+list_ms*.py
+get_ms*.py
+upload_to_modelscope.py
+analyze_*.py
+diagnose_*.py
+inspect_*.py
+check_*.py
+fix_*.py
+extract_*.py
+find_*.py
+final_status.py
+.tmp_v4fix/
+
+# 生成物
+*.docx

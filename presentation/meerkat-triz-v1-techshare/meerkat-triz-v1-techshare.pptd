@@ -1,0 +1,76 @@
+version: v2
+title: Meerkat-TRIZ-v1 从训练到运行：参数与代码全景分析
+size: [960, 540]
+theme:
+  colors:
+    paper: "#F7F5F0"
+    ink: "#22211E"
+    pine: "#1E4D3B"
+    terra: "#C26A2E"
+    muted: "#6B675F"
+    hair: "#D8D3C8"
+    paleG: "#EAF1EC"
+    paleT: "#F7EBDC"
+  textStyles:
+    kicker:
+      fontSize: 11
+      color: "$terra"
+      bold: true
+      letterSpacing: 2
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+    title:
+      fontSize: 26
+      color: "$ink"
+      bold: true
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+    body:
+      fontSize: 13
+      color: "$ink"
+      lineHeight: 1.55
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+    small:
+      fontSize: 10.5
+      color: "$muted"
+      lineHeight: 1.4
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+    code:
+      fontSize: 10
+      color: "$ink"
+      lineHeight: 1.5
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+  tableStyles:
+    default:
+      cellStyle:
+        fontSize: 11
+        color: "$ink"
+        fontFamily: {latin: "Liter", ea: "MiSans"}
+        border: [null, null, {style: solid, width: 0.75, color: "$hair"}, null]
+        align: [left, middle]
+      firstRowStyle:
+        fill: {type: solid, color: "$pine"}
+        color: "#F7F5F0"
+        bold: true
+        fontSize: 11
+      bodyStyles:
+        - {fill: {type: solid, color: "#F7F5F0"}}
+        - {fill: {type: solid, color: "#F1EEE6"}}
+pages:
+  - pages/01_cover.page
+  - pages/02_pipeline.page
+  - pages/03_ch1.page
+  - pages/04_base_lora.page
+  - pages/05_hyperparams.page
+  - pages/06_train_code.page
+  - pages/07_training_curve.page
+  - pages/08_data_evolution.page
+  - pages/08b_seeds.page
+  - pages/08c_trizraw.page
+  - pages/09_ch2.page
+  - pages/10_eval_harness.page
+  - pages/11_eval_results.page
+  - pages/12_shipping.page
+  - pages/13_ch3.page
+  - pages/14_deploy_arch.page
+  - pages/15_runtime_params.page
+  - pages/16_lessons.page
+  - pages/17_final.page

@@ -1,0 +1,54 @@
+pageType: final
+background:
+  type: solid
+  color: "$pine"
+elements:
+  - elementId: title
+    elementType: text
+    bounds: [72, 120, 760, 50]
+    content:
+      fontSize: 34
+      bold: true
+      color: "$paper"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: 带走的三句话
+  - elementId: points
+    elementType: text
+    bounds: [72, 190, 800, 130]
+    content:
+      fontSize: 15
+      color: "#EDE9DF"
+      lineHeight: 1.8
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p>① 领域微调的上限由<strong>数据质量门</strong>决定，超参只需要「冻结 + 有出处」。</p>
+        <p>② 训练代码里最有价值的部分是<strong>防御性断言</strong>：不信任框架默认值，一切可归结为事故教训。</p>
+        <p>③ 评测透明是产品功能：双轨、配对统计、异源终审——<strong>诚实的 +0.10 胜过注水的 +0.39</strong>。</p>
+  - elementId: hairline
+    elementType: shape
+    bounds: [72, 350, 816, 1]
+    shapeName: rect
+    fill: {type: solid, color: "#F7F5F055"}
+  - elementId: links
+    elementType: text
+    bounds: [72, 372, 800, 100]
+    content:
+      fontSize: 12
+      color: "#D8D3C8"
+      lineHeight: 1.8
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p>模型：huggingface.co/Meerkat-AI/Meerkat-TRIZ-v1（Apache-2.0，基座 Qwen3.6-35B-A3B）</p>
+        <p>代码与白皮书：github.com/coidea-sys/meerkat-triz（WHITEPAPER / REPRODUCE / 异源终审报告）</p>
+        <p>引用：@misc{meerkat-triz-v1-2026} · 请同时引用基座模型</p>
+  - elementId: end
+    elementType: text
+    bounds: [72, 480, 300, 24]
+    content:
+      fontSize: 13
+      color: "$paper"
+      bold: true
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: 谢谢 · Q&amp;A

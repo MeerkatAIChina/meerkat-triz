@@ -1,0 +1,192 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 40, 600, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: |-
+        01 · 为什么是现在
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 36]
+    content:
+      style: "$h1"
+      wrap: false
+      text: |-
+        你已经会写 Prompt 了，为什么还是「差点什么」？
+  - elementId: s1-icon
+    elementType: icon
+    bounds: [56, 132, 28, 28]
+    iconName: "fas:file-lines"
+    fill: {type: solid, color: "$pine"}
+  - elementId: s1-title
+    elementType: text
+    bounds: [100, 130, 520, 22]
+    content:
+      fontSize: 15
+      bold: true
+      color: "$ink"
+      wrap: false
+      text: |-
+        场景一：让 AI 写巡检报告
+  - elementId: s1-desc
+    elementType: text
+    bounds: [100, 156, 520, 20]
+    content:
+      fontSize: 12
+      color: "$muted"
+      wrap: false
+      text: |-
+        你得把平台里 6 处数据，一条条复制粘贴进对话框，它才开始写
+  - elementId: s1-tag
+    elementType: text
+    bounds: [640, 140, 264, 22]
+    content:
+      fontSize: 12
+      bold: true
+      color: "$terra"
+      align: [right, top]
+      wrap: false
+      text: |-
+        卡点：人在当「搬运工」
+  - elementId: s1-line
+    elementType: shape
+    bounds: [56, 188, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: s2-icon
+    elementType: icon
+    bounds: [56, 210, 28, 28]
+    iconName: "fas:plug-circle-xmark"
+    fill: {type: solid, color: "$pine"}
+  - elementId: s2-title
+    elementType: text
+    bounds: [100, 208, 520, 22]
+    content:
+      fontSize: 15
+      bold: true
+      color: "$ink"
+      wrap: false
+      text: |-
+        场景二：让 AI 排查数据异常
+  - elementId: s2-desc
+    elementType: text
+    bounds: [100, 234, 520, 20]
+    content:
+      fontSize: 12
+      color: "$muted"
+      wrap: false
+      text: |-
+        它不知道我们平台的接口，连监测数据都拿不到，只能凭空分析
+  - elementId: s2-tag
+    elementType: text
+    bounds: [640, 218, 264, 22]
+    content:
+      fontSize: 12
+      bold: true
+      color: "$terra"
+      align: [right, top]
+      wrap: false
+      text: |-
+        卡点：AI 没有「手」（工具）
+  - elementId: s2-line
+    elementType: shape
+    bounds: [56, 266, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: s3-icon
+    elementType: icon
+    bounds: [56, 288, 28, 28]
+    iconName: "fas:eye"
+    fill: {type: solid, color: "$pine"}
+  - elementId: s3-title
+    elementType: text
+    bounds: [100, 286, 520, 22]
+    content:
+      fontSize: 15
+      bold: true
+      color: "$ink"
+      wrap: false
+      text: |-
+        场景三：让它「持续盯着」某监测断面
+  - elementId: s3-desc
+    elementType: text
+    bounds: [100, 312, 520, 20]
+    content:
+      fontSize: 12
+      color: "$muted"
+      wrap: false
+      text: |-
+        一次问答结束，它就停了 —— 没有人替它值下一班
+  - elementId: s3-tag
+    elementType: text
+    bounds: [640, 296, 264, 22]
+    content:
+      fontSize: 12
+      bold: true
+      color: "$terra"
+      align: [right, top]
+      wrap: false
+      text: |-
+        卡点：没有「循环」
+  - elementId: s3-line
+    elementType: shape
+    bounds: [56, 344, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: concl-bg
+    elementType: shape
+    bounds: [56, 366, 848, 66]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+  - elementId: concl-bar
+    elementType: shape
+    bounds: [56, 366, 4, 66]
+    shapeName: rect
+    fill: {type: solid, color: "$pine"}
+  - elementId: concl-text
+    elementType: text
+    bounds: [78, 366, 810, 66]
+    content:
+      fontSize: 15
+      bold: true
+      color: "$pine"
+      align: [left, middle]
+      wrap: false
+      text: |-
+        结论：单次问答解决不了连续的工作 —— 这正是智能体要解决的问题。
+  - elementId: check-line
+    elementType: text
+    bounds: [56, 450, 600, 18]
+    content:
+      style: "$small"
+      wrap: false
+      text: |-
+        现场对照：这三个场景，你遇到过哪几个？
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-left
+    elementType: text
+    bounds: [56, 510, 400, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: |-
+        东方智感 · AI 内训第三期
+  - elementId: footer-page
+    elementType: text
+    bounds: [854, 510, 50, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: |-
+        04

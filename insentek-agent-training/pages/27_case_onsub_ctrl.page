@@ -1,0 +1,133 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+notes: 案例①(下)onsub.pub 控制 Skill Demo:左栏事实速览为报告原文事实(Demo 验证目标、意图→确认→执行→返回链路、AI 语义/代码协议分工、沙箱不真实下发);右栏讲师点评:确定性封装(第 17 页)、用户确认=人在回路(第 18 页)、沙箱=护栏、边界声明(第 34 页风险红线);底部 paleT 待补条:真实凭证绑定后的权限细分与审计(报告已列入计划)。
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 38, 600, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: |-
+        05 内部案例 · 案例①(下)
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 36]
+    content:
+      style: "$h1"
+      wrap: false
+      text: |-
+        控制 Skill Demo = 教科书级的护栏设计
+  # ---- 左栏:事实速览 ----
+  - elementId: fact-label
+    elementType: text
+    bounds: [56, 116, 396, 18]
+    content:
+      fontSize: 14
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: |-
+        事实速览 · 报告原文
+  - elementId: fact-bar
+    elementType: shape
+    bounds: [56, 142, 32, 3]
+    shapeName: rect
+    fill: {type: solid, color: "$pine"}
+  - elementId: fact-body
+    elementType: text
+    bounds: [56, 158, 400, 244]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.5
+      text: |-
+        <p><strong>在验证什么:</strong>自然语言能否稳定转成可确认的业务命令——开哪个阀、灌多久;整体链路可复现:意图 → 确认 → 执行 → 返回结果。</p>
+        <p style="margin-top:10px"><strong>分工:</strong>AI 只负责理解意图;厂商协议(签名、Token、请求体)由确定性适配器代码处理,不由 AI 临场拼装。</p>
+        <p style="margin-top:10px"><strong>边界:</strong>适配器在沙箱中执行(本地子进程 / Docker),用户确认后模拟开/关阀与状态查询;Demo 模式不真实下发,未接真实阀门。</p>
+        <p style="margin-top:10px"><strong>定位:</strong>方案验证阶段,是否纳入产品路线尚未定论;业务口径是优先保证策略 Skill 判灌稳定。</p>
+  # ---- 中缝分隔线 ----
+  - elementId: mid-divider
+    elementType: shape
+    bounds: [480, 116, 1, 286]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  # ---- 右栏:讲师点评 ----
+  - elementId: cmt-label
+    elementType: text
+    bounds: [504, 116, 400, 18]
+    content:
+      fontSize: 14
+      bold: true
+      color: "$terra"
+      wrap: false
+      text: |-
+        讲师点评 · 护栏层层拆解(见第 18 页)
+  - elementId: cmt-bar
+    elementType: shape
+    bounds: [504, 142, 32, 3]
+    shapeName: rect
+    fill: {type: solid, color: "$terra"}
+  - elementId: cmt-body
+    elementType: text
+    bounds: [504, 158, 400, 244]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.5
+      text: |-
+        <p><span style="color:$pine"><strong>AI 做语义、代码做协议</strong></span> =「好工具 = 确定性封装」的实践:高风险部分不让模型自由发挥(见第 17 页工具设计)。</p>
+        <p style="margin-top:10px"><span style="color:$pine"><strong>执行前用户确认</strong></span> = 人在回路:意图必须经人点头才进入执行(见第 18 页)。</p>
+        <p style="margin-top:10px"><span style="color:$pine"><strong>沙箱执行、不真实下发</strong></span> = 给智能体的安全护栏:先证明可控,再谈接入。</p>
+        <p style="margin-top:10px"><span style="color:$pine"><strong>明示「Demo、未接真实阀门」</strong></span> = 边界声明,风险分级的正面示范(见第 34 页三条红线)。</p>
+  # ---- 底部待补条 ----
+  - elementId: todo-box
+    elementType: shape
+    bounds: [56, 420, 848, 58]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+  - elementId: todo-bar
+    elementType: shape
+    bounds: [56, 420, 4, 58]
+    shapeName: rect
+    fill: {type: solid, color: "$terra"}
+  - elementId: todo-icon
+    elementType: icon
+    bounds: [76, 440, 18, 18]
+    iconName: "fas:clipboard-check"
+    fill: {type: solid, color: "$terra"}
+  - elementId: todo-body
+    elementType: text
+    bounds: [106, 437, 782, 24]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.5
+      align: [left, middle]
+      text: |-
+        <p><strong>待补:</strong>真实凭证绑定后的权限细分与审计——报告自身已列入计划:真实凭证与设备绑定 → 限定场地试点 → 状态同步与生产沙箱加固。</p>
+  # ---- 页脚 ----
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-src
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: |-
+        来源:onsub.pub 项目进展汇报(2026-07-22)
+  - elementId: footer-page
+    elementType: text
+    bounds: [824, 510, 80, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: |-
+        27 / 35

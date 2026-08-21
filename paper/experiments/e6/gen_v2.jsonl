@@ -1,0 +1,120 @@
+{"id": "probe_cs_01", "subcategory": "common_sense", "response": "水的化学式是H2O，表示每个水分子由两个氢原子和一个氧原子组成。"}
+{"id": "probe_cs_02", "subcategory": "common_sense", "response": "中国的首都是北京。北京位于中国北部，是中国的政治、文化和国际交往中心，也是中华人民共和国的中央政府所在地。北京拥有悠久的历史，是中国古代多个朝代的都城，如元、明、清等。作为现代中国的首都，北京不仅是国家政治决策的中心，也是经济、科技、教育和交通的重要枢纽。北京拥有众多历史遗迹和文化景点，如故宫、长城等，同时也是国际会议和外交活动的重要举办地。"}
+{"id": "probe_cs_03", "subcategory": "common_sense", "response": "地球绕太阳公转一周大约需要365.25天。这个周期被称为一个回归年，是地球绕太阳运行一周的时间。由于地球轨道的椭圆形状和地球自转轴的倾斜，这个周期并不是完全均匀的，因此我们通常将一年定义为365天，并每四年增加一个闰日（2月29日），以补偿这额外的0.25天。"}
+{"id": "probe_cs_04", "subcategory": "common_sense", "response": "人体正常体温大约是37摄氏度。这个数值是一个平均值，实际上每个人的体温可能会有轻微的差异，并且体温也会随着一天中的不同时间、活动水平以及健康状况等因素而波动。通常，体温在36.1°C到37.2°C之间都被认为是正常的。"}
+{"id": "probe_cs_05", "subcategory": "common_sense", "response": "空气中含量最多的气体是氮气，约占空气体积的78%。其次是氧气，约占21%。其他气体如氩气、二氧化碳等含量较少。氮气是一种无色、无味、无臭的气体，化学性质相对稳定，在常温下不易与其他物质发生反应。氧气是一种无色、无味的气体，化学性质活泼，是维持生命活动所必需的气体。"}
+{"id": "probe_math_01", "subcategory": "math", "response": "3+5 等于 8。这是一个基本的加法运算，将 3 和 5 相加得到 8。"}
+{"id": "probe_math_02", "subcategory": "math", "response": "12 乘以 4 等于 48。计算过程如下：12 × 4 = 48。"}
+{"id": "probe_math_03", "subcategory": "math", "response": "100 除以 4 等于 25。计算过程如下：100 ÷ 4 = 25。因此，100 除以 4 的结果是 25。"}
+{"id": "probe_math_04", "subcategory": "math", "response": "根据勾股定理，直角三角形的斜边长度可以通过公式 c = √(a² + b²) 计算，其中 a 和 b 是直角边的长度。在这个问题中，a = 3，b = 4，所以斜边长度 c = √(3² + 4²) = √(9 + 16) = √25 = 5。因此，斜边的长度是 5。"}
+{"id": "probe_math_05", "subcategory": "math", "response": "2 的 10 次方等于 1024。计算过程如下：2^10 = 2 × 2 × 2 × 2 × 2 × 2 × 2 × 2 × 2 × 2 = 1024。这个结果在计算机科学中非常常见，因为 1024 字节等于 1 千字节（KB）。"}
+{"id": "probe_logic_01", "subcategory": "logic", "response": "根据三段论的逻辑推理，如果所有猫都是动物，并且咪咪是一只猫，那么可以得出结论：咪咪是动物。这个推理过程遵循了从一般到特殊的逻辑路径，即从“所有猫都是动物”这一普遍规则，应用到“咪咪是一只猫”这一特定情况，从而得出“咪咪是动物”的结论。"}
+{"id": "probe_logic_02", "subcategory": "logic", "response": "根据给定的条件，如果今天下雨，地面就会湿。既然今天确实下雨了，那么地面会湿。这是一个典型的条件语句应用，其中“如果...那么...”的结构用来表达因果关系。在这个例子中，下雨是原因，地面湿是结果。因此，根据这个逻辑关系，我们可以得出结论：地面会湿。"}
+{"id": "probe_logic_03", "subcategory": "logic", "response": "根据题目中的条件，甲比乙高，乙比丙高，可以得出甲是最高的。因为甲比乙高，而乙又比丙高，所以甲比丙也高。因此，三人中甲是最高的。"}
+{"id": "probe_logic_04", "subcategory": "logic", "response": "数列 1, 2, 4, 8, 16 的下一个数是 32。这个数列是一个等比数列，每个数都是前一个数的两倍。因此，16 的两倍是 32。"}
+{"id": "probe_logic_05", "subcategory": "logic", "response": "小明现在有 6 个苹果。计算过程如下：小明原有 5 个苹果，吃了 2 个后剩下 3 个，然后又买了 3 个，所以 3 + 3 = 6 个苹果。"}
+{"id": "probe_write_01", "subcategory": "writing", "response": "春风拂面，带来了温暖和生机，万物复苏，大地披上了新绿。"}
+{"id": "probe_write_02", "subcategory": "writing", "response": "因为今天下雨，所以我没有去公园散步。"}
+{"id": "probe_write_03", "subcategory": "writing", "response": "他跑得很快，像一阵风一样。"}
+{"id": "probe_write_04", "subcategory": "writing", "response": "在写报告时，他添加了一些无关紧要的细节，结果画蛇添足，反而使报告显得冗长且重点不突出。"}
+{"id": "probe_write_05", "subcategory": "writing", "response": "今天阳光明媚，非常适合出去郊游。"}
+{"id": "probe_code_01", "subcategory": "code", "response": "在 Python 中，打印输出使用的是 `print()` 函数。这个函数可以将指定的内容输出到控制台或标准输出设备。`print()` 函数可以接受一个或多个参数，这些参数可以是字符串、数字、变量等，它们会被转换为字符串并连接起来输出。例如，`print(\"Hello, World!\")` 会在控制台输出 \"Hello, World!\"。`print()` 函数还可以接受关键字参数，如 `end` 和 `sep`，用于控制输出的格式。`end` 参数指定输出结束后要打印的字符，默认为换行符；`sep` 参数指定多个输出项之间的分隔符，默认为空格。通过调整这些参数，可以灵活控制输出的格式。"}
+{"id": "probe_code_02", "subcategory": "code", "response": "在 Python 中，表达式 7 % 3 的结果是 1。这是因为 7 除以 3 的商是 2，余数是 1。取模运算符 % 返回的是除法运算后的余数部分。"}
+{"id": "probe_code_03", "subcategory": "code", "response": "在 Python 中，定义函数使用 `def` 关键字。`def` 后面跟着函数名和一对圆括号，圆括号内可以包含参数。函数体以冒号开始，并且通常使用缩进来表示代码块。例如：`def my_function():` 定义了一个名为 `my_function` 的函数。"}
+{"id": "probe_code_04", "subcategory": "code", "response": "在 Python 中，获取列表 [1,2,3] 的长度应调用内置函数 len()。这个函数返回对象（字符、字符串、列表、元组、字典等）的长度或项目个数。对于列表 [1,2,3]，len([1,2,3]) 将返回 3，因为列表中有三个元素。"}
+{"id": "probe_code_05", "subcategory": "code", "response": "在 Python 中，单行注释以井号（#）开头。井号后面的内容在代码执行时会被忽略，不会作为代码的一部分运行。这种注释方式允许开发者在代码中添加解释性文本，以提高代码的可读性和可维护性。例如，# 这是一个单行注释，用于解释下一行代码的功能。"}
+{"id": "probe_if_01", "subcategory": "instruction_following", "response": "好的"}
+{"id": "probe_if_02", "subcategory": "instruction_following", "response": "100"}
+{"id": "probe_if_03", "subcategory": "instruction_following", "response": "今天天气不错"}
+{"id": "probe_if_04", "subcategory": "instruction_following", "response": "“我爱学习”翻译成英语是“I love learning”。"}
+{"id": "probe_if_05", "subcategory": "instruction_following", "response": "中国（zhong guo）"}
+{"id": "probe_cs_06", "subcategory": "common_sense", "response": "闰年有366天。这是因为闰年会在2月份增加一天，即2月29日，使得该年总天数达到366天。闰年的规则是：能被4整除的年份是闰年，但能被100整除而不能被400整除的年份不是闰年。例如，2000年是闰年，因为它能被400整除；而1900年不是闰年，因为它能被100整除但不能被400整除。"}
+{"id": "probe_cs_07", "subcategory": "common_sense", "response": "人体最大的器官是皮肤。皮肤覆盖在人体表面，具有保护、感觉、调节体温等多种功能。成年人的皮肤总面积约为1.5至2平方米，重量约占体重的16%。皮肤由表皮、真皮和皮下组织三层结构组成，其中表皮又分为角质层、透明层、颗粒层、棘层和基底层。真皮层含有胶原纤维、弹性纤维、血管、神经末梢等结构。皮下组织主要由脂肪细胞构成，具有保温、缓冲等作用。皮肤是人体与外界环境接触的第一道防线，能够阻挡细菌、病毒等病原体的入侵，同时也能防止体内水分和电解质的流失。此外，皮肤还含有大量的感觉神经末梢，能够感知触觉、痛觉、温度等刺激。皮肤还能通过汗腺分泌汗液，调节体温。因此，皮肤不仅是人体最大的器官，也是维持生命活动不可或缺的重要器官。"}
+{"id": "probe_cs_08", "subcategory": "common_sense", "response": "地球的自转周期是24小时。这个周期定义了地球上一天的长度，即地球绕其轴心旋转一周所需的时间。这个自转导致了昼夜的交替，并且影响了地球上的许多自然现象，如风的形成和海洋潮汐。"}
+{"id": "probe_cs_09", "subcategory": "common_sense", "response": "血液的主要成分包括血浆、红细胞、白细胞和血小板。血浆是血液的液体部分，含有水、蛋白质、电解质、营养物质和废物等。红细胞负责携带氧气和二氧化碳，白细胞参与免疫反应，血小板则在血液凝固过程中起关键作用。这些成分共同维持血液的运输、免疫和凝血功能。"}
+{"id": "probe_cs_10", "subcategory": "common_sense", "response": "一天有24个小时。这是基于地球自转一周所需的时间，即一个太阳日。每个小时被进一步划分为60分钟，每分钟又分为60秒。因此，一天总共有1440分钟和86400秒。这个时间系统是全球通用的，用于日常计时和安排活动。"}
+{"id": "probe_cs_11", "subcategory": "common_sense", "response": "人体内最多的元素是氧元素。氧元素在人体中的含量约为65%，主要以水（H2O）的形式存在，同时也存在于蛋白质、脂肪和碳水化合物等有机分子中。氧元素对于维持生命活动至关重要，它参与细胞呼吸过程，帮助产生能量，并且是构成人体许多重要分子的基本组成部分。"}
+{"id": "probe_cs_12", "subcategory": "common_sense", "response": "地球的自转方向是逆时针的，这是从北极上空观察的结果。如果从南极上空观察，地球的自转方向则表现为顺时针。这种自转方向导致了地球上的昼夜交替现象，并且影响了地球上的许多自然现象，比如科里奥利力的产生，进而影响风向和洋流的流向。"}
+{"id": "probe_cs_13", "subcategory": "common_sense", "response": "电脑键盘上的'Ctrl'键全称是'Control'键。它是一个修饰键，通常与其他键组合使用以执行特定的命令或功能。在不同的操作系统和应用程序中，'Ctrl'键的组合功能可能会有所不同。例如，在Windows系统中，'Ctrl+C'用于复制，'Ctrl+V'用于粘贴，'Ctrl+Z'用于撤销等。'Ctrl'键的设计使得用户可以通过简单的按键组合快速执行常用操作，提高工作和操作的效率。"}
+{"id": "probe_cs_14", "subcategory": "common_sense", "response": "人类正常心跳次数每分钟大约在60到100次之间。这个范围被称为静息心率，是指人在完全休息状态下心脏每分钟跳动的次数。静息心率受多种因素影响，包括年龄、健康状况、体能水平等。运动员或经常锻炼的人可能具有较低的静息心率，而老年人或患有某些疾病的人可能具有较高的静息心率。"}
+{"id": "probe_cs_15", "subcategory": "common_sense", "response": "成人正常血压的低压值（舒张压）大约是80毫米汞柱。这个数值是血压测量中的第二个数字，代表心脏在两次跳动之间放松时血管内的压力。正常血压范围通常定义为收缩压低于120毫米汞柱且舒张压低于80毫米汞柱。"}
+{"id": "probe_cs_16", "subcategory": "common_sense", "response": "太阳系中以古罗马神话中的战神命名的行星是火星（Mars）。在古罗马神话中，火星是战神马尔斯（Mars）的化身，象征着战争和力量。由于火星在夜空中呈现出红色，这与血液的颜色相似，因此古罗马人将其与战神联系起来。在希腊神话中，火星对应的是阿瑞斯（Ares），也是战争之神。火星是太阳系中第四颗行星，也是距离太阳第四近的行星，其表面有许多与战争和神话相关的特征，如奥林匹斯山（Olympus Mons）和火星上的许多撞击坑。"}
+{"id": "probe_cs_17", "subcategory": "common_sense", "response": "构成人类基因组的基本单位是DNA（脱氧核糖核酸）。DNA是一种长链分子，由四种不同的核苷酸组成，这些核苷酸按照特定的顺序排列，形成了遗传信息的编码。人类基因组包含了大约30亿个这样的核苷酸对，它们分布在23对染色体上，其中包含了指导人体发育、功能和繁殖的所有遗传指令。"}
+{"id": "probe_cs_18", "subcategory": "common_sense", "response": "在国际标准单位制中，电流的单位是安培（Ampere），以法国物理学家安德烈-玛丽·安培（André-Marie Ampère）的名字命名。安培在电磁学领域做出了重要贡献，特别是他对电流和磁场之间关系的深入研究。安培的单位定义是基于电流产生的磁效应，具体来说，1安培的电流会在真空中两个无限长、平行、相距1米的导线之间产生2×10^-7牛顿的力。安培的单位不仅用于电流，还衍生出其他电学单位，如安培秒（库仑）、安培每米（磁场强度）等。"}
+{"id": "probe_cs_19", "subcategory": "common_sense", "response": "中国的官方货币单位是人民币（RMB），其货币代码为CNY。人民币是中华人民共和国的法定货币，由中国人民银行发行。人民币的货币符号是¥，通常用于表示价格或金额。人民币的辅币单位是分，1元等于10角，1角等于10分。人民币的流通版本包括纸币和硬币，纸币面额有1元、5元、10元、20元、50元和100元，硬币面额有1角、5角和1元。人民币在国际金融中也是一个重要的货币，其汇率受到全球市场的影响。"}
+{"id": "probe_cs_20", "subcategory": "common_sense", "response": "人体中含量最多的元素是氧（O），约占人体总重量的65%。其次是碳（C），约占18.5%，氢（H）约占9.5%，氮（N）约占3.2%。这些元素构成了人体中的水、蛋白质、脂肪和碳水化合物等有机分子。氧元素主要存在于水和有机分子中，碳元素是构成有机分子的基础，氢元素和氮元素则参与构成水和蛋白质等重要生物分子。"}
+{"id": "probe_math_06", "subcategory": "math", "response": "圆的面积可以通过公式 A = πr² 计算，其中 r 是圆的半径。给定半径 r = 7 厘米，我们可以将值代入公式得到 A = π × 7² = 49π 平方厘米。使用 π 的近似值 3.14159，面积大约是 153.94 平方厘米。因此，这个圆的面积是 153.94 平方厘米。"}
+{"id": "probe_math_07", "subcategory": "math", "response": "要计算表达式 3x - 4x + 5 的结果，其中 x 是 2，我们首先将 x 的值代入表达式中。代入后，表达式变为 3(2) - 4(2) + 5。接下来，我们进行乘法运算，得到 6 - 8 + 5。然后，我们进行加法和减法运算，首先计算 6 - 8 得到 -2，然后将 -2 加上 5，最终结果是 3。因此，当 x 是 2 时，表达式 3x - 4x + 5 的结果是 3。"}
+{"id": "probe_math_08", "subcategory": "math", "response": "设这个数为 x，根据题意可以列出方程：3x + 4 = 19。解这个方程，首先将 4 移到等号右边，得到 3x = 15，然后将 3 移到等号右边，得到 x = 5。因此，这个数是 5。"}
+{"id": "probe_math_09", "subcategory": "math", "response": "长方体的体积计算公式是：体积 = 长 × 宽 × 高。根据题目给出的数据，长方体的长是 5 厘米，宽是 3 厘米，高是 2 厘米。将这些数值代入公式，得到体积 = 5 × 3 × 2 = 30 立方厘米。因此，这个长方体的体积是 30 立方厘米。"}
+{"id": "probe_math_10", "subcategory": "math", "response": "设这个数为 x，根据题意可以列出方程：4x - 6 = 2x。解这个方程，首先将 2x 移到等号左边，得到 4x - 2x = 6，即 2x = 6。然后两边同时除以 2，得到 x = 3。因此，这个数是 3。"}
+{"id": "probe_math_11", "subcategory": "math", "response": "设这个数为 x，根据题意可以列出方程：2x + 10 = 30。解这个方程，首先将 10 移到等号右边，得到 2x = 30 - 10，即 2x = 20。然后两边同时除以 2，得到 x = 10。因此，这个数是 10。"}
+{"id": "probe_math_12", "subcategory": "math", "response": "长方形的面积可以通过公式 A = l × w 计算，其中 l 是长，w 是宽。在这个问题中，长 l = 8 米，宽 w = 3 米。因此，面积 A = 8 × 3 = 24 平方米。所以，这个长方形的面积是 24 平方米。"}
+{"id": "probe_math_13", "subcategory": "math", "response": "根据速度、时间和距离的关系公式：距离 = 速度 × 时间。将给定的数值代入公式：距离 = 60 公里/小时 × 2 小时 = 120 公里。因此，汽车在 2 小时内行驶了 120 公里。"}
+{"id": "probe_math_14", "subcategory": "math", "response": "正方形的周长计算公式是 4 乘以边长。因此，边长为 4 厘米的正方形，其周长是 4 * 4 = 16 厘米。"}
+{"id": "probe_math_15", "subcategory": "math", "response": "如果一个水果篮子里有 5 个苹果和 8 个橙子，那么总共有 5 + 8 = 13 个水果。"}
+{"id": "probe_math_16", "subcategory": "math", "response": "长方形的面积可以通过长乘以宽来计算。在这个问题中，长方形的长是 10 米，宽是 5 米，所以面积是 10 米 × 5 米 = 50 平方米。因此，这个长方形的面积是 50 平方米。"}
+{"id": "probe_math_17", "subcategory": "math", "response": "如果一辆汽车以每小时 60 公里的速度行驶，那么它 2 小时可以行驶的距离可以通过速度乘以时间计算得出。即 60 公里/小时 × 2 小时 = 120 公里。因此，这辆汽车在 2 小时内可以行驶 120 公里。"}
+{"id": "probe_math_18", "subcategory": "math", "response": "要找到这个数，我们需要将 45 除以 3。计算过程如下：45 ÷ 3 = 15。因此，这个数是 15。"}
+{"id": "probe_math_19", "subcategory": "math", "response": "小明吃了这个西瓜的 3/8。因为西瓜被平均切成了 8 块，每块代表 1/8，小明吃了 3 块，所以是 3 * 1/8 = 3/8。"}
+{"id": "probe_math_20", "subcategory": "math", "response": "首先，我们计算50减去25的结果，得到25。然后，将这个结果乘以4，即25乘以4，得到100。因此，50减去25后再乘以4的结果是100。"}
+{"id": "probe_logic_06", "subcategory": "logic", "response": "根据给定的前提，如果所有的鸟都会飞，并且企鹅是鸟，那么按照逻辑推理，企鹅也会飞。然而，这个结论与实际情况不符，因为企鹅实际上不会飞。这个例子展示了逻辑推理中的一个常见错误：前提可能不完全准确或存在例外情况。在现实世界中，企鹅是鸟类，但由于它们的身体结构和生活方式，它们已经进化成不会飞的鸟类。因此，尽管逻辑推理可以基于前提得出结论，但在应用这些结论时，需要考虑实际情况和可能的例外。"}
+{"id": "probe_logic_07", "subcategory": "logic", "response": "是的，仙人掌需要水。虽然仙人掌能够在干旱环境中生存，并且具有储存水分的能力，但它们仍然需要水来进行光合作用和维持生命活动。仙人掌通过其特殊的生理结构和行为适应干旱环境，例如在夜间开放气孔以减少水分蒸发，以及在雨季时快速吸收并储存水分。因此，尽管仙人掌对水的需求量比其他植物少，但它们仍然需要水来生存。"}
+{"id": "probe_logic_08", "subcategory": "logic", "response": "根据题目中的条件，张三比李四高，李四比王五高，可以得出张三 > 李四 > 王五。因此，三人中最矮的是王五。"}
+{"id": "probe_logic_09", "subcategory": "logic", "response": "根据题目描述，数列中的每个数字是前一个数字的两倍。因此，数列的规律是每次乘以2。从给定的数列2, 4, 8, 16来看，下一个数字应该是16乘以2，即32。所以，数列的下一个数字是32。"}
+{"id": "probe_logic_10", "subcategory": "logic", "response": "小华最初有 10 个橘子。他给了妹妹 3 个后，剩下 10 - 3 = 7 个橘子。然后妈妈又给了他 5 个，所以现在小华有 7 + 5 = 12 个橘子。"}
+{"id": "probe_logic_11", "subcategory": "logic", "response": "是的，玫瑰需要水。根据前提，所有的植物都需要水来生长，而玫瑰被明确归类为植物。因此，玫瑰作为植物的一员，自然也需要水来维持其生长和生存。水是植物进行光合作用、运输养分和维持细胞结构的关键因素，对玫瑰的生长同样至关重要。"}
+{"id": "probe_logic_12", "subcategory": "logic", "response": "根据给定的前提，如果一个物体是红色的，那么它就是暖色调。苹果是红色的，因此根据这个逻辑，苹果是暖色调。这个结论是基于前提中的条件关系得出的，即红色物体属于暖色调，而苹果作为红色物体，自然也被归类为暖色调。"}
+{"id": "probe_logic_13", "subcategory": "logic", "response": "根据题目中的逻辑推理，所有会飞的动物都有翅膀，而企鹅被描述为会飞的动物，因此可以得出结论：企鹅有翅膀。然而，这个结论与实际情况不符，因为企鹅实际上并不会飞，它们属于不会飞的鸟类。题目中的前提条件与事实不符，导致逻辑推理的结果与实际情况相悖。"}
+{"id": "probe_logic_14", "subcategory": "logic", "response": "根据给定的条件，如果今天是周末，那么图书馆不开门。今天是工作日，这个条件与前提中的周末情况相反，因此不能直接应用前提中的结论。然而，根据常识，如果图书馆在周末不开门，那么在工作日通常是开门的，除非有特殊的安排或公告。因此，可以合理推断今天是工作日，图书馆是开门的。"}
+{"id": "probe_logic_15", "subcategory": "logic", "response": "是的，14可以被2整除。根据题目中的前提，所有的偶数都可以被2整除，而14是一个偶数，因此14可以被2整除。具体来说，14除以2等于7，没有余数，这验证了14可以被2整除的事实。"}
+{"id": "probe_logic_16", "subcategory": "logic", "response": "是的，小蓝是哺乳动物。根据题目中的逻辑推理，所有的海豚都是哺乳动物，而小蓝是海豚，因此小蓝必然是哺乳动物。这是一个典型的三段论推理，其中大前提是所有海豚都是哺乳动物，小前提是小蓝是海豚，结论是小蓝是哺乳动物。"}
+{"id": "probe_logic_17", "subcategory": "logic", "response": "根据给定的条件，如果今天下雨，那么我们应该选择在家看电影。这是因为条件陈述中明确指出，如果下雨，活动安排就是在家看电影。因此，根据天气情况，我们应当遵循这个计划，享受一个室内活动日。"}
+{"id": "probe_logic_18", "subcategory": "logic", "response": "是的，玫瑰需要阳光。根据前提，所有的植物都需要阳光，而玫瑰是植物的一种，因此玫瑰也需要阳光。这是通过演绎推理得出的结论，即从一般性的前提（所有植物都需要阳光）推导出特定情况下的结论（玫瑰需要阳光）。"}
+{"id": "probe_logic_19", "subcategory": "logic", "response": "根据题干中的逻辑关系，如果厨师生病，餐馆就会关闭。这是一个充分条件，即厨师生病是餐馆关闭的一个可能原因。但是，题干中只告诉我们今天餐馆关闭了，并没有提供足够的信息来确定厨师是否生病。餐馆关闭可能有其他原因，比如节假日、维修等。因此，我们不能仅凭餐馆关闭这一事实就断定厨师生病了。要确定厨师是否生病，我们需要更多的信息，比如餐馆的营业记录、厨师的请假情况等。总之，根据题干中的信息，我们无法确定厨师是否生病，需要进一步调查才能得出结论。"}
+{"id": "probe_logic_20", "subcategory": "logic", "response": "根据提供的信息，企鹅属于“带翅膀但不能飞”的类别。虽然所有带翅膀的都能飞是一个普遍规则，但企鹅是一个例外，它们有翅膀但不能飞。因此，企鹅被归类为“带翅膀但不能飞”的类别。"}
+{"id": "probe_write_06", "subcategory": "writing", "response": "听到自己获得一等奖的消息后，小明心花怒放，脸上洋溢着幸福的笑容。"}
+{"id": "probe_write_07", "subcategory": "writing", "response": "尽管前方的道路充满未知和挑战，但是我们要坚持自己的信念，勇往直前。"}
+{"id": "probe_write_08", "subcategory": "writing", "response": "月光如水，银辉洒满大地，万物在静谧中沐浴着这份温柔的光辉。"}
+{"id": "probe_write_09", "subcategory": "writing", "response": "在秋高气爽的时节，天空显得格外高远和清澈，阳光透过稀疏的云层洒在大地上，给万物披上了一层金色的外衣。微风轻拂，带来阵阵凉意，树叶在风中摇曳，发出沙沙的声响。远处的山峦在蓝天的映衬下显得更加苍翠，近处的田野里，金黄的稻谷随风起伏，仿佛在诉说着丰收的喜悦。人们走出家门，享受着这宜人的天气，孩子们在草地上奔跑嬉戏，老人们在树荫下悠闲地聊天。整个场景充满了宁静与和谐，让人感受到秋天独有的魅力。"}
+{"id": "probe_write_10", "subcategory": "writing", "response": "滴水穿石，非一日之功。正如我们在追求梦想的路上，需要不断地努力和坚持，才能最终实现目标。就像滴水穿石一样，每一次的努力都是向着成功迈进的一步，只有持之以恒，才能最终达到目的。"}
+{"id": "probe_write_11", "subcategory": "writing", "response": "月色如银，洒在静谧的湖面上，波光粼粼，仿佛无数颗钻石在闪烁。湖边的柳树在月光的照耀下，投下斑驳的影子，随风轻摆，宛如一幅水墨画。远处的山峦在月色的笼罩下，显得朦胧而神秘，仿佛披上了一层轻纱。整个夜晚，月色如水，宁静而美好，让人沉醉其中，忘却尘世的喧嚣。"}
+{"id": "probe_write_12", "subcategory": "writing", "response": "光阴似箭，日月如梭，我们应当珍惜每一分每一秒，努力学习和工作，不负韶华。"}
+{"id": "probe_write_13", "subcategory": "writing", "response": "秋意浓时，金黄的落叶铺满了小径，微风中带着丝丝凉意，远处的山峦被晚霞染成了橙红色，整个画面如同一幅浓墨重彩的油画，让人感受到秋天独有的宁静与美丽。"}
+{"id": "probe_write_14", "subcategory": "writing", "response": "在经历了长时间的失业和求职无果后，小李几乎要放弃希望，就在他感到绝望的时候，突然收到了一家心仪公司的面试邀请，那一刻，他仿佛体会到了“柳暗花明又一村”的感觉，心中充满了希望和喜悦。"}
+{"id": "probe_write_15", "subcategory": "writing", "response": "今天风和日丽，阳光明媚，正是出游的好天气。"}
+{"id": "probe_write_16", "subcategory": "writing", "response": "在这个信息爆炸的时代，科技日新月异，每天都会有新的突破和创新出现，改变着我们的生活和工作方式。"}
+{"id": "probe_write_17", "subcategory": "writing", "response": "尽管他每天都很忙碌，但他总能抽出时间陪伴家人。"}
+{"id": "probe_write_18", "subcategory": "writing", "response": "她的声音很悦耳，仿佛春风拂过心田，带来无尽的温柔与宁静。"}
+{"id": "probe_write_19", "subcategory": "writing", "response": "在解决问题时，我们不能刻舟求剑，而应该根据实际情况灵活应对，寻找最有效的解决方案。"}
+{"id": "probe_write_20", "subcategory": "writing", "response": "秋高气爽的时节，天空湛蓝如洗，白云悠悠飘过，微风拂面带来阵阵凉意，正是出游赏景的好时光。"}
+{"id": "probe_code_06", "subcategory": "code", "response": "在 Python 中，可以通过使用加号（+）操作符将字符串 'hello' 和 'world' 连接起来。具体操作如下：首先定义两个字符串变量，分别赋值为 'hello' 和 'world'，然后使用加号将这两个变量相加，结果会是一个新的字符串，包含两个原始字符串的内容，即 'helloworld'。例如：str1 = 'hello'; str2 = 'world'; result = str1 + str2; print(result) 将会输出 'helloworld'。"}
+{"id": "probe_code_07", "subcategory": "code", "response": "在 Python 中，去掉列表中的最后一个元素可以使用 `pop()` 方法。具体操作是 `lst.pop()`，这会移除并返回列表中的最后一个元素。例如，对于列表 `lst = [1, 2, 3]`，执行 `lst.pop()` 后，列表将变为 `[1, 2]`，并且返回值为 `3`。"}
+{"id": "probe_code_08", "subcategory": "code", "response": "在 Python 中，可以使用内置的 `str()` 函数将整数 10 转换成字符串类型。具体操作如下：`str(10)` 会返回字符串 `'10'`。这个转换过程是 Python 类型转换的一个基本示例，它允许将数值类型的数据转换为字符串类型，以便于进行字符串操作或输出显示。"}
+{"id": "probe_code_09", "subcategory": "code", "response": "在 Python 代码中，检查一个字符串是否包含子字符串 'test' 可以通过使用 'in' 操作符来实现。例如，如果有一个字符串变量 `s`，你可以使用 `if 'test' in s:` 来检查 `s` 是否包含 'test'。如果包含，条件为真，可以执行相应的代码块。这种方法简洁且易于理解，是 Python 中检查子字符串的常用方法。"}
+{"id": "probe_code_10", "subcategory": "code", "response": "在 Python 中，元组 (tuple) 和列表 (list) 都是用于存储有序元素集合的数据结构，但它们之间存在一些关键区别：1. 可变性：列表是可变的数据结构，意味着可以添加、删除或修改列表中的元素；而元组是不可变的，一旦创建就不能更改。2. 语法：列表使用方括号 [] 表示，元组使用圆括号 () 表示。3. 性能：由于元组是不可变的，它们在内存中占用的空间通常比列表小，因此在某些情况下，元组可以提供更好的性能。4. 用途：列表通常用于存储需要频繁修改的数据，而元组用于存储不需要修改的固定数据，如配置信息或数据库记录。5. 哈希性：元组是可哈希的，可以作为字典的键或集合的元素；而列表不可哈希，不能直接用作字典的键。总的来说，选择使用元组还是列表取决于具体的应用场景和需求。"}
+{"id": "probe_code_11", "subcategory": "code", "response": "在 Python 中，判断一个变量是否是列表类型的表达式是 `isinstance(variable, list)`。这个表达式会返回一个布尔值，如果变量是列表类型，则返回 `True`，否则返回 `False`。例如，`isinstance([1, 2, 3], list)` 会返回 `True`，而 `isinstance(123, list)` 会返回 `False`。"}
+{"id": "probe_code_12", "subcategory": "code", "response": "在 Python 中，布尔类型变量可以接受两个值：True 和 False。要创建一个值为 0 的布尔类型变量，实际上是将 0 转换为布尔值 False。Python 中，0 被解释为 False，而任何非零值都被解释为 True。因此，你可以直接赋值 0 给一个布尔变量，或者使用 bool() 函数将 0 转换为布尔值。例如：`my_bool = bool(0)` 或者 `my_bool = False`。这两种方式都会创建一个值为 False 的布尔变量。"}
+{"id": "probe_code_13", "subcategory": "code", "response": "一个 Python 表达式用于计算并返回两个数相加的结果可以是：`lambda x, y: x + y`。这个表达式定义了一个匿名函数，它接受两个参数 `x` 和 `y`，并返回它们的和。这个表达式本身就是一个函数，可以直接调用，例如 `(lambda x, y: x + y)(3, 4)` 将返回 `7`。"}
+{"id": "probe_code_14", "subcategory": "code", "response": "在 Python 中，要将字符串 'hello' 转换为小写，可以使用字符串的 `lower()` 方法。这个方法会将字符串中的所有大写字母转换为小写字母，而小写字母保持不变。对于字符串 'hello'，由于它已经是小写，所以 `lower()` 方法不会改变它。转换后的结果仍然是 'hello'。如果字符串中包含大写字母，比如 'HELLO'，那么 `lower()` 方法会将其转换为 'hello'。"}
+{"id": "probe_code_15", "subcategory": "code", "response": "在Python中，使用关键字`while`来创建一个循环，该循环将重复执行代码块直到满足某个条件。`while`循环的基本语法是：`while 条件: 代码块`。只要条件为真，循环就会继续执行代码块中的代码。一旦条件变为假，循环就会终止。例如，`while x < 10: x += 1`会一直增加x的值，直到x等于或大于10。"}
+{"id": "probe_code_16", "subcategory": "code", "response": "在Python中，可以使用内置的`type()`函数来检查一个变量是否是列表类型。例如，`type(variable) == list`会返回`True`如果`variable`是一个列表，否则返回`False`。此外，也可以使用`isinstance()`函数，如`isinstance(variable, list)`，它同样会返回`True`或`False`，并且更加灵活，因为它可以检查变量是否属于某个类或其子类。"}
+{"id": "probe_code_17", "subcategory": "code", "response": "在Python中，'+='操作符是一个复合赋值操作符，它允许你将一个值加到一个变量上，并将结果重新赋值给该变量。例如，'a += b'等同于'a = a + b'。这个操作符不仅适用于数值类型，还可以用于字符串、列表等支持加法操作的数据类型。使用'+='操作符可以使代码更加简洁，提高代码的可读性。"}
+{"id": "probe_code_18", "subcategory": "code", "response": "在Python中，可以通过元组解包的方式交换两个变量的值而不使用临时变量。例如，如果我们要交换变量a和b的值，可以这样做：a, b = b, a。这行代码首先创建一个包含b和a值的元组，然后将这个元组的值分别赋给a和b，从而实现了值的交换。这种方法简洁且直观，是Python中交换变量值的一种常见方式。"}
+{"id": "probe_code_19", "subcategory": "code", "response": "在 JavaScript 中，创建一个名为 'myObject' 的空对象可以通过以下代码实现：`var myObject = {};`。这行代码使用对象字面量语法创建了一个新的空对象，并将其赋值给变量 'myObject'。空对象不包含任何属性或方法，可以随后通过添加属性和方法来扩展。"}
+{"id": "probe_code_20", "subcategory": "code", "response": "在 Java 中，声明一个具有初始值 10 的整型变量可以通过以下方式实现：`int myVariable = 10;`。这里，`int` 是数据类型，表示这是一个整型变量；`myVariable` 是变量名，可以根据需要自定义；`10` 是初始值，表示在声明变量的同时为其赋值为 10。这种声明方式简洁明了，是 Java 中常见的变量声明和初始化方法。"}
+{"id": "probe_if_06", "subcategory": "instruction_following", "response": "The English word for \"人工智能\" is \"Artificial Intelligence\"."}
+{"id": "probe_if_07", "subcategory": "instruction_following", "response": "“春天来了”这句话翻译成英文是“Spring is here”。"}
+{"id": "probe_if_08", "subcategory": "instruction_following", "response": "数字2023的中文读法是“两千零二十三”。在中文中，数字的读法遵循一定的规则，其中“千”代表千位，“百”代表百位，“十”代表十位，个位则直接读出数字。对于2023，千位是2，所以读作“两千”；百位是0，所以读作“零”；十位是2，读作“二十”；个位是3，读作“三”。将这些部分组合起来，就是“两千零二十三”。"}
+{"id": "probe_if_09", "subcategory": "instruction_following", "response": "Monday is the first day of the week. In many cultures and calendars, the week starts on Monday, making it the initial day of the seven-day cycle. This is particularly true in countries that follow the ISO 8601 standard, which designates Monday as the first day of the week. However, in some cultures, such as in the United States, Sunday is considered the first day of the week. Regardless of cultural differences, Monday is universally recognized as a significant day, marking the beginning of the workweek in many parts of the world."}
+{"id": "probe_if_10", "subcategory": "instruction_following", "response": "The English word for '苹果' is 'apple'."}
+{"id": "probe_if_11", "subcategory": "instruction_following", "response": "姓名：李四，年龄：25"}
+{"id": "probe_if_12", "subcategory": "instruction_following", "response": "根据五笔输入法的编码规则，‘猫’字的编码是‘QFJF’。因此，使用五笔输入法输入‘猫’字时，需要依次按下‘Q’、‘F’、‘J’、‘F’这四个键。这个编码是基于‘猫’字的字形结构，将其分解为四个部分，并对应到五笔键盘的相应键位上。通过这种方式，可以快速准确地输入‘猫’字。"}
+{"id": "probe_if_13", "subcategory": "instruction_following", "response": "‘他是一个学生。’的反问句翻译是：‘难道他不是学生吗？’ 或者 ‘他怎么不是学生呢？’ 这两种表达方式都通过反问的形式强调了‘他是一个学生’这一事实。"}
+{"id": "probe_if_14", "subcategory": "instruction_following", "response": "秋天，金黄的落叶铺满小径，凉爽的秋风轻拂过面颊，丰收的季节带来喜悦与宁静。"}
+{"id": "probe_if_15", "subcategory": "instruction_following", "response": "The letter following 'A' is 'B', and the letter following 'B' is 'C'. Therefore, the answer is 'C'."}
+{"id": "probe_if_16", "subcategory": "instruction_following", "response": "一周有7天。以数字形式呈现为：7。"}
+{"id": "probe_if_17", "subcategory": "instruction_following", "response": "画蛇添足，比喻做了多余的事，反而不恰当。"}
+{"id": "probe_if_18", "subcategory": "instruction_following", "response": "根据五笔字型输入法的编码规则，‘龙’字的编码是‘D’。‘龙’字属于‘龙’部，在五笔字型输入法中，‘龙’部对应的键位是‘D’。因此，‘龙’字的编码就是‘D’。这个编码规则是基于五笔字型输入法的字根和键位对应关系确定的，使得用户可以通过输入对应的键位来快速输入汉字。"}
+{"id": "probe_if_19", "subcategory": "instruction_following", "response": "尼罗河"}
+{"id": "probe_if_20", "subcategory": "instruction_following", "response": "The English word for '幸福' is 'happiness'."}

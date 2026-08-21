@@ -1,0 +1,209 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+notes: 风险与边界:三条红线(数据安全、幻觉核查、责任边界)+ 可以做 vs 必须人在回路正反对照。
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 40, 500, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: |-
+        06 落地行动 · 风险与边界
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 38]
+    content:
+      style: "$h1"
+      wrap: false
+      text: |-
+        三条红线:数据不出界、数字要核验、高风险人确认
+  # ---- 红线 ① ----
+  - elementId: rule1-bar
+    elementType: shape
+    bounds: [56, 136, 4, 54]
+    shapeName: rect
+    fill: {type: solid, color: "$terra"}
+  - elementId: rule1-num
+    elementType: text
+    bounds: [72, 138, 34, 26]
+    content:
+      fontSize: 20
+      bold: true
+      color: "$terra"
+      wrap: false
+      text: |-
+        ①
+  - elementId: rule1-title
+    elementType: text
+    bounds: [112, 138, 160, 24]
+    content:
+      style: "$h2"
+      wrap: false
+      text: |-
+        数据安全
+  - elementId: rule1-desc
+    elementType: text
+    bounds: [112, 164, 792, 20]
+    content:
+      fontSize: 12
+      color: "$ink"
+      wrap: false
+      text: |-
+        客户监测数据不出授权边界;调用外部模型前先脱敏,敏感字段不进入提示词。
+  # ---- 红线 ② ----
+  - elementId: rule2-bar
+    elementType: shape
+    bounds: [56, 200, 4, 54]
+    shapeName: rect
+    fill: {type: solid, color: "$terra"}
+  - elementId: rule2-num
+    elementType: text
+    bounds: [72, 202, 34, 26]
+    content:
+      fontSize: 20
+      bold: true
+      color: "$terra"
+      wrap: false
+      text: |-
+        ②
+  - elementId: rule2-title
+    elementType: text
+    bounds: [112, 202, 160, 24]
+    content:
+      style: "$h2"
+      wrap: false
+      text: |-
+        幻觉核查
+  - elementId: rule2-desc
+    elementType: text
+    bounds: [112, 228, 792, 20]
+    content:
+      fontSize: 12
+      color: "$ink"
+      wrap: false
+      text: |-
+        对外发出的每个数字、每条事实必须人工核验——模型会一本正经地给出错误答案。
+  # ---- 红线 ③ ----
+  - elementId: rule3-bar
+    elementType: shape
+    bounds: [56, 264, 4, 54]
+    shapeName: rect
+    fill: {type: solid, color: "$terra"}
+  - elementId: rule3-num
+    elementType: text
+    bounds: [72, 266, 34, 26]
+    content:
+      fontSize: 20
+      bold: true
+      color: "$terra"
+      wrap: false
+      text: |-
+        ③
+  - elementId: rule3-title
+    elementType: text
+    bounds: [112, 266, 160, 24]
+    content:
+      style: "$h2"
+      wrap: false
+      text: |-
+        责任边界
+  - elementId: rule3-desc
+    elementType: text
+    bounds: [112, 292, 792, 20]
+    content:
+      fontSize: 12
+      color: "$ink"
+      wrap: false
+      text: |-
+        高风险动作必须人确认:对外发送、预警发布、生产写入,一律先过人、再执行。
+  # ---- 正反对照 ----
+  - elementId: ok-bg
+    elementType: shape
+    bounds: [56, 340, 416, 132]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+  - elementId: ok-icon
+    elementType: icon
+    bounds: [76, 356, 16, 16]
+    iconName: "fas:circle-check"
+    fill: {type: solid, color: "$pine"}
+  - elementId: ok-h
+    elementType: text
+    bounds: [102, 352, 300, 22]
+    content:
+      fontSize: 14
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: |-
+        可以放心派出去
+  - elementId: ok-list
+    elementType: text
+    bounds: [76, 382, 380, 80]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.7
+      align: [left, top]
+      text: |-
+        <p>· 辅助起草:方案、邮件、纪要初稿</p>
+        <p>· 内部分析:数据汇总、调研简报</p>
+        <p>· 值守初判:自动巡检、异常初筛</p>
+  - elementId: no-bg
+    elementType: shape
+    bounds: [488, 340, 416, 132]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+  - elementId: no-icon
+    elementType: icon
+    bounds: [508, 356, 16, 16]
+    iconName: "fas:hand"
+    fill: {type: solid, color: "$terra"}
+  - elementId: no-h
+    elementType: text
+    bounds: [534, 352, 300, 22]
+    content:
+      fontSize: 14
+      bold: true
+      color: "$terra"
+      wrap: false
+      text: |-
+        必须人在回路
+  - elementId: no-list
+    elementType: text
+    bounds: [508, 382, 380, 80]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.7
+      align: [left, top]
+      text: |-
+        <p>· 对外交付:报告、方案发出前</p>
+        <p>· 预警发布:地灾、墒情预警信息</p>
+        <p>· 系统变更:生产写入、配置修改</p>
+  # ---- 页脚 ----
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-left
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: |-
+        东方智感 · AI 内训第三期 | 护栏共识,全员须记住
+  - elementId: footer-page
+    elementType: text
+    bounds: [804, 510, 100, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: |-
+        34 / 35

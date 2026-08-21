@@ -1,0 +1,55 @@
+[2026-08-17 05:44:26] monitor started (interval=600s, pid=518663)
+[2026-08-17 05:44:27] ALIVE | step=296/5548 | eval_loss=1.587 | NEW BEST: eval_loss=1.587288 @ eval_step=200
+[2026-08-17 05:51:45] monitor started (interval=600s, pid=518663)
+[2026-08-17 05:51:45] ALIVE | step=300/5548 | eval_loss=1.587 | NEW BEST: eval_loss=1.587288 @ eval_step=200
+[2026-08-17 06:01:46] ALIVE | step=323/5548 | eval_loss=1.587 | NEW BEST: eval_loss=1.587288 @ eval_step=200
+[2026-08-17 06:11:47] ALIVE | step=361/5548 | eval_loss=1.587 | NEW BEST: eval_loss=1.587288 @ eval_step=200
+[2026-08-17 06:21:47] ALIVE | step=400/5548 | eval_loss=1.588 | NEW BEST: eval_loss=1.587288 @ eval_step=200
+[2026-08-17 06:31:48] ALIVE | step=400/5548 | eval_loss=1.583 | NEW BEST: eval_loss=1.582638 @ eval_step=400
+[2026-08-17 06:41:49] ALIVE | step=438/5548 | eval_loss=1.583 | NEW BEST: eval_loss=1.582638 @ eval_step=400
+[2026-08-17 06:51:49] ALIVE | step=475/5548 | eval_loss=1.583 | NEW BEST: eval_loss=1.582638 @ eval_step=400
+[2026-08-17 07:01:50] ALIVE | step=500/5548 | eval_loss=1.583 | NEW BEST: eval_loss=1.582638 @ eval_step=400
+[2026-08-17 07:11:51] ALIVE | step=511/5548 | eval_loss=1.565 | NEW BEST: eval_loss=1.564864 @ eval_step=500
+[2026-08-17 07:21:51] ALIVE | step=552/5548 | eval_loss=1.565 | NEW BEST: eval_loss=1.564864 @ eval_step=500
+[2026-08-17 07:31:52] ALIVE | step=591/5548 | eval_loss=1.565 | NEW BEST: eval_loss=1.564864 @ eval_step=500
+[2026-08-17 07:41:53] ALIVE | step=600/5548 | eval_loss=1.565 | NEW BEST: eval_loss=1.564864 @ eval_step=500
+[2026-08-17 07:51:53] ALIVE | step=629/5548 | eval_loss=1.558 | NEW BEST: eval_loss=1.557641 @ eval_step=600
+[2026-08-17 08:01:54] ALIVE | step=667/5548 | eval_loss=1.558 | NEW BEST: eval_loss=1.557641 @ eval_step=600
+[2026-08-17 08:11:55] ALIVE | step=700/5548 | eval_loss=1.558 | NEW BEST: eval_loss=1.557641 @ eval_step=600
+[2026-08-17 08:21:56] ALIVE | step=705/5548 | eval_loss=1.554 | NEW BEST: eval_loss=1.553694 @ eval_step=700
+[2026-08-17 08:31:57] ALIVE | step=744/5548 | eval_loss=1.554 | NEW BEST: eval_loss=1.553694 @ eval_step=700
+[2026-08-17 08:41:57] ALIVE | step=782/5548 | eval_loss=1.554 | NEW BEST: eval_loss=1.553694 @ eval_step=700
+[2026-08-17 08:51:58] ALIVE | step=800/5548 | eval_loss=1.554 | NEW BEST: eval_loss=1.553694 @ eval_step=700
+[2026-08-17 09:01:59] ALIVE | step=819/5548 | eval_loss=1.546 | NEW BEST: eval_loss=1.545576 @ eval_step=800
+[2026-08-17 09:11:59] ALIVE | step=857/5548 | eval_loss=1.546 | NEW BEST: eval_loss=1.545576 @ eval_step=800
+[2026-08-17 09:22:00] ALIVE | step=898/5548 | eval_loss=1.546 | NEW BEST: eval_loss=1.545576 @ eval_step=800
+[2026-08-17 09:32:01] ALIVE | step=900/5548 | eval_loss=1.546 | NEW BEST: eval_loss=1.545576 @ eval_step=800
+[2026-08-17 09:42:02] ALIVE | step=935/5548 | eval_loss=1.545 | NEW BEST: eval_loss=1.544791 @ eval_step=900
+[2026-08-17 09:52:02] ALIVE | step=974/5548 | eval_loss=1.545 | NEW BEST: eval_loss=1.544791 @ eval_step=900
+[2026-08-17 10:02:03] ALIVE | step=1000/5548 | eval_loss=1.545 | NEW BEST: eval_loss=1.544791 @ eval_step=900
+[2026-08-17 10:12:04] ALIVE | step=1014/5548 | eval_loss=1.53 | NEW BEST: eval_loss=1.529552 @ eval_step=1000
+[2026-08-17 10:22:04] ALIVE | step=1054/5548 | eval_loss=1.53 | NEW BEST: eval_loss=1.529552 @ eval_step=1000
+[2026-08-17 10:32:05] ALIVE | step=1094/5548 | eval_loss=1.53 | NEW BEST: eval_loss=1.529552 @ eval_step=1000
+[2026-08-17 10:42:06] ALIVE | step=1100/5548 | eval_loss=1.53 | NEW BEST: eval_loss=1.529552 @ eval_step=1000
+[2026-08-17 10:52:07] ALIVE | step=1132/5548 | eval_loss=1.524 | NEW BEST: eval_loss=1.523598 @ eval_step=1100
+[2026-08-17 11:02:07] ALIVE | step=1170/5548 | eval_loss=1.524 | NEW BEST: eval_loss=1.523598 @ eval_step=1100
+[2026-08-17 11:12:08] ALIVE | step=1200/5548 | eval_loss=1.524 | NEW BEST: eval_loss=1.523598 @ eval_step=1100
+[2026-08-17 11:22:09] ALIVE | step=1204/5548 | eval_loss=1.517 | NEW BEST: eval_loss=1.517282 @ eval_step=1200
+[2026-08-17 11:32:09] ALIVE | step=1240/5548 | eval_loss=1.517 | NEW BEST: eval_loss=1.517282 @ eval_step=1200
+[2026-08-17 11:42:10] ALIVE | step=1278/5548 | eval_loss=1.517 | NEW BEST: eval_loss=1.517282 @ eval_step=1200
+[2026-08-17 11:52:11] ALIVE | step=1300/5548 | eval_loss=1.517 | NEW BEST: eval_loss=1.517282 @ eval_step=1200
+[2026-08-17 12:02:11] ALIVE | step=1313/5548 | eval_loss=1.506 | NEW BEST: eval_loss=1.505834 @ eval_step=1300
+[2026-08-17 12:12:12] ALIVE | step=1350/5548 | eval_loss=1.506 | NEW BEST: eval_loss=1.505834 @ eval_step=1300
+[2026-08-17 12:22:13] ALIVE | step=1391/5548 | eval_loss=1.506 | NEW BEST: eval_loss=1.505834 @ eval_step=1300
+[2026-08-17 12:32:13] ALIVE | step=1400/5548 | eval_loss=1.506 | NEW BEST: eval_loss=1.505834 @ eval_step=1300
+[2026-08-17 12:42:14] ALIVE | step=1428/5548 | eval_loss=1.506 | NEW BEST: eval_loss=1.505834 @ eval_step=1300
+[2026-08-17 12:52:15] ALIVE | step=1468/5548 | eval_loss=1.506 | NEW BEST: eval_loss=1.505834 @ eval_step=1300
+[2026-08-17 13:02:15] ALIVE | step=1500/5548 | eval_loss=1.533 | NEW BEST: eval_loss=1.505834 @ eval_step=1300
+[2026-08-17 13:12:16] ALIVE | step=1507/5548 | eval_loss=1.533 | NEW BEST: eval_loss=1.505834 @ eval_step=1300
+[2026-08-17 13:22:17] ALIVE | step=1547/5548 | eval_loss=1.533 | NEW BEST: eval_loss=1.505834 @ eval_step=1300
+[2026-08-17 13:32:17] ALIVE | step=1585/5548 | eval_loss=1.533 | NEW BEST: eval_loss=1.505834 @ eval_step=1300
+[2026-08-17 13:42:18] ALIVE | step=1600/5548 | eval_loss=1.541 | NEW BEST: eval_loss=1.505834 @ eval_step=1300
+[2026-08-17 13:52:19] ALIVE | step=1600/5548 | eval_loss=1.538 | NEW BEST: eval_loss=1.505834 @ eval_step=1300
+[2026-08-17 14:02:19] COMPLETED | step=1600/5548 | eval_loss=1.538 | NEW BEST: eval_loss=1.505834 @ eval_step=1300
+[2026-08-17 14:02:19] ★★★ 训练正常结束 → 进入评测阶段 ★★★
+[2026-08-17 14:02:19] 评测命令见 V6_RUNBOOK.md「训练完成后的评测」章节

@@ -1,0 +1,45 @@
+[03:43:00] 金标 300 题
+[03:43:00] gpt-5.4: 已完成 39, 待生成 261
+[03:47:00] gpt-5.4: 25/261
+[03:50:28] gpt-5.4: 50/261
+[03:51:32] gpt-5.4/v4_gold_092 attempt 1 失败: Error code: 429 - {'error': {'code': 'api_key_rate_limited', 'message': 'API key is temporarily rate limited', 'param': 
+[03:53:41] gpt-5.4: 75/261
+[03:57:02] gpt-5.4: 100/261
+[04:00:25] gpt-5.4: 125/261
+[04:04:23] gpt-5.4: 150/261
+[04:07:52] gpt-5.4: 175/261
+[04:11:40] gpt-5.4/v5_gold_236 attempt 1 失败: Error code: 429 - {'error': {'code': 'api_key_rate_limited', 'message': 'API key is temporarily rate limited', 'param': 
+[04:11:58] gpt-5.4: 200/261
+[04:16:12] gpt-5.4: 225/261
+[04:19:18] gpt-5.4/v5_gold_283 attempt 1 失败: Error code: 429 - {'error': {'code': 'api_key_rate_limited', 'message': 'API key is temporarily rate limited', 'param': 
+[04:20:04] gpt-5.4: 250/261
+[04:22:27] gpt-5.4: 完成 261, 失败 0
+[04:22:27] claude-sonnet-4-6: 已完成 0, 待生成 300
+[04:25:38] claude-sonnet-4-6: 25/300
+[04:28:10] claude-sonnet-4-6/v4_gold_045 attempt 1 失败: Error code: 429 - {'error': {'code': 'api_key_rate_limited', 'message': 'API key is temporarily rate limited', 'param': 
+[04:28:12] claude-sonnet-4-6/v4_gold_046 attempt 1 失败: Error code: 429 - {'error': {'code': 'api_key_rate_limited', 'message': 'API key is temporarily rate limited', 'param': 
+[04:28:15] claude-sonnet-4-6/v4_gold_047 attempt 1 失败: Error code: 429 - {'error': {'code': 'api_key_rate_limited', 'message': 'API key is temporarily rate limited', 'param': 
+[04:28:17] claude-sonnet-4-6/v4_gold_048 attempt 1 失败: Error code: 429 - {'error': {'code': 'api_key_rate_limited', 'message': 'API key is temporarily rate limited', 'param': 
+[04:28:24] claude-sonnet-4-6: 50/300
+[04:29:53] claude-sonnet-4-6: 75/300
+[04:32:08] claude-sonnet-4-6: 100/300
+[04:34:22] claude-sonnet-4-6/v5_gold_116 attempt 1 失败: empty content
+[04:34:31] claude-sonnet-4-6/v5_gold_116 attempt 2 失败: empty content
+[04:35:49] claude-sonnet-4-6/v5_gold_116 attempt 3 失败: empty content
+[04:36:31] claude-sonnet-4-6: 125/300
+[04:37:13] claude-sonnet-4-6/v5_gold_116 attempt 4 失败: empty content
+[04:37:59] claude-sonnet-4-6/v5_gold_116 attempt 5 失败: empty content
+[04:39:33] claude-sonnet-4-6: 150/300
+[04:40:13] claude-sonnet-4-6/v5_gold_149 attempt 1 失败: Error code: 429 - {'error': {'code': 'api_key_rate_limited', 'message': 'API key is temporarily rate limited', 'param': 
+[04:41:13] claude-sonnet-4-6/v5_gold_159 attempt 1 失败: Error code: 429 - {'error': {'code': 'api_key_rate_limited', 'message': 'API key is temporarily rate limited', 'param': 
+[04:41:15] claude-sonnet-4-6/v5_gold_160 attempt 1 失败: Error code: 429 - {'error': {'code': 'api_key_rate_limited', 'message': 'API key is temporarily rate limited', 'param': 
+[04:42:29] claude-sonnet-4-6: 175/300
+[04:44:10] claude-sonnet-4-6: 200/300
+[04:44:16] claude-sonnet-4-6/v5_gold_202 attempt 1 失败: Error code: 429 - {'error': {'code': 'api_key_rate_limited', 'message': 'API key is temporarily rate limited', 'param': 
+[04:48:33] claude-sonnet-4-6: 225/300
+[04:50:24] claude-sonnet-4-6: 250/300
+[04:52:44] claude-sonnet-4-6: 275/300
+[04:52:56] claude-sonnet-4-6/v5_gold_269 attempt 1 失败: Error code: 429 - {'error': {'code': 'api_key_rate_limited', 'message': 'API key is temporarily rate limited', 'param': 
+[04:52:58] claude-sonnet-4-6/v5_gold_270 attempt 1 失败: Error code: 429 - {'error': {'code': 'api_key_rate_limited', 'message': 'API key is temporarily rate limited', 'param': 
+[04:54:53] claude-sonnet-4-6: 完成 299, 失败 1
+[04:54:53] 全部选手完成

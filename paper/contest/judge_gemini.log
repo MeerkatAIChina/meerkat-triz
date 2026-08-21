@@ -1,0 +1,29 @@
+[    0.3s] === 选手 gemini-3.5-flash: 300 条回答, 评委 ['claude-sonnet-4-6', 'gpt-5.4'] ===
+[    0.3s] claude-sonnet-4-6/gemini-3.5-flash: 缓存 0, 待评 300
+[    7.1s]   claude-sonnet-4-6/gemini-3.5-flash 进度 25/300
+[   73.1s]   claude-sonnet-4-6/gemini-3.5-flash 进度 50/300
+[   74.9s]   claude-sonnet-4-6/gemini-3.5-flash 进度 75/300
+[   78.9s]   claude-sonnet-4-6/gemini-3.5-flash 进度 100/300
+[  201.7s]   judge claude-sonnet-4-6 失败 (1/5): Connection error.
+[  205.9s]   claude-sonnet-4-6/gemini-3.5-flash 进度 125/300
+[  207.9s]   claude-sonnet-4-6/gemini-3.5-flash 进度 150/300
+[  273.4s]   claude-sonnet-4-6/gemini-3.5-flash 进度 175/300
+[  276.7s]   claude-sonnet-4-6/gemini-3.5-flash 进度 200/300
+[  341.6s]   claude-sonnet-4-6/gemini-3.5-flash 进度 225/300
+[  347.2s]   claude-sonnet-4-6/gemini-3.5-flash 进度 250/300
+[  352.8s]   claude-sonnet-4-6/gemini-3.5-flash 进度 275/300
+[  419.7s]   claude-sonnet-4-6/gemini-3.5-flash 进度 300/300
+[  419.7s] gpt-5.4/gemini-3.5-flash: 缓存 0, 待评 300
+[  430.7s]   gpt-5.4/gemini-3.5-flash 进度 25/300
+[  437.0s]   gpt-5.4/gemini-3.5-flash 进度 50/300
+[  441.4s]   gpt-5.4/gemini-3.5-flash 进度 75/300
+[  506.5s]   gpt-5.4/gemini-3.5-flash 进度 100/300
+[  512.4s]   gpt-5.4/gemini-3.5-flash 进度 125/300
+[  518.3s]   gpt-5.4/gemini-3.5-flash 进度 150/300
+[  523.0s]   gpt-5.4/gemini-3.5-flash 进度 175/300
+[  529.4s]   gpt-5.4/gemini-3.5-flash 进度 200/300
+[  592.4s]   gpt-5.4/gemini-3.5-flash 进度 225/300
+[  599.3s]   gpt-5.4/gemini-3.5-flash 进度 250/300
+[  604.1s]   gpt-5.4/gemini-3.5-flash 进度 275/300
+[  610.2s]   gpt-5.4/gemini-3.5-flash 进度 300/300
+[  610.2s] 全部评委任务完成

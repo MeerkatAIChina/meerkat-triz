@@ -1,0 +1,93 @@
+pageType: chapter
+background:
+  type: solid
+  color: "$pine"
+notes: 第六章章节页:从知道到做到——落地与边界。
+elements:
+  - elementId: ch-kicker
+    elementType: text
+    bounds: [56, 96, 400, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: |-
+        CHAPTER 06 · 落地行动
+  - elementId: ch-num
+    elementType: text
+    bounds: [56, 126, 260, 84]
+    content:
+      style: "$chapterNum"
+      wrap: false
+      text: |-
+        06
+  - elementId: ch-title
+    elementType: text
+    bounds: [56, 222, 800, 52]
+    content:
+      style: "$chapterTitle"
+      wrap: false
+      text: |-
+        从知道到做到:落地与边界
+  - elementId: ch-bar
+    elementType: shape
+    bounds: [56, 296, 96, 3]
+    shapeName: rect
+    fill: {type: solid, color: "$terra"}
+  - elementId: ch-q-label
+    elementType: text
+    bounds: [56, 324, 200, 16]
+    content:
+      style: "$caption"
+      color: "#F7F5F099"
+      wrap: false
+      text: |-
+        本章学习问题
+  - elementId: ch-q
+    elementType: text
+    bounds: [56, 344, 700, 28]
+    content:
+      style: "$body"
+      color: "$paper"
+      fontSize: 17
+      bold: true
+      wrap: false
+      text: |-
+        从哪里开始?哪些不能做?
+  - elementId: ch-kw-label
+    elementType: text
+    bounds: [56, 396, 200, 16]
+    content:
+      style: "$caption"
+      color: "#F7F5F099"
+      wrap: false
+      text: |-
+        关键词
+  - elementId: ch-kw
+    elementType: text
+    bounds: [56, 416, 700, 24]
+    content:
+      style: "$body"
+      color: "#F7F5F0CC"
+      fontSize: 14
+      wrap: false
+      text: |-
+        机会地图 · 三条红线 · 30 天行动
+  - elementId: ch-footer-left
+    elementType: text
+    bounds: [56, 510, 400, 14]
+    content:
+      style: "$caption"
+      color: "#F7F5F066"
+      wrap: false
+      text: |-
+        东方智感 · AI 内训第三期
+  - elementId: ch-footer-page
+    elementType: text
+    bounds: [804, 510, 100, 14]
+    content:
+      style: "$caption"
+      color: "#F7F5F066"
+      align: [right, top]
+      wrap: false
+      text: |-
+        32 / 35

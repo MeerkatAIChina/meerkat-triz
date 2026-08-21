@@ -1,0 +1,126 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+elements:
+  # ---------- 页眉 ----------
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 40, 420, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: |-
+        02 · 智能体思维
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 36]
+    content:
+      style: "$h1"
+      wrap: false
+      text: |-
+        提示词思维 vs 智能体思维:从「怎么问」到「怎么带」
+  - elementId: lead
+    elementType: text
+    bounds: [56, 112, 848, 20]
+    content:
+      style: "$small"
+      wrap: false
+      text: |-
+        同一个模型,两种用法——差别不在模型,在你给它什么、按什么验收。
+
+  # ---------- 同骨架对照表 ----------
+  - elementId: compare-table
+    elementType: table
+    bounds: [56, 148, 848, 272]
+    columnWidths: [0.16, 0.42, 0.42]
+    rowHeights: [0.16, 0.168, 0.168, 0.168, 0.168, 0.168]
+    style: "$default"
+    rows:
+      - - text: |-
+            维度
+        - text: |-
+            提示词思维(第二期)
+        - text: |-
+            智能体思维(本期)
+      - - text: |-
+            关注点
+          bold: true
+        - text: |-
+            怎么把问题问好
+        - text: |-
+            给模型什么环境与条件
+      - - text: |-
+            输入
+          bold: true
+        - text: |-
+            一段提示词
+        - text: |-
+            目标 + 工具 + 边界
+      - - text: |-
+            成功标准
+          bold: true
+        - text: |-
+            答得像、答得对
+        - text: |-
+            活干完、通过验收
+      - - text: |-
+            失败处理
+          bold: true
+        - text: |-
+            换种问法,重问一次
+        - text: |-
+            在循环中纠偏,继续推进
+      - - text: |-
+            人机关系
+          bold: true
+        - text: |-
+            一问一答
+        - text: |-
+            委派 + 检查点
+
+  # ---------- 底部结论条 ----------
+  - elementId: takeaway-band
+    elementType: shape
+    bounds: [56, 446, 848, 40]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+  - elementId: takeaway-icon
+    elementType: icon
+    bounds: [76, 457, 19, 18]
+    iconName: "fas:person-chalkboard"
+    fill: {type: solid, color: "$pine"}
+  - elementId: takeaway-text
+    elementType: text
+    bounds: [108, 455, 784, 22]
+    content:
+      fontSize: 12.5
+      color: "$ink"
+      align: [left, middle]
+      text: |-
+        <p><strong>思维转变:你是教练,不是考生。</strong>教练不亲自上场答题——定目标、给条件、看结果,让模型在循环里把活干完。</p>
+
+  # ---------- 页脚 ----------
+  - elementId: footer-line
+    elementType: line
+    bounds: [56, 501, 848, 2]
+    viewBox: [848, 2]
+    points: "0,1 848,1"
+    border: {style: solid, width: 1, color: "$hair"}
+  - elementId: footer-left
+    elementType: text
+    bounds: [56, 510, 560, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: |-
+        东方智感 · AI 内训第三期
+  - elementId: footer-right
+    elementType: text
+    bounds: [804, 510, 100, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: |-
+        10

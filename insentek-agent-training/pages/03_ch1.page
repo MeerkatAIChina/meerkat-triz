@@ -1,0 +1,109 @@
+pageType: chapter
+background:
+  type: solid
+  color: "$pine"
+elements:
+  - elementId: course-tag
+    elementType: text
+    bounds: [56, 58, 500, 16]
+    content:
+      style: "$caption"
+      color: "$hair"
+      wrap: false
+      text: |-
+        智能体与 AI 最新发展 · 东方智感 AI 内训第三期
+  - elementId: chapter-num
+    elementType: text
+    bounds: [56, 128, 240, 84]
+    content:
+      style: "$chapterNum"
+      wrap: false
+      text: |-
+        01
+  - elementId: accent-bar
+    elementType: shape
+    bounds: [56, 232, 64, 3]
+    shapeName: rect
+    fill: {type: solid, color: "$terra"}
+  - elementId: chapter-title
+    elementType: text
+    bounds: [56, 254, 780, 48]
+    content:
+      style: "$chapterTitle"
+      wrap: false
+      text: |-
+        为什么是现在：从「对话」到「干活」
+  - elementId: question-label
+    elementType: text
+    bounds: [56, 332, 300, 16]
+    content:
+      style: "$caption"
+      color: "$terra"
+      bold: true
+      letterSpacing: 2
+      wrap: false
+      text: |-
+        本章学习问题
+  - elementId: question
+    elementType: text
+    bounds: [56, 354, 780, 26]
+    content:
+      fontSize: 16
+      color: "#F7F5F0"
+      wrap: false
+      text: |-
+        AI 为什么突然开始能「独立完成一件事」？
+  - elementId: kw-line
+    elementType: shape
+    bounds: [56, 416, 560, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: kw-label
+    elementType: text
+    bounds: [56, 430, 300, 16]
+    content:
+      style: "$caption"
+      color: "$hair"
+      letterSpacing: 2
+      wrap: false
+      text: |-
+        本章关键词
+  - elementId: keywords
+    elementType: text
+    bounds: [56, 452, 560, 24]
+    content:
+      fontSize: 16
+      bold: true
+      color: "#F7F5F0"
+      wrap: false
+      text: |-
+        推理能力　·　工具调用　·　长任务
+  - elementId: deco-ring
+    elementType: shape
+    bounds: [740, 320, 220, 220]
+    shapeName: ellipse
+    border: {style: solid, width: 1.5, color: "#F7F5F026"}
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-left
+    elementType: text
+    bounds: [56, 510, 400, 14]
+    content:
+      style: "$caption"
+      color: "$hair"
+      wrap: false
+      text: |-
+        东方智感 · AI 内训第三期
+  - elementId: footer-page
+    elementType: text
+    bounds: [854, 510, 50, 14]
+    content:
+      style: "$caption"
+      color: "$hair"
+      align: [right, top]
+      wrap: false
+      text: |-
+        03

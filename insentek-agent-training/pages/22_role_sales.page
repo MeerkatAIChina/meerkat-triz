@@ -1,0 +1,224 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+notes: 售前与市场岗位页:从资料到方案的四棒流水线——调研、生成、改写、核查,最后一棒必须人工把关。
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 40, 500, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: |-
+        04 岗位结合 · 售前与市场
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 38]
+    content:
+      style: "$h1"
+      wrap: false
+      text: |-
+        从资料到方案:智能体跑流水线,人把好最后一关
+  # ---- 流水线四棒 ----
+  - elementId: step1-bg
+    elementType: shape
+    bounds: [56, 140, 208, 56]
+    shapeName: homePlate
+    fill: {type: solid, color: "$pine"}
+  - elementId: step1-txt
+    elementType: text
+    bounds: [70, 149, 160, 38]
+    content:
+      color: "$white"
+      align: [left, middle]
+      text: |-
+        <p><span style="font-size:10px;">第 1 棒</span></p>
+        <p><span style="font-size:14px;"><strong>调研</strong></span></p>
+  - elementId: step2-bg
+    elementType: shape
+    bounds: [269, 140, 208, 56]
+    shapeName: chevron
+    fill: {type: solid, color: "$pine"}
+  - elementId: step2-txt
+    elementType: text
+    bounds: [296, 149, 160, 38]
+    content:
+      color: "$white"
+      align: [left, middle]
+      text: |-
+        <p><span style="font-size:10px;">第 2 棒</span></p>
+        <p><span style="font-size:14px;"><strong>生成</strong></span></p>
+  - elementId: step3-bg
+    elementType: shape
+    bounds: [482, 140, 208, 56]
+    shapeName: chevron
+    fill: {type: solid, color: "$pine"}
+  - elementId: step3-txt
+    elementType: text
+    bounds: [509, 149, 160, 38]
+    content:
+      color: "$white"
+      align: [left, middle]
+      text: |-
+        <p><span style="font-size:10px;">第 3 棒</span></p>
+        <p><span style="font-size:14px;"><strong>改写</strong></span></p>
+  - elementId: step4-bg
+    elementType: shape
+    bounds: [695, 140, 208, 56]
+    shapeName: chevron
+    fill: {type: solid, color: "$terra"}
+  - elementId: step4-txt
+    elementType: text
+    bounds: [722, 149, 160, 38]
+    content:
+      color: "$white"
+      align: [left, middle]
+      text: |-
+        <p><span style="font-size:10px;">第 4 棒 · 人</span></p>
+        <p><span style="font-size:14px;"><strong>核查</strong></span></p>
+  - elementId: step1-desc
+    elementType: text
+    bounds: [56, 208, 200, 60]
+    content:
+      style: "$small"
+      align: [left, top]
+      text: |-
+        Deep Research 自动调研:政策、竞品、客户背景,30 分钟出简报
+  - elementId: step2-desc
+    elementType: text
+    bounds: [269, 208, 200, 60]
+    content:
+      style: "$small"
+      align: [left, top]
+      text: |-
+        按模板生成方案初稿与标书框架,先把结构立起来
+  - elementId: step3-desc
+    elementType: text
+    bounds: [482, 208, 200, 60]
+    content:
+      style: "$small"
+      align: [left, top]
+      text: |-
+        改写成面向客户的表达:少术语、多价值、贴场景
+  - elementId: step4-desc
+    elementType: text
+    bounds: [695, 208, 200, 60]
+    content:
+      style: "$small"
+      align: [left, top]
+      text: |-
+        事实与数字人工把关,确认无误才能对外
+  - elementId: mid-divider
+    elementType: shape
+    bounds: [56, 288, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  # ---- 左下:适用场景 ----
+  - elementId: scene-h
+    elementType: text
+    bounds: [56, 306, 480, 22]
+    content:
+      style: "$h2"
+      wrap: false
+      text: |-
+        这些场景,直接套用这条流水线
+  - elementId: scene1-icon
+    elementType: icon
+    bounds: [56, 340, 18, 18]
+    iconName: "fas:water"
+    fill: {type: solid, color: "$pine"}
+  - elementId: scene1-txt
+    elementType: text
+    bounds: [86, 336, 450, 42]
+    content:
+      align: [left, top]
+      text: |-
+        <p><span style="font-size:13px; color:$ink;"><strong>水利监测项目方案</strong></span></p>
+        <p><span style="font-size:11px; color:$muted;">先调研灌区政策与竞品,再按评分标准搭初稿框架(教学演示)</span></p>
+  - elementId: scene2-icon
+    elementType: icon
+    bounds: [56, 386, 18, 18]
+    iconName: "fas:wheat-awn"
+    fill: {type: solid, color: "$pine"}
+  - elementId: scene2-txt
+    elementType: text
+    bounds: [86, 382, 450, 42]
+    content:
+      align: [left, top]
+      text: |-
+        <p><span style="font-size:13px; color:$ink;"><strong>智慧农业投标材料</strong></span></p>
+        <p><span style="font-size:11px; color:$muted;">作物与园区背景先行调研,技术方案初稿自动生成</span></p>
+  - elementId: scene3-icon
+    elementType: icon
+    bounds: [56, 432, 18, 18]
+    iconName: "fas:newspaper"
+    fill: {type: solid, color: "$pine"}
+  - elementId: scene3-txt
+    elementType: text
+    bounds: [86, 428, 450, 42]
+    content:
+      align: [left, top]
+      text: |-
+        <p><span style="font-size:13px; color:$ink;"><strong>公众号与展会内容</strong></span></p>
+        <p><span style="font-size:11px; color:$muted;">行业热点调研 → 初稿 → 品牌口吻改写 → 事实核查</span></p>
+  # ---- 右下:红线提醒 + 行动 ----
+  - elementId: warn-bg
+    elementType: shape
+    bounds: [560, 306, 344, 84]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+  - elementId: warn-icon
+    elementType: icon
+    bounds: [576, 322, 16, 16]
+    iconName: "fas:triangle-exclamation"
+    fill: {type: solid, color: "$terra"}
+  - elementId: warn-txt
+    elementType: text
+    bounds: [604, 314, 288, 70]
+    content:
+      align: [left, middle]
+      text: |-
+        <p><span style="font-size:13px; color:$terra;"><strong>红线提醒:对外数字必须人工核验</strong></span></p>
+        <p style="margin-top:4px"><span style="font-size:11px; color:$ink;">方案与标书中的每个数字、每条事实,发出前人工复核(护栏见第 18 页)。</span></p>
+  - elementId: act-bg
+    elementType: shape
+    bounds: [560, 402, 344, 76]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+  - elementId: act-icon
+    elementType: icon
+    bounds: [576, 418, 16, 16]
+    iconName: "fas:circle-check"
+    fill: {type: solid, color: "$pine"}
+  - elementId: act-txt
+    elementType: text
+    bounds: [604, 410, 288, 60]
+    content:
+      align: [left, middle]
+      text: |-
+        <p><span style="font-size:13px; color:$pine;"><strong>本周行动</strong></span></p>
+        <p style="margin-top:4px"><span style="font-size:11px; color:$ink;">下次写方案,先做 30 分钟 Deep Research 再动笔,调研简报附在方案后。</span></p>
+  # ---- 页脚 ----
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-left
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: |-
+        东方智感 · AI 内训第三期 | 场景为教学演示,基于公开产品能力整理
+  - elementId: footer-page
+    elementType: text
+    bounds: [804, 510, 100, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: |-
+        22 / 35

@@ -1,0 +1,186 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 34, 500, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: 01 · 模型与训练
+  - elementId: title
+    elementType: text
+    bounds: [56, 56, 840, 34]
+    content:
+      style: "$title"
+      wrap: false
+      text: 数据深潜（下）：TRIZ-raw 外部资料使用过程与版权边界
+  - elementId: flow1
+    elementType: shape
+    bounds: [56, 116, 158, 96]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+    border: {style: solid, width: 1, color: "$pine"}
+  - elementId: flow1-t
+    elementType: text
+    bounds: [66, 124, 138, 80]
+    content:
+      fontSize: 10.5
+      color: "$ink"
+      lineHeight: 1.45
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong><span style="color:$pine">① 原始资料</span></strong></p>
+        <p>~300 个文件：PDF/PPTX/DOCX/DOC；课程、会议文集、培训班课件、案例；图片视频跳过</p>
+  - elementId: fa1
+    elementType: shape
+    bounds: [218, 152, 22, 22]
+    shapeName: rightArrow
+    adjustments: [40000, 45000]
+    fill: {type: solid, color: "$pine"}
+  - elementId: flow2
+    elementType: shape
+    bounds: [244, 116, 158, 96]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+    border: {style: solid, width: 1, color: "$pine"}
+  - elementId: flow2-t
+    elementType: text
+    bounds: [254, 124, 138, 80]
+    content:
+      fontSize: 10.5
+      color: "$ink"
+      lineHeight: 1.45
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong><span style="color:$pine">② 提取</span></strong></p>
+        <p>按扩展名分发 4 个提取器；扫描版 PDF 走 OCR 兜底（&lt;20 字符判定）</p>
+  - elementId: fa2
+    elementType: shape
+    bounds: [406, 152, 22, 22]
+    shapeName: rightArrow
+    adjustments: [40000, 45000]
+    fill: {type: solid, color: "$pine"}
+  - elementId: flow3
+    elementType: shape
+    bounds: [432, 116, 158, 96]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+    border: {style: solid, width: 1, color: "$pine"}
+  - elementId: flow3-t
+    elementType: text
+    bounds: [442, 124, 138, 80]
+    content:
+      fontSize: 10.5
+      color: "$ink"
+      lineHeight: 1.45
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong><span style="color:$pine">③ 语义分块</span></strong></p>
+        <p>按标题/分页切分，短段合并至 2,048 tok（硬顶 4,096）；保留 source_path/页码溯源</p>
+  - elementId: fa3
+    elementType: shape
+    bounds: [594, 152, 22, 22]
+    shapeName: rightArrow
+    adjustments: [40000, 45000]
+    fill: {type: solid, color: "$pine"}
+  - elementId: flow4
+    elementType: shape
+    bounds: [620, 116, 134, 96]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+    border: {style: solid, width: 1, color: "$pine"}
+  - elementId: flow4-t
+    elementType: text
+    bounds: [630, 124, 114, 80]
+    content:
+      fontSize: 10.5
+      color: "$ink"
+      lineHeight: 1.45
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong><span style="color:$pine">④ 质量门</span></strong></p>
+        <p>min 50 字符 + 去重 → triz_corpus.jsonl（附 stats / failed_files）</p>
+  - elementId: fa4
+    elementType: shape
+    bounds: [758, 152, 22, 22]
+    shapeName: rightArrow
+    adjustments: [40000, 45000]
+    fill: {type: solid, color: "$pine"}
+  - elementId: flow5
+    elementType: shape
+    bounds: [784, 116, 120, 96]
+    shapeName: rect
+    fill: {type: solid, color: "$pine"}
+  - elementId: flow5-t
+    elementType: text
+    bounds: [792, 124, 104, 80]
+    content:
+      fontSize: 10
+      color: "#F7F5F0"
+      lineHeight: 1.45
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong>⑤ 转 SFT</strong></p>
+        <p>Moonshot 基于教材片段生成问答对（grounding）</p>
+  - elementId: lessons-title
+    elementType: text
+    bounds: [56, 236, 500, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: 这条链路上的两个关键教训
+  - elementId: lessons
+    elementType: text
+    bounds: [56, 260, 848, 96]
+    content:
+      style: "$body"
+      fontSize: 12
+      lineHeight: 1.55
+      text: |
+        <p>· <strong>v1 零质量门 → 整体回退 −0.057：</strong>corpus 转 SFT 时无去重、无长度过滤、无 think 块清洗、子集自由分类；且该数据集只在 DGX 上、无 manifest，无法复现「2,662 条到底是什么」。→ 此后 DATA-11 纪律：无 manifest 的数据集不得用于训练。</p>
+        <p style="margin-top:5px">· <strong>「真实」的真实含义：</strong>corpus 路径下问答 100% 由 Moonshot 生成，「真实」仅体现在基于真实教材片段 grounding——生成模型的表述风格就是微调模型的天花板（复盘引用外部实证：等量真实数据微调优于合成 +11.9%）。v5 的双风格/种子救回/×3 上采样都是在缓解这一点。</p>
+  - elementId: ip-box
+    elementType: shape
+    bounds: [56, 372, 848, 108]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+    border: {style: solid, width: 1, color: "$terra"}
+  - elementId: ip-t
+    elementType: text
+    bounds: [72, 382, 816, 90]
+    content:
+      fontSize: 11.5
+      color: "$ink"
+      lineHeight: 1.55
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong><span style="color:$terra">版权边界（Owner 裁决 + Stage3 IP 检查）：</span></strong></p>
+        <p style="margin-top:3px">· 训练集含第三方版权 TRIZ 教材派生内容 → <strong>训练集不公开</strong>（README / REPRODUCE 明示）；公开的只有双金标集（triz_gold_v4 / v5_public.jsonl，各 100 题）。</p>
+        <p>· Stage3 如实记录：chunk 级有 source_path，但样本→chunk 映射在构建期已丢失，<strong>「无法区分」如实声明</strong>，按方案「如实继承」条款处理——不编造区分结果。</p>
+        <p>· 去污参照集 B 包含早期种子扩充集，确保训练集与任何评测/探针材料不共源。</p>
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-src
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$small"
+      wrap: false
+      text: 来源：utils/corpus_builder.py · corpus_to_sft.py · specs/2026-06-13-triz-raw-corpus-design.md · 复盘文档
+  - elementId: footer-page
+    elementType: text
+    bounds: [864, 510, 40, 14]
+    content:
+      style: "$small"
+      align: [right, top]
+      wrap: false
+      text: "10"

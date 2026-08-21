@@ -1,0 +1,256 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 40, 600, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: |-
+        01 · 为什么是现在
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 36]
+    content:
+      style: "$h1"
+      wrap: false
+      text: |-
+        智能体 = 大模型 + 记忆 + 工具 + 规划，跑在一个循环里
+  - elementId: loop-ring
+    elementType: shape
+    bounds: [86, 148, 288, 288]
+    shapeName: donut
+    adjustments: [6000]
+    fill: {type: solid, color: "$paleG"}
+  - elementId: loop-arrow
+    elementType: icon
+    bounds: [317, 175, 30, 30]
+    iconName: "fas:arrow-rotate-right"
+    fill: {type: solid, color: "$terra"}
+  - elementId: conn-top
+    elementType: line
+    bounds: [229, 184, 2, 48]
+    viewBox: [2, 48]
+    points: "1,0 1,48"
+    border: {style: solid, width: 1.5, color: "$hair"}
+  - elementId: conn-left
+    elementType: line
+    bounds: [187, 335, 2, 41]
+    viewBox: [2, 41]
+    points: "1,0 1,41"
+    border: {style: solid, width: 1.5, color: "$hair"}
+  - elementId: conn-right
+    elementType: line
+    bounds: [271, 335, 2, 41]
+    viewBox: [2, 41]
+    points: "1,0 1,41"
+    border: {style: solid, width: 1.5, color: "$hair"}
+  - elementId: core-circle
+    elementType: shape
+    bounds: [170, 232, 120, 120]
+    shapeName: ellipse
+    fill: {type: solid, color: "$pine"}
+  - elementId: core-text
+    elementType: text
+    bounds: [170, 262, 120, 60]
+    content:
+      fontSize: 15
+      bold: true
+      color: "$white"
+      align: [center, middle]
+      lineHeight: 1.3
+      text: |-
+        <p>LLM</p>
+        <p>大模型</p>
+  - elementId: sat-top-box
+    elementType: shape
+    bounds: [170, 148, 120, 36]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1, color: "$pine"}
+  - elementId: sat-top-icon
+    elementType: icon
+    bounds: [182, 158, 16, 16]
+    iconName: "fas:screwdriver-wrench"
+    fill: {type: solid, color: "$pine"}
+  - elementId: sat-top-text
+    elementType: text
+    bounds: [204, 148, 82, 36]
+    content:
+      fontSize: 12
+      bold: true
+      color: "$pine"
+      align: [left, middle]
+      wrap: false
+      text: |-
+        工具 Tools
+  - elementId: sat-bl-box
+    elementType: shape
+    bounds: [58, 376, 134, 36]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1, color: "$pine"}
+  - elementId: sat-bl-icon
+    elementType: icon
+    bounds: [70, 386, 16, 16]
+    iconName: "fas:database"
+    fill: {type: solid, color: "$pine"}
+  - elementId: sat-bl-text
+    elementType: text
+    bounds: [92, 376, 96, 36]
+    content:
+      fontSize: 12
+      bold: true
+      color: "$pine"
+      align: [left, middle]
+      wrap: false
+      text: |-
+        记忆 Memory
+  - elementId: sat-br-box
+    elementType: shape
+    bounds: [268, 376, 134, 36]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1, color: "$pine"}
+  - elementId: sat-br-icon
+    elementType: icon
+    bounds: [280, 386, 16, 16]
+    iconName: "fas:route"
+    fill: {type: solid, color: "$pine"}
+  - elementId: sat-br-text
+    elementType: text
+    bounds: [302, 376, 96, 36]
+    content:
+      fontSize: 12
+      bold: true
+      color: "$pine"
+      align: [left, middle]
+      wrap: false
+      text: |-
+        规划 Planning
+  - elementId: loop-caption
+    elementType: text
+    bounds: [86, 448, 288, 16]
+    content:
+      style: "$caption"
+      align: [center, top]
+      wrap: false
+      text: |-
+        观察 → 思考 → 行动 → 再观察
+  - elementId: def-head
+    elementType: text
+    bounds: [560, 130, 344, 20]
+    content:
+      style: "$h2"
+      wrap: false
+      text: |-
+        一句话复述定义
+  - elementId: def-text
+    elementType: text
+    bounds: [560, 156, 344, 66]
+    content:
+      style: "$body"
+      text: |-
+        由大模型驱动，具备记忆、工具与规划能力，在「观察—思考—行动」的循环中持续逼近目标、完成任务的系统。
+  - elementId: def-sep
+    elementType: shape
+    bounds: [560, 238, 344, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: bound-head
+    elementType: text
+    bounds: [560, 254, 344, 20]
+    content:
+      style: "$h2"
+      wrap: false
+      text: |-
+        与单次问答的边界
+  - elementId: b1-dot
+    elementType: shape
+    bounds: [560, 287, 8, 8]
+    shapeName: rect
+    fill: {type: solid, color: "$terra"}
+  - elementId: b1-text
+    elementType: text
+    bounds: [578, 282, 326, 20]
+    content:
+      fontSize: 12
+      color: "$ink"
+      wrap: false
+      text: |-
+        无循环 —— 一问一答即结束，不会自己继续
+  - elementId: b2-dot
+    elementType: shape
+    bounds: [560, 313, 8, 8]
+    shapeName: rect
+    fill: {type: solid, color: "$terra"}
+  - elementId: b2-text
+    elementType: text
+    bounds: [578, 308, 326, 20]
+    content:
+      fontSize: 12
+      color: "$ink"
+      wrap: false
+      text: |-
+        无工具 —— 只能用你复制粘贴进去的内容
+  - elementId: b3-dot
+    elementType: shape
+    bounds: [560, 339, 8, 8]
+    shapeName: rect
+    fill: {type: solid, color: "$terra"}
+  - elementId: b3-text
+    elementType: text
+    bounds: [578, 334, 326, 20]
+    content:
+      fontSize: 12
+      color: "$ink"
+      wrap: false
+      text: |-
+        无记忆 —— 每次对话都从零开始
+  - elementId: recall-bg
+    elementType: shape
+    bounds: [560, 382, 344, 62]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+  - elementId: recall-bar
+    elementType: shape
+    bounds: [560, 382, 4, 62]
+    shapeName: rect
+    fill: {type: solid, color: "$pine"}
+  - elementId: recall-text
+    elementType: text
+    bounds: [578, 382, 310, 62]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      align: [left, middle]
+      lineHeight: 1.5
+      text: |-
+        <p>一句话复述：</p>
+        <p>智能体是 ______，跑在 ______ 里。</p>
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-left
+    elementType: text
+    bounds: [56, 510, 400, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: |-
+        东方智感 · AI 内训第三期
+  - elementId: footer-page
+    elementType: text
+    bounds: [854, 510, 50, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: |-
+        06

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meerkat-TRIZ-v1 企业用户说明</title>
+<meta name="description" content="用通俗语言向不同企业用户解释 Meerkat-TRIZ-v1 的先进性、用途与边界。">
+<style>
+:root {
+  --paper: #faf9f6;
+  --ink: #1c1a17;
+  --soft: #57534b;
+  --faint: #8a857a;
+  --accent: #b23c17;
+  --accent-soft: #b23c1714;
+  --rule: #e4e0d8;
+  --card: #ffffff;
+  --gold: #c98a2d;
+  --green: #486b4d;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Songti SC", "Noto Serif CJK SC", "SimSun", "Charter", "Georgia", serif;
+  font-size: 17px;
+  line-height: 1.82;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+
+.topbar {
+  position: sticky; top: 0; z-index: 20;
+  background: color-mix(in srgb, var(--paper) 90%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rule);
+}
+.topbar .inner {
+  max-width: 1120px; margin: 0 auto; padding: .9rem 1.4rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+}
+.brand { font-weight: 700; letter-spacing: .02em; }
+.brand span { color: var(--accent); }
+.nav { display: flex; gap: 1.2rem; font-size: .88rem; color: var(--soft); }
+.nav a { text-decoration: none; }
+.nav a:hover { color: var(--accent); }
+
+.hero {
+  max-width: 1120px; margin: 0 auto; padding: 6.2rem 1.4rem 4.2rem;
+  display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(300px, .88fr);
+  gap: 3rem; align-items: center;
+}
+.eyebrow {
+  color: var(--accent); font-size: .78rem; letter-spacing: .28em;
+  text-transform: uppercase; margin-bottom: 1.1rem; font-weight: 650;
+}
+h1 {
+  font-size: clamp(2.35rem, 5vw, 4.1rem);
+  line-height: 1.18; letter-spacing: .01em; font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+.hero .lead { font-size: 1.13rem; color: var(--soft); max-width: 58ch; }
+.hero .lead strong { color: var(--ink); }
+.hero-note {
+  margin-top: 1.4rem; display: inline-flex; gap: .55rem; align-items: center;
+  color: var(--faint); font-size: .86rem;
+}
+.hero-note::before { content: ""; width: .55rem; height: .55rem; border-radius: 50%; background: var(--green); }
+
+.analogy {
+  background: var(--card); border: 1px solid var(--rule); border-radius: 18px;
+  padding: 1.5rem; box-shadow: 0 18px 50px #0000000b;
+}
+.analogy .label { color: var(--faint); font-size: .76rem; letter-spacing: .16em; margin-bottom: .8rem; }
+.analogy .row { display: grid; grid-template-columns: 1fr auto 1fr; gap: .9rem; align-items: center; }
+.analogy .box {
+  border-radius: 14px; padding: 1.1rem; min-height: 142px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.analogy .box.general { background: #f0eee9; }
+.analogy .box.special { background: var(--accent-soft); border: 1px solid #b23c1730; }
+.analogy h3 { font-size: 1.04rem; margin-bottom: .45rem; }
+.analogy p { font-size: .9rem; color: var(--soft); line-height: 1.68; }
+.analogy .arrow { color: var(--accent); font-size: 1.6rem; font-weight: 700; }
+
+.metrics {
+  max-width: 1120px; margin: 0 auto; padding: 0 1.4rem 4.5rem;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+}
+.metric {
+  background: var(--card); border: 1px solid var(--rule); border-radius: 16px;
+  padding: 1.25rem 1.15rem;
+}
+.metric .value { color: var(--accent); font-size: 1.8rem; line-height: 1.15; font-weight: 750; }
+.metric .name { font-size: .84rem; color: var(--soft); margin-top: .5rem; line-height: 1.55; }
+
+main { max-width: 1120px; margin: 0 auto; padding: 0 1.4rem 5rem; }
+section { margin-bottom: 5rem; }
+.section-head { max-width: 760px; margin-bottom: 1.7rem; }
+.section-head .no { color: var(--accent); font-size: .82rem; letter-spacing: .18em; font-weight: 700; }
+h2 { font-size: clamp(1.65rem, 3vw, 2.35rem); line-height: 1.3; margin: .35rem 0 .75rem; }
+.section-head p { color: var(--soft); }
+
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.card {
+  background: var(--card); border: 1px solid var(--rule); border-radius: 16px;
+  padding: 1.35rem 1.3rem;
+}
+.card h3 { font-size: 1.08rem; line-height: 1.4; margin-bottom: .6rem; }
+.card p { color: var(--soft); font-size: .94rem; line-height: 1.75; }
+.card .tag {
+  display: inline-block; color: var(--accent); background: var(--accent-soft);
+  border-radius: 999px; padding: .18rem .65rem; font-size: .74rem; margin-bottom: .75rem;
+}
+.card.hot { border-color: #b23c1750; box-shadow: 0 12px 36px #b23c1712; }
+
+.filters { display: flex; flex-wrap: wrap; gap: .55rem; margin: 1.2rem 0 1.4rem; }
+.filters button {
+  border: 1px solid var(--rule); background: var(--card); color: var(--soft);
+  border-radius: 999px; padding: .42rem .9rem; font: inherit; font-size: .84rem;
+  cursor: pointer;
+}
+.filters button.on { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.role-card { transition: transform .16s ease, opacity .16s ease; }
+.role-card.hidden { display: none; }
+.role-card .who { color: var(--accent); font-size: .78rem; font-weight: 700; letter-spacing: .08em; margin-bottom: .5rem; }
+.role-card .answer { margin-top: .75rem; padding-top: .75rem; border-top: 1px solid var(--rule); }
+.role-card .answer b { color: var(--ink); }
+
+.industry {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+}
+.industry .card ul { padding-left: 1.1rem; color: var(--soft); font-size: .91rem; }
+.industry .card li { margin: .35rem 0; }
+.industry .card li::marker { color: var(--accent); }
+
+.steps {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+  counter-reset: step;
+}
+.step {
+  position: relative; background: var(--card); border: 1px solid var(--rule);
+  border-radius: 16px; padding: 1.35rem 1.2rem;
+}
+.step::before {
+  counter-increment: step; content: counter(step, decimal-leading-zero);
+  display: block; color: var(--accent); font-size: 1.7rem; font-weight: 750;
+  margin-bottom: .7rem;
+}
+.step h3 { font-size: 1.02rem; margin-bottom: .45rem; }
+.step p { color: var(--soft); font-size: .9rem; line-height: 1.7; }
+
+.quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.quote {
+  background: #211e1a; color: #e8e4dc; border-radius: 16px; padding: 1.4rem;
+  min-height: 210px; display: flex; flex-direction: column;
+}
+.quote .for { color: #a39d92; font-size: .76rem; letter-spacing: .16em; margin-bottom: .8rem; }
+.quote p { font-size: .98rem; line-height: 1.8; }
+
+.warning {
+  border: 1px solid #b23c1730; background: var(--accent-soft); border-radius: 16px;
+  padding: 1.5rem;
+}
+.warning h3 { margin-bottom: .8rem; }
+.warning ul { padding-left: 1.2rem; color: var(--soft); }
+.warning li { margin: .45rem 0; }
+.warning li::marker { color: var(--accent); }
+
+.footer {
+  border-top: 1px solid var(--rule); padding: 2.4rem 1.4rem 3rem;
+  text-align: center; color: var(--faint); font-size: .86rem;
+}
+.footer .local {
+  display: inline-block; margin-bottom: .55rem; padding: .22rem .7rem;
+  border: 1px solid var(--rule); border-radius: 999px; background: var(--card);
+}
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; padding-top: 4.5rem; }
+  .metrics, .steps { grid-template-columns: repeat(2, 1fr); }
+  .grid-3, .industry, .quotes { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 620px) {
+  .nav { display: none; }
+  .metrics, .grid-2, .grid-3, .industry, .steps, .quotes { grid-template-columns: 1fr; }
+  .analogy .row { grid-template-columns: 1fr; }
+  .analogy .arrow { transform: rotate(90deg); justify-self: center; }
+}
+@media print {
+  .topbar, .filters { display: none; }
+  body { background: white; }
+  .card, .metric, .step, .analogy, .warning { break-inside: avoid; box-shadow: none; }
+}
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="inner">
+    <div class="brand">Meerkat<span>-TRIZ-v1</span></div>
+    <div class="nav">
+      <a href="#advanced">先进性</a>
+      <a href="#roles">按角色</a>
+      <a href="#industries">按行业</a>
+      <a href="#workflow">工作流</a>
+      <a href="#boundary">边界</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div>
+    <div class="eyebrow">Enterprise Explainer · Local Only</div>
+    <h1>不是更大的模型，<br>而是受过 TRIZ 训练的<br>创新工程助手。</h1>
+    <p class="lead">通用大模型像一位知识很广的顾问；Meerkat-TRIZ-v1 更像一位学过 TRIZ、知道怎么分析矛盾、推荐发明原理、写创新方案草稿的工程助教。<strong>它不替代专家，而是让每位工程师都能随时获得一个“懂 TRIZ 的初级助手”。</strong></p>
+    <div class="hero-note">本地说明页 · 未同步公开仓库</div>
+  </div>
+  <aside class="analogy">
+    <div class="label">一个简单类比</div>
+    <div class="row">
+      <div class="box general">
+        <h3>通用大模型</h3>
+        <p>知识面广，能聊很多话题；但每次都要靠提示词告诉它“请扮演 TRIZ 专家”。</p>
+      </div>
+      <div class="arrow">→</div>
+      <div class="box special">
+        <h3>Meerkat-TRIZ-v1</h3>
+        <p>把 TRIZ 的术语、分析步骤和推荐方式训练进模型。不是临时扮演，而是受过系统训练。</p>
+      </div>
+    </div>
+  </aside>
+</header>
+
+<div class="metrics">
+  <div class="metric">
+    <div class="value">+0.19 / +0.27</div>
+    <div class="name">等长预算下，2/3 外部评委验证的质量增益</div>
+  </div>
+  <div class="metric">
+    <div class="value">0.4×</div>
+    <div class="name">自然回答篇幅：1,344 字 vs 基座 3,242 字</div>
+  </div>
+  <div class="metric">
+    <div class="value">0.638</div>
+    <div class="name">300 题金标上的客观 TRIZ 关键词覆盖</div>
+  </div>
+  <div class="metric">
+    <div class="value">181MB</div>
+    <div class="name">LoRA 适配器；只训练 0.24% 参数</div>
+  </div>
+</div>
+
+<main>
+
+<section id="advanced">
+  <div class="section-head">
+    <div class="no">01 · WHY IT IS DIFFERENT</div>
+    <h2>它的先进性，不是“比所有模型都聪明”</h2>
+    <p>而是把一个高价值、低供给的专业方法域，做成了可部署、可测量、可复现的模型能力。</p>
+  </div>
+  <div class="grid-2">
+    <div class="card hot">
+      <span class="tag">专业化</span>
+      <h3>不是靠提示词“装懂”</h3>
+      <p>很多企业现在靠提示词让通用模型“扮演 TRIZ 专家”。这有用，但不稳定。Meerkat-TRIZ-v1 把 TRIZ 的术语纪律、分析步骤和原理推荐方式固化进模型，换一个问题、换一个用户，输出仍更一致。</p>
+    </div>
+    <div class="card hot">
+      <span class="tag">效率</span>
+      <h3>更短，但不是靠省略内容</h3>
+      <p>基座模型中位回答约 3,242 字，v1 约 1,344 字。工程师读起来更快，系统成本更低。关键是：基座被迫写短时会丢失 TRIZ 覆盖，v1 能保住这些内容。</p>
+    </div>
+    <div class="card">
+      <span class="tag">可信评测</span>
+      <h3>不是“自己说自己好”</h3>
+      <p>同族评委的 +0.39 不作为质量证据，因为等长后基本消失。正式口径采用外部评委等长验证：Claude 与 GPT 显著为正，Gemini 方向为正但不显著。好看的说法让位于可辩护的说法。</p>
+    </div>
+    <div class="card">
+      <span class="tag">客观指标</span>
+      <h3>不是只会“说好听话”</h3>
+      <p>关键词轨不调用 LLM 评委，只检查 TRIZ 概念、原理编号和方法术语是否出现。v1 与基座同为 0.638，高于本次擂台中的 GPT、Claude 与 Gemini 参赛模型。这说明专业化训练在窄领域有效。</p>
+    </div>
+  </div>
+</section>
+
+<section id="roles">
+  <div class="section-head">
+    <div class="no">02 · FOR DIFFERENT USERS</div>
+    <h2>不同企业用户，应该怎么理解它？</h2>
+    <p>同一模型，对不同角色意味着不同价值。点击筛选你关心的人群。</p>
+  </div>
+  <div class="filters" id="filters">
+    <button class="on" data-filter="all">全部</button>
+    <button data-filter="management">管理层</button>
+    <button data-filter="tech">技术负责人</button>
+    <button data-filter="rd">研发与工程</button>
+    <button data-filter="ip">创新与知识产权</button>
+    <button data-filter="product">产品与项目</button>
+    <button data-filter="training">培训与专家</button>
+  </div>
+  <div class="grid-3" id="roleGrid">
+    <div class="card role-card" data-role="management">
+      <div class="who">CEO / 总经理</div>
+      <h3>这是 AI 概念，还是创新能力？</h3>
+      <p>它把过去依赖少数专家的 TRIZ 方法，变成员工随时可以调用的基础设施。</p>
+      <p class="answer"><b>核心价值：</b>专家仍重要，但专家时间从重复讲解和初稿生产，转向判断与决策。</p>
+    </div>
+    <div class="card role-card" data-role="tech">
+      <div class="who">CTO / 技术负责人</div>
+      <h3>能不能接入现有系统？成本高不高？</h3>
+      <p>它是 181MB LoRA，不需要重训整个 35B 模型，适合挂在企业现有模型服务上。</p>
+      <p class="answer"><b>核心价值：</b>以较低部署和训练成本，获得一个可内部化的领域助手。</p>
+    </div>
+    <div class="card role-card" data-role="rd">
+      <div class="who">研发总监 / 总工程师</div>
+      <h3>能不能真的帮工程师解决问题？</h3>
+      <p>适合问题澄清、技术矛盾分析、发明原理推荐、方案草稿和 ARIZ 步骤引导。</p>
+      <p class="answer"><b>核心价值：</b>不替工程师做最终设计，但能让团队更快进入有结构的讨论。</p>
+    </div>
+    <div class="card role-card" data-role="ip">
+      <div class="who">创新负责人</div>
+      <h3>我们已有创新流程，它加什么价值？</h3>
+      <p>它把“头脑风暴”变成“有方法论的方案生成”，围绕矛盾、资源和发明原理展开。</p>
+      <p class="answer"><b>核心价值：</b>让创新过程从灵感驱动，变成可复用的方法驱动。</p>
+    </div>
+    <div class="card role-card" data-role="ip">
+      <div class="who">知识产权 / 专利团队</div>
+      <h3>能不能帮助专利布局？</h3>
+      <p>可从技术矛盾、替代原理和系统进化角度扩展思路，辅助交底书初稿和规避设计讨论。</p>
+      <p class="answer"><b>边界：</b>它不是专利检索系统，也不能替代律师意见。</p>
+    </div>
+    <div class="card role-card" data-role="product">
+      <div class="who">产品经理</div>
+      <h3>我不懂 TRIZ，它能帮我什么？</h3>
+      <p>把“产品要更轻，但不能牺牲强度”这类模糊诉求，整理成可讨论的技术矛盾。</p>
+      <p class="answer"><b>核心价值：</b>让产品语言更容易转成工程语言。</p>
+    </div>
+    <div class="card role-card" data-role="rd">
+      <div class="who">工艺 / 制造 / 质量工程师</div>
+      <h3>现场问题能用吗？</h3>
+      <p>密封与散热、轻量化与强度、成本与可靠性、效率与噪音，都是 TRIZ 擅长的权衡问题。</p>
+      <p class="answer"><b>核心价值：</b>帮助现场经验进入结构化改进流程。</p>
+    </div>
+    <div class="card role-card" data-role="training">
+      <div class="who">HR / 培训负责人</div>
+      <h3>能不能降低培训成本？</h3>
+      <p>它可以做 TRIZ 入门教练：解释概念、生成练习题、批改答案、提供案例。</p>
+      <p class="answer"><b>核心价值：</b>培训部门不必每次都从外部顾问开始。</p>
+    </div>
+    <div class="card role-card" data-role="training">
+      <div class="who">咨询顾问 / 专家委员会</div>
+      <h3>会不会替代专家？</h3>
+      <p>不会。它更像专家的初级助理：先完成结构化初稿、扩展候选方向、检查术语和步骤。</p>
+      <p class="answer"><b>核心价值：</b>专家负责判断、取舍和背书。</p>
+    </div>
+  </div>
+</section>
+
+<section id="industries">
+  <div class="section-head">
+    <div class="no">03 · INDUSTRY USE CASES</div>
+    <h2>按行业看，它可以先用在哪？</h2>
+    <p>优先选择那些“到处都是一个参数变好、另一个参数变差”的场景。</p>
+  </div>
+  <div class="industry">
+    <div class="card">
+      <span class="tag">汽车与零部件</span>
+      <h3>轻量化、安全、成本之间的权衡</h3>
+      <ul>
+        <li>轻量化 vs 碰撞安全</li>
+        <li>续航 vs 成本</li>
+        <li>密封性 vs 散热</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">电子与消费电子</span>
+      <h3>小型化与可靠性的长期拉扯</h3>
+      <ul>
+        <li>更薄 vs 更强散热</li>
+        <li>高集成度 vs 可维修性</li>
+        <li>防水 vs 声学性能</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">工业装备</span>
+      <h3>把经验调参变成原理驱动</h3>
+      <ul>
+        <li>提高速度 vs 降低振动</li>
+        <li>自动化 vs 维护复杂度</li>
+        <li>精度 vs 成本</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">能源、材料与化工</span>
+      <h3>辅助技术路线讨论</h3>
+      <ul>
+        <li>能量密度 vs 安全性</li>
+        <li>催化效率 vs 成本</li>
+        <li>材料强度 vs 可加工性</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">医疗与精密设备</span>
+      <h3>设计输入阶段的结构化预分析</h3>
+      <ul>
+        <li>小型化 vs 操作稳定性</li>
+        <li>无菌要求 vs 装配效率</li>
+        <li>安全性 vs 使用便利性</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">软件与智能硬件</span>
+      <h3>把产品矛盾说清楚</h3>
+      <ul>
+        <li>功能更多 vs 产品更简单</li>
+        <li>自动化 vs 用户可控性</li>
+        <li>数据丰富 vs 隐私保护</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="workflow">
+  <div class="section-head">
+    <div class="no">04 · HOW IT FITS IN</div>
+    <h2>它在企业里的典型工作流</h2>
+    <p>最现实的用法不是“让模型给答案”，而是让模型把讨论推进到专家更容易判断的位置。</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <h3>把问题说清楚</h3>
+      <p>把“电池包要更轻，但强度不能下降”整理成改善参数、恶化参数和技术矛盾。</p>
+    </div>
+    <div class="step">
+      <h3>生成解决方向</h3>
+      <p>从分割、嵌套、预先作用、动态化、复合材料等发明原理中寻找候选路径。</p>
+    </div>
+    <div class="step">
+      <h3>形成评审材料</h3>
+      <p>输出问题定义、矛盾分析、候选原理、方案草案、风险和验证建议。</p>
+    </div>
+    <div class="step">
+      <h3>专家做判断</h3>
+      <p>专家不再从空白页开始，而是评审结构化初稿，把经验用在取舍和背书上。</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-head">
+    <div class="no">05 · READY TO SAY</div>
+    <h2>对外介绍时，可以直接用这三句话</h2>
+  </div>
+  <div class="quotes">
+    <div class="quote">
+      <div class="for">给管理层</div>
+      <p>Meerkat-TRIZ-v1 把 TRIZ 创新方法从少数专家手里的方法论，变成企业可以规模化部署的 AI 基础设施。它不替代专家，但能显著提高工程师进入结构化创新讨论的速度。</p>
+    </div>
+    <div class="quote">
+      <div class="for">给技术团队</div>
+      <p>这是一个面向 TRIZ 领域微调的 35B LoRA 模型。在我们的 300 题金标上，它以约 0.4× 的回答长度交付内容，并在等长对照下获得 2/3 外部评委的显著质量确认。</p>
+    </div>
+    <div class="quote">
+      <div class="for">给工程团队</div>
+      <p>你可以把它当成一个随时在线的 TRIZ 助教：帮你定义技术矛盾、推荐发明原理、生成方案草稿。最终判断仍由工程师和专家完成。</p>
+    </div>
+  </div>
+</section>
+
+<section id="boundary">
+  <div class="section-head">
+    <div class="no">06 · CLAIM DISCIPLINE</div>
+    <h2>最重要的边界</h2>
+    <p>这些边界不是削弱说服力，而是让企业客户敢相信。</p>
+  </div>
+  <div class="warning">
+    <h3>对外始终说清楚</h3>
+    <ul>
+      <li>它目前主要面向中文 TRIZ 问答与创新分析。</li>
+      <li>它不是通用大模型的全面替代品。</li>
+      <li>它不是专利检索系统，也不能替代律师意见。</li>
+      <li>它不能替代实验、仿真、安全验证和专家评审。</li>
+      <li>优势宣称限定在公开评测口径内，不外推成“全面超过所有大模型”。</li>
+      <li>最准确的定位：把一个高价值、低供给的专业方法域，做成可部署、可测量、可复现的模型能力。</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="local">Local Draft · Not Published</div>
+  <div>Meerkat AI · 企业用户说明页 · 仅供本地讨论与修改</div>
+</footer>
+
+<script>
+const buttons = document.querySelectorAll('#filters button');
+const cards = document.querySelectorAll('.role-card');
+buttons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    buttons.forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+    const filter = btn.dataset.filter;
+    cards.forEach(card => {
+      card.classList.toggle('hidden', filter !== 'all' && card.dataset.role !== filter);
+    });
+  });
+});
+</script>
+</body>
+</html>

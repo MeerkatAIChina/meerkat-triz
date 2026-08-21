@@ -1,0 +1,173 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 34, 500, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: 01 · 模型与训练
+  - elementId: title
+    elementType: text
+    bounds: [56, 56, 840, 34]
+    content:
+      style: "$title"
+      wrap: false
+      text: 训练曲线：best 在 step 2700，之后是过拟合爬坡
+  - elementId: curve
+    elementType: chart
+    bounds: [56, 110, 560, 360]
+    data:
+      cols: [step, eval_loss]
+      rows:
+        - [100, 1.6579]
+        - [200, 1.6254]
+        - [300, 1.6148]
+        - [400, 1.5981]
+        - [500, 1.5873]
+        - [600, 1.5787]
+        - [700, 1.5743]
+        - [800, 1.5667]
+        - [900, 1.5643]
+        - [1000, 1.5558]
+        - [1100, 1.5501]
+        - [1200, 1.5457]
+        - [1300, 1.5391]
+        - [1400, 1.5448]
+        - [1500, 1.5533]
+        - [1600, 1.5494]
+        - [1700, 1.5545]
+        - [1800, 1.5467]
+        - [1900, 1.5529]
+        - [2000, 1.5465]
+        - [2100, 1.5448]
+        - [2200, 1.5407]
+        - [2300, 1.5369]
+        - [2400, 1.5306]
+        - [2500, 1.5351]
+        - [2600, 1.5287]
+        - [2700, 1.5266]
+        - [2800, 1.5692]
+        - [2900, 1.5880]
+        - [3000, 1.5900]
+        - [3100, 1.5909]
+        - [3200, 1.5899]
+        - [3300, 1.5834]
+        - [3400, 1.5799]
+        - [3500, 1.5804]
+        - [3600, 1.5784]
+        - [3700, 1.5768]
+        - [3800, 1.5796]
+        - [3900, 1.5821]
+        - [4000, 1.5805]
+        - [4100, 1.5805]
+        - [4200, 1.6073]
+        - [4300, 1.6233]
+        - [4400, 1.6227]
+        - [4500, 1.6241]
+        - [4600, 1.6241]
+        - [4700, 1.6255]
+        - [4800, 1.6250]
+        - [4900, 1.6250]
+        - [5000, 1.6257]
+        - [5100, 1.6259]
+        - [5200, 1.6258]
+        - [5300, 1.6256]
+        - [5400, 1.6263]
+        - [5500, 1.6262]
+        - [5548, 1.6259]
+    series:
+      - type: line
+        encode: {x: step, y: eval_loss}
+        name: eval_loss
+        smooth: false
+        width: 2
+        lineColor: "$pine"
+        marker: {shape: circle, size: 3, fill: "$pine"}
+    xAxis:
+      title: "step（eval_steps = save_steps = 100）"
+      label: {fontSize: 9, color: "$muted"}
+      gridLine: false
+    yAxis:
+      min: 1.50
+      max: 1.68
+      title: "eval_loss"
+      label: {fontSize: 9, color: "$muted", numberFormat: "0.00"}
+      gridLine: {style: dash, color: "$hair", width: 0.75}
+    legend: false
+  - elementId: best-mark
+    elementType: text
+    bounds: [300, 128, 320, 18]
+    content:
+      fontSize: 11
+      bold: true
+      color: "$terra"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: "▲ best = 1.5266 @ step 2700（约 1.95 epoch）"
+  - elementId: facts-title
+    elementType: text
+    bounds: [648, 110, 260, 20]
+    content:
+      fontSize: 14
+      bold: true
+      color: "$pine"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: 训练事实（adapter_info.json）
+  - elementId: facts
+    elementType: text
+    bounds: [648, 136, 256, 196]
+    content:
+      style: "$body"
+      fontSize: 11.5
+      lineHeight: 1.55
+      text: |
+        <p>· 完整 4 epochs / <strong>5,548 步</strong>，未早停</p>
+        <p>· 耗时 <strong>23.02 小时</strong>（≈15s/步）</p>
+        <p>· 峰值显存 <strong>69.72 GB</strong> / 121GB</p>
+        <p>· final train_loss <strong>0.604</strong></p>
+        <p>· 终点 eval_loss <strong>1.626</strong>，best <strong>1.5266</strong></p>
+        <p>· loss 冒烟 <strong>PASSED</strong></p>
+        <p>· completion_only_loss = true</p>
+  - elementId: read
+    elementType: shape
+    bounds: [648, 340, 256, 130]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+    border: {style: solid, width: 1, color: "$terra"}
+  - elementId: read-t
+    elementType: text
+    bounds: [660, 350, 232, 112]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.5
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong><span style="color:$terra">曲线读法</span></strong></p>
+        <p style="margin-top:4px">step 2800 起 eval_loss 持续回升 → 过拟合；若按末步发货会损失 0.10。</p>
+        <p style="margin-top:4px">BestCheckpointCallback 的价值正在于此：发货的是 <strong>best/（step 2700）</strong>，不是末步。</p>
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-src
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$small"
+      wrap: false
+      text: 来源：adapter_info.json training.eval_trajectory / best_checkpoint.promotion_history
+  - elementId: footer-page
+    elementType: text
+    bounds: [864, 510, 40, 14]
+    content:
+      style: "$small"
+      align: [right, top]
+      wrap: false
+      text: "07"

@@ -1,0 +1,240 @@
+[03:16:47] judge 探测 kimi-k2-0711-preview: FAIL (Error code: 404 - {'error': {'message': 'Not found the model kimi-k2-0711-preview or Permission denied', 'type': 'resource_not_found_error'}})
+[03:16:48] judge 探测 moonshot-v1-32k: OK (ok)
+[03:16:49] judge 探测 moonshot-v1-8k: OK (ok)
+[03:16:50] judge 选定: moonshot-v1-32k (same_origin_fallback=False)
+[03:16:50] gen 0/100, judge 0/100, 本轮送评 0
+[03:18:50] gen 0/100, judge 0/100, 本轮送评 0
+[03:19:07] judge 探测 kimi-k2-0711-preview: FAIL (Error code: 404 - {'error': {'message': 'Not found the model kimi-k2-0711-preview or Permission denied', 'type': 'resource_not_found_error'}})
+[03:19:08] judge 探测 moonshot-v1-32k: OK (ok)
+[03:19:10] judge 探测 moonshot-v1-8k: OK (ok)
+[03:19:11] judge 选定: moonshot-v1-32k (same_origin_fallback=False)
+[03:19:11] gen 5/100, judge 0/100, 本轮送评 5
+[03:19:11] judge: 缓存 0 条, 待评 5 条 (model=moonshot-v1-32k)
+[03:19:16] judge 进度 5/5
+[03:21:16] gen 7/100, judge 5/100, 本轮送评 2
+[03:21:16] judge: 缓存 5 条, 待评 2 条 (model=moonshot-v1-32k)
+[03:21:18] judge 进度 2/2
+[03:23:18] gen 8/100, judge 7/100, 本轮送评 1
+[03:23:18] judge: 缓存 7 条, 待评 1 条 (model=moonshot-v1-32k)
+[03:23:20] judge 进度 1/1
+[03:25:20] gen 9/100, judge 8/100, 本轮送评 1
+[03:25:20] judge: 缓存 8 条, 待评 1 条 (model=moonshot-v1-32k)
+[03:25:21] judge 进度 1/1
+[03:27:21] gen 10/100, judge 9/100, 本轮送评 1
+[03:27:21] judge: 缓存 9 条, 待评 1 条 (model=moonshot-v1-32k)
+[03:27:23] judge 进度 1/1
+[03:29:23] gen 11/100, judge 10/100, 本轮送评 1
+[03:29:23] judge: 缓存 10 条, 待评 1 条 (model=moonshot-v1-32k)
+[03:29:24] judge 进度 1/1
+[03:31:24] gen 12/100, judge 11/100, 本轮送评 1
+[03:31:24] judge: 缓存 11 条, 待评 1 条 (model=moonshot-v1-32k)
+[03:31:26] judge 进度 1/1
+[03:33:26] gen 14/100, judge 12/100, 本轮送评 2
+[03:33:26] judge: 缓存 12 条, 待评 2 条 (model=moonshot-v1-32k)
+[03:33:28] judge 进度 2/2
+[03:35:28] gen 15/100, judge 14/100, 本轮送评 1
+[03:35:28] judge: 缓存 14 条, 待评 1 条 (model=moonshot-v1-32k)
+[03:35:30] judge 进度 1/1
+[03:37:30] gen 16/100, judge 15/100, 本轮送评 1
+[03:37:30] judge: 缓存 15 条, 待评 1 条 (model=moonshot-v1-32k)
+[03:37:31] judge 进度 1/1
+[03:39:31] gen 18/100, judge 16/100, 本轮送评 2
+[03:39:31] judge: 缓存 16 条, 待评 2 条 (model=moonshot-v1-32k)
+[03:39:34] judge 进度 2/2
+[03:41:34] gen 19/100, judge 18/100, 本轮送评 1
+[03:41:34] judge: 缓存 18 条, 待评 1 条 (model=moonshot-v1-32k)
+[03:41:35] judge 进度 1/1
+[03:43:35] gen 20/100, judge 19/100, 本轮送评 1
+[03:43:35] judge: 缓存 19 条, 待评 1 条 (model=moonshot-v1-32k)
+[03:43:37] judge 进度 1/1
+[03:45:37] gen 21/100, judge 20/100, 本轮送评 1
+[03:45:37] judge: 缓存 20 条, 待评 1 条 (model=moonshot-v1-32k)
+[03:45:38] judge 进度 1/1
+[03:47:38] gen 22/100, judge 21/100, 本轮送评 1
+[03:47:38] judge: 缓存 21 条, 待评 1 条 (model=moonshot-v1-32k)
+[03:47:40] judge 进度 1/1
+[03:49:40] gen 24/100, judge 22/100, 本轮送评 2
+[03:49:40] judge: 缓存 22 条, 待评 2 条 (model=moonshot-v1-32k)
+[03:49:42] judge 进度 2/2
+[03:51:42] gen 25/100, judge 24/100, 本轮送评 1
+[03:51:42] judge: 缓存 24 条, 待评 1 条 (model=moonshot-v1-32k)
+[03:51:44] judge 进度 1/1
+[03:53:44] gen 26/100, judge 25/100, 本轮送评 1
+[03:53:44] judge: 缓存 25 条, 待评 1 条 (model=moonshot-v1-32k)
+[03:53:45] judge 进度 1/1
+[03:55:45] gen 27/100, judge 26/100, 本轮送评 1
+[03:55:45] judge: 缓存 26 条, 待评 1 条 (model=moonshot-v1-32k)
+[03:55:47] judge 进度 1/1
+[03:57:47] gen 29/100, judge 27/100, 本轮送评 2
+[03:57:47] judge: 缓存 27 条, 待评 2 条 (model=moonshot-v1-32k)
+[03:57:49] judge 进度 2/2
+[03:59:49] gen 30/100, judge 29/100, 本轮送评 1
+[03:59:49] judge: 缓存 29 条, 待评 1 条 (model=moonshot-v1-32k)
+[03:59:50] judge 进度 1/1
+[04:01:50] gen 31/100, judge 30/100, 本轮送评 1
+[04:01:50] judge: 缓存 30 条, 待评 1 条 (model=moonshot-v1-32k)
+[04:01:52] judge 进度 1/1
+[04:03:52] gen 33/100, judge 31/100, 本轮送评 2
+[04:03:52] judge: 缓存 31 条, 待评 2 条 (model=moonshot-v1-32k)
+[04:03:54] judge 进度 2/2
+[04:05:54] gen 34/100, judge 33/100, 本轮送评 1
+[04:05:54] judge: 缓存 33 条, 待评 1 条 (model=moonshot-v1-32k)
+[04:05:55] judge 进度 1/1
+[04:07:55] gen 35/100, judge 34/100, 本轮送评 1
+[04:07:55] judge: 缓存 34 条, 待评 1 条 (model=moonshot-v1-32k)
+[04:07:57] judge 进度 1/1
+[04:09:57] gen 36/100, judge 35/100, 本轮送评 1
+[04:09:57] judge: 缓存 35 条, 待评 1 条 (model=moonshot-v1-32k)
+[04:09:58] judge 进度 1/1
+[04:11:58] gen 38/100, judge 36/100, 本轮送评 2
+[04:11:58] judge: 缓存 36 条, 待评 2 条 (model=moonshot-v1-32k)
+[04:12:01] judge 进度 2/2
+[04:14:01] gen 39/100, judge 38/100, 本轮送评 1
+[04:14:01] judge: 缓存 38 条, 待评 1 条 (model=moonshot-v1-32k)
+[04:14:02] judge 进度 1/1
+[04:16:02] gen 40/100, judge 39/100, 本轮送评 1
+[04:16:02] judge: 缓存 39 条, 待评 1 条 (model=moonshot-v1-32k)
+[04:16:04] judge 进度 1/1
+[04:18:04] gen 41/100, judge 40/100, 本轮送评 1
+[04:18:04] judge: 缓存 40 条, 待评 1 条 (model=moonshot-v1-32k)
+[04:18:05] judge 进度 1/1
+[04:20:05] gen 42/100, judge 41/100, 本轮送评 1
+[04:20:05] judge: 缓存 41 条, 待评 1 条 (model=moonshot-v1-32k)
+[04:20:07] judge 进度 1/1
+[04:22:07] gen 43/100, judge 42/100, 本轮送评 1
+[04:22:07] judge: 缓存 42 条, 待评 1 条 (model=moonshot-v1-32k)
+[04:22:08] judge 进度 1/1
+[04:24:08] gen 44/100, judge 43/100, 本轮送评 1
+[04:24:08] judge: 缓存 43 条, 待评 1 条 (model=moonshot-v1-32k)
+[04:24:10] judge 进度 1/1
+[04:26:10] gen 45/100, judge 44/100, 本轮送评 1
+[04:26:10] judge: 缓存 44 条, 待评 1 条 (model=moonshot-v1-32k)
+[04:26:11] judge 进度 1/1
+[04:28:11] gen 47/100, judge 45/100, 本轮送评 2
+[04:28:11] judge: 缓存 45 条, 待评 2 条 (model=moonshot-v1-32k)
+[04:28:14] judge 进度 2/2
+[04:30:14] gen 48/100, judge 47/100, 本轮送评 1
+[04:30:14] judge: 缓存 47 条, 待评 1 条 (model=moonshot-v1-32k)
+[04:30:16] judge 进度 1/1
+[04:32:16] gen 49/100, judge 48/100, 本轮送评 1
+[04:32:16] judge: 缓存 48 条, 待评 1 条 (model=moonshot-v1-32k)
+[04:32:17] judge 进度 1/1
+[04:34:17] gen 51/100, judge 49/100, 本轮送评 2
+[04:34:17] judge: 缓存 49 条, 待评 2 条 (model=moonshot-v1-32k)
+[04:34:20] judge 进度 2/2
+[04:36:20] gen 52/100, judge 51/100, 本轮送评 1
+[04:36:20] judge: 缓存 51 条, 待评 1 条 (model=moonshot-v1-32k)
+[04:36:21] judge 进度 1/1
+[04:38:21] gen 53/100, judge 52/100, 本轮送评 1
+[04:38:21] judge: 缓存 52 条, 待评 1 条 (model=moonshot-v1-32k)
+[04:38:23] judge 进度 1/1
+[04:40:23] gen 54/100, judge 53/100, 本轮送评 1
+[04:40:23] judge: 缓存 53 条, 待评 1 条 (model=moonshot-v1-32k)
+[04:40:25] judge 进度 1/1
+[04:42:25] gen 55/100, judge 54/100, 本轮送评 1
+[04:42:25] judge: 缓存 54 条, 待评 1 条 (model=moonshot-v1-32k)
+[04:42:26] judge 进度 1/1
+[04:44:26] gen 56/100, judge 55/100, 本轮送评 1
+[04:44:26] judge: 缓存 55 条, 待评 1 条 (model=moonshot-v1-32k)
+[04:44:27] judge 进度 1/1
+[04:46:27] gen 57/100, judge 56/100, 本轮送评 1
+[04:46:27] judge: 缓存 56 条, 待评 1 条 (model=moonshot-v1-32k)
+[04:46:29] judge 进度 1/1
+[04:48:29] gen 59/100, judge 57/100, 本轮送评 2
+[04:48:29] judge: 缓存 57 条, 待评 2 条 (model=moonshot-v1-32k)
+[04:48:31] judge 进度 2/2
+[04:50:31] gen 60/100, judge 59/100, 本轮送评 1
+[04:50:31] judge: 缓存 59 条, 待评 1 条 (model=moonshot-v1-32k)
+[04:50:33] judge 进度 1/1
+[04:52:33] gen 62/100, judge 60/100, 本轮送评 2
+[04:52:33] judge: 缓存 60 条, 待评 2 条 (model=moonshot-v1-32k)
+[04:53:14] judge 进度 2/2
+[04:55:14] gen 63/100, judge 62/100, 本轮送评 1
+[04:55:14] judge: 缓存 62 条, 待评 1 条 (model=moonshot-v1-32k)
+[04:55:16] judge 进度 1/1
+[04:57:16] gen 65/100, judge 63/100, 本轮送评 2
+[04:57:16] judge: 缓存 63 条, 待评 2 条 (model=moonshot-v1-32k)
+[04:57:57] judge 进度 2/2
+[04:59:57] gen 67/100, judge 65/100, 本轮送评 2
+[04:59:57] judge: 缓存 65 条, 待评 2 条 (model=moonshot-v1-32k)
+[05:00:39] judge 进度 2/2
+[05:02:39] gen 69/100, judge 67/100, 本轮送评 2
+[05:02:39] judge: 缓存 67 条, 待评 2 条 (model=moonshot-v1-32k)
+[05:02:41] judge 进度 2/2
+[05:04:41] gen 70/100, judge 69/100, 本轮送评 1
+[05:04:41] judge: 缓存 69 条, 待评 1 条 (model=moonshot-v1-32k)
+[05:04:42] judge 进度 1/1
+[05:06:42] gen 71/100, judge 70/100, 本轮送评 1
+[05:06:42] judge: 缓存 70 条, 待评 1 条 (model=moonshot-v1-32k)
+[05:06:44] judge 进度 1/1
+[05:08:44] gen 72/100, judge 71/100, 本轮送评 1
+[05:08:44] judge: 缓存 71 条, 待评 1 条 (model=moonshot-v1-32k)
+[05:08:45] judge 进度 1/1
+[05:10:45] gen 73/100, judge 72/100, 本轮送评 1
+[05:10:45] judge: 缓存 72 条, 待评 1 条 (model=moonshot-v1-32k)
+[05:10:46] judge 进度 1/1
+[05:12:46] gen 75/100, judge 73/100, 本轮送评 2
+[05:12:46] judge: 缓存 73 条, 待评 2 条 (model=moonshot-v1-32k)
+[05:12:49] judge 进度 2/2
+[05:14:49] gen 76/100, judge 75/100, 本轮送评 1
+[05:14:49] judge: 缓存 75 条, 待评 1 条 (model=moonshot-v1-32k)
+[05:14:50] judge 进度 1/1
+[05:16:50] gen 77/100, judge 76/100, 本轮送评 1
+[05:16:50] judge: 缓存 76 条, 待评 1 条 (model=moonshot-v1-32k)
+[05:16:51] judge 进度 1/1
+[05:18:51] gen 78/100, judge 77/100, 本轮送评 1
+[05:18:51] judge: 缓存 77 条, 待评 1 条 (model=moonshot-v1-32k)
+[05:18:53] judge 进度 1/1
+[05:20:53] gen 79/100, judge 78/100, 本轮送评 1
+[05:20:53] judge: 缓存 78 条, 待评 1 条 (model=moonshot-v1-32k)
+[05:20:54] judge 进度 1/1
+[05:22:54] gen 80/100, judge 79/100, 本轮送评 1
+[05:22:54] judge: 缓存 79 条, 待评 1 条 (model=moonshot-v1-32k)
+[05:22:56] judge 进度 1/1
+[05:24:56] gen 81/100, judge 80/100, 本轮送评 1
+[05:24:56] judge: 缓存 80 条, 待评 1 条 (model=moonshot-v1-32k)
+[05:24:58] judge 进度 1/1
+[05:26:58] gen 83/100, judge 81/100, 本轮送评 2
+[05:26:58] judge: 缓存 81 条, 待评 2 条 (model=moonshot-v1-32k)
+[05:27:39] judge 进度 2/2
+[05:29:39] gen 84/100, judge 83/100, 本轮送评 1
+[05:29:39] judge: 缓存 83 条, 待评 1 条 (model=moonshot-v1-32k)
+[05:29:40] judge 进度 1/1
+[05:31:40] gen 86/100, judge 84/100, 本轮送评 2
+[05:31:40] judge: 缓存 84 条, 待评 2 条 (model=moonshot-v1-32k)
+[05:32:22] judge 进度 2/2
+[05:34:22] gen 87/100, judge 86/100, 本轮送评 1
+[05:34:22] judge: 缓存 86 条, 待评 1 条 (model=moonshot-v1-32k)
+[05:34:24] judge 进度 1/1
+[05:36:24] gen 88/100, judge 87/100, 本轮送评 1
+[05:36:24] judge: 缓存 87 条, 待评 1 条 (model=moonshot-v1-32k)
+[05:36:25] judge 进度 1/1
+[05:38:25] gen 89/100, judge 88/100, 本轮送评 1
+[05:38:25] judge: 缓存 88 条, 待评 1 条 (model=moonshot-v1-32k)
+[05:38:27] judge 进度 1/1
+[05:40:27] gen 91/100, judge 89/100, 本轮送评 2
+[05:40:27] judge: 缓存 89 条, 待评 2 条 (model=moonshot-v1-32k)
+[05:40:29] judge 进度 2/2
+[05:42:29] gen 92/100, judge 91/100, 本轮送评 1
+[05:42:29] judge: 缓存 91 条, 待评 1 条 (model=moonshot-v1-32k)
+[05:42:30] judge 进度 1/1
+[05:44:30] gen 93/100, judge 92/100, 本轮送评 1
+[05:44:30] judge: 缓存 92 条, 待评 1 条 (model=moonshot-v1-32k)
+[05:44:32] judge 进度 1/1
+[05:46:32] gen 94/100, judge 93/100, 本轮送评 1
+[05:46:32] judge: 缓存 93 条, 待评 1 条 (model=moonshot-v1-32k)
+[05:46:33] judge 进度 1/1
+[05:48:33] gen 96/100, judge 94/100, 本轮送评 2
+[05:48:33] judge: 缓存 94 条, 待评 2 条 (model=moonshot-v1-32k)
+[05:48:35] judge 进度 2/2
+[05:50:35] gen 97/100, judge 96/100, 本轮送评 1
+[05:50:35] judge: 缓存 96 条, 待评 1 条 (model=moonshot-v1-32k)
+[05:50:37] judge 进度 1/1
+[05:52:37] gen 99/100, judge 97/100, 本轮送评 2
+[05:52:37] judge: 缓存 97 条, 待评 2 条 (model=moonshot-v1-32k)
+[05:52:39] judge 进度 2/2
+[05:54:39] gen 100/100, judge 99/100, 本轮送评 1
+[05:54:39] judge: 缓存 99 条, 待评 1 条 (model=moonshot-v1-32k)
+[05:54:41] judge 进度 1/1
+[05:54:41] judge 完成度 100/100, 缺失 []
+[05:54:41] JUDGE_ALL_DONE

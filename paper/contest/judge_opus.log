@@ -1,0 +1,29 @@
+[    0.2s] === 选手 claude-opus-4-8: 299 条回答, 评委 ['gpt-5.4', 'gemini-3.5-flash'] ===
+[    0.2s] gpt-5.4/claude-opus-4-8: 缓存 25, 待评 274
+[   42.5s]   gpt-5.4/claude-opus-4-8 进度 50/299
+[   60.3s]   gpt-5.4/claude-opus-4-8 进度 75/299
+[   80.3s]   gpt-5.4/claude-opus-4-8 进度 100/299
+[  128.0s]   gpt-5.4/claude-opus-4-8 进度 125/299
+[  186.4s]   gpt-5.4/claude-opus-4-8 进度 150/299
+[  206.8s]   gpt-5.4/claude-opus-4-8 进度 175/299
+[  228.0s]   gpt-5.4/claude-opus-4-8 进度 200/299
+[  319.9s]   gpt-5.4/claude-opus-4-8 进度 225/299
+[  347.6s]   gpt-5.4/claude-opus-4-8 进度 250/299
+[  390.2s]   gpt-5.4/claude-opus-4-8 进度 274/299
+[  466.1s]   judge gpt-5.4 失败 (1/5): Error code: 429 - {'error': {'code': 'api_key_rate_limited', 'message': 'API key is temporarily rate limited', 'param': 
+[  470.8s]   judge gpt-5.4 失败 (1/5): Error code: 429 - {'error': {'code': 'api_key_rate_limited', 'message': 'API key is temporarily rate limited', 'param': 
+[  593.2s]   gpt-5.4/claude-opus-4-8 进度 299/299
+[  593.2s] gemini-3.5-flash/claude-opus-4-8: 缓存 0, 待评 299
+[  663.0s]   gemini-3.5-flash/claude-opus-4-8 进度 25/299
+[  666.9s]   gemini-3.5-flash/claude-opus-4-8 进度 50/299
+[  670.9s]   gemini-3.5-flash/claude-opus-4-8 进度 75/299
+[  676.7s]   gemini-3.5-flash/claude-opus-4-8 进度 100/299
+[  742.5s]   gemini-3.5-flash/claude-opus-4-8 进度 125/299
+[  748.2s]   gemini-3.5-flash/claude-opus-4-8 进度 150/299
+[  753.0s]   gemini-3.5-flash/claude-opus-4-8 进度 179/299
+[  759.2s]   gemini-3.5-flash/claude-opus-4-8 进度 200/299
+[  764.4s]   gemini-3.5-flash/claude-opus-4-8 进度 225/299
+[  827.3s]   gemini-3.5-flash/claude-opus-4-8 进度 250/299
+[  833.7s]   gemini-3.5-flash/claude-opus-4-8 进度 275/299
+[  838.8s]   gemini-3.5-flash/claude-opus-4-8 进度 299/299
+[  838.8s] 全部评委任务完成

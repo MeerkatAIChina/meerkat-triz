@@ -1,0 +1,352 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+elements:
+  # ---------- 页眉 ----------
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 40, 420, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: |-
+        01 · 为什么是现在
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 36]
+    content:
+      style: "$h1"
+      wrap: false
+      text: |-
+        Agent 的心跳:观察 → 思考 → 行动 → 再观察
+
+  # ---------- 左区:ReAct 循环图 ----------
+  - elementId: loop-zone-label
+    elementType: text
+    bounds: [56, 116, 340, 22]
+    content:
+      style: "$h2"
+      wrap: false
+      text: |-
+        ReAct 循环:边看、边想、边做
+  - elementId: loop-ring
+    elementType: shape
+    bounds: [74, 160, 312, 250]
+    shapeName: ellipse
+    border: {style: dash, width: 1.25, color: "$pine"}
+  - elementId: loop-ring-label-bg
+    elementType: shape
+    bounds: [134, 159, 192, 18]
+    shapeName: rect
+    fill: {type: solid, color: "$paper"}
+  - elementId: loop-ring-label
+    elementType: text
+    bounds: [118, 160, 224, 15]
+    content:
+      fontSize: 10
+      color: "$muted"
+      align: [center, middle]
+      wrap: false
+      text: |-
+        虚线环 = 上下文,每一圈都在累积
+  # 节点 1:观察
+  - elementId: node-observe
+    elementType: shape
+    bounds: [186, 178, 88, 88]
+    shapeName: ellipse
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 2, color: "$pine"}
+  - elementId: node-observe-text
+    elementType: text
+    bounds: [186, 178, 88, 88]
+    content:
+      align: [center, middle]
+      lineHeight: 1.25
+      text: |-
+        <p><span style="font-size:14px; color:$pine;"><strong>观察</strong></span></p>
+        <p><span style="font-size:9px; color:$muted;">Observe</span></p>
+        <p><span style="font-size:9.5px; color:$ink;">读数据/网页/文件</span></p>
+  # 节点 2:思考
+  - elementId: node-think
+    elementType: shape
+    bounds: [271, 296, 88, 88]
+    shapeName: ellipse
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 2, color: "$pine"}
+  - elementId: node-think-text
+    elementType: text
+    bounds: [271, 296, 88, 88]
+    content:
+      align: [center, middle]
+      lineHeight: 1.25
+      text: |-
+        <p><span style="font-size:14px; color:$pine;"><strong>思考</strong></span></p>
+        <p><span style="font-size:9px; color:$muted;">Think</span></p>
+        <p><span style="font-size:9.5px; color:$ink;">推理下一步</span></p>
+  # 节点 3:行动
+  - elementId: node-act
+    elementType: shape
+    bounds: [101, 296, 88, 88]
+    shapeName: ellipse
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 2, color: "$pine"}
+  - elementId: node-act-text
+    elementType: text
+    bounds: [101, 296, 88, 88]
+    content:
+      align: [center, middle]
+      lineHeight: 1.25
+      text: |-
+        <p><span style="font-size:14px; color:$pine;"><strong>行动</strong></span></p>
+        <p><span style="font-size:9px; color:$muted;">Act</span></p>
+        <p><span style="font-size:9.5px; color:$ink;">调用工具</span></p>
+  # 中心循环图标
+  - elementId: loop-center-icon
+    elementType: icon
+    bounds: [215, 278, 30, 30]
+    iconName: "fas:arrows-rotate"
+    fill: {type: solid, color: "$pine"}
+  # 循环箭头:观察 → 思考
+  - elementId: arrow-observe-think
+    elementType: line
+    bounds: [264, 258, 44, 40]
+    viewBox: [44, 40]
+    points: "4,4 40,36"
+    curve: round
+    arrow: [null, arrow]
+    border: {style: solid, width: 2, color: "$pine"}
+  # 循环箭头:思考 → 行动
+  - elementId: arrow-think-act
+    elementType: line
+    bounds: [196, 334, 66, 12]
+    viewBox: [66, 12]
+    points: "64,6 2,6"
+    curve: round
+    arrow: [null, arrow]
+    border: {style: solid, width: 2, color: "$pine"}
+  # 循环箭头:行动 → 观察
+  - elementId: arrow-act-observe
+    elementType: line
+    bounds: [154, 258, 44, 40]
+    viewBox: [44, 40]
+    points: "6,36 40,4"
+    curve: round
+    arrow: [null, arrow]
+    border: {style: solid, width: 2, color: "$pine"}
+  # 左区说明
+  - elementId: loop-caption
+    elementType: text
+    bounds: [56, 414, 360, 32]
+    content:
+      style: "$small"
+      align: [left, top]
+      text: |-
+        每一圈:观察写入新信息,思考基于全部上下文推理,行动改变外部世界。
+
+  # ---------- 右区:三圈示例 ----------
+  - elementId: case-label
+    elementType: text
+    bounds: [440, 116, 464, 22]
+    content:
+      style: "$h2"
+      wrap: false
+      text: |-
+        走三圈:天圻气象站数据异常排查(教学演示)
+  # 第 1 圈
+  - elementId: r1-badge
+    elementType: shape
+    bounds: [440, 152, 30, 30]
+    shapeName: ellipse
+    fill: {type: solid, color: "$pine"}
+  - elementId: r1-badge-num
+    elementType: text
+    bounds: [440, 152, 30, 30]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$white"
+      align: [center, middle]
+      wrap: false
+      text: |-
+        1
+  - elementId: r1-title
+    elementType: text
+    bounds: [484, 152, 420, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: |-
+        第 1 圈 · 发现异常
+  - elementId: r1-desc
+    elementType: text
+    bounds: [484, 174, 420, 16]
+    content:
+      fontSize: 11
+      color: "$ink"
+      wrap: false
+      text: |-
+        观察:3 号站今晨缺数 → 思考:先查设备状态 → 行动:调平台接口查在线状态
+  - elementId: r1-result
+    elementType: text
+    bounds: [484, 194, 420, 16]
+    content:
+      fontSize: 11
+      color: "$terra"
+      wrap: false
+      text: |-
+        结果:3 号站设备离线,带着这个发现进入第 2 圈
+  - elementId: r1-conn
+    elementType: line
+    bounds: [452, 214, 6, 28]
+    viewBox: [6, 28]
+    points: "3,2 3,26"
+    curve: round
+    arrow: [null, arrow]
+    border: {style: solid, width: 1.5, color: "$hair"}
+  # 第 2 圈
+  - elementId: r2-badge
+    elementType: shape
+    bounds: [440, 246, 30, 30]
+    shapeName: ellipse
+    fill: {type: solid, color: "$pine"}
+  - elementId: r2-badge-num
+    elementType: text
+    bounds: [440, 246, 30, 30]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$white"
+      align: [center, middle]
+      wrap: false
+      text: |-
+        2
+  - elementId: r2-title
+    elementType: text
+    bounds: [484, 246, 420, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: |-
+        第 2 圈 · 定位原因
+  - elementId: r2-desc
+    elementType: text
+    bounds: [484, 268, 420, 16]
+    content:
+      fontSize: 11
+      color: "$ink"
+      wrap: false
+      text: |-
+        观察:设备离线、电池电量低 → 思考:查维护记录 → 行动:调取运维档案
+  - elementId: r2-result
+    elementType: text
+    bounds: [484, 288, 420, 16]
+    content:
+      fontSize: 11
+      color: "$terra"
+      wrap: false
+      text: |-
+        结果:上次现场维护在 40 天前,疑似供电故障
+  - elementId: r2-conn
+    elementType: line
+    bounds: [452, 308, 6, 28]
+    viewBox: [6, 28]
+    points: "3,2 3,26"
+    curve: round
+    arrow: [null, arrow]
+    border: {style: solid, width: 1.5, color: "$hair"}
+  # 第 3 圈
+  - elementId: r3-badge
+    elementType: shape
+    bounds: [440, 340, 30, 30]
+    shapeName: ellipse
+    fill: {type: solid, color: "$pine"}
+  - elementId: r3-badge-num
+    elementType: text
+    bounds: [440, 340, 30, 30]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$white"
+      align: [center, middle]
+      wrap: false
+      text: |-
+        3
+  - elementId: r3-title
+    elementType: text
+    bounds: [484, 340, 420, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: |-
+        第 3 圈 · 处置闭环
+  - elementId: r3-desc
+    elementType: text
+    bounds: [484, 362, 420, 16]
+    content:
+      fontSize: 11
+      color: "$ink"
+      wrap: false
+      text: |-
+        观察:符合供电故障特征 → 思考:达到派单条件 → 行动:生成维修工单草稿
+  - elementId: r3-result
+    elementType: text
+    bounds: [484, 382, 420, 16]
+    content:
+      fontSize: 11
+      color: "$terra"
+      wrap: false
+      text: |-
+        结果:工单交运维确认后派出,任务完成,循环停止
+
+  # ---------- 底部结论条 ----------
+  - elementId: takeaway-band
+    elementType: shape
+    bounds: [56, 452, 848, 40]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+  - elementId: takeaway-icon
+    elementType: icon
+    bounds: [76, 463, 18, 18]
+    iconName: "fas:circle-question"
+    fill: {type: solid, color: "$pine"}
+  - elementId: takeaway-text
+    elementType: text
+    bounds: [106, 461, 786, 22]
+    content:
+      fontSize: 12.5
+      color: "$ink"
+      align: [left, middle]
+      text: |-
+        <p><strong>本质差别:</strong>一次性问答只走一圈;智能体循环把「看到结果,再定下一步」交给模型。想一想:这和单次问答差在哪?</p>
+
+  # ---------- 页脚 ----------
+  - elementId: footer-line
+    elementType: line
+    bounds: [56, 501, 848, 2]
+    viewBox: [848, 2]
+    points: "0,1 848,1"
+    border: {style: solid, width: 1, color: "$hair"}
+  - elementId: footer-left
+    elementType: text
+    bounds: [56, 510, 560, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: |-
+        天圻场景为教学演示/示例 · 东方智感 AI 内训第三期
+  - elementId: footer-right
+    elementType: text
+    bounds: [804, 510, 100, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: |-
+        08

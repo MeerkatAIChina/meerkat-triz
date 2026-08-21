@@ -1,0 +1,196 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+notes: 工具设计方法页。左侧工具说明书三要素(名字/参数/返回)+原则;右侧示意代码块:把物联网平台查墒情接口写成工具描述;底部行动:盘点第一批工具化接口。
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 38, 500, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: 第三章 · HARNESS 与 LOOP ENGINEERING
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 36]
+    content:
+      style: "$h1"
+      wrap: false
+      text: 工具设计:把公司系统变成智能体的"手"
+  # ---- 左列:三要素 ----
+  - elementId: keys-h
+    elementType: text
+    bounds: [56, 130, 330, 20]
+    content:
+      style: "$h2"
+      wrap: false
+      text: 工具说明书三要素
+  - elementId: key-1-icon
+    elementType: icon
+    bounds: [56, 162, 18, 18]
+    iconName: "fas:tag"
+    fill: {type: solid, color: "$pine"}
+  - elementId: key-1-t
+    elementType: text
+    bounds: [84, 160, 302, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$ink"
+      wrap: false
+      text: 名字 name —— 说清干什么
+  - elementId: key-1-d
+    elementType: text
+    bounds: [84, 182, 302, 34]
+    content:
+      fontSize: 11
+      color: "$muted"
+      lineHeight: 1.45
+      text: |
+        <p>智能体靠名字决定何时调用。动词开头,一眼看懂干什么。</p>
+  - elementId: key-2-icon
+    elementType: icon
+    bounds: [56, 234, 18, 18]
+    iconName: "fas:sliders"
+    fill: {type: solid, color: "$pine"}
+  - elementId: key-2-t
+    elementType: text
+    bounds: [84, 232, 302, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$ink"
+      wrap: false
+      text: 参数 parameters —— 说清给什么
+  - elementId: key-2-d
+    elementType: text
+    bounds: [84, 254, 302, 34]
+    content:
+      fontSize: 11
+      color: "$muted"
+      lineHeight: 1.45
+      text: |
+        <p>每个参数写清类型、必填与否、默认值,最好给一个示例。</p>
+  - elementId: key-3-icon
+    elementType: icon
+    bounds: [56, 306, 18, 18]
+    iconName: "fas:reply"
+    fill: {type: solid, color: "$pine"}
+  - elementId: key-3-t
+    elementType: text
+    bounds: [84, 304, 302, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$ink"
+      wrap: false
+      text: 返回 returns —— 说清得到什么
+  - elementId: key-3-d
+    elementType: text
+    bounds: [84, 326, 302, 34]
+    content:
+      fontSize: 11
+      color: "$muted"
+      lineHeight: 1.45
+      text: |
+        <p>返回结构化字段,而不是一段散文——模型要靠它决定下一步。</p>
+  - elementId: prin-box
+    elementType: shape
+    bounds: [56, 380, 330, 60]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+  - elementId: prin-body
+    elementType: text
+    bounds: [72, 390, 298, 40]
+    content:
+      fontSize: 12
+      bold: true
+      color: "$pine"
+      lineHeight: 1.5
+      text: |
+        <p>原则:好工具 = 好说明书。说明书含糊,智能体就会用错。</p>
+  # ---- 右列:示意代码块 ----
+  - elementId: code-h
+    elementType: text
+    bounds: [420, 130, 484, 20]
+    content:
+      style: "$h2"
+      wrap: false
+      text: 示例:墒情查询接口 → 工具描述(示意)
+  - elementId: code-box
+    elementType: shape
+    bounds: [420, 156, 484, 234]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1, color: "$hair"}
+  - elementId: code-accent
+    elementType: shape
+    bounds: [420, 156, 3, 234]
+    shapeName: rect
+    fill: {type: solid, color: "$pine"}
+  - elementId: code-body
+    elementType: text
+    bounds: [438, 168, 452, 210]
+    content:
+      fontSize: 10
+      color: "$ink"
+      lineHeight: 1.5
+      text: |
+        {
+          "name": "get_soil_moisture",
+          "description": "查询指定墒情站的逐日土壤含水量",
+          "parameters": {
+            "station_id": "站点编号,如 ZS-A07(必填)",
+            "days": "向前查询天数,默认 7"
+          },
+          "returns": {
+            "series": "逐日含水量列表",
+            "completeness": "数据完整度 0-1"
+          }
+        }
+  - elementId: code-note
+    elementType: text
+    bounds: [420, 402, 484, 18]
+    content:
+      fontSize: 11
+      color: "$muted"
+      wrap: false
+      text: |
+        <p>从 Prompt 到 MCP:协议让工具"即插即用"——同一套说明书,不同智能体都能直接调用。</p>
+  # ---- 底部行动 ----
+  - elementId: act-icon
+    elementType: icon
+    bounds: [56, 458, 16, 16]
+    iconName: "fas:bolt"
+    fill: {type: solid, color: "$terra"}
+  - elementId: act-body
+    elementType: text
+    bounds: [80, 456, 824, 20]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$ink"
+      wrap: false
+      text: 行动:盘一盘平台接口——哪些可以第一批工具化?从「只读、高频、参数少」的开始。
+  # ---- 页脚 ----
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-src
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: 接口名与字段为教学示意,非真实 API 文档
+  - elementId: footer-page
+    elementType: text
+    bounds: [824, 510, 80, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: 17 / 35

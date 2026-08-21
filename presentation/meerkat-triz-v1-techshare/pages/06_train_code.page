@@ -1,0 +1,98 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 34, 500, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: 01 · 模型与训练
+  - elementId: title
+    elementType: text
+    bounds: [56, 56, 840, 34]
+    content:
+      style: "$title"
+      wrap: false
+      text: train.py 代码解剖：571 行，一半是「不信任框架」
+  - elementId: code-box
+    elementType: shape
+    bounds: [56, 108, 430, 372]
+    shapeName: rect
+    fill: {type: solid, color: "#22211E"}
+  - elementId: code
+    elementType: text
+    bounds: [70, 118, 404, 354]
+    content:
+      fontSize: 10
+      color: "#E8E4DA"
+      lineHeight: 1.5
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><span style="color:#C26A2E"># ① eval_steps==save_steps，否则拒绝启动</span></p>
+        <p>if cfg["eval_steps"] != cfg["save_steps"]: fatal(...)</p>
+        <p> </p>
+        <p><span style="color:#C26A2E"># ② completion-only loss 硬断言</span></p>
+        <p>if trainer.completion_only_loss is not True:</p>
+        <p>    fatal("拒绝训练", EXIT_ASSERT)</p>
+        <p> </p>
+        <p><span style="color:#C26A2E"># ③ loss 冒烟：decode 首 batch labels</span></p>
+        <p>assert 前缀全 -100 且 decode 含 &lt;|im_start|&gt;</p>
+        <p>assert 被监督区段不含 &lt;|im_start|&gt;  # 防 prompt 泄漏</p>
+        <p> </p>
+        <p><span style="color:#C26A2E"># ④ cosine horizon 重建（2-epoch 设计）</span></p>
+        <p>trainer.create_optimizer_and_scheduler(</p>
+        <p>    num_training_steps=steps_per_epoch*2)</p>
+        <p> </p>
+        <p><span style="color:#C26A2E"># ⑤ LoRA dtype 校正（v4 发货事故修复）</span></p>
+        <p>for n,p in model.named_parameters():</p>
+        <p>    if "lora_" in n: p.data = p.data.bfloat16()</p>
+        <p> </p>
+        <p><span style="color:#C26A2E"># ⑥ BestCheckpointCallback + 只复制磁盘文件发货</span></p>
+        <p>ship_adapter(best_dir, adapter_dir)  # 绝不保存内存态</p>
+  - elementId: mech-title
+    elementType: text
+    bounds: [512, 108, 400, 20]
+    content:
+      fontSize: 14
+      bold: true
+      color: "$pine"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: 六道防线分别防什么
+  - elementId: mech
+    elementType: text
+    bounds: [512, 134, 392, 346]
+    content:
+      style: "$body"
+      fontSize: 11.5
+      lineHeight: 1.5
+      text: |
+        <p><strong>① 配置即断言</strong> —— eval/save 步长不等直接退出：BestCheckpointCallback 归因「eval 创新低 → 对应落盘 checkpoint」的前提。</p>
+        <p style="margin-top:5px"><strong>② completion_only_loss</strong> —— prompt/completion 格式数据集让 trl 1.5.1 自动只对答案计 loss；拿不到 True 就拒绝训练。v1 用全文 loss（system+user 也算），口径不可比，是早期教训。</p>
+        <p style="margin-top:5px"><strong>③ loss 冒烟</strong> —— 不信任框架的自动判定：真 decode 首 batch 的 labels，确认被 mask 的是 prompt、被监督的是 completion，防 trl 规则变更造成共模失效。</p>
+        <p style="margin-top:5px"><strong>④ cosine horizon 重建</strong> —— Trainer 默认按 4 epoch 排程，lr 在 2 epoch 早停时几乎没退火（v4 实测 lr 仍 1.55e-4）；重建调度器让余弦在 2 epoch 内走完。</p>
+        <p style="margin-top:5px"><strong>⑤ dtype 校正 ×2</strong> —— peft 默认以 FP32 初始化 LoRA 参数；v4 首轮发货因此验证 FAILED。训练前 + 发货前各做一次幂等校正；v5b 续跑退化后又加了 on_train_begin 回调第三次兜底。</p>
+        <p style="margin-top:5px"><strong>⑥ 只复制磁盘文件</strong> —— 发货 = 从 best/ 目录 cp 文件 + 9 项验证 + sha256，绝不动内存态模型，消灭「存的时候变了」这一整类事故。</p>
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-src
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$small"
+      wrap: false
+      text: 来源：meerkat-triz/src/meerkat_triz/train/train.py（退出码约定：0 成功 / 2 配置致命 / 3 断言冒烟失败）
+  - elementId: footer-page
+    elementType: text
+    bounds: [864, 510, 40, 14]
+    content:
+      style: "$small"
+      align: [right, top]
+      wrap: false
+      text: "06"

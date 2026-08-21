@@ -1,0 +1,134 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 34, 500, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: 01 · 模型与训练
+  - elementId: title
+    elementType: text
+    bounds: [56, 56, 840, 34]
+    content:
+      style: "$title"
+      wrap: false
+      text: 基座与适配器：混合架构决定了 12 个 target_modules
+  - elementId: left-title
+    elementType: text
+    bounds: [56, 110, 400, 20]
+    content:
+      fontSize: 14
+      bold: true
+      color: "$pine"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: 基座：Qwen3.6-35B-A3B 的三类层
+  - elementId: arch-table
+    elementType: table
+    bounds: [56, 138, 420, 190]
+    columnWidths: [0.42, 0.16, 0.42]
+    rowHeights: [0.19, 0.27, 0.27, 0.27]
+    style: "$default"
+    rows:
+      - - text: "层类型"
+        - text: "层数占比"
+        - text: "关键投影矩阵"
+      - - text: "Gated Attention"
+        - text: "10 / 40"
+        - text: "q_proj · k_proj · v_proj · o_proj"
+      - - text: "Gated DeltaNet（线性注意力）"
+        - text: "30 / 40"
+        - text: "in_proj_qkv · in_proj_z · in_proj_b · in_proj_a · out_proj"
+      - - text: "MoE MLP（256 专家）"
+        - text: "40 / 40"
+        - text: "gate_proj · up_proj · down_proj"
+  - elementId: arch-note
+    elementType: text
+    bounds: [56, 340, 420, 104]
+    content:
+      style: "$body"
+      fontSize: 12
+      text: |
+        <p><strong>为什么不能写 <span style="color:$terra">"all-linear"</span>：</strong>Qwen3.6 是 Attention + DeltaNet + MoE 的混合架构，自动匹配存在已知兼容性问题。</p>
+        <p style="margin-top:6px">工程做法：<strong>显式列出 12 个模块名</strong>，逐类覆盖全部三种层——这直接写死在 config.py 与 train_v5a.json 中，两个仓库完全一致。</p>
+  - elementId: right-title
+    elementType: text
+    bounds: [512, 110, 400, 20]
+    content:
+      fontSize: 14
+      bold: true
+      color: "$pine"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: 适配器参数（adapter_config.json 实测值）
+  - elementId: lora-table
+    elementType: table
+    bounds: [512, 138, 392, 190]
+    columnWidths: [0.38, 0.62]
+    rowHeights: [0.16, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14]
+    style: "$default"
+    rows:
+      - - text: "参数"
+        - text: "值 / 理由"
+      - - text: "r（秩）"
+        - text: "64 —— 复杂领域推荐值"
+      - - text: "lora_alpha"
+        - text: "128 = 2×r，缩放 α/r = 2"
+      - - text: "lora_dropout"
+        - text: "0.0 —— dropout 会扰乱 MoE 专家路由"
+      - - text: "use_rslora"
+        - text: "false —— P0 六组小扫 + 金标双轨冒烟终裁"
+      - - text: "bias / task_type"
+        - text: "none / CAUSAL_LM"
+      - - text: "peft 版本"
+        - text: "0.19.1（环境全链冻结）"
+  - elementId: lora-numbers
+    elementType: shape
+    bounds: [512, 340, 392, 88]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+    border: {style: solid, width: 1, color: "$pine"}
+  - elementId: lora-numbers-t
+    elementType: text
+    bounds: [526, 350, 366, 70]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.5
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p>可训练参数 <strong><span style="color:$pine">84.66M / 35B = 0.24%</span></strong></p>
+        <p>发货权重 <strong>620 个张量（A=310 / B=310），169.4MB，全 BF16</strong></p>
+        <p><span style="color:$muted; font-size:10.5px">来源：adapter_info.json validation.tensor_stats</span></p>
+  - elementId: base-spec
+    elementType: text
+    bounds: [56, 452, 848, 36]
+    content:
+      style: "$small"
+      text: |
+        <p>基座规格：35B 总参 / 3B 激活 · 262K 上下文 · thinking-native 对话模板（后文 E0 铁律的根源）· Apache-2.0 可商用</p>
+        <p>选型理由：121GB 统一内存可免量化 BF16 全量加载 35B MoE；激活仅 3B，训练/推理都便宜</p>
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-src
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$small"
+      wrap: false
+      text: 来源：config.py §QLoRA_CONFIG · hf_model_repo/adapter_config.json · adapter_info.json
+  - elementId: footer-page
+    elementType: text
+    bounds: [864, 510, 40, 14]
+    content:
+      style: "$small"
+      align: [right, top]
+      wrap: false
+      text: "04"

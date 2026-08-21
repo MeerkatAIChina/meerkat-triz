@@ -1,0 +1,115 @@
+version: v2
+title: 智能体与AI最新发展——东方智感全员培训
+size: [960, 540]
+theme:
+  colors:
+    paper: "#F7F5F0"
+    ink: "#22211E"
+    pine: "#1E4D3B"
+    terra: "#C26A2E"
+    muted: "#6B675F"
+    hair: "#D8D3C8"
+    paleG: "#EAF1EC"
+    paleT: "#F7EBDC"
+    white: "#FFFFFF"
+  textStyles:
+    kicker:
+      fontSize: 11
+      color: "$terra"
+      bold: true
+      letterSpacing: 2
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+    h1:
+      fontSize: 26
+      bold: true
+      color: "$ink"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+    h2:
+      fontSize: 15
+      bold: true
+      color: "$pine"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+    body:
+      fontSize: 13
+      color: "$ink"
+      lineHeight: 1.55
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+    small:
+      fontSize: 11
+      color: "$muted"
+      lineHeight: 1.5
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+    caption:
+      fontSize: 10
+      color: "$muted"
+      lineHeight: 1.4
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+    hero:
+      fontSize: 44
+      bold: true
+      color: "$pine"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+    chapterNum:
+      fontSize: 64
+      bold: true
+      color: "$terra"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+    chapterTitle:
+      fontSize: 34
+      bold: true
+      color: "#F7F5F0"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+  tableStyles:
+    default:
+      cellStyle:
+        fontSize: 12
+        color: "$ink"
+        fontFamily: {latin: "Liter", ea: "MiSans"}
+        lineHeight: 1.4
+        border: [null, null, {style: solid, width: 1, color: "$hair"}, null]
+        align: [left, middle]
+      firstRowStyle:
+        fill: {type: solid, color: "$pine"}
+        color: "#FFFFFF"
+        bold: true
+        fontSize: 12
+        align: [left, middle]
+      bodyStyles:
+        - {fill: {type: solid, color: "#FFFFFF"}}
+        - {fill: {type: solid, color: "$paper"}}
+pages:
+  - pages/01_cover.page
+  - pages/02_roadmap.page
+  - pages/03_ch1.page
+  - pages/04_pain.page
+  - pages/05_timeline.page
+  - pages/06_agent_def.page
+  - pages/07_spectrum.page
+  - pages/08_loop.page
+  - pages/09_ch2.page
+  - pages/10_mindset.page
+  - pages/11_delegate.page
+  - pages/12_model_choice.page
+  - pages/13_context.page
+  - pages/14_ch3.page
+  - pages/15_harness.page
+  - pages/16_loop_eng.page
+  - pages/17_tools.page
+  - pages/18_verify.page
+  - pages/19_case.page
+  - pages/20_ch4.page
+  - pages/21_role_rd.page
+  - pages/22_role_sales.page
+  - pages/23_role_ops.page
+  - pages/24_role_admin.page
+  - pages/25_ch5_cases.page
+  - pages/26_case_onsub_skill.page
+  - pages/27_case_onsub_ctrl.page
+  - pages/28_case_ecoinfo.page
+  - pages/29_case_istos.page
+  - pages/30_case_yunyao.page
+  - pages/31_case_review.page
+  - pages/32_ch6.page
+  - pages/33_opportunity.page
+  - pages/34_risk.page
+  - pages/35_action.page

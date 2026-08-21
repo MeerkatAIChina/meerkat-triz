@@ -1,0 +1,181 @@
+pageType: final
+background:
+  type: solid
+  color: "$paper"
+notes: 结尾页:30 天行动计划四周节奏 + 结束语「从会问到会派活」,低密度呼应封面。
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 40, 500, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: |-
+        06 落地行动 · 30 天行动计划
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 38]
+    content:
+      style: "$h1"
+      wrap: false
+      text: |-
+        30 天行动计划:从第一张委派单开始
+  # ---- 四周时间线 ----
+  - elementId: tl-week1
+    elementType: text
+    bounds: [62, 166, 200, 20]
+    content:
+      fontSize: 14
+      bold: true
+      color: "$terra"
+      align: [center, top]
+      wrap: false
+      text: |-
+        第 1 周
+  - elementId: tl-week2
+    elementType: text
+    bounds: [274, 166, 200, 20]
+    content:
+      fontSize: 14
+      bold: true
+      color: "$terra"
+      align: [center, top]
+      wrap: false
+      text: |-
+        第 2 周
+  - elementId: tl-week3
+    elementType: text
+    bounds: [486, 166, 200, 20]
+    content:
+      fontSize: 14
+      bold: true
+      color: "$terra"
+      align: [center, top]
+      wrap: false
+      text: |-
+        第 3 周
+  - elementId: tl-week4
+    elementType: text
+    bounds: [698, 166, 200, 20]
+    content:
+      fontSize: 14
+      bold: true
+      color: "$terra"
+      align: [center, top]
+      wrap: false
+      text: |-
+        第 4 周
+  - elementId: tl-line
+    elementType: line
+    bounds: [106, 209, 748, 2]
+    viewBox: [748, 2]
+    points: "0,1 748,1"
+    curve: sharp
+    arrow: [null, arrow]
+    border: {style: solid, width: 2, color: "$pine"}
+  - elementId: tl-node1
+    elementType: shape
+    bounds: [152, 200, 20, 20]
+    shapeName: ellipse
+    fill: {type: solid, color: "$pine"}
+  - elementId: tl-node2
+    elementType: shape
+    bounds: [364, 200, 20, 20]
+    shapeName: ellipse
+    fill: {type: solid, color: "$pine"}
+  - elementId: tl-node3
+    elementType: shape
+    bounds: [576, 200, 20, 20]
+    shapeName: ellipse
+    fill: {type: solid, color: "$pine"}
+  - elementId: tl-node4
+    elementType: shape
+    bounds: [788, 200, 20, 20]
+    shapeName: ellipse
+    fill: {type: solid, color: "$terra"}
+  - elementId: tl-desc1
+    elementType: text
+    bounds: [62, 234, 200, 40]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.5
+      align: [center, top]
+      text: |-
+        写一张任务委派单,并用 Agent 完整跑通一次
+  - elementId: tl-desc2
+    elementType: text
+    bounds: [274, 234, 200, 40]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.5
+      align: [center, top]
+      text: |-
+        复盘循环:目标—行动—反馈—验证,哪一环缺失
+  - elementId: tl-desc3
+    elementType: text
+    bounds: [486, 234, 200, 32]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.5
+      align: [center, top]
+      text: |-
+        在部门内分享一个跑通的场景
+  - elementId: tl-desc4
+    elementType: text
+    bounds: [698, 234, 200, 40]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.5
+      align: [center, top]
+      text: |-
+        提交「机会地图」认领,进入公司落地清单
+  # ---- 结束语 ----
+  - elementId: end-bar
+    elementType: shape
+    bounds: [430, 334, 100, 3]
+    shapeName: rect
+    fill: {type: solid, color: "$terra"}
+  - elementId: end-txt
+    elementType: text
+    bounds: [130, 356, 700, 76]
+    content:
+      align: [center, top]
+      text: |-
+        <p style="text-align:center"><span style="font-size:22px; color:$pine;"><strong>从会问到会派活</strong></span></p>
+        <p style="text-align:center; margin-top:12px"><span style="font-size:13px; color:$muted;">智能体时代,感知真实世界的人,也要学会指挥数字世界的手</span></p>
+  - elementId: end-caption
+    elementType: text
+    bounds: [230, 452, 500, 16]
+    content:
+      style: "$caption"
+      align: [center, top]
+      wrap: false
+      text: |-
+        东方智感 Insentek · AI 内训第三期 · 感谢参与
+  # ---- 页脚 ----
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-left
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: |-
+        东方智感 · AI 内训第三期
+  - elementId: footer-page
+    elementType: text
+    bounds: [804, 510, 100, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: |-
+        35 / 35

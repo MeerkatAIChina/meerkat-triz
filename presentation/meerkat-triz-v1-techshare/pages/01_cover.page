@@ -1,0 +1,61 @@
+pageType: cover
+background:
+  type: solid
+  color: "$paper"
+elements:
+  - elementId: spine
+    elementType: shape
+    bounds: [0, 0, 18, 540]
+    shapeName: rect
+    fill: {type: solid, color: "$pine"}
+  - elementId: kicker
+    elementType: text
+    bounds: [72, 118, 600, 20]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: 技术分享 · 模型工程复盘
+  - elementId: main-title
+    elementType: text
+    bounds: [72, 148, 800, 60]
+    content:
+      fontSize: 42
+      bold: true
+      color: "$ink"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: Meerkat-TRIZ-v1：从训练到运行
+  - elementId: sub-title
+    elementType: text
+    bounds: [72, 216, 800, 30]
+    content:
+      fontSize: 18
+      color: "$pine"
+      bold: true
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: 一次 QLoRA 领域微调的完整参数与代码解剖
+  - elementId: desc
+    elementType: text
+    bounds: [72, 268, 720, 90]
+    content:
+      style: "$body"
+      color: "$muted"
+      text: |
+        <p>基座 Qwen3.6-35B-A3B（35B 总参 / 3B 激活 MoE）· LoRA r=64 · 11,096 条中文 TRIZ SFT 样本</p>
+        <p>单台 DGX Spark（GB10, 121GB 统一内存）完成训练、双轨评测、发货验证与 vLLM 上线</p>
+        <p>本分享逐页对照<strong>真实配置文件与训练/评测/部署代码</strong>，讲清每个参数为什么是这个值</p>
+  - elementId: hairline
+    elementType: shape
+    bounds: [72, 392, 816, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: meta
+    elementType: text
+    bounds: [72, 408, 800, 60]
+    content:
+      style: "$small"
+      text: |
+        <p>材料来源：config.py / train_v5a.json / pipeline_v5 train.py / adapter_info.json / METRICS_LEDGER.md / 部署运维手册 / 白皮书</p>
+        <p>模型已发布：huggingface.co/Meerkat-AI/Meerkat-TRIZ-v1 · 代码：github.com/coidea-sys/meerkat-triz</p>
+        <p style="margin-top:6px">2026-08 · 猫鼬 AI（Meerkat AI）</p>

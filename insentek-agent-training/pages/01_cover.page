@@ -1,0 +1,92 @@
+pageType: cover
+background:
+  type: solid
+  color: "$paper"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 150, 560, 18]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: |-
+        东方智感 · AI 内训第三期
+  - elementId: main-title
+    elementType: text
+    bounds: [56, 184, 640, 62]
+    content:
+      style: "$hero"
+      wrap: false
+      text: |-
+        智能体与 AI 最新发展
+  - elementId: sub-title
+    elementType: text
+    bounds: [56, 254, 640, 40]
+    content:
+      fontSize: 28
+      bold: true
+      color: "$terra"
+      wrap: false
+      text: |-
+        从「会问」到「会派活」
+  - elementId: accent-bar
+    elementType: shape
+    bounds: [56, 316, 72, 4]
+    shapeName: rect
+    fill: {type: solid, color: "$terra"}
+  - elementId: subtitle
+    elementType: text
+    bounds: [56, 338, 640, 24]
+    content:
+      fontSize: 15
+      bold: true
+      color: "$ink"
+      wrap: false
+      text: |-
+        智能体思维 · Harness 与 Loop Engineering
+  - elementId: series-note
+    elementType: text
+    bounds: [56, 370, 640, 20]
+    content:
+      style: "$small"
+      fontSize: 12
+      wrap: false
+      text: |-
+        承接《机器学习基础》《Prompt Engineering》两期培训，走向「派任务 + 验收」
+  - elementId: date-line
+    elementType: text
+    bounds: [56, 468, 500, 22]
+    content:
+      style: "$body"
+      wrap: false
+      text: |-
+        东方智感 Insentek · 2026 年 7 月
+  - elementId: ring-outer
+    elementType: shape
+    bounds: [600, 140, 300, 300]
+    shapeName: ellipse
+    border: {style: solid, width: 1.5, color: "$pine"}
+  - elementId: ring-mid
+    elementType: shape
+    bounds: [650, 190, 200, 200]
+    shapeName: ellipse
+    border: {style: solid, width: 1, color: "$hair"}
+  - elementId: ring-core
+    elementType: shape
+    bounds: [700, 240, 100, 100]
+    shapeName: ellipse
+    fill: {type: solid, color: "$pine"}
+  - elementId: ring-icon
+    elementType: icon
+    bounds: [726, 266, 48, 48]
+    iconName: "fas:arrows-rotate"
+    fill: {type: solid, color: "$paper"}
+  - elementId: ring-caption
+    elementType: text
+    bounds: [600, 452, 300, 16]
+    content:
+      style: "$caption"
+      align: [center, top]
+      wrap: false
+      text: |-
+        观察 · 思考 · 行动 · 再观察

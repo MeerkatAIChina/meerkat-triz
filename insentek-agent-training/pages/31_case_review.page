@@ -1,0 +1,202 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+notes: 案例总评:4 项目 × Loop 四要素(目标/行动/反馈/验证)对照表,强=松绿、弱=赭石;共同启示为「验证与环境是共同短板」;迁移建议把判灌 Skill 经验复制到墒情巡检报告场景,呼应第 19 页与第 33 页。
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 38, 600, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: |-
+        05 内部案例 · 案例总评
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 36]
+    content:
+      style: "$h1"
+      wrap: false
+      text: |-
+        四张答卷:对照 Loop 四要素看我们的项目
+  - elementId: legend
+    elementType: text
+    bounds: [56, 104, 848, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: |-
+        评级口径:强 = 松绿 · 中 = 墨色 · 弱 = 赭石(讲师点评,非项目考核)
+  # ---- 对照表 ----
+  - elementId: loop-table
+    elementType: table
+    bounds: [56, 126, 848, 224]
+    columnWidths: [0.16, 0.11, 0.11, 0.11, 0.11, 0.40]
+    rowHeights: [0.16, 0.21, 0.21, 0.21, 0.21]
+    style: "$default"
+    rows:
+      - - text: |-
+            项目
+        - text: |-
+            目标
+        - text: |-
+            行动
+        - text: |-
+            反馈
+        - text: |-
+            验证
+        - text: |-
+            总评(讲师点评)
+      - - text: |-
+            onsub.pub 智能灌溉
+          bold: true
+        - text: |-
+            强
+          bold: true
+          color: "$pine"
+          align: [center, middle]
+        - text: |-
+            强
+          bold: true
+          color: "$pine"
+          align: [center, middle]
+        - text: |-
+            强
+          bold: true
+          color: "$pine"
+          align: [center, middle]
+        - text: |-
+            中
+          align: [center, middle]
+        - text: |-
+            最接近完整 Loop;验证靠人工核对判读说明
+      - - text: |-
+            e生态平台重构
+          bold: true
+        - text: |-
+            强
+          bold: true
+          color: "$pine"
+          align: [center, middle]
+        - text: |-
+            中
+          align: [center, middle]
+        - text: |-
+            中
+          align: [center, middle]
+        - text: |-
+            中
+          align: [center, middle]
+        - text: |-
+            Harness 思维用在工程组织:提案即验收,评审即回路
+      - - text: |-
+            IST-OS 固件
+          bold: true
+        - text: |-
+            中
+          align: [center, middle]
+        - text: |-
+            强
+          bold: true
+          color: "$pine"
+          align: [center, middle]
+        - text: |-
+            弱
+          bold: true
+          color: "$terra"
+          align: [center, middle]
+        - text: |-
+            强
+          bold: true
+          color: "$pine"
+          align: [center, middle]
+        - text: |-
+            自动化测试让 Agent 敢快跑;断点在环境:Wave 6 缺沙箱
+      - - text: |-
+            耘曜重构
+          bold: true
+        - text: |-
+            中
+          align: [center, middle]
+        - text: |-
+            强
+          bold: true
+          color: "$pine"
+          align: [center, middle]
+        - text: |-
+            弱
+          bold: true
+          color: "$terra"
+          align: [center, middle]
+        - text: |-
+            中
+          align: [center, middle]
+        - text: |-
+            重构跑得快;断点在物理现场:断网场景反馈缺失
+  # ---- 共同启示 ----
+  - elementId: insight-box
+    elementType: shape
+    bounds: [56, 366, 848, 48]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+  - elementId: insight-bar
+    elementType: shape
+    bounds: [56, 366, 4, 48]
+    shapeName: rect
+    fill: {type: solid, color: "$pine"}
+  - elementId: insight-text
+    elementType: text
+    bounds: [78, 380, 810, 20]
+    content:
+      fontSize: 12.5
+      color: "$ink"
+      align: [left, middle]
+      wrap: false
+      text: |-
+        <p><strong><span style="color:$pine">共同启示:</span></strong>「验证」与「环境」是四张答卷的共同短板——沙箱、仿真、部署到位的兜底,比更强的模型更决定智能体成效。</p>
+  # ---- 迁移建议 ----
+  - elementId: mig-box
+    elementType: shape
+    bounds: [56, 426, 848, 48]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+  - elementId: mig-bar
+    elementType: shape
+    bounds: [56, 426, 4, 48]
+    shapeName: rect
+    fill: {type: solid, color: "$terra"}
+  - elementId: mig-text
+    elementType: text
+    bounds: [78, 426, 810, 48]
+    content:
+      fontSize: 12
+      color: "$ink"
+      align: [left, middle]
+      lineHeight: 1.45
+      text: |-
+        <p><strong><span style="color:$terra">迁移建议:</span></strong>把「判灌 Skill」的经验复制到墒情巡检报告场景——规则写成可对话修订的 Skill,每日自动跑、人来核对(呼应第 19 页巡检案例、第 33 页机会地图)。</p>
+  # ---- 页脚 ----
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-src
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: |-
+        来源:四份项目进展报告(2026-07-22)综合
+  - elementId: footer-page
+    elementType: text
+    bounds: [804, 510, 100, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: |-
+        31 / 35

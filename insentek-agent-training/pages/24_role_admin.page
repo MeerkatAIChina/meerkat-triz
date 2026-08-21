@@ -1,0 +1,125 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+notes: 职能与管理岗位页:三个低门槛智能体,每个给目标-工具-验收一句话委派单;行动是写出第一张任务委派单。
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 40, 500, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: |-
+        04 岗位结合 · 职能与管理
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 38]
+    content:
+      style: "$h1"
+      wrap: false
+      text: |-
+        不要求编程:人人今天就能派出的三个智能体
+  - elementId: intro
+    elementType: text
+    bounds: [56, 116, 848, 22]
+    content:
+      style: "$body"
+      wrap: false
+      text: |-
+        三个低门槛场景,都用「目标—工具—验收」一句话就能派出去——先服务自己,再服务团队。
+  # ---- 委派单示例表 ----
+  - elementId: delegate-table
+    elementType: table
+    bounds: [56, 152, 848, 246]
+    columnWidths: [0.24, 0.28, 0.20, 0.28]
+    rowHeights: [0.16, 0.28, 0.28, 0.28]
+    style: "$default"
+    rows:
+      - - text: |
+            智能体
+        - text: |-
+            目标(完成什么)
+        - text: |-
+            工具(用什么)
+        - text: |-
+            验收(怎么算完成)
+      - - text: |
+            <p><strong>① 会议纪要 + 待办跟踪</strong></p>
+        - text: |-
+            会后 10 分钟产出纪要与待办清单
+        - text: |-
+            录音转写 + 大模型
+        - text: |-
+            每条待办有负责人与截止时间,经与会人确认
+      - - text: |
+            <p><strong>② 周报 / 月报汇总</strong></p>
+        - text: |-
+            部门周报汇总成 1 页摘要
+        - text: |-
+            文档 + 大模型
+        - text: |-
+            数字与原表一致,异常项单独标出
+      - - text: |
+            <p><strong>③ 制度知识库问答(RAG)</strong></p>
+        - text: |-
+            制度类问题秒答并附出处
+        - text: |-
+            知识库检索 + 大模型
+        - text: |-
+            每个回答附制度条款原文出处
+  # ---- 底部:原则 + 行动 ----
+  - elementId: principle-icon
+    elementType: icon
+    bounds: [56, 424, 16, 16]
+    iconName: "fas:seedling"
+    fill: {type: solid, color: "$pine"}
+  - elementId: principle-txt
+    elementType: text
+    bounds: [84, 420, 500, 56]
+    content:
+      align: [left, top]
+      text: |-
+        <p><span style="font-size:13px; color:$pine;"><strong>从个人提效开始</strong></span></p>
+        <p><span style="font-size:11px; color:$muted;">不要求编程,先用现成工具跑通一个场景;委派单写法见第 11 页「派活四件套」。</span></p>
+  - elementId: act-bg
+    elementType: shape
+    bounds: [600, 414, 304, 62]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+  - elementId: act-icon
+    elementType: icon
+    bounds: [616, 430, 15, 15]
+    iconName: "fas:pen"
+    fill: {type: solid, color: "$pine"}
+  - elementId: act-txt
+    elementType: text
+    bounds: [644, 422, 246, 46]
+    content:
+      align: [left, middle]
+      text: |-
+        <p><span style="font-size:13px; color:$pine;"><strong>本周行动</strong></span></p>
+        <p style="margin-top:2px"><span style="font-size:11px; color:$ink;">写出你的第一张任务委派单。</span></p>
+  # ---- 页脚 ----
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-left
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: |-
+        东方智感 · AI 内训第三期 | 表格为委派单示例(教学演示)
+  - elementId: footer-page
+    elementType: text
+    bounds: [804, 510, 100, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: |-
+        24 / 35

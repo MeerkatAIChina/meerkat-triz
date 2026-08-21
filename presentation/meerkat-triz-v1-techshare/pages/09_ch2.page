@@ -1,0 +1,37 @@
+pageType: chapter
+background:
+  type: solid
+  color: "$pine"
+elements:
+  - elementId: ch-num
+    elementType: text
+    bounds: [72, 120, 220, 110]
+    content:
+      fontSize: 88
+      bold: true
+      color: "#F7F5F033"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: "02"
+  - elementId: ch-title
+    elementType: text
+    bounds: [72, 240, 700, 48]
+    content:
+      fontSize: 36
+      bold: true
+      color: "$paper"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: 评测与发货
+  - elementId: ch-sub
+    elementType: text
+    bounds: [72, 300, 720, 80]
+    content:
+      fontSize: 14
+      color: "#D8D3C8"
+      lineHeight: 1.7
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p>· 为什么评测要双轨，且两轨永不混合加权？</p>
+        <p>· 同族评委 +0.39 与异源终审 +0.10，哪个才是能写进 README 的数字？</p>
+        <p>· 发货不是「save 一下」：9 项验证 + sha256 + adapter_info.json 元数据诚实</p>

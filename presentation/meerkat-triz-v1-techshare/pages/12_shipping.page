@@ -1,0 +1,115 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 34, 500, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: 02 · 评测与发货
+  - elementId: title
+    elementType: text
+    bounds: [56, 56, 840, 34]
+    content:
+      style: "$title"
+      wrap: false
+      text: 发货链：checkpointing.py 的「验证九条」与元数据诚实
+  - elementId: flow-title
+    elementType: text
+    bounds: [56, 106, 400, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: 发货流程（train.py 尾段 + checkpointing.py）
+  - elementId: flow
+    elementType: text
+    bounds: [56, 130, 420, 210]
+    content:
+      style: "$body"
+      fontSize: 12
+      lineHeight: 1.6
+      text: |
+        <p><strong>1.</strong> BestCheckpointCallback：eval 创新低即另存 <span style="color:$pine">best/</span>，并记录 promotion_history（本次共 17 次晋升，末次 step 2700）</p>
+        <p><strong>2.</strong> 末步 checkpoint 强制落盘 + 终点 eval，保证任何一步都可归因</p>
+        <p><strong>3.</strong> ship_adapter：从 best/ <strong>只复制磁盘文件</strong>（adapter 权重/config/tokenizer/chat_template），绝不保存内存态</p>
+        <p><strong>4.</strong> 发货前兜底 dtype 校正为 BF16（幂等，v5b 教训）</p>
+        <p><strong>5.</strong> validate_adapter_dir 九项检查 → 全 PASSED 才写 adapter_info.json，status 字段如实登记</p>
+  - elementId: val-title
+    elementType: text
+    bounds: [512, 106, 400, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: 九项验证（本次全部 PASSED）
+  - elementId: val-table
+    elementType: table
+    bounds: [512, 130, 392, 210]
+    columnWidths: [0.62, 0.38]
+    rowHeights: [0.111, 0.111, 0.111, 0.111, 0.111, 0.111, 0.111, 0.111, 0.112]
+    style: "$default"
+    rows:
+      - - text: "检查项"
+        - text: "实测"
+      - - text: "adapter_config/weights 存在"
+        - text: "✓"
+      - - text: "config 完整 r=64 α=128 targets=12"
+        - text: "✓"
+      - - text: "权重 ≥1MB"
+        - text: "169.4 MB"
+      - - text: "张量非空"
+        - text: "620 个"
+      - - text: "lora_B 存在 / A·B 数量一致"
+        - text: "310 / 310"
+      - - text: "lora_B 全 BF16"
+        - text: "✓"
+      - - text: "lora_B 全部非零"
+        - text: "310/310"
+      - - text: "sha256 已记录"
+        - text: "5 个文件"
+  - elementId: info-box
+    elementType: shape
+    bounds: [56, 360, 848, 118]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+    border: {style: solid, width: 1, color: "$pine"}
+  - elementId: info-t
+    elementType: text
+    bounds: [72, 370, 816, 98]
+    content:
+      fontSize: 11.5
+      color: "$ink"
+      lineHeight: 1.55
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong><span style="color:$pine">adapter_info.json = 元数据诚实：</span></strong>随权重一起发布，515 行，包含完整 eval 轨迹、best 归因、发货来源、5 个文件 sha256、训练日志路径。</p>
+        <p>权重 sha256 <span style="font-size:10.5px">e006d4c8…ec0b7</span> 在三个地方一致：训练发货记录 · HuggingFace 发布页 · DGX Spark 部署目录——部署侧据此确认「线上跑的就是评测过的那份权重」。</p>
+        <p><span style="color:$muted">反例纪律：v1 的逐步 loss 日志永久丢失、v4 首轮 dtype 事故——都转化为现在的强制检查项。</span></p>
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-src
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$small"
+      wrap: false
+      text: 来源：train.py 发货段 · checkpointing.py · hf_model_repo/adapter_info.json
+  - elementId: footer-page
+    elementType: text
+    bounds: [864, 510, 40, 14]
+    content:
+      style: "$small"
+      align: [right, top]
+      wrap: false
+      text: "14"

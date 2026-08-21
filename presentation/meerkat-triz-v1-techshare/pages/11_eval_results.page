@@ -1,0 +1,121 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 34, 500, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: 02 · 评测与发货
+  - elementId: title
+    elementType: text
+    bounds: [56, 56, 840, 34]
+    content:
+      style: "$title"
+      wrap: false
+      text: 评测结果：头条数字是 +0.09~+0.10，不是 +0.39
+  - elementId: r1-title
+    elementType: text
+    bounds: [56, 106, 500, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: v5 金标 300 题（同族 Moonshot 评委读数）
+  - elementId: r1
+    elementType: table
+    bounds: [56, 130, 848, 120]
+    columnWidths: [0.28, 0.20, 0.22, 0.30]
+    rowHeights: [0.25, 0.25, 0.25, 0.25]
+    style: "$default"
+    rows:
+      - - text: "指标"
+        - text: "base"
+        - text: "Meerkat-TRIZ-v1"
+        - text: "配对差值 [95% CI]"
+      - - text: "关键词轨均值"
+        - text: "0.6384"
+        - text: "0.6383"
+        - text: "−0.0001 [−0.017, +0.017] 不显著"
+      - - text: "judge 臂 A 均值"
+        - text: "3.0300"
+        - text: "3.4233"
+        - text: "+0.3933 [+0.297, +0.490] 显著"
+      - - text: "judge pass 率"
+        - text: "0.843"
+        - text: "0.947"
+        - text: "McNemar p=1.5e-05"
+  - elementId: r2-title
+    elementType: text
+    bounds: [56, 266, 500, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$pine"
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      wrap: false
+      text: 异源评委终审（发布后，299 题逐字复跑臂 A 协议）
+  - elementId: r2
+    elementType: table
+    bounds: [56, 290, 848, 120]
+    columnWidths: [0.34, 0.40, 0.26]
+    rowHeights: [0.2, 0.2, 0.2, 0.2, 0.2]
+    style: "$default"
+    rows:
+      - - text: "评委"
+        - text: "配对差值 [95% CI]"
+        - text: "显著"
+      - - text: "moonshot-v1-32k（同族参照）"
+        - text: "+0.393 [+0.297, +0.490]"
+        - text: "是（但含家族效应）"
+      - - text: "claude-sonnet-4-6（Anthropic）"
+        - text: "+0.094 [+0.020, +0.167]"
+        - text: "是"
+      - - text: "gpt-5.4（OpenAI）"
+        - text: "+0.104 [+0.020, +0.184]"
+        - text: "是"
+      - - text: "gemini-3.5-flash（Google）"
+        - text: "−0.048 [−0.144, +0.045]"
+        - text: "否"
+  - elementId: claim-box
+    elementType: shape
+    bounds: [56, 416, 848, 70]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+    border: {style: solid, width: 1, color: "$terra"}
+  - elementId: claim-t
+    elementType: text
+    bounds: [70, 422, 820, 58]
+    content:
+      fontSize: 11.5
+      color: "$ink"
+      lineHeight: 1.5
+      fontFamily: {latin: "Liter", ea: "MiSans"}
+      text: |
+        <p><strong><span style="color:$terra">诚实声明（README 原文纪律）：</span></strong>方向成立、量级不成立——同族 +0.39 中约 3/4 是评委家族效应，不得外推；可辩护头条 = 三个外部评委中两个显著（+0.09~+0.10）。</p>
+        <p>concept_explanation 在三个外部评委下全部显著（+0.24/+0.31/+0.29），是最强共识；Gemini 对 principle_recommendation 的 −0.31 记为开放信号而非已确立回退。</p>
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-src
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$small"
+      wrap: false
+      text: 来源：白皮书 §5.1/§5.2 · docs/EXTERNAL_JUDGE_REVIEW.md
+  - elementId: footer-page
+    elementType: text
+    bounds: [864, 510, 40, 14]
+    content:
+      style: "$small"
+      align: [right, top]
+      wrap: false
+      text: "13"

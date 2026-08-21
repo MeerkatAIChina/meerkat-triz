@@ -1,0 +1,247 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+notes: Harness 核心概念页。左侧三层嵌套图:内核模型、中层 Harness、外层组织;右侧一句话定义与公司类比。检查:说出 Harness 至少 3 个组成。
+elements:
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 38, 500, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: 第三章 · HARNESS 与 LOOP ENGINEERING
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 36]
+    content:
+      style: "$h1"
+      wrap: false
+      text: Harness:模型之外,让智能体能干活的整套装备
+  # ---- 左侧:三层嵌套直角细框图 ----
+  - elementId: nest-outer
+    elementType: shape
+    bounds: [56, 140, 440, 320]
+    shapeName: rect
+    border: {style: solid, width: 1, color: "$pine"}
+  - elementId: nest-outer-label
+    elementType: text
+    bounds: [70, 148, 412, 18]
+    content:
+      fontSize: 12
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: 外层 · 组织:数据、系统、流程、人
+  - elementId: nest-mid
+    elementType: shape
+    bounds: [86, 200, 380, 230]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+    border: {style: solid, width: 1, color: "$pine"}
+  - elementId: nest-mid-label
+    elementType: text
+    bounds: [100, 208, 352, 18]
+    content:
+      fontSize: 12
+      bold: true
+      color: "$pine"
+      wrap: false
+      text: 中层 · Harness:智能体的驾驶舱
+  - elementId: harness-tag-1
+    elementType: shape
+    bounds: [100, 236, 66, 26]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1, color: "$hair"}
+  - elementId: harness-tag-1-t
+    elementType: text
+    bounds: [100, 236, 66, 26]
+    content:
+      fontSize: 11
+      color: "$ink"
+      align: [center, middle]
+      wrap: false
+      text: 工具接口
+  - elementId: harness-tag-2
+    elementType: shape
+    bounds: [173, 236, 66, 26]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1, color: "$hair"}
+  - elementId: harness-tag-2-t
+    elementType: text
+    bounds: [173, 236, 66, 26]
+    content:
+      fontSize: 11
+      color: "$ink"
+      align: [center, middle]
+      wrap: false
+      text: 记忆存储
+  - elementId: harness-tag-3
+    elementType: shape
+    bounds: [246, 236, 66, 26]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1, color: "$hair"}
+  - elementId: harness-tag-3-t
+    elementType: text
+    bounds: [246, 236, 66, 26]
+    content:
+      fontSize: 11
+      color: "$ink"
+      align: [center, middle]
+      wrap: false
+      text: 上下文管理
+  - elementId: harness-tag-4
+    elementType: shape
+    bounds: [319, 236, 66, 26]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1, color: "$hair"}
+  - elementId: harness-tag-4-t
+    elementType: text
+    bounds: [319, 236, 66, 26]
+    content:
+      fontSize: 11
+      color: "$ink"
+      align: [center, middle]
+      wrap: false
+      text: 循环调度
+  - elementId: harness-tag-5
+    elementType: shape
+    bounds: [392, 236, 66, 26]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1, color: "$hair"}
+  - elementId: harness-tag-5-t
+    elementType: text
+    bounds: [392, 236, 66, 26]
+    content:
+      fontSize: 11
+      color: "$ink"
+      align: [center, middle]
+      wrap: false
+      text: 护栏
+  - elementId: nest-core
+    elementType: shape
+    bounds: [196, 300, 160, 66]
+    shapeName: rect
+    fill: {type: solid, color: "$pine"}
+  - elementId: nest-core-t
+    elementType: text
+    bounds: [196, 308, 160, 50]
+    content:
+      align: [center, middle]
+      lineHeight: 1.4
+      text: |
+        <p style="text-align:center"><span style="font-size:13px; color:#FFFFFF"><strong>内核 · 模型(LLM)</strong></span></p>
+        <p style="text-align:center"><span style="font-size:10px; color:#F7F5F0">负责推理的发动机</span></p>
+  - elementId: nest-mid-note
+    elementType: text
+    bounds: [100, 384, 352, 16]
+    content:
+      fontSize: 10
+      color: "$muted"
+      align: [center, top]
+      wrap: false
+      text: 同一个模型,配上不同的 Harness,能干完全不同的活
+  - elementId: nest-outer-note
+    elementType: text
+    bounds: [70, 436, 412, 16]
+    content:
+      fontSize: 10
+      color: "$muted"
+      wrap: false
+      text: 模型之外的一切:接口、数据、权限、流程,都在 Harness 这一层
+  # ---- 右侧:定义 + 类比 + 检查 ----
+  - elementId: def-h
+    elementType: text
+    bounds: [540, 140, 364, 20]
+    content:
+      style: "$h2"
+      wrap: false
+      text: 一句话记住
+  - elementId: def-body
+    elementType: text
+    bounds: [540, 166, 364, 64]
+    content:
+      style: "$body"
+      text: |
+        <p>Harness = 智能体的<strong>驾驶舱</strong>:方向盘是工具,仪表盘是反馈,刹车是护栏——模型只负责发动机。</p>
+  - elementId: ana-box
+    elementType: shape
+    bounds: [540, 246, 364, 110]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+  - elementId: ana-icon
+    elementType: icon
+    bounds: [556, 262, 22, 22]
+    iconName: "fas:satellite-dish"
+    fill: {type: solid, color: "$pine"}
+  - elementId: ana-h
+    elementType: text
+    bounds: [588, 262, 300, 20]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$ink"
+      wrap: false
+      text: 看我们自己
+  - elementId: ana-body
+    elementType: text
+    bounds: [556, 292, 332, 52]
+    content:
+      fontSize: 12
+      color: "$ink"
+      lineHeight: 1.5
+      text: |
+        <p>我们的传感器 + 物联网平台,其实就是<strong>物理世界数据的 Harness</strong>——把墒情、气象、地质信号接进数字世界。</p>
+  - elementId: chk-box
+    elementType: shape
+    bounds: [540, 372, 364, 76]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+  - elementId: chk-icon
+    elementType: icon
+    bounds: [556, 388, 18, 18]
+    iconName: "fas:circle-question"
+    fill: {type: solid, color: "$terra"}
+  - elementId: chk-h
+    elementType: text
+    bounds: [584, 387, 304, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$terra"
+      wrap: false
+      text: 检查
+  - elementId: chk-body
+    elementType: text
+    bounds: [556, 412, 332, 20]
+    content:
+      fontSize: 12
+      color: "$ink"
+      wrap: false
+      text: 不看页面,说出 Harness 的至少 3 个组成部分。
+  # ---- 页脚 ----
+  - elementId: footer-line
+    elementType: shape
+    bounds: [56, 502, 848, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$hair"}
+  - elementId: footer-src
+    elementType: text
+    bounds: [56, 510, 640, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: 概念据公开 Agent 工程资料整理;公司类比基于公开产品能力
+  - elementId: footer-page
+    elementType: text
+    bounds: [824, 510, 80, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: 15 / 35

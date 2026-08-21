@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meerkat-TRIZ-v1 — TRIZ 领域首个 LLM 微调模型</title>
+<style>
+:root {
+  --paper: #faf9f6;
+  --ink: #1c1a17;
+  --ink-soft: #57534b;
+  --ink-faint: #8a857a;
+  --accent: #b23c17;
+  --accent-soft: #b23c1714;
+  --rule: #e4e0d8;
+  --card: #ffffff;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Charter", "Bitstream Charter", "Georgia", "Songti SC", "SimSun", serif;
+  font-size: 17px;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+}
+[lang-zh] { font-family: "Songti SC", "Noto Serif CJK SC", "SimSun", "Charter", "Georgia", serif; }
+.mono { font-family: "SF Mono", "Menlo", "JetBrains Mono", monospace; font-size: 0.82em; }
+
+/* ---------- language toggle ---------- */
+#langbar {
+  position: fixed; top: 1.2rem; right: 1.4rem; z-index: 50;
+  display: flex; gap: .4rem;
+  background: var(--card); border: 1px solid var(--rule); border-radius: 999px;
+  padding: .3rem .35rem; box-shadow: 0 2px 12px #0001;
+}
+#langbar button {
+  border: none; background: none; cursor: pointer;
+  font-size: .78rem; letter-spacing: .08em; padding: .28rem .8rem; border-radius: 999px;
+  color: var(--ink-faint); font-family: inherit;
+}
+#langbar button.on { background: var(--ink); color: var(--paper); }
+
+/* ---------- hero ---------- */
+header.hero {
+  padding: 7.5rem 1.5rem 4.5rem;
+  text-align: center;
+  border-bottom: 1px solid var(--rule);
+}
+.eyebrow {
+  font-size: .78rem; letter-spacing: .32em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 1.6rem;
+}
+h1 {
+  font-size: clamp(2.1rem, 5.2vw, 3.4rem);
+  font-weight: 600; line-height: 1.28; letter-spacing: .01em;
+  max-width: 20ch; margin: 0 auto 1.4rem;
+}
+.subtitle {
+  font-size: 1.08rem; color: var(--ink-soft); max-width: 56ch; margin: 0 auto 2.6rem;
+}
+.badges { display: flex; gap: .6rem; justify-content: center; flex-wrap: wrap; }
+.badge {
+  font-size: .8rem; color: var(--ink-soft);
+  border: 1px solid var(--rule); border-radius: 999px; padding: .32rem .95rem;
+  background: var(--card);
+}
+.badge b { color: var(--ink); font-weight: 600; }
+
+/* ---------- artifact cards ---------- */
+.artifacts {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem; max-width: 880px; margin: 3rem auto 0;
+}
+.acard {
+  display: block; background: var(--card); border: 1px solid var(--rule);
+  border-radius: 12px; padding: 1.3rem 1.4rem; text-decoration: none; color: inherit;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.acard:hover { transform: translateY(-3px); box-shadow: 0 10px 30px #0000000f; border-color: var(--accent); }
+.acard .k { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); }
+.acard .t { font-size: 1.05rem; font-weight: 600; margin: .35rem 0 .3rem; }
+.acard .d { font-size: .85rem; color: var(--ink-soft); line-height: 1.6; }
+
+/* ---------- body ---------- */
+main { max-width: 720px; margin: 0 auto; padding: 4rem 1.5rem 5rem; }
+section { margin-bottom: 4.2rem; }
+h2 {
+  font-size: 1.55rem; font-weight: 600; line-height: 1.35;
+  margin-bottom: 1.2rem; padding-top: .4rem;
+}
+h2 .no { color: var(--accent); font-size: .85em; margin-right: .5rem; }
+p { margin-bottom: 1.15rem; color: var(--ink); }
+p.soft, li { color: var(--ink-soft); }
+strong { font-weight: 650; }
+em { font-style: italic; }
+ul { padding-left: 1.3rem; margin-bottom: 1.15rem; }
+li { margin-bottom: .55rem; }
+li::marker { color: var(--accent); }
+a { color: var(--accent); text-decoration: none; border-bottom: 1px solid #b23c1740; }
+a:hover { border-bottom-color: var(--accent); }
+blockquote {
+  border-left: 3px solid var(--accent); padding: .2rem 0 .2rem 1.2rem;
+  color: var(--ink-soft); margin: 1.6rem 0; font-size: .98em;
+}
+
+/* ---------- results table ---------- */
+.rtable { width: 100%; border-collapse: collapse; margin: 1.4rem 0 1.6rem; font-size: .92rem; }
+.rtable th, .rtable td { padding: .65rem .8rem; text-align: left; border-bottom: 1px solid var(--rule); }
+.rtable th { font-size: .74rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); font-weight: 600; }
+.rtable td.num { font-family: "SF Mono", "Menlo", monospace; font-size: .86em; white-space: nowrap; }
+.rtable tr.hl td { background: var(--accent-soft); }
+.rtable .sig { color: var(--accent); font-weight: 650; }
+.rtable .ns { color: var(--ink-faint); }
+
+/* ---------- failure cards ---------- */
+.fail {
+  background: var(--card); border: 1px solid var(--rule); border-radius: 12px;
+  padding: 1.6rem 1.7rem; margin-bottom: 1.2rem;
+  display: grid; grid-template-columns: auto 1fr; gap: 1.3rem; align-items: start;
+}
+.fail .n {
+  font-size: 2.6rem; font-weight: 700; color: var(--accent); line-height: 1;
+  font-variant-numeric: lining-nums; padding-top: .2rem;
+}
+.fail h3 { font-size: 1.08rem; margin-bottom: .5rem; font-weight: 650; }
+.fail p { font-size: .95rem; color: var(--ink-soft); margin-bottom: .6rem; }
+.fail p:last-child { margin-bottom: 0; }
+.fail .flip { font-family: "SF Mono", "Menlo", monospace; font-size: .82rem; color: var(--accent); }
+
+/* ---------- code ---------- */
+pre {
+  background: #211e1a; color: #e8e4dc; border-radius: 10px;
+  padding: 1.1rem 1.3rem; overflow-x: auto; font-size: .82rem; line-height: 1.7;
+  font-family: "SF Mono", "Menlo", monospace; margin: 1.3rem 0 1.6rem;
+}
+pre .c { color: #8a857a; }
+
+/* ---------- footer ---------- */
+footer {
+  border-top: 1px solid var(--rule); padding: 3rem 1.5rem 4rem;
+  text-align: center; color: var(--ink-faint); font-size: .88rem;
+}
+footer .links { display: flex; gap: 1.6rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.2rem; }
+footer .motto { font-style: italic; color: var(--ink-soft); max-width: 46ch; margin: 0 auto 1.2rem; }
+
+@media (max-width: 560px) {
+  header.hero { padding: 6rem 1.2rem 3.2rem; }
+  .fail { grid-template-columns: 1fr; gap: .4rem; }
+}
+</style>
+</head>
+<body>
+
+<div id="langbar">
+  <button id="btn-en" onclick="setLang('en')">EN</button>
+  <button id="btn-zh" onclick="setLang('zh')">中文</button>
+</div>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="eyebrow" lang-en>Meerkat AI · July 2026 · Release</div>
+  <div class="eyebrow" lang-zh>Meerkat AI · 2026 年 7 月 · 发布</div>
+  <h1 lang-en>Meerkat-TRIZ-v1</h1>
+  <h1 lang-zh>Meerkat-TRIZ-v1</h1>
+  <p class="subtitle" lang-en>The first LLM fine-tune for the TRIZ domain — and the evaluation infrastructure that kept it honest.</p>
+  <p class="subtitle" lang-zh>TRIZ（发明问题解决理论）领域首个 LLM 微调模型——以及让它保持诚实的评测基础设施。</p>
+  <div class="badges">
+    <span class="badge"><b>181MB</b> LoRA</span>
+    <span class="badge"><b>0.24%</b> <span lang-en>trainable</span><span lang-zh>可训练参数</span></span>
+    <span class="badge">Qwen3.6-35B-A3B</span>
+    <span class="badge">Apache-2.0</span>
+  </div>
+  <div class="artifacts">
+    <a class="acard" href="https://huggingface.co/Meerkat-AI/Meerkat-TRIZ-v1">
+      <div class="k" lang-en>Model</div><div class="k" lang-zh>模型</div>
+      <div class="t">Meerkat-TRIZ-v1</div>
+      <div class="d" lang-en>LoRA adapter on Qwen3.6-35B-A3B, model card with full claim discipline</div>
+      <div class="d" lang-zh>Qwen3.6-35B-A3B 上的 LoRA 适配器，model card 含完整结论纪律</div>
+    </a>
+    <a class="acard" href="https://huggingface.co/datasets/Meerkat-AI/triz-gold-benchmark">
+      <div class="k" lang-en>Benchmark</div><div class="k" lang-zh>基准</div>
+      <div class="t">triz-gold</div>
+      <div class="d" lang-en>Dual gold sets, 100 + 300 items, six TRIZ task types</div>
+      <div class="d" lang-zh>双金标集 100 + 300 题，覆盖六类 TRIZ 任务</div>
+    </a>
+    <a class="acard" href="https://github.com/coidea-sys/meerkat-triz">
+      <div class="k" lang-en>Code & Whitepaper</div><div class="k" lang-zh>代码与白皮书</div>
+      <div class="t">meerkat-triz</div>
+      <div class="d" lang-en>Evaluation harness, CI-tested; bilingual whitepaper (MD + PDF)</div>
+      <div class="d" lang-zh>评测 harness（CI 保障）+ 中英双语白皮书（MD + PDF）</div>
+    </a>
+  </div>
+</header>
+
+<main>
+
+<!-- ================= TRIZ intro ================= -->
+<section>
+  <h2><span class="no">01</span><span lang-en>What is TRIZ?</span><span lang-zh>TRIZ 是什么</span></h2>
+  <p lang-en>TRIZ — the Theory of Inventive Problem Solving — was distilled by Genrich Altshuller and his colleagues starting in 1946, from the analysis of hundreds of thousands of patents. Its core insight: <strong>innovation is not random genius</strong>. The same technical problems recur across industries, and their solutions follow reusable patterns. A problem solved in aerospace in 1975 may be the same contradiction a battery engineer faces today.</p>
+  <p lang-zh>TRIZ（俄文"发明问题解决理论"缩写）由根里奇·阿奇舒勒及其同事自 1946 年起，从对数十万件专利的分析中提炼而成。它的核心洞察是：<strong>创新不是随机的天才灵光</strong>——同样的技术问题在不同行业反复出现，而它们的解法遵循可复用的模式。航空领域 1975 年解决的问题，可能就是今天电池工程师面对的同一个矛盾。</p>
+  <p lang-en class="soft">The toolbox is unusually structured for a creativity method: 40 numbered inventive principles and the contradiction matrix; separation principles for physical contradictions; ARIZ, a full problem-solving algorithm; and the laws of technical-system evolution. Samsung, Siemens, GE and Boeing have trained thousands of engineers on it. The catch: today it lives almost entirely inside expensive courses and certified consultants — a few thousand experts worldwide, against millions of engineers who could use it.</p>
+  <p lang-zh class="soft">它的工具箱在"创造力方法"里罕见地结构化：40 个有编号的发明原理与矛盾矩阵、分离原理、完整的 ARIZ 算法、技术系统进化法则。三星、西门子、GE、波音都曾用它内训数以千计的工程师。问题是：这套方法论今天几乎只存在于昂贵的培训课程和持证咨询师身上——全球活跃咨询师千人量级，而需要它的工程师是百万量级。</p>
+</section>
+
+<!-- ================= why fine-tune ================= -->
+<section>
+  <h2><span class="no">02</span><span lang-en>Why fine-tune for TRIZ?</span><span lang-zh>为什么值得为 TRIZ 做微调</span></h2>
+  <p lang-en>Prior LLM+TRIZ work was all prompt engineering. Fine-tuning buys three things prompts can't: <strong>terminology discipline</strong> (correct principle numbering and analysis steps, baked into weights rather than begged for in prompts), <strong>behavioral style</strong> (direct, executable answers — our fine-tunes compress base responses to ~1/10 length at parity coverage), and <strong>internalized capability</strong> (the difference between consulting a book and knowing the method).</p>
+  <p lang-zh>此前的 LLM+TRIZ 工作全部是提示词工程。微调能买到三样提示词买不到的东西：<strong>术语纪律</strong>（原理编号引用、分析步骤完整性，固化进权重而不是在 prompt 里恳求）、<strong>行为风格</strong>（直接可执行的回答——我们的微调把基座回答压缩到约 1/10 长度且覆盖持平）、<strong>能力内嵌</strong>（"查书答题"与"学会方法"的区别）。</p>
+  <p lang-en>It turns methodology application from a per-day-billed service into infrastructure with zero marginal cost.</p>
+  <p lang-zh>微调模型把方法论的应用能力，从按人天计费的服务变成边际成本为零的基础设施。</p>
+  <p lang-en class="soft">For enterprises, the innovation bottleneck is rarely ideas — it is <em>problem formulation</em>. A resident model answers "which principles apply to my contradiction?" at 2am before the design review; it scales the onboarding tier (our strongest task types are exactly principle recommendation and concept explanation); and it drafts contradiction-analysis reports so expert time shifts from production to judgment. An assistant, not a replacement — but it raises the floor for everyone.</p>
+  <p lang-zh class="soft">对企业而言，创新的瓶颈往往不是点子，而是<em>问题表述</em>。常驻模型能在设计评审前夜凌晨两点回答"我的矛盾该用哪几条原理"；它把入门普及层规模化（我们最强的子集恰是原理推荐与概念讲解）；它起草矛盾分析与 ARIZ 报告，让专家时间从"生产"转向"判断"。这是助手而非替代——但它抬高了所有人的下限。</p>
+</section>
+
+<!-- ================= results ================= -->
+<section>
+  <h2><span class="no">03</span><span lang-en>Results — all of them, including the tie</span><span lang-zh>结果——全部结果，包括打平的那个</span></h2>
+  <p lang-en>v5 gold protocol, 300 items, per-item paired statistics. Judge-track numbers here are <strong>same-family (Moonshot) readings</strong> — the external-judge final review follows below:</p>
+  <p lang-zh>v5 金标口径，300 题，逐题配对统计。本表 judge 轨数字为<strong>同族（Moonshot）评委读数</strong>——异源评委终审见下方：</p>
+  <table class="rtable">
+    <thead><tr>
+      <th><span lang-en>Metric</span><span lang-zh>指标</span></th>
+      <th>base</th><th>v1</th><th><span lang-en>Paired diff [95% CI]</span><span lang-zh>配对差值 [95% CI]</span></th>
+    </tr></thead>
+    <tbody>
+      <tr class="hl"><td lang-en>Judge track (0–4)</td><td lang-zh>judge 轨 (0–4)</td><td class="num">3.0300</td><td class="num">3.4233</td><td class="num sig">+0.393 [+0.297, +0.490]</td></tr>
+      <tr><td lang-en>— concept_explanation</td><td lang-zh>— 概念讲解子集</td><td class="num">—</td><td class="num">—</td><td class="num sig">+0.733 [+0.467, +1.022]</td></tr>
+      <tr><td lang-en>Keyword track</td><td lang-zh>关键词轨</td><td class="num">0.6384</td><td class="num">0.6383</td><td class="num ns">−0.0001 [−0.017, +0.017]</td></tr>
+      <tr><td lang-en>Judge pass rate</td><td lang-zh>judge pass 率</td><td class="num">0.843</td><td class="num">0.947</td><td class="num sig">McNemar p=1.5e-05</td></tr>
+    </tbody>
+  </table>
+  <p lang-en class="soft">On the older v4 protocol (100 items), Meerkat-TRIZ-v1 is <strong>statistically tied</strong> with our strongest internal baseline (judge −0.22 [−0.47, +0.01], n.s.). We ran no external-model comparisons and claim none.</p>
+  <p lang-zh class="soft">在较早的 v4 口径（100 题）上，Meerkat-TRIZ-v1 与内部最强基线<strong>统计打平</strong>（judge −0.22 [−0.47, +0.01]，不显著）。我们未做外部模型对比，也不做任何此类宣称。</p>
+
+  <h3 lang-en style="margin-top:28px">External-judge final review (post-release)</h3>
+  <h3 lang-zh style="margin-top:28px">异源评委终审（发布后补做）</h3>
+  <p lang-en>After release we re-ran the judge protocol verbatim — same rubric, same prompts, T=0 — with three external judges from three vendors. 299 paired items (1 blocked by provider content filter):</p>
+  <p lang-zh>发布后，我们将评委协议逐字复跑——同 rubric、同 prompt、T=0——换成三家外部厂商的评委。299 题配对（1 题被服务商内容过滤拦截）：</p>
+  <table class="rtable">
+    <thead><tr>
+      <th><span lang-en>Judge</span><span lang-zh>评委</span></th>
+      <th><span lang-en>Paired diff [95% CI]</span><span lang-zh>配对差值 [95% CI]</span></th>
+      <th><span lang-en>Significant</span><span lang-zh>显著</span></th>
+    </tr></thead>
+    <tbody>
+      <tr><td lang-en>moonshot-v1-32k (same-family reference)</td><td lang-zh>moonshot-v1-32k（同族参照）</td><td class="num">+0.393 [+0.297, +0.490]</td><td class="num sig">✓</td></tr>
+      <tr class="hl"><td>claude-sonnet-4-6 (Anthropic)</td><td class="num sig">+0.094 [+0.020, +0.167]</td><td class="num sig">✓</td></tr>
+      <tr class="hl"><td>gpt-5.4 (OpenAI)</td><td class="num sig">+0.104 [+0.020, +0.184]</td><td class="num sig">✓</td></tr>
+      <tr><td>gemini-3.5-flash (Google)</td><td class="num ns">−0.048 [−0.144, +0.045]</td><td class="num ns">✗</td></tr>
+    </tbody>
+  </table>
+  <p lang-en class="soft">Direction confirmed under two of three external judges — at roughly <strong>one quarter</strong> of the same-family magnitude. The defensible headline is <strong>+0.09 ~ +0.10</strong>; the +0.39 must not be extrapolated across judge families. The external judges agree with each other (Spearman 0.63–0.75) far more than with the same-family judge (0.27–0.31) — a scoring-system difference, not noise. The strongest consensus: the targeted <strong>concept_explanation</strong> repair is significant under all three external judges (+0.24 / +0.31 / +0.29). Watch item: gemini scores principle_recommendation significantly lower (−0.31) — single-judge support, logged as an open signal. <a href="https://github.com/coidea-sys/meerkat-triz/blob/main/docs/EXTERNAL_JUDGE_REVIEW.md">Full report →</a></p>
+  <p lang-zh class="soft">三个外部评委中两个确认正方向——但量级仅为同族读数的约 <strong>1/4</strong>。可辩护的头条结论是 <strong>+0.09 ~ +0.10</strong>；+0.39 不得跨评委家族外推。外部评委互相一致性（Spearman 0.63–0.75）远高于与同族评委的一致性（0.27–0.31）——这是评分体系差异，不是噪声。最强共识：定向修复的<strong>概念讲解子集</strong>在三个外部评委下全部显著（+0.24 / +0.31 / +0.29）。观察项：gemini 对原理推荐子集给出显著负差（−0.31）——单一评委支持，记为开放信号。<a href="https://github.com/coidea-sys/meerkat-triz/blob/main/docs/EXTERNAL_JUDGE_REVIEW.zh-CN.md">完整报告 →</a></p>
+</section>
+
+<!-- ================= failures ================= -->
+<section>
+  <h2><span class="no">04</span><span lang-en>The evaluation caught itself lying</span><span lang-zh>评测系统抓到了自己说谎</span></h2>
+  <p lang-en class="soft">Three measurement failures found and repaired during five versions of iteration — each capable of reversing a conclusion:</p>
+  <p lang-zh class="soft">五版本迭代中发现并修复的三类测量学故障——每一类都足以反转结论：</p>
+
+  <div class="fail">
+    <div class="n">1</div>
+    <div>
+      <h3 lang-en>A baseline that was lying</h3><h3 lang-zh>会说谎的基线</h3>
+      <p lang-en>The harness stripped the empty think block the thinking-native base needs; base emitted unterminated reasoning drafts on 91/100 gold items. Both tracks were grading drafts.</p>
+      <p lang-zh>harness 剥离了 thinking-native 基座所需的空 think 块；基座在 91/100 题上输出未闭合思考草稿——两条评分轨评的都是草稿。</p>
+      <p class="flip">+1.00 → −0.30</p>
+    </div>
+  </div>
+
+  <div class="fail">
+    <div class="n">2</div>
+    <div>
+      <h3 lang-en>Judge position bias at 2× the literature amplitude</h3><h3 lang-zh>评委位置偏差达文献振幅两倍</h3>
+      <p lang-en>The pairwise judge picked the second-presented candidate 81% of the time (0.87 inconsistency; literature ~25pp). Single-order pairwise is noise; dual-order merging is now enforced in code. Bonus: at T=0 the judge was fully deterministic (0.000 flip rate).</p>
+      <p lang-zh>pairwise 评委 81% 选择第二位候选（不一致率 0.87，文献约 25pp）。单序结论全是噪声，双序合并已以代码强制。附带发现：T=0 下评委完全确定（翻转率 0.000）。</p>
+      <p class="flip">0.87 [0.79, 0.92]</p>
+    </div>
+  </div>
+
+  <div class="fail">
+    <div class="n">3</div>
+    <div>
+      <h3 lang-en>Two tracks voting opposite ways</h3><h3 lang-zh>两条轨投出相反的票</h3>
+      <p lang-en>Keyword and judge tracks share ~10% variance. v3 once scored significantly better on keywords (+0.056) and significantly worse on the judge (−0.068) — it had learned to stuff keywords. Rule: release gates must be dual-track.</p>
+      <p lang-zh>关键词轨与 judge 轨仅共享约 10% 方差。v3 曾关键词轨显著更好（+0.056）而 judge 轨显著更差（−0.068）——它学会了堆关键词。规则：发布门必须双轨。</p>
+      <p class="flip" lang-en>dual-track or nothing</p><p class="flip" lang-zh>双轨，否则不下判</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= limitations ================= -->
+<section>
+  <h2><span class="no">05</span><span lang-en>Limitations, stated</span><span lang-zh>局限，如实声明</span></h2>
+  <ul>
+    <li lang-en>Single domain (Chinese TRIZ QA), single base, single PEFT config.</li>
+    <li lang-zh>单领域（中文 TRIZ 问答）、单基座、单 PEFT 配置。</li>
+    <li lang-en>Judge shares a family with the data generator (declared weak same-origin). A post-release external review (§03) confirmed direction under 2/3 external judges at ~1/4 the magnitude; same-family absolute scores are not portable across judge families.</li>
+    <li lang-zh>评委与数据生成器同族（已声明"同族弱异源"）。发布后异源终审（§03）在 2/3 外部评委下确认方向，但量级约为同族读数的 1/4；同族绝对分不可跨评委家族外推。</li>
+    <li lang-en>100-item subsets are descriptive only; "tied with v2" means no significant difference detected, not proven equivalence.</li>
+    <li lang-zh>100 题口径子集仅为描述性；"与 v2 打平"意为未检出显著差异，而非已证等价。</li>
+    <li lang-en>Public benchmark withholds reference answers (copyright); keyword track fully reproducible, judge absolute scores not.</li>
+    <li lang-zh>公开基准不含参考答案（版权原因）；关键词轨可完整复现，judge 轨绝对分不可。</li>
+  </ul>
+</section>
+
+<!-- ================= quick start ================= -->
+<section>
+  <h2><span class="no">06</span><span lang-en>Quick start</span><span lang-zh>快速上手</span></h2>
+  <pre>from peft import PeftModel
+model = PeftModel.from_pretrained(base, "Meerkat-AI/Meerkat-TRIZ-v1")
+<span class="c"># ⚠️ keep the empty think block in your prompt template —
+#   the model was trained with it retained; stripping measurably hurts output.
+# ⚠️ 请保留 prompt 模板中的空 think 块——模型在保留它的格式下训练,
+#   剥离会可测量地损害输出质量。</span></pre>
+</section>
+
+</main>
+
+<footer>
+  <p class="motto" lang-en>"If your evaluation infrastructure has ever told you a story you wanted to hear — the whitepaper is for you."</p>
+  <p class="motto" lang-zh>"如果你的评测系统也曾告诉你一个你想听的故事——这份白皮书就是为你写的。"</p>
+  <div class="links">
+    <a href="https://huggingface.co/Meerkat-AI/Meerkat-TRIZ-v1">Model</a>
+    <a href="https://huggingface.co/datasets/Meerkat-AI/triz-gold-benchmark">Benchmark</a>
+    <a href="https://github.com/coidea-sys/meerkat-triz">Code</a>
+    <a href="https://github.com/coidea-sys/meerkat-triz/blob/main/docs/WHITEPAPER.md">Whitepaper EN</a>
+    <a href="https://github.com/coidea-sys/meerkat-triz/blob/main/docs/WHITEPAPER.zh-CN.md">白皮书</a>
+  </div>
+  <p>Meerkat AI · July 2026 · Apache-2.0</p>
+</footer>
+
+<script>
+function setLang(l) {
+  document.querySelectorAll('[lang-en]').forEach(e => e.style.display = l === 'en' ? '' : 'none');
+  document.querySelectorAll('[lang-zh]').forEach(e => e.style.display = l === 'zh' ? '' : 'none');
+  document.getElementById('btn-en').classList.toggle('on', l === 'en');
+  document.getElementById('btn-zh').classList.toggle('on', l === 'zh');
+  document.documentElement.lang = l === 'zh' ? 'zh-CN' : 'en';
+  document.title = l === 'zh'
+    ? 'Meerkat-TRIZ-v1 — TRIZ 领域首个 LLM 微调模型'
+    : 'Meerkat-TRIZ-v1 — First LLM Fine-tune for the TRIZ Domain';
+  try { localStorage.setItem('mk-lang', l); } catch (e) {}
+}
+let saved = null;
+try { saved = localStorage.getItem('mk-lang'); } catch (e) {}
+setLang(saved || ((navigator.language || 'en').toLowerCase().startsWith('zh') ? 'zh' : 'en'));
+</script>
+</body>
+</html>

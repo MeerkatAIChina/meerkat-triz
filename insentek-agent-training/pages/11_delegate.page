@@ -1,0 +1,302 @@
+pageType: content
+background:
+  type: solid
+  color: "$paper"
+elements:
+  # ---------- 页眉 ----------
+  - elementId: kicker
+    elementType: text
+    bounds: [56, 40, 420, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      text: |-
+        02 · 智能体思维
+  - elementId: title
+    elementType: text
+    bounds: [56, 62, 848, 36]
+    content:
+      style: "$h1"
+      wrap: false
+      text: |-
+        派活四件套:目标、资源、边界、验收
+
+  # ---------- 左栏:任务委派单模板 ----------
+  - elementId: tpl-label
+    elementType: text
+    bounds: [56, 114, 300, 22]
+    content:
+      style: "$h2"
+      wrap: false
+      text: |-
+        任务委派单 · 模板
+  # 条目 1 目标
+  - elementId: item1-badge
+    elementType: shape
+    bounds: [56, 148, 26, 26]
+    shapeName: rect
+    fill: {type: solid, color: "$pine"}
+  - elementId: item1-num
+    elementType: text
+    bounds: [56, 148, 26, 26]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$white"
+      align: [center, middle]
+      wrap: false
+      text: |-
+        1
+  - elementId: item1-title
+    elementType: text
+    bounds: [94, 150, 342, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$ink"
+      wrap: false
+      text: |-
+        目标 —— 完成什么,可衡量
+  - elementId: item1-desc
+    elementType: text
+    bounds: [94, 172, 342, 16]
+    content:
+      fontSize: 11
+      color: "$muted"
+      wrap: false
+      text: |-
+        交付物是什么?写到「能检查」的程度
+  # 条目 2 资源
+  - elementId: item2-badge
+    elementType: shape
+    bounds: [56, 216, 26, 26]
+    shapeName: rect
+    fill: {type: solid, color: "$pine"}
+  - elementId: item2-num
+    elementType: text
+    bounds: [56, 216, 26, 26]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$white"
+      align: [center, middle]
+      wrap: false
+      text: |-
+        2
+  - elementId: item2-title
+    elementType: text
+    bounds: [94, 218, 342, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$ink"
+      wrap: false
+      text: |-
+        资源 —— 它能用什么
+  - elementId: item2-desc
+    elementType: text
+    bounds: [94, 240, 342, 16]
+    content:
+      fontSize: 11
+      color: "$muted"
+      wrap: false
+      text: |-
+        数据、账号、工具、模板,一次给够
+  # 条目 3 边界
+  - elementId: item3-badge
+    elementType: shape
+    bounds: [56, 284, 26, 26]
+    shapeName: rect
+    fill: {type: solid, color: "$pine"}
+  - elementId: item3-num
+    elementType: text
+    bounds: [56, 284, 26, 26]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$white"
+      align: [center, middle]
+      wrap: false
+      text: |-
+        3
+  - elementId: item3-title
+    elementType: text
+    bounds: [94, 286, 342, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$ink"
+      wrap: false
+      text: |-
+        边界 —— 不许做什么
+  - elementId: item3-desc
+    elementType: text
+    bounds: [94, 308, 342, 16]
+    content:
+      fontSize: 11
+      color: "$muted"
+      wrap: false
+      text: |-
+        权限上限、预算、时长,写清楚红线
+  # 条目 4 验收
+  - elementId: item4-badge
+    elementType: shape
+    bounds: [56, 352, 26, 26]
+    shapeName: rect
+    fill: {type: solid, color: "$terra"}
+  - elementId: item4-num
+    elementType: text
+    bounds: [56, 352, 26, 26]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$white"
+      align: [center, middle]
+      wrap: false
+      text: |-
+        4
+  - elementId: item4-title
+    elementType: text
+    bounds: [94, 354, 342, 18]
+    content:
+      fontSize: 13
+      bold: true
+      color: "$ink"
+      wrap: false
+      text: |-
+        验收 —— 怎样算完成
+  - elementId: item4-desc
+    elementType: text
+    bounds: [94, 376, 342, 16]
+    content:
+      fontSize: 11
+      color: "$muted"
+      wrap: false
+      text: |-
+        交付物 + 检查标准,不合格就退回重做
+  - elementId: tpl-tip
+    elementType: text
+    bounds: [56, 412, 384, 32]
+    content:
+      style: "$small"
+      align: [left, top]
+      text: |-
+        口诀:目标可衡量、资源要给够、边界写清楚、验收能检查。
+
+  # ---------- 右栏:差任务 vs 好任务 ----------
+  # 反例
+  - elementId: bad-box
+    elementType: shape
+    bounds: [470, 114, 434, 108]
+    shapeName: rect
+    fill: {type: solid, color: "$paleT"}
+  - elementId: bad-title
+    elementType: text
+    bounds: [486, 126, 402, 18]
+    content:
+      fontSize: 13
+      color: "$ink"
+      wrap: false
+      text: |-
+        <p><strong>差任务:</strong>「帮我看看数据」</p>
+  - elementId: bad-desc
+    elementType: text
+    bounds: [486, 150, 402, 62]
+    content:
+      fontSize: 11
+      color: "$muted"
+      lineHeight: 1.55
+      align: [left, top]
+      text: |-
+        <p>✕ 没有目标:看什么、看到什么程度?</p>
+        <p>✕ 没有资源:哪份数据、在哪个系统?</p>
+        <p>✕ 没有验收:怎样算「看完了」?</p>
+  # 正例
+  - elementId: good-box
+    elementType: shape
+    bounds: [470, 236, 434, 208]
+    shapeName: rect
+    fill: {type: solid, color: "$paleG"}
+  - elementId: good-title
+    elementType: text
+    bounds: [486, 248, 402, 18]
+    content:
+      fontSize: 13
+      color: "$ink"
+      wrap: false
+      text: |-
+        <p><strong>好任务:</strong>智墒土壤墒情周报(教学演示)</p>
+  - elementId: good-desc
+    elementType: text
+    bounds: [486, 274, 402, 134]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.5
+      align: [left, top]
+      text: |-
+        <p><strong>目标</strong>:每周一 9:00 前产出全域墒情周报草稿</p>
+        <p style="margin-top:7px"><strong>资源</strong>:物联网平台取数接口 + 上周报告模板</p>
+        <p style="margin-top:7px"><strong>边界</strong>:只读取数、不改系统;缺数站点如实标注</p>
+        <p style="margin-top:7px"><strong>验收</strong>:含趋势图与异常清单,数据可溯源到站点</p>
+  - elementId: good-note
+    elementType: text
+    bounds: [486, 414, 402, 16]
+    content:
+      fontSize: 10.5
+      color: "$muted"
+      wrap: false
+      text: |-
+        派活之后,人只做最终复核——这就是「教练」的工作方式
+
+  # ---------- 底部行动条 ----------
+  - elementId: action-band
+    elementType: shape
+    bounds: [56, 456, 848, 38]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1, color: "$hair"}
+  - elementId: action-bar
+    elementType: shape
+    bounds: [56, 456, 4, 38]
+    shapeName: rect
+    fill: {type: solid, color: "$pine"}
+  - elementId: action-icon
+    elementType: icon
+    bounds: [76, 466, 18, 18]
+    iconName: "fas:pen-to-square"
+    fill: {type: solid, color: "$pine"}
+  - elementId: action-text
+    elementType: text
+    bounds: [106, 464, 786, 22]
+    content:
+      fontSize: 12.5
+      color: "$ink"
+      align: [left, middle]
+      text: |-
+        <p><strong>现场练习(5 分钟):</strong>把你自己的一个周报 / 例行任务,按「目标 · 资源 · 边界 · 验收」写成一张任务委派单。</p>
+
+  # ---------- 页脚 ----------
+  - elementId: footer-line
+    elementType: line
+    bounds: [56, 501, 848, 2]
+    viewBox: [848, 2]
+    points: "0,1 848,1"
+    border: {style: solid, width: 1, color: "$hair"}
+  - elementId: footer-left
+    elementType: text
+    bounds: [56, 510, 560, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      text: |-
+        智墒场景为教学演示/示例 · 东方智感 AI 内训第三期
+  - elementId: footer-right
+    elementType: text
+    bounds: [804, 510, 100, 14]
+    content:
+      style: "$caption"
+      align: [right, top]
+      wrap: false
+      text: |-
+        11
