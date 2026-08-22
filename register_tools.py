@@ -34,17 +34,32 @@ TOOLS = [
     },
     {
         "id": IMAGE_TOOL_ID,
-        "name": "文生图 (FLUX)",
+        "name": "文生图 (FLUX.1-dev)",
         "content_file": "/tmp/openwebui_tool_image.py",
-        "description": "根据文字描述生成图片（本地 FLUX.1-schnell）",
+        "description": "根据文字描述生成图片（本地 FLUX.1-dev，支持中文标注叠加）",
         "specs": [
             {
                 "name": "generate_image",
-                "description": "根据文字描述生成一张图片",
+                "description": "根据文字描述生成一张图片；生成结构图/原理图时用 annotations 叠加清晰中文标注（不要要求模型在图中直接渲染中文）",
                 "parameters": {
                     "type": "object",
                     "properties": {
-                        "prompt": {"type": "string", "description": "图片描述，中文或英文"},
+                        "prompt": {"type": "string", "description": "图片描述，中文或英文（结构图/工程图建议英文，构图更准）"},
+                        "annotations": {
+                            "type": "array",
+                            "description": "可选，图上叠加的中文标注列表",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "text": {"type": "string", "description": "标注文字（中文）"},
+                                    "x": {"type": "integer", "description": "像素 x 坐标 (0-768)"},
+                                    "y": {"type": "integer", "description": "像素 y 坐标 (0-768)"},
+                                    "size": {"type": "integer", "description": "字号，默认 36"},
+                                    "color": {"type": "string", "description": "颜色，默认 red"},
+                                },
+                                "required": ["text", "x", "y"],
+                            },
+                        },
                     },
                     "required": ["prompt"],
                 },
