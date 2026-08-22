@@ -53,7 +53,13 @@ class Tools:
         )
         url = __request__.app.url_path_for("get_file_content_by_id", id=file_item.id)
 
-        file_entry = {"type": "image", "id": file_item.id, "url": url}
+        file_entry = {
+            "type": "file",
+            "id": file_item.id,
+            "url": url,
+            "name": "generated.png",
+            "meta": {"content_type": "image/png", "size": len(data)},
+        }
         if __chat_id__ and __message_id__:
             await Chats.add_message_files_by_id_and_message_id(
                 __chat_id__, __message_id__, [file_entry]
