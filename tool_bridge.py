@@ -5,8 +5,8 @@ Meerkat 工具桥接服务：供 Open WebUI function calling 调用的宿主机 
 端点:
   POST /health  健康检查
   POST /convert {fmt, md_text}                 -> 返回 Word/PDF/Excel/PPT 文件
-  POST /image   {prompt, steps?, width?, height?, annotations?} -> 返回 PNG 图片
-                 annotations: [{text, x, y, size?, color?}] 在图上叠加中文标注
+  POST /image   {prompt, steps?, width?, height?, title?, legend?} -> 返回 PNG 图片
+                 title: 顶部居中标题; legend: 底部图例列表 ["零件1","零件2",...]
   POST /unload  释放 FLUX 显存
 
 运行:
@@ -33,30 +33,47 @@ CJK_FONT_REGULAR = "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
 CJK_FONT_BOLD = "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc"
 
 
-def annotate_image(image, annotations):
-    """在 PIL Image 上叠加中文标注（白描边保证可读性）。
+def annotate_image(image, title=None, legend=None):
+    """结构化中文标注：顶部居中标题 + 底部图例条（白底，编号+文字）。
 
-    annotations: [{text, x, y, size?, color?, bold?}]
+    位置固定、字号统一，避免模型猜测像素坐标导致的错乱。
+    title: 顶部标题文字
+    legend: 图例列表，如 ["主动轮", "从动轮", "传动轴"]
     """
     from PIL import ImageDraw, ImageFont
 
     img = image.convert("RGB")
+    W, H = img.size
     draw = ImageDraw.Draw(img)
-    for ann in annotations or []:
-        text = str(ann.get("text", "")).strip()
-        if not text:
-            continue
-        x = int(ann.get("x", 40))
-        y = int(ann.get("y", 40))
-        size = int(ann.get("size", 36))
-        color = str(ann.get("color", "red"))
-        font_path = CJK_FONT_BOLD if ann.get("bold") else CJK_FONT_REGULAR
-        font = ImageFont.truetype(font_path, size)
-        # 白色描边，保证深色背景上可读
-        for dx in (-2, -1, 1, 2):
-            for dy in (-2, -1, 1, 2):
-                draw.text((x + dx, y + dy), text, font=font, fill="white")
-        draw.text((x, y), text, font=font, fill=color)
+
+    # 底部图例条（白底，编号 + 文字，统一字号）
+    if legend:
+        items = [str(x).strip() for x in legend if str(x).strip()]
+        if items:
+            line_h = 44
+            pad = 24
+            legend_h = pad * 2 + len(items) * line_h
+            draw.rectangle([0, H - legend_h, W, H], fill="white")
+            draw.line([0, H - legend_h, W, H - legend_h], fill="black", width=3)
+            font = ImageFont.truetype(CJK_FONT_REGULAR, 32)
+            for i, item in enumerate(items, 1):
+                y = H - legend_h + pad + (i - 1) * line_h
+                draw.text((30, y), f"({i}) {item}", font=font, fill="black")
+
+    # 顶部标题（居中大字，黑字白描边）
+    if title:
+        title = str(title).strip()
+        if title:
+            font = ImageFont.truetype(CJK_FONT_BOLD, 44)
+            bbox = draw.textbbox((0, 0), title, font=font)
+            tw = bbox[2] - bbox[0]
+            x = max(10, (W - tw) // 2)
+            y = 16
+            for dx in (-2, -1, 1, 2):
+                for dy in (-2, -1, 1, 2):
+                    draw.text((x + dx, y + dy), title, font=font, fill="white")
+            draw.text((x, y), title, font=font, fill="black")
+
     return img
 
 MIME = {
@@ -206,10 +223,11 @@ class Handler(BaseHTTPRequestHandler):
             max_sequence_length=256,
         ).images[0]
 
-        # 可选：在图上叠加中文标注（后期合成，避免模型中文渲染乱码）
-        annotations = body.get("annotations", [])
-        if annotations:
-            image = annotate_image(image, annotations)
+        # 可选：结构化中文标注（顶部标题 + 底部图例，避免模型中文渲染乱码）
+        title = body.get("title", "")
+        legend = body.get("legend", [])
+        if title or legend:
+            image = annotate_image(image, title=title, legend=legend)
 
         buf = io.BytesIO()
         image.save(buf, format="PNG")

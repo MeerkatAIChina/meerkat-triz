@@ -15,7 +15,8 @@ class Tools:
     async def generate_image(
         self,
         prompt: str,
-        annotations: list = None,
+        title: str = "",
+        legend: list = None,
         __request__: Request = None,
         __user__: dict = None,
         __event_emitter__=None,
@@ -25,18 +26,19 @@ class Tools:
         """
         根据文字描述生成一张图片（本地 FLUX.1-dev 文生图模型），并把图片显示在对话中。
 
-        生成结构图/原理图/示意图时，用 annotations 参数在图上叠加中文标注（零件名、步骤、发明原理编号等）。
-        不要要求模型在图片里直接渲染中文文字——文生图模型渲染中文会乱码，正确做法是生成无文字的图，再用 annotations 叠加清晰中文标注。
+        生成结构图/原理图/示意图时，用 title 和 legend 添加中文标注：
+        - 不要要求模型在图片里直接渲染中文文字（会乱码），中文标注由 title/legend 后期合成。
+        - title 显示在图片顶部居中；legend 显示在底部白色图例条里，自动编号 (1)(2)(3)...
 
         :param prompt: 图片描述，中文或英文皆可（结构图/工程图建议英文描述，构图更准确）
-        :param annotations: 可选，中文标注列表。每项 {"text": "文字", "x": 像素x, "y": 像素y, "size": 字号, "color": "颜色"}
-            坐标范围对应图片尺寸（默认 768x768），size 默认 36，color 默认 red。示例：
-            [{"text": "泵体", "x": 60, "y": 80, "size": 42, "color": "red"},
-             {"text": "叶轮", "x": 340, "y": 300, "size": 42, "color": "blue"}]
+        :param title: 可选，图片顶部居中的标题（中文），如 "齿轮传动系统结构示意图"
+        :param legend: 可选，底部图例文字列表（中文），如 ["主动轮", "从动轮", "传动轴"]
         """
         payload = {"prompt": prompt}
-        if annotations:
-            payload["annotations"] = annotations
+        if title:
+            payload["title"] = title
+        if legend:
+            payload["legend"] = legend
         try:
             resp = requests.post(f"{BRIDGE}/image", json=payload, timeout=600)
             resp.raise_for_status()
