@@ -27,7 +27,6 @@ from doc_tools import convert as doc_convert  # noqa: E402
 
 BRIDGE_PORT = 8090
 FLUX_PATH = "/home/chinux/jupyterlab/meerkatai/models/FLUX.1-dev"
-FLUX_FP8_TRANSFORMER = "/home/chinux/jupyterlab/meerkatai/models/FLUX.1-dev-transformer-fp8"
 
 # 中文标注字体（Noto Sans CJK，DGX Spark 系统自带）
 CJK_FONT_REGULAR = "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
@@ -90,14 +89,11 @@ def get_pipe():
                 T5EncoderModel,
                 T5TokenizerFast,
             )
-            from optimum.quanto import QuantizedDiffusersModel
 
-            class QuantizedFluxTransformer2DModel(QuantizedDiffusersModel):
-                base_class = FluxTransformer2DModel
-
-            print("[bridge] 加载 FLUX FP8 transformer ...", flush=True)
-            qm = QuantizedFluxTransformer2DModel.from_pretrained(FLUX_FP8_TRANSFORMER)
-            transformer = qm._wrapped.to("cuda")
+            print("[bridge] 加载 FLUX dev transformer (BF16) ...", flush=True)
+            transformer = FluxTransformer2DModel.from_pretrained(
+                FLUX_PATH, subfolder="transformer", torch_dtype=torch.bfloat16, low_cpu_mem_usage=True
+            ).to("cuda")
 
             print("[bridge] 加载 FLUX 其他组件 ...", flush=True)
             text_encoder = CLIPTextModel.from_pretrained(
@@ -122,7 +118,7 @@ def get_pipe():
                 tokenizer_2=tokenizer_2,
                 scheduler=scheduler,
             )
-            print("[bridge] FLUX 就绪 (FP8)", flush=True)
+            print("[bridge] FLUX 就绪 (dev BF16)", flush=True)
         return _pipe
 
 
