@@ -5,7 +5,8 @@ Meerkat 工具桥接服务：供 Open WebUI function calling 调用的宿主机 
 端点:
   POST /health  健康检查
   POST /convert {fmt, md_text}                 -> 返回 Word/PDF/Excel/PPT 文件
-  POST /image   {prompt, steps?, width?, height?} -> 返回 PNG 图片
+  POST /image   {prompt, steps?, width?, height?, annotations?} -> 返回 PNG 图片
+                 annotations: [{text, x, y, size?, color?}] 在图上叠加中文标注
   POST /unload  释放 FLUX 显存
 
 运行:
@@ -25,8 +26,39 @@ sys.path.insert(0, "/home/chinux/jupyterlab/meerkatai")
 from doc_tools import convert as doc_convert  # noqa: E402
 
 BRIDGE_PORT = 8090
-FLUX_PATH = "/home/chinux/jupyterlab/meerkatai/models/FLUX.1-schnell"
-FLUX_FP8_TRANSFORMER = "/home/chinux/jupyterlab/meerkatai/models/FLUX.1-schnell-transformer-fp8"
+FLUX_PATH = "/home/chinux/jupyterlab/meerkatai/models/FLUX.1-dev"
+FLUX_FP8_TRANSFORMER = "/home/chinux/jupyterlab/meerkatai/models/FLUX.1-dev-transformer-fp8"
+
+# 中文标注字体（Noto Sans CJK，DGX Spark 系统自带）
+CJK_FONT_REGULAR = "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
+CJK_FONT_BOLD = "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc"
+
+
+def annotate_image(image, annotations):
+    """在 PIL Image 上叠加中文标注（白描边保证可读性）。
+
+    annotations: [{text, x, y, size?, color?, bold?}]
+    """
+    from PIL import ImageDraw, ImageFont
+
+    img = image.convert("RGB")
+    draw = ImageDraw.Draw(img)
+    for ann in annotations or []:
+        text = str(ann.get("text", "")).strip()
+        if not text:
+            continue
+        x = int(ann.get("x", 40))
+        y = int(ann.get("y", 40))
+        size = int(ann.get("size", 36))
+        color = str(ann.get("color", "red"))
+        font_path = CJK_FONT_BOLD if ann.get("bold") else CJK_FONT_REGULAR
+        font = ImageFont.truetype(font_path, size)
+        # 白色描边，保证深色背景上可读
+        for dx in (-2, -1, 1, 2):
+            for dy in (-2, -1, 1, 2):
+                draw.text((x + dx, y + dy), text, font=font, fill="white")
+        draw.text((x, y), text, font=font, fill=color)
+    return img
 
 MIME = {
     "docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -164,19 +196,25 @@ class Handler(BaseHTTPRequestHandler):
         prompt = str(body.get("prompt", "")).strip()
         if not prompt:
             return self._send_json({"error": "prompt is empty"}, 400)
-        steps = int(body.get("steps", 4))
+        steps = int(body.get("steps", 25))
         width = int(body.get("width", 768))
         height = int(body.get("height", 768))
 
         pipe = get_pipe()
         image = pipe(
             prompt,
-            guidance_scale=0.0,
+            guidance_scale=3.5,
             num_inference_steps=steps,
             width=width,
             height=height,
             max_sequence_length=256,
         ).images[0]
+
+        # 可选：在图上叠加中文标注（后期合成，避免模型中文渲染乱码）
+        annotations = body.get("annotations", [])
+        if annotations:
+            image = annotate_image(image, annotations)
+
         buf = io.BytesIO()
         image.save(buf, format="PNG")
         return self._send(200, buf.getvalue(), "image/png", "generated.png")
