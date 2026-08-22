@@ -9,7 +9,7 @@ docker stop meerkat-vllm-qwen38 meerkat-vllm-qwen36 2>/dev/null || true
 docker rm meerkat-vllm-qwen38 meerkat-vllm-qwen36 2>/dev/null || true
 sleep 5
 
-log "启动 v6 (Qwen3.8-27B) @ 0.25 + tool calling"
+log "启动 v6 (Qwen3.8-27B) @ 0.27 + tool calling"
 docker run -d --name meerkat-vllm-qwen38 \
   --network host --ipc host --gpus all \
   -e PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True \
@@ -23,8 +23,9 @@ docker run -d --name meerkat-vllm-qwen38 \
     --trust-remote-code \
     --dtype bfloat16 \
     --max-model-len 32768 \
-    --gpu-memory-utilization 0.25 \
-    --max-num-seqs 2 \
+    --gpu-memory-utilization 0.27 \
+    --max-num-seqs 4 \
+    --kv-cache-dtype fp8 \
     --limit-mm-per-prompt '{"image":3,"video":1}' \
     --mm-processor-cache-gb 2 \
     --enable-lora \
@@ -32,7 +33,7 @@ docker run -d --name meerkat-vllm-qwen38 \
     --max-lora-rank 64 \
     --enable-auto-tool-choice \
     --tool-call-parser qwen3_xml \
-    --override-generation-config '{"temperature":0.7,"top_p":0.8,"top_k":20,"max_new_tokens":8192}' \
+    --override-generation-config '{"temperature":0.7,"top_p":0.8,"top_k":20,"max_new_tokens":16384}' \
     --host 0.0.0.0 --port 8000
 
 log "等待 v6 启动完成 ..."
@@ -50,7 +51,7 @@ for i in $(seq 1 120); do
   sleep 5
 done
 
-log "启动 v1 (Qwen3.6-35B-A3B) @ 0.3 + tool calling"
+log "启动 v1 (Qwen3.6-35B-A3B) @ 0.32 + tool calling"
 docker run -d --name meerkat-vllm-qwen36 \
   --network host --ipc host --gpus all \
   -e PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True \
@@ -64,8 +65,9 @@ docker run -d --name meerkat-vllm-qwen36 \
     --trust-remote-code \
     --dtype bfloat16 \
     --max-model-len 32768 \
-    --gpu-memory-utilization 0.3 \
-    --max-num-seqs 8 \
+    --gpu-memory-utilization 0.32 \
+    --max-num-seqs 16 \
+    --kv-cache-dtype fp8 \
     --limit-mm-per-prompt '{"image":3,"video":1}' \
     --mm-processor-cache-gb 4 \
     --enable-lora \
@@ -73,6 +75,7 @@ docker run -d --name meerkat-vllm-qwen36 \
     --max-lora-rank 64 \
     --enable-auto-tool-choice \
     --tool-call-parser qwen3_xml \
+    --override-generation-config '{"temperature":0.7,"top_p":0.8,"top_k":20,"max_new_tokens":16384}' \
     --host 0.0.0.0 --port 8001
 
 log "等待 v1 启动完成 ..."

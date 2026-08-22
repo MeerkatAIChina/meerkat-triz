@@ -26,6 +26,7 @@ from doc_tools import convert as doc_convert  # noqa: E402
 
 BRIDGE_PORT = 8090
 FLUX_PATH = "/home/chinux/jupyterlab/meerkatai/models/FLUX.1-schnell"
+FLUX_FP8_TRANSFORMER = "/home/chinux/jupyterlab/meerkatai/models/FLUX.1-schnell-transformer-fp8"
 
 MIME = {
     "docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -45,16 +46,51 @@ def get_pipe():
     with _pipe_lock:
         if _pipe is None:
             import torch
-            from diffusers import FluxPipeline
-            print("[bridge] 加载 FLUX.1-schnell ...", flush=True)
-            # device_map="cuda" 直接载入 GPU, 避免统一内存下 CPU+GPU 双副本
-            _pipe = FluxPipeline.from_pretrained(
-                FLUX_PATH,
-                torch_dtype=torch.bfloat16,
-                low_cpu_mem_usage=True,
-                device_map="cuda",
+            from diffusers import (
+                FluxPipeline,
+                FluxTransformer2DModel,
+                AutoencoderKL,
+                FlowMatchEulerDiscreteScheduler,
             )
-            print("[bridge] FLUX 就绪", flush=True)
+            from transformers import (
+                CLIPTextModel,
+                CLIPTokenizer,
+                T5EncoderModel,
+                T5TokenizerFast,
+            )
+            from optimum.quanto import QuantizedDiffusersModel
+
+            class QuantizedFluxTransformer2DModel(QuantizedDiffusersModel):
+                base_class = FluxTransformer2DModel
+
+            print("[bridge] 加载 FLUX FP8 transformer ...", flush=True)
+            qm = QuantizedFluxTransformer2DModel.from_pretrained(FLUX_FP8_TRANSFORMER)
+            transformer = qm._wrapped.to("cuda")
+
+            print("[bridge] 加载 FLUX 其他组件 ...", flush=True)
+            text_encoder = CLIPTextModel.from_pretrained(
+                FLUX_PATH, subfolder="text_encoder", torch_dtype=torch.bfloat16
+            ).to("cuda")
+            text_encoder_2 = T5EncoderModel.from_pretrained(
+                FLUX_PATH, subfolder="text_encoder_2", torch_dtype=torch.bfloat16
+            ).to("cuda")
+            vae = AutoencoderKL.from_pretrained(
+                FLUX_PATH, subfolder="vae", torch_dtype=torch.bfloat16
+            ).to("cuda")
+            tokenizer = CLIPTokenizer.from_pretrained(FLUX_PATH, subfolder="tokenizer")
+            tokenizer_2 = T5TokenizerFast.from_pretrained(FLUX_PATH, subfolder="tokenizer_2")
+            scheduler = FlowMatchEulerDiscreteScheduler.from_pretrained(FLUX_PATH, subfolder="scheduler")
+
+            _pipe = FluxPipeline(
+                transformer=transformer,
+                text_encoder=text_encoder,
+                text_encoder_2=text_encoder_2,
+                vae=vae,
+                tokenizer=tokenizer,
+                tokenizer_2=tokenizer_2,
+                scheduler=scheduler,
+            )
+            print("[bridge] FLUX 就绪 (FP8)", flush=True)
         return _pipe
 
 
