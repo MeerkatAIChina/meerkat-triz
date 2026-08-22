@@ -83,11 +83,30 @@ async def _collect_all_images(files, chat_id):
     return "\n\n".join(imgs), len(imgs)
 
 
+async def _get_previous_assistant_content(chat_id):
+    """从对话历史获取最近一条 assistant 消息的文本内容（模型之前生成的分析/报告）。"""
+    try:
+        chat = await Chats.get_chat_by_id(chat_id)
+        if not chat or not chat.chat:
+            return ""
+        messages = (chat.chat or {}).get("history", {}).get("messages", {})
+        # 按消息顺序取最后一条有内容的 assistant 消息
+        items = list(messages.values())
+        for m in reversed(items):
+            if m.get("role") == "assistant":
+                content = m.get("content") or ""
+                if content and len(content) > 200:
+                    return content
+    except Exception:
+        pass
+    return ""
+
+
 class Tools:
     async def convert_markdown_to_file(
         self,
-        markdown_text: str,
         format: str,
+        markdown_text: str = "",
         __files__: list = None,
         __request__: Request = None,
         __user__: dict = None,
@@ -96,12 +115,13 @@ class Tools:
         __message_id__: str = None,
     ) -> str:
         """
-        将 Markdown 文本转换成 Word / PDF / Excel / PPT 文件，并自动嵌入当前对话里用户上传的图片（图文混排）。
+        将 Markdown 文本转换成 Word / PDF / Excel / PPT 文件，并自动嵌入当前对话里的图片（图文混排）。
         文件会自动附加到当前对话，用户直接点击下载即可。
-        用户要求生成/转换文档文件（含图片）时，必须调用本工具，工具会自动处理图片，不要自行假设或编造任何文件路径。
+        调用本工具时，markdown_text 参数可以留空——工具会自动从对话历史里取你刚才生成的分析/报告内容，并自动嵌入对话里的图片。
+        不要自行假设或编造任何文件路径。
 
-        :param markdown_text: 要转换的 Markdown 文本内容
         :param format: 目标文件格式，只能是 docx / pdf / xlsx / pptx 之一
+        :param markdown_text: 要转换的 Markdown 文本内容（可留空，留空时自动用对话历史里你刚生成的内容）
         """
         fmt = (format or "docx").lower().lstrip(".")
         if fmt not in MIME:
@@ -110,9 +130,16 @@ class Tools:
                 ensure_ascii=False,
             )
 
+        # 如果 markdown_text 太短，从对话历史取模型之前生成的分析/报告内容
+        md_text = markdown_text or ""
+        if len(md_text.strip()) < 100:
+            prev = await _get_previous_assistant_content(__chat_id__)
+            if prev and len(prev) > len(md_text):
+                md_text = prev
+
         # 把对话里的图片拼进 Markdown (图文混排): 用户上传 + 文生图 + 对话历史
         img_md, img_count = await _collect_all_images(__files__, __chat_id__)
-        full_md = (img_md + "\n\n" + markdown_text) if img_md else markdown_text
+        full_md = (img_md + "\n\n" + md_text) if img_md else md_text
 
         try:
             resp = requests.post(

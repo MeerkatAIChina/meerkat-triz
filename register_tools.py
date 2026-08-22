@@ -24,10 +24,10 @@ TOOLS = [
                 "parameters": {
                     "type": "object",
                     "properties": {
-                        "markdown_text": {"type": "string", "description": "要转换的 Markdown 文本内容"},
                         "format": {"type": "string", "description": "目标格式: docx/pdf/xlsx/pptx"},
+                        "markdown_text": {"type": "string", "description": "要转换的 Markdown 文本内容（可留空，留空时自动使用对话历史里刚生成的内容）"},
                     },
-                    "required": ["markdown_text", "format"],
+                    "required": ["format"],
                 },
             }
         ],
