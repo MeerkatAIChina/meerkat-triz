@@ -11,7 +11,7 @@ from open_webui.models.files import Files
 from open_webui.models.users import UserModel
 from open_webui.routers.files import upload_file_handler
 
-BRIDGE = "http://host.docker.internal:8090"
+BRIDGE = "http://192.168.5.246:8090"
 MIME = {
     "docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     "pdf": "application/pdf",
