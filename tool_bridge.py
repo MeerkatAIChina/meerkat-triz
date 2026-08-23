@@ -76,6 +76,20 @@ def annotate_image(image, title=None, legend=None):
 
     return img
 
+
+def enhance_image(image):
+    """自适应对比度增强：解决 FLUX dev 生成低对比度柔和色块的问题。
+
+    autocontrast 自适应拉伸（低对比度图增强多，正常图影响小）。
+    """
+    from PIL import ImageEnhance, ImageOps
+
+    img = image.convert("RGB")
+    img = ImageOps.autocontrast(img, cutoff=2)
+    img = ImageEnhance.Color(img).enhance(1.25)
+    return img
+
+
 MIME = {
     "docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     "pdf": "application/pdf",
@@ -222,6 +236,9 @@ class Handler(BaseHTTPRequestHandler):
             height=height,
             max_sequence_length=256,
         ).images[0]
+
+        # 对比度增强（dev 生成偏柔和，autocontrast 自适应拉伸）
+        image = enhance_image(image)
 
         # 可选：结构化中文标注（顶部标题 + 底部图例，避免模型中文渲染乱码）
         title = body.get("title", "")
