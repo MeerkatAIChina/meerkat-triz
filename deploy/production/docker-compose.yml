@@ -1,0 +1,95 @@
+version: "3.8"
+
+services:
+  # ──────────────────────────────────────────────
+  # vLLM 推理服务（基座 + LoRA）
+  # ──────────────────────────────────────────────
+  meerkat-vllm:
+    image: ${VLLM_IMAGE:-qwen36-dgx-spark:v0.1.1}
+    container_name: meerkat-vllm
+    restart: unless-stopped
+    network_mode: host
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    environment:
+      - ENABLE_MULTIMODAL=0
+      - NVIDIA_VISIBLE_DEVICES=all
+      - CUDA_DEVICE_ORDER=PCI_BUS_ID
+    volumes:
+      - ${HF_HOME:-~/.cache/huggingface}:/root/.cache/huggingface:ro
+      - ${LORA_DIR:-~/.cache/vllm/loras/meerkat-triz-v1}:/root/.cache/vllm/loras/meerkat-triz-v1:ro
+    # 注意：vLLM 容器使用 --rm（停止即删除），由 docker-compose up 管理生命周期
+    command: >
+      python3 -m vllm.entrypoints.openai.api_server
+        --model ${BASE_MODEL:-unsloth/Qwen3.6-35B-A3B-NVFP4-Fast}
+        --trust-remote-code
+        --dtype ${VLLM_DTYPE:-float16}
+        --max-model-len ${MAX_MODEL_LEN:-262144}
+        --gpu-memory-utilization ${GPU_MEM_UTIL:-0.83}
+        --max-num-batched-tokens ${MAX_BATCHED_TOKENS:-8192}
+        --max-num-seqs ${MAX_NUM_SEQS:-64}
+        --num-speculative-tokens ${NUM_SPEC_TOKENS:-3}
+        --speculative-model "[ngram]"
+        --enable-lora
+        --lora-modules Meerkat-TRIZ-v1=/root/.cache/vllm/loras/meerkat-triz-v1/
+        --max-lora-rank ${LORA_RANK:-64}
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://127.0.0.1:8000/v1/models"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 120s
+
+  # ──────────────────────────────────────────────
+  # Open WebUI 前端
+  # ──────────────────────────────────────────────
+  meerkat-webui:
+    image: ${WEBUI_IMAGE:-ghcr.io/open-webui/open-webui:ollama}
+    container_name: meerkat-webui
+    restart: unless-stopped
+    ports:
+      - "${WEBUI_PORT:-12001}:8080"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - meerkat-webui-data:/app/backend/data
+    environment:
+      # ── 核心连接 ──
+      - ENABLE_OLLAMA_API=False
+      - OPENAI_API_BASE_URL=${VLLM_BASE_URL:-http://host.docker.internal:8000/v1}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-local}
+
+      # ── 应用品牌 ──
+      - WEBUI_NAME=${WEBUI_NAME:-Meerkat-TRIZ}
+
+      # ── 默认生成参数（覆盖客户端不传时的行为） ──
+      # 注意：值必须是单引号包裹的 JSON 字符串，防止 bash source 后丢引号
+      - OVERRIDE_GENERATION_CONFIG=${OVERRIDE_GENERATION_CONFIG:-'{"temperature":0.6,"top_p":0.95,"repetition_penalty":1.05,"max_new_tokens":16384}'}
+
+      # ── 注册与权限 ──
+      - ENABLE_SIGNUP=${ENABLE_SIGNUP:-true}
+      - DEFAULT_USER_ROLE=${DEFAULT_USER_ROLE:-user}
+      - ENABLE_LOGIN_FORM=${ENABLE_LOGIN_FORM:-true}
+
+      # ── HuggingFace 镜像（中国大陆加速） ──
+      - HF_ENDPOINT=${HF_ENDPOINT:-https://hf-mirror.com}
+      - HF_HUB_ENDPOINT=${HF_HUB_ENDPOINT:-https://hf-mirror.com}
+
+      # ── 可选：SMTP 邮件验证 ──
+      # - SMTP_SERVER=${SMTP_SERVER:-}
+      # - SMTP_PORT=${SMTP_PORT:-587}
+      # - SMTP_USERNAME=${SMTP_USERNAME:-}
+      # - SMTP_PASSWORD=${SMTP_PASSWORD:-}
+    depends_on:
+      meerkat-vllm:
+        condition: service_healthy
+
+volumes:
+  meerkat-webui-data:
+    name: meerkat-webui-data
