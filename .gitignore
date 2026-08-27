@@ -67,3 +67,22 @@ final_status.py
 # 生成物
 *.docx
 meerkat-triz/
+
+# 监控日志
+*.log
+
+# 运行时数据/反馈
+usage_feedback/
+anchor_report.json
+
+# 冗余打包（production/ 已提交，zip 为重复）
+deploy/production.zip
+
+# 补充临时脚本
+read_*.py
+read_train*.py
+flip_*.py
+img_gen.py
+test_load.py
+register_kernel.sh
+monitor_v6_*.sh
