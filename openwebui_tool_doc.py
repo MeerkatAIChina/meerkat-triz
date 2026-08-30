@@ -17,6 +17,7 @@ MIME = {
     "pdf": "application/pdf",
     "xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     "pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    "html": "text/html; charset=utf-8",
 }
 
 
@@ -115,12 +116,18 @@ class Tools:
         __message_id__: str = None,
     ) -> str:
         """
-        将 Markdown 文本转换成 Word / PDF / Excel / PPT 文件，并自动嵌入当前对话里的图片（图文混排）。
+        将 Markdown 文本转换成 HTML / Word / PDF / Excel / PPT 文件（业界级排版 + 数据图表），并自动嵌入当前对话里的图片（图文混排）。
         文件会自动附加到当前对话，用户直接点击下载即可。
         调用本工具时，markdown_text 参数可以留空——工具会自动从对话历史里取你刚才生成的分析/报告内容，并自动嵌入对话里的图片。
         不要自行假设或编造任何文件路径。
 
-        :param format: 目标文件格式，只能是 docx / pdf / xlsx / pptx 之一
+        数据图表：在 Markdown 中用 ```chart 代码块输出 JSON 图表描述，工具会自动渲染成矢量图表（HTML）或原生图表对象（Excel/PPT）。
+        支持 type: bar(柱状) / barh(横向柱) / line(折线) / area(面积) / pie(饼图) / donut(环形) / radar(雷达) / scatter(散点) / funnel(漏斗) / gauge(仪表盘)。
+        示例：```chart
+        {"type": "bar", "title": "月度销量", "categories": ["1月","2月","3月"], "series": [{"name": "销量", "data": [120, 150, 180]}], "y_label": "件"}
+        ```
+
+        :param format: 目标文件格式，只能是 html / docx / pdf / xlsx / pptx 之一
         :param markdown_text: 要转换的 Markdown 文本内容（可留空，留空时自动用对话历史里你刚生成的内容）
         """
         fmt = (format or "docx").lower().lstrip(".")

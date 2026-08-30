@@ -16,15 +16,15 @@ TOOLS = [
         "id": DOC_TOOL_ID,
         "name": "Markdown 文档转换",
         "content_file": "/tmp/openwebui_tool_doc.py",
-        "description": "将 Markdown 文本转换为 Word/PDF/Excel/PPT 文件",
+        "description": "将 Markdown 文本转换为 HTML/Word/PDF/Excel/PPT 文件（业界级排版 + 数据图表）",
         "specs": [
             {
                 "name": "convert_markdown_to_file",
-                "description": "将 Markdown 文本转换成 Word/PDF/Excel/PPT 文件",
+                "description": "将 Markdown 文本转换成 HTML/Word/PDF/Excel/PPT 文件。支持在 Markdown 中用 ```chart 代码块输出 JSON 生成数据图表（type: bar/barh/line/area/pie/donut/radar/scatter/funnel/gauge），自动渲染为矢量图表或原生图表对象。",
                 "parameters": {
                     "type": "object",
                     "properties": {
-                        "format": {"type": "string", "description": "目标格式: docx/pdf/xlsx/pptx"},
+                        "format": {"type": "string", "description": "目标格式: html/docx/pdf/xlsx/pptx"},
                         "markdown_text": {"type": "string", "description": "要转换的 Markdown 文本内容（可留空，留空时自动使用对话历史里刚生成的内容）"},
                     },
                     "required": ["format"],
