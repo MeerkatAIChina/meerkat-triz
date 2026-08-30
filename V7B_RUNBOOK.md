@@ -296,6 +296,87 @@ Qwen3.6-35B-A3B 原生 262,144，用 YaRN factor 4.0 扩展到 1,010,000。官�
 | thinking | 中文引导 + reasoning-parser qwen3 |
 | 采样 | temperature 0.7 / top_p 0.9 / max_tokens 8192 |
 
+---
+
+## 极致联合优化：Web UI + vLLM 两层对齐（2026-08-30）
+
+### 发现的三处瓶颈/不一致
+
+| 层 | 参数 | 原值 | 问题 |
+|---|---|---|---|
+| Web UI | subagents.max_concurrent | 20 | ⚠️ 比 vLLM 64 低 3 倍，是隐藏瓶颈 |
+| Web UI | context_compaction | 关闭 | 长对话无管理，可能撑爆 1M |
+| Web UI | max_tokens | 8192 | thinking 深度思考可能截断 |
+
+### 优化结果
+
+| 层 | 参数 | 优化后 |
+|---|---|---|
+| Web UI 并发 | subagents.max_concurrent | **48**（对齐 vLLM 64） |
+| 上下文管理 | context_compaction | **开启**（阈值 500K，利用 1M 且防爆） |
+| 输出深度 | max_tokens | **12288**（thinking 6000+ 不截断） |
+
+### 上下文 vs 并发关系（核心认知）
+
+```
+实际并发 = KV cache 总量 ÷ 平均上下文长度
+```
+
+KV cache 5.24M tokens 下：1M 上下文→5 并发；64K→82；短对话→受 max-num-seqs 64 限制。**短/中上下文瓶颈是 max-num-seqs，长上下文瓶颈是 KV cache。**
+
+### MTP 方案验证结论（2026-08-30）
+
+验证了 Qwen3.8-27B NVFP4 MTP Q8attn + LoRA 方案：
+
+- **MTP + LoRA 兼容** ✅（vLLM 0.25 实测，LoRA 成功加载 + MTP drafter 加载）
+- **MTP 加速 1.97×**（AR 11.35 → MTP 22.4 tok/s）
+- **但未采用**：Qwen3.8-27B 是 dense（27B 全激活），Qwen3.6-35B-A3B 是 MoE（3B active），MTP 加速后 22 tok/s 仍远低于 Qwen3.6 的 57 tok/s（-61%）。judge 3.53 vs 3.42 的质量差不足以弥补吞吐损失。
+- **关键教训**：DGX Spark 是 memory-bound，decode 吞吐由 active 参数决定，MoE 远优于 dense。
+
+---
+
+## 电商运营数据分析闭环框架（2026-08-30）
+
+从 TRIZ 咨询延伸到电商运营，建立分钟级闭环框架。
+
+### 架构（五层闭环）
+
+```
+数据采集(data_ingestion) → 指标计算(metrics) → 异常检测(anomaly)
+  → AI 决策(ai_advisor，调 Meerkat-AI 电商 skill) → 执行(executor) → 反馈(feedback)
+```
+
+### AI 决策层：5 个电商 skill（已部署 Web UI）
+
+| Skill | 框架 |
+|---|---|
+| 【电商】选品分析 | 市场机会→需求洞察→竞品格局→蓝海挖掘 |
+| 【电商】新品建议 | 需求定位→差异化→定价→上市规划 |
+| 【电商】调价策略 | 竞品比价→价格弹性→利润测算→动态调价 |
+| 【电商】补货管理 | 库存预警→补货量→周转优化→供应链协同 |
+| 【电商】投放优化 | ROI 分析→预算分配→素材优化→人群定向 |
+
+### 代码框架（`ecom/` 目录，8 文件）
+
+- 数据采集骨架（4 平台 API + 数据库 + log 归一化，凭证占位 + mock 兜底）
+- 指标计算 + 异常检测（规则引擎，先规则后 AI）
+- AI 决策调用（异常类型自动映射 skill）
+- 执行层（分级：auto/notify/suggest）
+- 反馈层（动作 + 指标归因）
+- 主调度（分钟级 cron）
+
+### 接口规范（snapshot_schema.md）
+
+统一 schema + 运营快照格式 + 异常→skill 映射 + 执行分级策略。核心原则：**花真金白银的动作 AI 只建议不执行，可逆动作全自动。**
+
+### 验证结果
+
+单轮闭环测试通过：mock 数据 → 检测库存告急 → AI 补货建议（含具体 SKU、调拨量、优先级）。
+
+### 待接入（需凭证/基础设施）
+
+4 平台 API 凭证、数据库 DSN、log 路径填入 config.py 即切换真实数据。
+
 ## 背景与决策线
 
 - v7（Ornith 首个 LoRA，系统提示用「简洁模式 ≤300字/详细模式」）评测 judge 提升 **+0.0268（不显著）**，keyword **-0.0190（显著恶化）**，远低于 Qwen 基座 LoRA 的 +0.39~+0.50。
