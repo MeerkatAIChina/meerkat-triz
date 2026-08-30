@@ -21,6 +21,17 @@
 - **文生图**：已下线（FLUX，见 V7B_RUNBOOK.md）
 - **运维**：KV cache 监控脚本 + FLUX 空闲自动卸载 + tool_bridge 守护
 
+## 子项目：Meerkat EVO（下一代产品与研发总部）
+
+**Meerkat EVO · 自演进企业智能系统（SEEI 范式）** 已分离为独立子项目，包含：
+
+- 下一代模型训练战略（SFT→DPO→RLVR 三阶段、M0-M6 路线图、企业部署、数据飞轮）
+- Workbench 人机协同工作台设计（Harness/Loop/Graph + Autopilot L0-L4）
+- 数字孪生模型（市场/供应链/顾客）
+- ecom 电商闭环参考实现（Loop 引擎原型）
+
+👉 [Meerkat-EVO/README.md](Meerkat-EVO/README.md)。本项目（Meerkat-AI）保留现役生产线（模型服务、28 skill、训练/评测 pipeline），演进方向由 EVO 项目定义。
+
 ## 关键文档
 
 | 文档 | 内容 |

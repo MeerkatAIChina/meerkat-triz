@@ -86,3 +86,6 @@ img_gen.py
 test_load.py
 register_kernel.sh
 monitor_v6_*.sh
+
+# 独立子项目（自有 git 仓库）
+Meerkat-EVO/
