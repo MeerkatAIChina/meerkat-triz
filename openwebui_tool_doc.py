@@ -85,19 +85,27 @@ async def _collect_all_images(files, chat_id):
 
 
 async def _get_previous_assistant_content(chat_id):
-    """从对话历史获取最近一条 assistant 消息的文本内容（模型之前生成的分析/报告）。"""
+    """从对话历史汇总最近一轮 assistant 消息的文本内容（模型之前生成的分析/报告，支持多章节）。
+
+    逻辑: 从最近往回收集 assistant 消息, 遇到 user 消息即停止, 按时间正序拼接。
+    这样无论模型分几条消息生成报告, 都能完整汇总。
+    """
     try:
         chat = await Chats.get_chat_by_id(chat_id)
         if not chat or not chat.chat:
             return ""
         messages = (chat.chat or {}).get("history", {}).get("messages", {})
-        # 按消息顺序取最后一条有内容的 assistant 消息
-        items = list(messages.values())
+        items = sorted(messages.values(), key=lambda m: m.get("timestamp", 0))
+        parts = []
         for m in reversed(items):
             if m.get("role") == "assistant":
-                content = m.get("content") or ""
-                if content and len(content) > 200:
-                    return content
+                content = (m.get("content") or "").strip()
+                if content and len(content) > 50:
+                    parts.append(content)
+            elif parts:
+                # 遇到 user 消息且已收集到内容 → 停止（只取最近一轮）
+                break
+        return "\n\n".join(reversed(parts))
     except Exception:
         pass
     return ""
