@@ -59,6 +59,7 @@ diagnose_*.py
 inspect_*.py
 check_*.py
 fix_*.py
+!fix_bad_toolcalls.py
 extract_*.py
 find_*.py
 final_status.py
