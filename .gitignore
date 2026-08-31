@@ -93,3 +93,5 @@ Meerkat-EVO/
 
 # RLVR 样本数据 (大文件, 本地生成)
 data/rlvr_sales_forecast.jsonl
+# 专利 RLVR 样本 (大文件, 本地生成)
+data/patent/
