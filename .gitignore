@@ -90,3 +90,6 @@ monitor_v6_*.sh
 
 # 独立子项目（自有 git 仓库）
 Meerkat-EVO/
+
+# RLVR 样本数据 (大文件, 本地生成)
+data/rlvr_sales_forecast.jsonl
