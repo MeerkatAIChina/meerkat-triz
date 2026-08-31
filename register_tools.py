@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""在 Open WebUI 容器内运行，把两个工具注册进 webui.db 并给模型启用。"""
+"""在 Open WebUI 容器内运行，注册文档转换工具并给模型启用；同时删除已废弃的文生图工具。"""
 import json
 import sqlite3
 import time
@@ -9,7 +9,7 @@ DB = "/app/backend/data/webui.db"
 ADMIN_ID = "2336e02f-77df-407d-857a-8b6c0154fc84"  # Siyuan Huang (admin)
 
 DOC_TOOL_ID = "meerkat-doc-tools"
-IMAGE_TOOL_ID = "meerkat-image-gen"
+IMAGE_TOOL_ID = "meerkat-image-gen"  # 已废弃(FLUX 下线), 会被删除
 
 TOOLS = [
     {
@@ -32,36 +32,16 @@ TOOLS = [
             }
         ],
     },
-    {
-        "id": IMAGE_TOOL_ID,
-        "name": "文生图 (FLUX.1-dev)",
-        "content_file": "/tmp/openwebui_tool_image.py",
-        "description": "根据文字描述生成图片（本地 FLUX.1-dev，支持标题+图例中文标注）",
-        "specs": [
-            {
-                "name": "generate_image",
-                "description": "根据文字描述生成一张图片；生成结构图/原理图时用 title（顶部标题）和 legend（底部图例）添加中文标注，不要要求模型在图中直接渲染中文",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "prompt": {"type": "string", "description": "图片描述，中文或英文（结构图/工程图建议英文，构图更准）"},
-                        "title": {"type": "string", "description": "可选，图片顶部居中的中文标题，如「齿轮传动系统结构示意图」"},
-                        "legend": {
-                            "type": "array",
-                            "description": "可选，底部图例的中文文字列表，自动编号，如 ['主动轮','从动轮','传动轴']",
-                            "items": {"type": "string"},
-                        },
-                    },
-                    "required": ["prompt"],
-                },
-            }
-        ],
-    },
 ]
 
 db = sqlite3.connect(DB)
 cur = db.cursor()
 now = int(time.time())
+
+# 0. 删除已废弃的文生图工具 (FLUX 已下线)
+cur.execute("DELETE FROM tool WHERE id=?", (IMAGE_TOOL_ID,))
+cur.execute("DELETE FROM access_grant WHERE resource_type='tool' AND resource_id=?", (IMAGE_TOOL_ID,))
+print(f"[cleanup] 已删除废弃工具 {IMAGE_TOOL_ID}")
 
 for t in TOOLS:
     with open(t["content_file"], encoding="utf-8") as f:
@@ -98,8 +78,8 @@ for t in TOOLS:
         )
         print(f"[grant] {t['id']} -> 公开 read")
 
-# 给所有 workspace 模型启用这两个工具
-tool_ids = [DOC_TOOL_ID, IMAGE_TOOL_ID]
+# 给所有 workspace 模型启用文档工具 (并移除已废弃的文生图工具)
+tool_ids = [DOC_TOOL_ID]
 cur.execute("SELECT id, meta FROM model")
 for mid, meta_raw in cur.fetchall():
     meta = json.loads(meta_raw) if meta_raw else {}
@@ -112,4 +92,4 @@ for mid, meta_raw in cur.fetchall():
 
 db.commit()
 db.close()
-print("[done] 工具注册完成")
+print("[done] 工具注册完成 (文生图已下线)")
