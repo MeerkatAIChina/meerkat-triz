@@ -151,3 +151,36 @@ Step 3  真实闭环: 模型接生产预测 → 真实结果回流 → 样本持
 ## 九、一个关键推论
 
 **可验证性 = 系统的硬约束**。凡无法量化为"事后可核对的数字"的决策，对 RLVR 零价值，应从首期范围剔除。这反过来精简了电商系统的首期范围——**不是"先做完整电商系统"，而是"先做销量预测这一个可验证闭环"**。慢即是快。
+
+## 十、训练侧准备（已就绪，待 RLVR 阶段启动）
+
+三个脚本组成完整链路，**只准备、不启动**：
+
+| 脚本 | 作用 | 状态 |
+|---|---|---|
+| `build_rlvr_dataset.py` | 样本生成 | ✅ 已产出 33 万条 |
+| `convert_to_verl_parquet.py` | JSONL → verl parquet | ✅ 已测试 |
+| `verl_reward.py` | 销量预测 reward function | ✅ 自测 7/7 通过 |
+
+### 启动命令（训练任务执行到 RLVR 阶段时）
+
+```bash
+# 1. 转换数据 (JSONL → train.parquet + test.parquet, 98/2 分割)
+python3 convert_to_verl_parquet.py data/rlvr_sales_forecast.jsonl data/verl_parquet
+
+# 2. verl 训练关键参数
+--custom_reward_function.path=verl_reward.py \
+--custom_reward_function.name=compute_score \
+--data.train_files=data/verl_parquet/train.parquet \
+--data.val_files=data/verl_parquet/test.parquet
+```
+
+### reward function 接口（已对齐 verl 官方约定）
+
+```python
+def compute_score(data_source, solution_str, ground_truth, extra_info=None) -> float
+```
+
+- 奖励 = `-clip(|pred-actual|/actual, 0, 1)`
+- `pred` 从 `solution_str` 健壮提取（处理「预测14件」「总销量:14」「14」等格式，剥离「未来7天」的天数干扰）
+- `ground_truth` 来自 parquet 的 `reward_model.ground_truth`（字符串，运行时 float 化）
